@@ -7,6 +7,7 @@
 /bin/
 /classes/
 /.settings/
+/.settings
 /.idea/
 /.gradle/
 .classpath
@@ -14,5 +15,4 @@
 *.iml
 .vscode/launch.json
 .gitignore
-
 *.log
