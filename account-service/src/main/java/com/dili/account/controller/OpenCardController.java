@@ -1,0 +1,118 @@
+package com.dili.account.controller;
+
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+/**
+ *	开卡服务          
+ * @author ：WangBo
+ * @time ：2020年4月28日下午3:36:22
+ */
+@RestController
+@RequestMapping(value = "user")
+public class OpenCardController {
+//
+//	@Resource
+//	private IOpenCardService openCardService;
+//
+//	/**
+//	 * 主卡开卡
+//	 */
+//	@PostMapping("openMasterCard")
+//	public Message<?> openMasterCard(@RequestBody OpenCardDto openCardInfo) {
+//		// 主要参数校验
+//		checkMasterParam(openCardInfo);
+//		// 开卡
+//		OpenCardResponseDto response = openCardService.openMasterCard(openCardInfo);
+//		return Message.success(response);
+//	}
+//
+//	/**
+//	 * 副卡开卡
+//	 */
+//	@PostMapping("openSlaveCard")
+//	public Message<OpenCardResponseDto> openSlaveCard(@RequestBody OpenCardDto openCardInfo) throws Exception {
+//		// 主要参数校验
+//		AssertUtils.notNull(openCardInfo.getParentAccountId(), "主卡信息不能为空!");
+//		AssertUtils.notEmpty(openCardInfo.getMarketId(), "开卡市场编码不能为空!");
+//		OpenCardResponseDto response = openCardService.openSlaveCard(openCardInfo);
+//		return Message.success(response);
+//	}
+//
+//	/**
+//	 * 主卡参数校验
+//	 * @param openCardInfo
+//	 */
+//	private void checkMasterParam(OpenCardDto openCardInfo) {
+//		AssertUtils.notEmpty(openCardInfo.getName(), "开卡用户名不能为空!");
+//		AssertUtils.notEmpty(openCardInfo.getCredentialNo(), "开卡用户名证件号不能为空!");
+//		AssertUtils.notEmpty(openCardInfo.getMobile(), "开卡手机号不能为空!");
+//		AssertUtils.notEmpty(openCardInfo.getMarketId(), "开卡市场编码不能为空!");
+//		// 实体卡
+//		if (CardType.PHYSICAL_CARD.getCode() == openCardInfo.getSeinsweise()) {
+//			AssertUtils.notEmpty(openCardInfo.getMarketId(), "卡号不能为空!");
+//		}
+//		// 对公用户
+//		if (openCardInfo.getAccountType() == AccountType.PUBLIC.getCode()) {
+//			AssertUtils.notEmpty(openCardInfo.getLegalName(), "法人姓名不能为空!");
+//			AssertUtils.notEmpty(openCardInfo.getLegalNo(), "法人证件号不能为空!");
+//			AssertUtils.notEmpty(openCardInfo.getLegalCredentialType(), "法人证件类型不能为空!");
+//		}
+//	}
+//	
+//	public static void main(String[] args) throws Exception {
+//		OpenCardDto openInfo = new OpenCardDto();
+//		openInfo.setAccountType(AccountType.PERSONAL.getCode());
+//		openInfo.setAddress("成都府人民东路88号");
+//		openInfo.setAuthStatus(AuthStatus.AUTH.getCode());
+//		openInfo.setBizUsageType(CardBizType.BUYER.getCode());
+//		openInfo.setBusinessCategory("苹果香蕉");
+//		openInfo.setCardNo("888888888888");
+//		openInfo.setCategory(CardCategory.MASTER.getCode());
+//		openInfo.setCreateSource(CreateSource.COUNTER.getCode());
+//		openInfo.setCredentialNo("513002198810102287");
+//		openInfo.setCredentialType(CredentialType.ID.getCode());
+//		openInfo.setCrmCustormerId(123221L);
+//		openInfo.setCustomerArea(CustomerAreaType.LOCAL.getCode());
+//		openInfo.setCustormerType(AccountType.PERSONAL.getCode());
+//		openInfo.setFundAccountId(550330L);
+//		openInfo.setGender(Gender.MALE.getCode());
+//		openInfo.setLegalCredentialType(CredentialType.ID.getCode());
+//		openInfo.setLegalName("法人姓名");
+//		openInfo.setLegalNo("5119192929929293");
+//		openInfo.setLoginPwd("123456");
+//		openInfo.setMarketId(MarketEnum.SY.getMarketId());
+//		openInfo.setMobile("18888888888");
+//		openInfo.setName("老李一");
+//		openInfo.setParentAccountId(23422L);
+//		openInfo.setSeinsweise(CardType.PHYSICAL_CARD.getCode());
+//		openInfo.setTradePwd("123456");
+//		openInfo.setUsePermission("10,12,12");
+//		openInfo.setValidityDate(LocalDateTime.now());
+////		OpenCardDto dto = new OpenCardDto();
+////		Field[] fields = dto.getClass().getDeclaredFields();
+////		for (Field f : fields) {
+////			f.setAccessible(true);
+////			if (f.getType().equals(String.class)) {
+////				if (f.getName().contains("address")) {
+////					f.set(dto, "四川省成都人民东路8号");
+////				} else if (f.getName().contains("mobile")) {
+////					f.set(dto, "18988888888");
+////				} else if (f.getName().contains("name")) {
+////					f.set(dto, "老李");
+////				} else if (f.getName().contains("cardNo")) {
+////					f.set(dto, "888888888888");
+////				} else {
+////					f.set(dto, "测试数据" + f.getName());
+////				}
+////			} else if (f.getType().equals(Long.class)) {
+////				f.set(dto, 2L);
+////			} else if (f.getType().equals(LocalDateTime.class)) {
+////				f.set(dto, LocalDateTime.now());
+////			} else {
+////				f.set(dto, 1);
+////			}
+////		}
+//		System.out.println(JsonUtils.toJsonString(openInfo));
+//	}
+}
