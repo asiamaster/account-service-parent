@@ -1,22 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.dili.account.dao.IAccountUserCardDao">
+<mapper namespace="com.dili.account.dao.ICardStorageDao">
 	
-	<select id="selectList" resultType="com.dili.account.entity.AccountUserCardEntity">
+	<select id="selectList" resultType="com.dili.account.entity.CardStorageEntity">
 		SELECT
 			`id`, 
 			`device_id`, 
-			`account_id`, 
 			`card_no`, 
-			`category`, 
 			`type`, 
-			`usage_type`, 
 			`verify_code`, 
-			`cash_pledge`, 
-			`last`, 
+			`maker_version`, 
 			`state`, 
-			`version`, 
 			`creator_id`, 
 			`creator`, 
 			`firm_id`, 
@@ -24,24 +19,19 @@
 			`create_time`, 
 			`modify_time`
 		FROM
-			account_user_card
+			account_card_storage
 		ORDER BY
 			id DESC
 	</select>
 	
 	<insert id="save">
-		INSERT INTO account_user_card (
+		INSERT INTO account_card_storage (
 			`device_id`, 
-			`account_id`, 
 			`card_no`, 
-			`category`, 
 			`type`, 
-			`usage_type`, 
 			`verify_code`, 
-			`cash_pledge`, 
-			`last`, 
+			`maker_version`, 
 			`state`, 
-			`version`, 
 			`creator_id`, 
 			`creator`, 
 			`firm_id`, 
@@ -51,16 +41,11 @@
 		)
 		VALUES (
 			#{deviceId}, 
-			#{accountId}, 
 			#{cardNo}, 
-			#{category}, 
 			#{type}, 
-			#{usageType}, 
 			#{verifyCode}, 
-			#{cashPledge}, 
-			#{last}, 
+			#{makerVersion}, 
 			#{state}, 
-			#{version}, 
 			#{creatorId}, 
 			#{creator}, 
 			#{firmId}, 
@@ -70,20 +55,15 @@
 		)
 	</insert>
 	
-	<select id="getById" resultType="com.dili.account.entity.AccountUserCardEntity">
+	<select id="getById" resultType="com.dili.account.entity.CardStorageEntity">
 		SELECT
 			`id`, 
 			`device_id`, 
-			`account_id`, 
 			`card_no`, 
-			`category`, 
 			`type`, 
-			`usage_type`, 
 			`verify_code`, 
-			`cash_pledge`, 
-			`last`, 
+			`maker_version`, 
 			`state`, 
-			`version`, 
 			`creator_id`, 
 			`creator`, 
 			`firm_id`, 
@@ -91,25 +71,20 @@
 			`create_time`, 
 			`modify_time`
 		FROM
-			account_user_card
+			account_card_storage
 		WHERE
 			id = #{id}
 	</select>
 	
 	<update id="update">
-		UPDATE account_user_card
+		UPDATE account_card_storage
 	 	<set>
 			<if test="deviceId != null">`device_id` = #{deviceId}, </if>
-			<if test="accountId != null">`account_id` = #{accountId}, </if>
 			<if test="cardNo != null">`card_no` = #{cardNo}, </if>
-			<if test="category != null">`category` = #{category}, </if>
 			<if test="type != null">`type` = #{type}, </if>
-			<if test="usageType != null">`usage_type` = #{usageType}, </if>
 			<if test="verifyCode != null">`verify_code` = #{verifyCode}, </if>
-			<if test="cashPledge != null">`cash_pledge` = #{cashPledge}, </if>
-			<if test="last != null">`last` = #{last}, </if>
+			<if test="makerVersion != null">`maker_version` = #{makerVersion}, </if>
 			<if test="state != null">`state` = #{state}, </if>
-			<if test="version != null">`version` = #{version}, </if>
 			<if test="creatorId != null">`creator_id` = #{creatorId}, </if>
 			<if test="creator != null">`creator` = #{creator}, </if>
 			<if test="firmId != null">`firm_id` = #{firmId}, </if>
@@ -124,7 +99,7 @@
 	<delete id="batchRemove">
 		DELETE
 		FROM
-			account_user_card
+			account_card_storage
 		WHERE
 			id IN
 		<foreach item="id" collection="array" open="(" separator="," close=")">

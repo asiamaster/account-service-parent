@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
  * 用户账户信息
  * @author bob
  */
-public class AccountUserAccountEntity implements Serializable {
+public class UserAccountEntity implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -62,9 +62,9 @@ public class AccountUserAccountEntity implements Serializable {
 	/** 修改时间 */
 	private LocalDateTime modifyTime; 
     /**
-     * AccountUserAccountEntity constructor
+     * UserAccountEntity constructor
      */
-	public AccountUserAccountEntity() {
+	public UserAccountEntity() {
 		super();
 	}
 
@@ -419,11 +419,11 @@ public class AccountUserAccountEntity implements Serializable {
 	}
 
     /**
-     * AccountUserAccountEntity.toString()
+     * UserAccountEntity.toString()
      */
     @Override
     public String toString() {
-        return "AccountUserAccountEntity{" +
+        return "UserAccountEntity{" +
                "id='" + id + '\'' +
                ", accountId='" + accountId + '\'' +
                ", parentAccountId='" + parentAccountId + '\'' +
