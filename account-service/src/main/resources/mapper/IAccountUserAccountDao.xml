@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dili.account.dao.IAccountUserAccountDao">
+	
+	<select id="selectList" resultType="com.dili.account.entity.AccountUserAccountEntity">
+		SELECT
+			`id`, 
+			`account_id`, 
+			`parent_account_id`, 
+			`custormer_id`, 
+			`fund_account_id`, 
+			`type`, 
+			`usage_type`, 
+			`holder_name`, 
+			`holder_gender`, 
+			`holder_mobile`, 
+			`holder_certificate_number`, 
+			`holder_certificate_type`, 
+			`holder_address`, 
+			`permissions`, 
+			`login_pwd`, 
+			`pwd_changed`, 
+			`login_time`, 
+			`secret_key`, 
+			`state`, 
+			`source`, 
+			`version`, 
+			`firm_id`, 
+			`firm_name`, 
+			`create_time`, 
+			`modify_time`
+		FROM
+			account_user_account
+		ORDER BY
+			id DESC
+	</select>
+	
+	<insert id="save">
+		INSERT INTO account_user_account (
+			`account_id`, 
+			`parent_account_id`, 
+			`custormer_id`, 
+			`fund_account_id`, 
+			`type`, 
+			`usage_type`, 
+			`holder_name`, 
+			`holder_gender`, 
+			`holder_mobile`, 
+			`holder_certificate_number`, 
+			`holder_certificate_type`, 
+			`holder_address`, 
+			`permissions`, 
+			`login_pwd`, 
+			`pwd_changed`, 
+			`login_time`, 
+			`secret_key`, 
+			`state`, 
+			`source`, 
+			`version`, 
+			`firm_id`, 
+			`firm_name`, 
+			`create_time`, 
+			`modify_time`
+		)
+		VALUES (
+			#{accountId}, 
+			#{parentAccountId}, 
+			#{custormerId}, 
+			#{fundAccountId}, 
+			#{type}, 
+			#{usageType}, 
+			#{holderName}, 
+			#{holderGender}, 
+			#{holderMobile}, 
+			#{holderCertificateNumber}, 
+			#{holderCertificateType}, 
+			#{holderAddress}, 
+			#{permissions}, 
+			#{loginPwd}, 
+			#{pwdChanged}, 
+			#{loginTime}, 
+			#{secretKey}, 
+			#{state}, 
+			#{source}, 
+			#{version}, 
+			#{firmId}, 
+			#{firmName}, 
+			#{createTime}, 
+			#{modifyTime}
+		)
+	</insert>
+	
+	<select id="getById" resultType="com.dili.account.entity.AccountUserAccountEntity">
+		SELECT
+			`id`, 
+			`account_id`, 
+			`parent_account_id`, 
+			`custormer_id`, 
+			`fund_account_id`, 
+			`type`, 
+			`usage_type`, 
+			`holder_name`, 
+			`holder_gender`, 
+			`holder_mobile`, 
+			`holder_certificate_number`, 
+			`holder_certificate_type`, 
+			`holder_address`, 
+			`permissions`, 
+			`login_pwd`, 
+			`pwd_changed`, 
+			`login_time`, 
+			`secret_key`, 
+			`state`, 
+			`source`, 
+			`version`, 
+			`firm_id`, 
+			`firm_name`, 
+			`create_time`, 
+			`modify_time`
+		FROM
+			account_user_account
+		WHERE
+			id = #{id}
+	</select>
+	
+	<update id="update">
+		UPDATE account_user_account
+	 	<set>
+			<if test="accountId != null">`account_id` = #{accountId}, </if>
+			<if test="parentAccountId != null">`parent_account_id` = #{parentAccountId}, </if>
+			<if test="custormerId != null">`custormer_id` = #{custormerId}, </if>
+			<if test="fundAccountId != null">`fund_account_id` = #{fundAccountId}, </if>
+			<if test="type != null">`type` = #{type}, </if>
+			<if test="usageType != null">`usage_type` = #{usageType}, </if>
+			<if test="holderName != null">`holder_name` = #{holderName}, </if>
+			<if test="holderGender != null">`holder_gender` = #{holderGender}, </if>
+			<if test="holderMobile != null">`holder_mobile` = #{holderMobile}, </if>
+			<if test="holderCertificateNumber != null">`holder_certificate_number` = #{holderCertificateNumber}, </if>
+			<if test="holderCertificateType != null">`holder_certificate_type` = #{holderCertificateType}, </if>
+			<if test="holderAddress != null">`holder_address` = #{holderAddress}, </if>
+			<if test="permissions != null">`permissions` = #{permissions}, </if>
+			<if test="loginPwd != null">`login_pwd` = #{loginPwd}, </if>
+			<if test="pwdChanged != null">`pwd_changed` = #{pwdChanged}, </if>
+			<if test="loginTime != null">`login_time` = #{loginTime}, </if>
+			<if test="secretKey != null">`secret_key` = #{secretKey}, </if>
+			<if test="state != null">`state` = #{state}, </if>
+			<if test="source != null">`source` = #{source}, </if>
+			<if test="version != null">`version` = #{version}, </if>
+			<if test="firmId != null">`firm_id` = #{firmId}, </if>
+			<if test="firmName != null">`firm_name` = #{firmName}, </if>
+			<if test="createTime != null">`create_time` = #{createTime}, </if>
+			<if test="modifyTime != null">`modify_time` = #{modifyTime}</if>
+		</set>
+		WHERE
+			id = #{id}
+	</update>
+	
+	<delete id="batchRemove">
+		DELETE
+		FROM
+			account_user_account
+		WHERE
+			id IN
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>
