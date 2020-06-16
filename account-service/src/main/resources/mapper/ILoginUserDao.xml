@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.dili.account.dao.IAccountLoginUserDao">
+<mapper namespace="com.dili.account.dao.ILoginUserDao">
 	
-	<select id="selectList" resultType="com.dili.account.entity.AccountLoginUserEntity">
+	<select id="selectList" resultType="com.dili.account.entity.LoginUserEntity">
 		SELECT
 			`id`, 
 			`custormer_id`, 
@@ -58,7 +58,7 @@
 		)
 	</insert>
 	
-	<select id="getById" resultType="com.dili.account.entity.AccountLoginUserEntity">
+	<select id="getById" resultType="com.dili.account.entity.LoginUserEntity">
 		SELECT
 			`id`, 
 			`custormer_id`, 

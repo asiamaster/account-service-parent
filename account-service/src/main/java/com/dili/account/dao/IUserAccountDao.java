@@ -2,42 +2,42 @@ package com.dili.account.dao;
 
 import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
-import com.dili.account.entity.AccountCardStorageEntity;
+import com.dili.account.entity.UserAccountEntity;
 
 /**
- * 卡片仓库，所有新开卡必须来至该表
+ * 用户账户信息
  * @author bob<>
  */
 @Mapper
-public interface IAccountCardStorageDao {
+public interface IUserAccountDao {
 	/**
      * 列表查询
      * @param page
      * @param search
      * @return
      */
-	List<AccountCardStorageEntity> selectList(AccountCardStorageEntity accountCardStorage);
+	List<UserAccountEntity> selectList(UserAccountEntity userAccount);
 
     /**
      * 新增
-     * @param accountCardStorage
+     * @param userAccount
      * @return
      */
-	int save(AccountCardStorageEntity accountCardStorage);
+	int save(UserAccountEntity userAccount);
 
     /**
      * 根据id查询
      * @param id
      * @return
      */
-	AccountCardStorageEntity getById(Long id);
+	UserAccountEntity getById(Long id);
 
     /**
      * 修改
-     * @param accountCardStorage
+     * @param userAccount
      * @return
      */
-	int update(AccountCardStorageEntity accountCardStorage);
+	int update(UserAccountEntity userAccount);
 
     /**
      * 删除

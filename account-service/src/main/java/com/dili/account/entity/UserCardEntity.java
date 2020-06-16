@@ -4,10 +4,10 @@ import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
- * 卡片仓库，所有新开卡必须来至该表
+ * 用户卡片信息（包括电子卡）
  * @author bob
  */
-public class AccountCardStorageEntity implements Serializable {
+public class UserCardEntity implements Serializable {
 	
 	private static final long serialVersionUID = 1L;
 	
@@ -15,19 +15,29 @@ public class AccountCardStorageEntity implements Serializable {
 	private Long id; 
 	/** 卡片硬件标识 */
 	private String deviceId; 
+	/** 用户账号 */
+	private Long accountId; 
 	/** 卡号 */
 	private String cardNo; 
-	/** 卡片类型码 */
+	/** 卡类别-园区卡 银行卡 */
+	private Integer category; 
+	/** 类型-主/副/临时 */
 	private Integer type; 
+	/** 用途-买家/卖家卡 */
+	private Integer usageType; 
 	/** 验证码 */
 	private String verifyCode; 
-	/** 制卡程序版本号 */
-	private Integer makerVersion; 
-	/** 卡片状态-激活,在用,作废 */
+	/** 卡片押金-分 */
+	private Integer cashPledge; 
+	/** 是否最近卡片-换卡时使用 */
+	private Integer last; 
+	/** 卡片状态-正常/挂失 */
 	private Integer state; 
-	/** 操作员 */
+	/** 数据版本号 */
+	private Integer version; 
+	/** 操作人员 */
 	private Long creatorId; 
-	/** 操作员名称 */
+	/** 员工名称-保留字段 */
 	private String creator; 
 	/** 商户ID */
 	private String firmId; 
@@ -38,9 +48,9 @@ public class AccountCardStorageEntity implements Serializable {
 	/** 修改时间 */
 	private LocalDateTime modifyTime; 
     /**
-     * AccountCardStorageEntity constructor
+     * UserCardEntity constructor
      */
-	public AccountCardStorageEntity() {
+	public UserCardEntity() {
 		super();
 	}
 
@@ -73,6 +83,20 @@ public class AccountCardStorageEntity implements Serializable {
 	}
 
     /**
+     * setter for 用户账号
+     */
+	public void setAccountId(Long accountId) {
+		this.accountId = accountId;
+	}
+
+    /**
+     * getter for 用户账号
+     */
+	public Long getAccountId() {
+		return accountId;
+	}
+
+    /**
      * setter for 卡号
      */
 	public void setCardNo(String cardNo) {
@@ -87,17 +111,45 @@ public class AccountCardStorageEntity implements Serializable {
 	}
 
     /**
-     * setter for 卡片类型码
+     * setter for 卡类别-园区卡 银行卡
+     */
+	public void setCategory(Integer category) {
+		this.category = category;
+	}
+
+    /**
+     * getter for 卡类别-园区卡 银行卡
+     */
+	public Integer getCategory() {
+		return category;
+	}
+
+    /**
+     * setter for 类型-主/副/临时
      */
 	public void setType(Integer type) {
 		this.type = type;
 	}
 
     /**
-     * getter for 卡片类型码
+     * getter for 类型-主/副/临时
      */
 	public Integer getType() {
 		return type;
+	}
+
+    /**
+     * setter for 用途-买家/卖家卡
+     */
+	public void setUsageType(Integer usageType) {
+		this.usageType = usageType;
+	}
+
+    /**
+     * getter for 用途-买家/卖家卡
+     */
+	public Integer getUsageType() {
+		return usageType;
 	}
 
     /**
@@ -115,56 +167,84 @@ public class AccountCardStorageEntity implements Serializable {
 	}
 
     /**
-     * setter for 制卡程序版本号
+     * setter for 卡片押金-分
      */
-	public void setMakerVersion(Integer makerVersion) {
-		this.makerVersion = makerVersion;
+	public void setCashPledge(Integer cashPledge) {
+		this.cashPledge = cashPledge;
 	}
 
     /**
-     * getter for 制卡程序版本号
+     * getter for 卡片押金-分
      */
-	public Integer getMakerVersion() {
-		return makerVersion;
+	public Integer getCashPledge() {
+		return cashPledge;
 	}
 
     /**
-     * setter for 卡片状态-激活,在用,作废
+     * setter for 是否最近卡片-换卡时使用
+     */
+	public void setLast(Integer last) {
+		this.last = last;
+	}
+
+    /**
+     * getter for 是否最近卡片-换卡时使用
+     */
+	public Integer getLast() {
+		return last;
+	}
+
+    /**
+     * setter for 卡片状态-正常/挂失
      */
 	public void setState(Integer state) {
 		this.state = state;
 	}
 
     /**
-     * getter for 卡片状态-激活,在用,作废
+     * getter for 卡片状态-正常/挂失
      */
 	public Integer getState() {
 		return state;
 	}
 
     /**
-     * setter for 操作员
+     * setter for 数据版本号
+     */
+	public void setVersion(Integer version) {
+		this.version = version;
+	}
+
+    /**
+     * getter for 数据版本号
+     */
+	public Integer getVersion() {
+		return version;
+	}
+
+    /**
+     * setter for 操作人员
      */
 	public void setCreatorId(Long creatorId) {
 		this.creatorId = creatorId;
 	}
 
     /**
-     * getter for 操作员
+     * getter for 操作人员
      */
 	public Long getCreatorId() {
 		return creatorId;
 	}
 
     /**
-     * setter for 操作员名称
+     * setter for 员工名称-保留字段
      */
 	public void setCreator(String creator) {
 		this.creator = creator;
 	}
 
     /**
-     * getter for 操作员名称
+     * getter for 员工名称-保留字段
      */
 	public String getCreator() {
 		return creator;
@@ -227,18 +307,23 @@ public class AccountCardStorageEntity implements Serializable {
 	}
 
     /**
-     * AccountCardStorageEntity.toString()
+     * UserCardEntity.toString()
      */
     @Override
     public String toString() {
-        return "AccountCardStorageEntity{" +
+        return "UserCardEntity{" +
                "id='" + id + '\'' +
                ", deviceId='" + deviceId + '\'' +
+               ", accountId='" + accountId + '\'' +
                ", cardNo='" + cardNo + '\'' +
+               ", category='" + category + '\'' +
                ", type='" + type + '\'' +
+               ", usageType='" + usageType + '\'' +
                ", verifyCode='" + verifyCode + '\'' +
-               ", makerVersion='" + makerVersion + '\'' +
+               ", cashPledge='" + cashPledge + '\'' +
+               ", last='" + last + '\'' +
                ", state='" + state + '\'' +
+               ", version='" + version + '\'' +
                ", creatorId='" + creatorId + '\'' +
                ", creator='" + creator + '\'' +
                ", firmId='" + firmId + '\'' +
