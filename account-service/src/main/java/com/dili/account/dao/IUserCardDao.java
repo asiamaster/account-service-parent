@@ -62,5 +62,4 @@ public interface IUserCardDao {
 	 * @param accountId 卡账号
 	 */
 	UserCardDo findCardByAccountId(@Param("accountId") Long accountId);
-	int updateState(@Param("accountId") Long accountId, @Param("state") Integer state, @Param("version") Integer version);
 }

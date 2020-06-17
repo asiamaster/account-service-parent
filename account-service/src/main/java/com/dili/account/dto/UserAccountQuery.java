@@ -1,11 +1,11 @@
 package com.dili.account.dto;
 
-import com.dili.account.common.PageDto;
+import com.dili.account.common.Page;
 
 /**
  * 用户账户查询dto
  */
-public class UserAccountQuery extends PageDto {
+public class UserAccountQuery extends Page {
 
     /**
      * 卡号

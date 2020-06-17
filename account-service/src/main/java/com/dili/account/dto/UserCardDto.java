@@ -1,11 +1,11 @@
 package com.dili.account.dto;
 
-import com.dili.account.entity.UserCardEntity;
+import com.dili.account.entity.UserCardDo;
 
 /**
  * 卡相关DTO
  */
-public class UserCardDto extends UserCardEntity {
+public class UserCardDto extends UserCardDo {
 
     /** 密码 */
     private String loginPwd;

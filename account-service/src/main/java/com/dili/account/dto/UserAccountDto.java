@@ -1,11 +1,11 @@
 package com.dili.account.dto;
 
-import com.dili.account.entity.UserAccountEntity;
+import com.dili.account.entity.UserAccountDo;
 
 /**
  * 用户账户DTO
  */
-public class UserAccountDto extends UserAccountEntity {
+public class UserAccountDto extends UserAccountDo {
     /**
      * 卡号
      */
