@@ -2,7 +2,7 @@ package com.dili.account.dao;
 
 import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
-import com.dili.account.entity.LoginUserEntity;
+import com.dili.account.entity.LoginUserDo;
 
 /**
  * 用户电子登录账号
@@ -16,28 +16,28 @@ public interface ILoginUserDao {
      * @param search
      * @return
      */
-	List<LoginUserEntity> selectList(LoginUserEntity loginUser);
+	List<LoginUserDo> selectList(LoginUserDo loginUser);
 
     /**
      * 新增
      * @param loginUser
      * @return
      */
-	int save(LoginUserEntity loginUser);
+	int save(LoginUserDo loginUser);
 
     /**
      * 根据id查询
      * @param id
      * @return
      */
-	LoginUserEntity getById(Long id);
+	LoginUserDo getById(Long id);
 
     /**
      * 修改
      * @param loginUser
      * @return
      */
-	int update(LoginUserEntity loginUser);
+	int update(LoginUserDo loginUser);
 
     /**
      * 删除

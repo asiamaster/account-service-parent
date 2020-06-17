@@ -2,7 +2,7 @@ package com.dili.account.dao;
 
 import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
-import com.dili.account.entity.CardStorageEntity;
+import com.dili.account.entity.CardStorageDo;
 
 /**
  * 卡片仓库，所有新开卡必须来至该表
@@ -16,28 +16,28 @@ public interface ICardStorageDao {
      * @param search
      * @return
      */
-	List<CardStorageEntity> selectList(CardStorageEntity cardStorage);
+	List<CardStorageDo> selectList(CardStorageDo cardStorage);
 
     /**
      * 新增
      * @param cardStorage
      * @return
      */
-	int save(CardStorageEntity cardStorage);
+	int save(CardStorageDo cardStorage);
 
     /**
      * 根据id查询
      * @param id
      * @return
      */
-	CardStorageEntity getById(Long id);
+	CardStorageDo getById(Long id);
 
     /**
      * 修改
      * @param cardStorage
      * @return
      */
-	int update(CardStorageEntity cardStorage);
+	int update(CardStorageDo cardStorage);
 
     /**
      * 删除

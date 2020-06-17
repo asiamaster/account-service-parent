@@ -3,7 +3,7 @@
 
 <mapper namespace="com.dili.account.dao.ICardStorageDao">
 	
-	<select id="selectList" resultType="com.dili.account.entity.CardStorageEntity">
+	<select id="selectList" resultType="com.dili.account.entity.CardStorageDo">
 		SELECT
 			`id`, 
 			`device_id`, 
@@ -55,7 +55,7 @@
 		)
 	</insert>
 	
-	<select id="getById" resultType="com.dili.account.entity.CardStorageEntity">
+	<select id="getById" resultType="com.dili.account.entity.CardStorageDo">
 		SELECT
 			`id`, 
 			`device_id`, 

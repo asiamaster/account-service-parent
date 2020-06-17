@@ -3,7 +3,7 @@
 
 <mapper namespace="com.dili.account.dao.ILoginUserDao">
 	
-	<select id="selectList" resultType="com.dili.account.entity.LoginUserEntity">
+	<select id="selectList" resultType="com.dili.account.entity.LoginUserDo">
 		SELECT
 			`id`, 
 			`custormer_id`, 
@@ -58,7 +58,7 @@
 		)
 	</insert>
 	
-	<select id="getById" resultType="com.dili.account.entity.LoginUserEntity">
+	<select id="getById" resultType="com.dili.account.entity.LoginUserDo">
 		SELECT
 			`id`, 
 			`custormer_id`, 

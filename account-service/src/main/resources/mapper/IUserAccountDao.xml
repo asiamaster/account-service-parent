@@ -3,7 +3,7 @@
 
 <mapper namespace="com.dili.account.dao.IUserAccountDao">
 	
-	<select id="selectList" resultType="com.dili.account.entity.UserAccountEntity">
+	<select id="selectList" resultType="com.dili.account.entity.UserAccountDo">
 		SELECT
 			`id`, 
 			`account_id`, 
@@ -91,7 +91,7 @@
 		)
 	</insert>
 	
-	<select id="getById" resultType="com.dili.account.entity.UserAccountEntity">
+	<select id="getById" resultType="com.dili.account.entity.UserAccountDo">
 		SELECT
 			`id`, 
 			`account_id`, 

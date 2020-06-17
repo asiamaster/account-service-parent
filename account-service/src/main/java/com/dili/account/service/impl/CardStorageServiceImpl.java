@@ -4,7 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import com.dili.account.service.ICardRepositoryService;
+import com.dili.account.service.ICardStorageService;
 
 /**
  * @description： 卡片入库service实现
@@ -12,10 +12,10 @@ import com.dili.account.service.ICardRepositoryService;
  * @author ：WangBo
  * @time ：2020年4月22日下午5:53:40
  */
-@Service("cardRepositoryService")
-public class CardRepositoryServiceImpl/* implements ICardRepositoryService */{
+@Service("cardStorageService")
+public class CardStorageServiceImpl{
 
-	private static final Logger LOG = LoggerFactory.getLogger(CardRepositoryServiceImpl.class);
+	private static final Logger LOG = LoggerFactory.getLogger(CardStorageServiceImpl.class);
 
 //	@Resource
 //	private IUserCardRepositoryDao userCardRepositoryDao;

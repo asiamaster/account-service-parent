@@ -1,30 +1,43 @@
 package com.dili.account.controller;
 
+import javax.annotation.Resource;
+
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.dili.account.dto.OpenCardDto;
+import com.dili.account.dto.OpenCardResponseDto;
+import com.dili.account.service.IOpenCardService;
+import com.dili.ss.domain.BaseOutput;
 
 /**
  *	开卡服务          
  * @author ：WangBo
  * @time ：2020年4月28日下午3:36:22
  */
+/**
+ * @author mrkin
+ *
+ */
 @RestController
 @RequestMapping(value = "user")
 public class OpenCardController {
-//
-//	@Resource
-//	private IOpenCardService openCardService;
-//
+
+	@Resource
+	private IOpenCardService openCardService;
+
 //	/**
 //	 * 主卡开卡
 //	 */
 //	@PostMapping("openMasterCard")
-//	public Message<?> openMasterCard(@RequestBody OpenCardDto openCardInfo) {
+//	public BaseOutput<?> openMasterCard(@RequestBody OpenCardDto openCardInfo) {
 //		// 主要参数校验
 //		checkMasterParam(openCardInfo);
 //		// 开卡
 //		OpenCardResponseDto response = openCardService.openMasterCard(openCardInfo);
-//		return Message.success(response);
+//		return BaseOutput.success(response);
 //	}
 //
 //	/**

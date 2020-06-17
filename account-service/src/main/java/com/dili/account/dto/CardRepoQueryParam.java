@@ -1,6 +1,6 @@
 package com.dili.account.dto;
 
-import com.dili.account.common.PageDto;
+import com.dili.account.common.Page;
 
 /**
  * @description： 卡片仓库查询参数
@@ -8,7 +8,7 @@ import com.dili.account.common.PageDto;
  * @author ：WangBo
  * @time ：2020年4月28日下午4:14:56
  */
-public class CardRepoQueryParam extends PageDto {
+public class CardRepoQueryParam extends Page {
 
 	/** 卡号 */
 	private String cardNo;
