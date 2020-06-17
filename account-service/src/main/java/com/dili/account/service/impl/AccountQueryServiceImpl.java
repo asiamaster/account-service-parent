@@ -8,6 +8,7 @@ import com.dili.account.dto.CustomerResponseDto;
 import com.dili.account.dto.UserAccountCardQuery;
 import com.dili.account.dto.UserAccountResponseDto;
 import com.dili.account.dto.UserCardResponseDto;
+import com.dili.account.entity.CardAggregationWrapper;
 import com.dili.account.entity.UserAccountDo;
 import com.dili.account.entity.UserCardDo;
 import com.dili.account.service.IAccountQueryService;
@@ -44,12 +45,12 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
     }
 
     @Override
-    public CardAggregationDto getByAccountIdWithNotNull(Long accountId) {
+    public CardAggregationWrapper getByAccountIdWithNotNull(Long accountId) {
         return this.getByAccountIdWithNotNull(accountId, false);
     }
 
     @Override
-    public CardAggregationDto getByAccountIdWithNotNull(Long accountId, boolean needCustomerInfo) {
+    public CardAggregationWrapper getByAccountIdWithNotNull(Long accountId, boolean needCustomerInfo) {
         UserCardDo card = userCardDao.getByAccountId(accountId);
         Optional.ofNullable(card)
                 .orElseThrow(() -> new BusinessException(ResultCode.DATA_ERROR, ExceptionMsg.CARD_NOT_EXIST.getName()));
@@ -65,23 +66,11 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
         return this.combine(card, userAccount, customer);
     }
 
-    private CardAggregationDto combine(UserCardDo card, UserAccountDo account, CustomerResponseDto customer) {
-        CardAggregationDto cardAggregationDto = new CardAggregationDto();
+    private CardAggregationWrapper combine(UserCardDo card, UserAccountDo account, CustomerResponseDto customer) {
+        CardAggregationWrapper cardAggregationDto = new CardAggregationWrapper();
         cardAggregationDto.setFirmId(account.getFirmId());
-
-        UserAccountResponseDto userAccount = new UserAccountResponseDto();
-        userAccount.setAccountId(account.getAccountId());
-        userAccount.setBizUsageType(account.getUsageType());
-        userAccount.setLoginPwd(account.getLoginPwd());
-        cardAggregationDto.setUserAccount(userAccount);
-
-        UserCardResponseDto userCard = new UserCardResponseDto();
-        userCard.setCardId(card.getId());
-        userCard.setCardNo(card.getCardNo());
-        userCard.setCategory(card.getCategory());
-        userCard.setState(card.getState());
-        cardAggregationDto.setUserCard(userCard);
-
+        cardAggregationDto.setUserAccount(account);
+        cardAggregationDto.setUserCard(card);
         cardAggregationDto.setCustomerInfo(customer);
         return cardAggregationDto;
     }

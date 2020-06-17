@@ -14,6 +14,16 @@ public class CardRequestDto {
 	private Long accountId;
 	/** 登录密码 */
 	private String loginPwd;
+	/**操作员信息*/
+	private OperatorRequestDto operator;
+
+	public OperatorRequestDto getOperator() {
+		return operator;
+	}
+
+	public void setOperator(OperatorRequestDto operator) {
+		this.operator = operator;
+	}
 
 	public String getCardNo() {
 		return cardNo;

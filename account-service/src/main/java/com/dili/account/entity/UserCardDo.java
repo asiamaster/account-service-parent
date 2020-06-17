@@ -1,5 +1,8 @@
 package com.dili.account.entity;
 
+import com.dili.account.type.CardStatus;
+import org.springframework.beans.BeanUtils;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
@@ -7,330 +10,230 @@ import java.time.LocalDateTime;
  * 用户卡片信息（包括电子卡）
  * @author bob
  */
-public class UserCardDo implements Serializable {
-	
-	private static final long serialVersionUID = 1L;
-	
-	/**  */
-	private Long id; 
-	/** 卡片硬件标识 */
-	private String deviceId; 
-	/** 用户账号 */
-	private Long accountId; 
-	/** 卡号 */
-	private String cardNo; 
-	/** 卡类别-园区卡 银行卡 */
-	private Integer category; 
-	/** 类型-主/副/临时 */
-	private Integer type; 
-	/** 用途-买家/卖家卡 */
-	private Integer usageType; 
-	/** 验证码 */
-	private String verifyCode; 
-	/** 卡片押金-分 */
-	private Integer cashPledge; 
-	/** 是否最近卡片-换卡时使用 */
-	private Integer last; 
-	/** 卡片状态-正常/挂失 */
-	private Integer state; 
-	/** 数据版本号 */
-	private Integer version; 
-	/** 操作人员 */
-	private Long creatorId; 
-	/** 员工名称-保留字段 */
-	private String creator; 
-	/** 商户ID */
-	private String firmId; 
-	/** 商户名称 */
-	private String firmName; 
-	/** 创建时间 */
-	private LocalDateTime createTime; 
-	/** 修改时间 */
-	private LocalDateTime modifyTime; 
-    /**
-     * UserCardEntity constructor
-     */
-	public UserCardDo() {
-		super();
-	}
+public class UserCardDo implements Serializable, Cloneable {
 
-    /**
-     * setter for 
-     */
-	public void setId(Long id) {
-		this.id = id;
-	}
+    private static final long serialVersionUID = 1L;
 
-    /**
-     * getter for 
-     */
-	public Long getId() {
-		return id;
-	}
+    /**  */
+    private Long id;
+    /** 卡片硬件标识 */
+    private String deviceId;
+    /** 用户账号 */
+    private Long accountId;
+    /** 卡号 */
+    private String cardNo;
+    /** 卡类别-园区卡 银行卡 */
+    private Integer category;
+    /** 类型-主/副/临时 */
+    private Integer type;
+    /** 用途-买家/卖家卡 */
+    private Integer usageType;
+    /** 验证码 */
+    private String verifyCode;
+    /** 卡片押金-分 */
+    private Integer cashPledge;
+    /** 是否最近卡片-换卡时使用 */
+    private Integer last;
+    /** 卡片状态-正常/挂失 */
+    private Integer state;
+    /** 数据版本号 */
+    private Integer version;
+    /** 操作人员 */
+    private Long creatorId;
+    /** 员工名称-保留字段 */
+    private String creator;
+    /** 商户ID */
+    private String firmId;
+    /** 商户名称 */
+    private String firmName;
+    /** 创建时间 */
+    private LocalDateTime createTime;
+    /** 修改时间 */
+    private LocalDateTime modifyTime;
 
-    /**
-     * setter for 卡片硬件标识
-     */
-	public void setDeviceId(String deviceId) {
-		this.deviceId = deviceId;
-	}
+    public UserCardDo() {
+        this.createTime = LocalDateTime.now();
+    }
 
-    /**
-     * getter for 卡片硬件标识
-     */
-	public String getDeviceId() {
-		return deviceId;
-	}
+    @Override
+    public Object clone() {
+        UserCardDo userCardDo = new UserCardDo();
+        BeanUtils.copyProperties(this, userCardDo);
+        return userCardDo;
+    }
 
-    /**
-     * setter for 用户账号
-     */
-	public void setAccountId(Long accountId) {
-		this.accountId = accountId;
-	}
+    public UserCardDo cloneWhenChangeCard(){
+        UserCardDo newCard = (UserCardDo)this.clone();
+        newCard.setState(CardStatus.NORMAL.getCode());
+        return newCard;
+    }
 
-    /**
-     * getter for 用户账号
-     */
-	public Long getAccountId() {
-		return accountId;
-	}
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-    /**
-     * setter for 卡号
-     */
-	public void setCardNo(String cardNo) {
-		this.cardNo = cardNo;
-	}
+    public Long getId() {
+        return id;
+    }
 
-    /**
-     * getter for 卡号
-     */
-	public String getCardNo() {
-		return cardNo;
-	}
+    public void setDeviceId(String deviceId) {
+        this.deviceId = deviceId;
+    }
 
-    /**
-     * setter for 卡类别-园区卡 银行卡
-     */
-	public void setCategory(Integer category) {
-		this.category = category;
-	}
+    public String getDeviceId() {
+        return deviceId;
+    }
 
-    /**
-     * getter for 卡类别-园区卡 银行卡
-     */
-	public Integer getCategory() {
-		return category;
-	}
+    public void setAccountId(Long accountId) {
+        this.accountId = accountId;
+    }
 
-    /**
-     * setter for 类型-主/副/临时
-     */
-	public void setType(Integer type) {
-		this.type = type;
-	}
+    public Long getAccountId() {
+        return accountId;
+    }
 
-    /**
-     * getter for 类型-主/副/临时
-     */
-	public Integer getType() {
-		return type;
-	}
+    public void setCardNo(String cardNo) {
+        this.cardNo = cardNo;
+    }
 
-    /**
-     * setter for 用途-买家/卖家卡
-     */
-	public void setUsageType(Integer usageType) {
-		this.usageType = usageType;
-	}
+    public String getCardNo() {
+        return cardNo;
+    }
 
-    /**
-     * getter for 用途-买家/卖家卡
-     */
-	public Integer getUsageType() {
-		return usageType;
-	}
+    public void setCategory(Integer category) {
+        this.category = category;
+    }
 
-    /**
-     * setter for 验证码
-     */
-	public void setVerifyCode(String verifyCode) {
-		this.verifyCode = verifyCode;
-	}
+    public Integer getCategory() {
+        return category;
+    }
 
-    /**
-     * getter for 验证码
-     */
-	public String getVerifyCode() {
-		return verifyCode;
-	}
+    public void setType(Integer type) {
+        this.type = type;
+    }
 
-    /**
-     * setter for 卡片押金-分
-     */
-	public void setCashPledge(Integer cashPledge) {
-		this.cashPledge = cashPledge;
-	}
+    public Integer getType() {
+        return type;
+    }
 
-    /**
-     * getter for 卡片押金-分
-     */
-	public Integer getCashPledge() {
-		return cashPledge;
-	}
+    public void setUsageType(Integer usageType) {
+        this.usageType = usageType;
+    }
 
-    /**
-     * setter for 是否最近卡片-换卡时使用
-     */
-	public void setLast(Integer last) {
-		this.last = last;
-	}
+    public Integer getUsageType() {
+        return usageType;
+    }
 
-    /**
-     * getter for 是否最近卡片-换卡时使用
-     */
-	public Integer getLast() {
-		return last;
-	}
+    public void setVerifyCode(String verifyCode) {
+        this.verifyCode = verifyCode;
+    }
 
-    /**
-     * setter for 卡片状态-正常/挂失
-     */
-	public void setState(Integer state) {
-		this.state = state;
-	}
+    public String getVerifyCode() {
+        return verifyCode;
+    }
 
-    /**
-     * getter for 卡片状态-正常/挂失
-     */
-	public Integer getState() {
-		return state;
-	}
+    public void setCashPledge(Integer cashPledge) {
+        this.cashPledge = cashPledge;
+    }
 
-    /**
-     * setter for 数据版本号
-     */
-	public void setVersion(Integer version) {
-		this.version = version;
-	}
+    public Integer getCashPledge() {
+        return cashPledge;
+    }
 
-    /**
-     * getter for 数据版本号
-     */
-	public Integer getVersion() {
-		return version;
-	}
+    public void setLast(Integer last) {
+        this.last = last;
+    }
 
-    /**
-     * setter for 操作人员
-     */
-	public void setCreatorId(Long creatorId) {
-		this.creatorId = creatorId;
-	}
+    public Integer getLast() {
+        return last;
+    }
 
-    /**
-     * getter for 操作人员
-     */
-	public Long getCreatorId() {
-		return creatorId;
-	}
+    public void setState(Integer state) {
+        this.state = state;
+    }
 
-    /**
-     * setter for 员工名称-保留字段
-     */
-	public void setCreator(String creator) {
-		this.creator = creator;
-	}
+    public Integer getState() {
+        return state;
+    }
 
-    /**
-     * getter for 员工名称-保留字段
-     */
-	public String getCreator() {
-		return creator;
-	}
+    public void setVersion(Integer version) {
+        this.version = version;
+    }
 
-    /**
-     * setter for 商户ID
-     */
-	public void setFirmId(String firmId) {
-		this.firmId = firmId;
-	}
+    public Integer getVersion() {
+        return version;
+    }
 
-    /**
-     * getter for 商户ID
-     */
-	public String getFirmId() {
-		return firmId;
-	}
+    public void setCreatorId(Long creatorId) {
+        this.creatorId = creatorId;
+    }
 
-    /**
-     * setter for 商户名称
-     */
-	public void setFirmName(String firmName) {
-		this.firmName = firmName;
-	}
+    public Long getCreatorId() {
+        return creatorId;
+    }
 
-    /**
-     * getter for 商户名称
-     */
-	public String getFirmName() {
-		return firmName;
-	}
+    public void setCreator(String creator) {
+        this.creator = creator;
+    }
 
-    /**
-     * setter for 创建时间
-     */
-	public void setCreateTime(LocalDateTime createTime) {
-		this.createTime = createTime;
-	}
+    public String getCreator() {
+        return creator;
+    }
 
-    /**
-     * getter for 创建时间
-     */
-	public LocalDateTime getCreateTime() {
-		return createTime;
-	}
+    public void setFirmId(String firmId) {
+        this.firmId = firmId;
+    }
 
-    /**
-     * setter for 修改时间
-     */
-	public void setModifyTime(LocalDateTime modifyTime) {
-		this.modifyTime = modifyTime;
-	}
+    public String getFirmId() {
+        return firmId;
+    }
 
-    /**
-     * getter for 修改时间
-     */
-	public LocalDateTime getModifyTime() {
-		return modifyTime;
-	}
+    public void setFirmName(String firmName) {
+        this.firmName = firmName;
+    }
 
-    /**
-     * UserCardEntity.toString()
-     */
+    public String getFirmName() {
+        return firmName;
+    }
+
+    public void setCreateTime(LocalDateTime createTime) {
+        this.createTime = createTime;
+    }
+
+    public LocalDateTime getCreateTime() {
+        return createTime;
+    }
+
+    public void setModifyTime(LocalDateTime modifyTime) {
+        this.modifyTime = modifyTime;
+    }
+
+    public LocalDateTime getModifyTime() {
+        return modifyTime;
+    }
+
     @Override
     public String toString() {
         return "UserCardEntity{" +
-               "id='" + id + '\'' +
-               ", deviceId='" + deviceId + '\'' +
-               ", accountId='" + accountId + '\'' +
-               ", cardNo='" + cardNo + '\'' +
-               ", category='" + category + '\'' +
-               ", type='" + type + '\'' +
-               ", usageType='" + usageType + '\'' +
-               ", verifyCode='" + verifyCode + '\'' +
-               ", cashPledge='" + cashPledge + '\'' +
-               ", last='" + last + '\'' +
-               ", state='" + state + '\'' +
-               ", version='" + version + '\'' +
-               ", creatorId='" + creatorId + '\'' +
-               ", creator='" + creator + '\'' +
-               ", firmId='" + firmId + '\'' +
-               ", firmName='" + firmName + '\'' +
-               ", createTime='" + createTime + '\'' +
-               ", modifyTime='" + modifyTime + '\'' +
-               '}';
+                "id='" + id + '\'' +
+                ", deviceId='" + deviceId + '\'' +
+                ", accountId='" + accountId + '\'' +
+                ", cardNo='" + cardNo + '\'' +
+                ", category='" + category + '\'' +
+                ", type='" + type + '\'' +
+                ", usageType='" + usageType + '\'' +
+                ", verifyCode='" + verifyCode + '\'' +
+                ", cashPledge='" + cashPledge + '\'' +
+                ", last='" + last + '\'' +
+                ", state='" + state + '\'' +
+                ", version='" + version + '\'' +
+                ", creatorId='" + creatorId + '\'' +
+                ", creator='" + creator + '\'' +
+                ", firmId='" + firmId + '\'' +
+                ", firmName='" + firmName + '\'' +
+                ", createTime='" + createTime + '\'' +
+                ", modifyTime='" + modifyTime + '\'' +
+                '}';
     }
 
 }
