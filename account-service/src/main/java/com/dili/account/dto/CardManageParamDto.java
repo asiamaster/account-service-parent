@@ -2,11 +2,12 @@ package com.dili.account.dto;
 
 /**
  * @description： 卡片管理相关数据
- * 
+ *
  * @author ：WangBo
  * @time ：2020年4月28日下午4:14:56
  */
 public class CardManageParamDto {
+	private Long id;
 
 	/** 卡号 */
 	private String cardNo;
@@ -16,6 +17,14 @@ public class CardManageParamDto {
 	private Long accountId;
 	/** 登录密码 */
 	private String loginPwd;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
 
 	public String getCardNo() {
 		return cardNo;

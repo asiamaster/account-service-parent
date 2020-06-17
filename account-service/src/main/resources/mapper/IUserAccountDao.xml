@@ -2,128 +2,128 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.dili.account.dao.IUserAccountDao">
-	
+
 	<select id="selectList" resultType="com.dili.account.entity.UserAccountDo">
 		SELECT
-			`id`, 
-			`account_id`, 
-			`parent_account_id`, 
-			`custormer_id`, 
-			`fund_account_id`, 
-			`type`, 
-			`usage_type`, 
-			`holder_name`, 
-			`holder_gender`, 
-			`holder_mobile`, 
-			`holder_certificate_number`, 
-			`holder_certificate_type`, 
-			`holder_address`, 
-			`permissions`, 
-			`login_pwd`, 
-			`pwd_changed`, 
-			`login_time`, 
-			`secret_key`, 
-			`state`, 
-			`source`, 
-			`version`, 
-			`firm_id`, 
-			`firm_name`, 
-			`create_time`, 
+			`id`,
+			`account_id`,
+			`parent_account_id`,
+			`custormer_id`,
+			`fund_account_id`,
+			`type`,
+			`usage_type`,
+			`holder_name`,
+			`holder_gender`,
+			`holder_mobile`,
+			`holder_certificate_number`,
+			`holder_certificate_type`,
+			`holder_address`,
+			`permissions`,
+			`login_pwd`,
+			`pwd_changed`,
+			`login_time`,
+			`secret_key`,
+			`state`,
+			`source`,
+			`version`,
+			`firm_id`,
+			`firm_name`,
+			`create_time`,
 			`modify_time`
 		FROM
 			account_user_account
 		ORDER BY
 			id DESC
 	</select>
-	
+
 	<insert id="save">
 		INSERT INTO account_user_account (
-			`account_id`, 
-			`parent_account_id`, 
-			`custormer_id`, 
-			`fund_account_id`, 
-			`type`, 
-			`usage_type`, 
-			`holder_name`, 
-			`holder_gender`, 
-			`holder_mobile`, 
-			`holder_certificate_number`, 
-			`holder_certificate_type`, 
-			`holder_address`, 
-			`permissions`, 
-			`login_pwd`, 
-			`pwd_changed`, 
-			`login_time`, 
-			`secret_key`, 
-			`state`, 
-			`source`, 
-			`version`, 
-			`firm_id`, 
-			`firm_name`, 
-			`create_time`, 
+			`account_id`,
+			`parent_account_id`,
+			`custormer_id`,
+			`fund_account_id`,
+			`type`,
+			`usage_type`,
+			`holder_name`,
+			`holder_gender`,
+			`holder_mobile`,
+			`holder_certificate_number`,
+			`holder_certificate_type`,
+			`holder_address`,
+			`permissions`,
+			`login_pwd`,
+			`pwd_changed`,
+			`login_time`,
+			`secret_key`,
+			`state`,
+			`source`,
+			`version`,
+			`firm_id`,
+			`firm_name`,
+			`create_time`,
 			`modify_time`
 		)
 		VALUES (
-			#{accountId}, 
-			#{parentAccountId}, 
-			#{custormerId}, 
-			#{fundAccountId}, 
-			#{type}, 
-			#{usageType}, 
-			#{holderName}, 
-			#{holderGender}, 
-			#{holderMobile}, 
-			#{holderCertificateNumber}, 
-			#{holderCertificateType}, 
-			#{holderAddress}, 
-			#{permissions}, 
-			#{loginPwd}, 
-			#{pwdChanged}, 
-			#{loginTime}, 
-			#{secretKey}, 
-			#{state}, 
-			#{source}, 
-			#{version}, 
-			#{firmId}, 
-			#{firmName}, 
-			#{createTime}, 
+			#{accountId},
+			#{parentAccountId},
+			#{custormerId},
+			#{fundAccountId},
+			#{type},
+			#{usageType},
+			#{holderName},
+			#{holderGender},
+			#{holderMobile},
+			#{holderCertificateNumber},
+			#{holderCertificateType},
+			#{holderAddress},
+			#{permissions},
+			#{loginPwd},
+			#{pwdChanged},
+			#{loginTime},
+			#{secretKey},
+			#{state},
+			#{source},
+			#{version},
+			#{firmId},
+			#{firmName},
+			#{createTime},
 			#{modifyTime}
 		)
 	</insert>
-	
+
 	<select id="getById" resultType="com.dili.account.entity.UserAccountDo">
 		SELECT
-			`id`, 
-			`account_id`, 
-			`parent_account_id`, 
-			`custormer_id`, 
-			`fund_account_id`, 
-			`type`, 
-			`usage_type`, 
-			`holder_name`, 
-			`holder_gender`, 
-			`holder_mobile`, 
-			`holder_certificate_number`, 
-			`holder_certificate_type`, 
-			`holder_address`, 
-			`permissions`, 
-			`login_pwd`, 
-			`pwd_changed`, 
-			`login_time`, 
-			`secret_key`, 
-			`state`, 
-			`source`, 
-			`version`, 
-			`firm_id`, 
-			`firm_name`, 
-			`create_time`, 
+			`id`,
+			`account_id`,
+			`parent_account_id`,
+			`custormer_id`,
+			`fund_account_id`,
+			`type`,
+			`usage_type`,
+			`holder_name`,
+			`holder_gender`,
+			`holder_mobile`,
+			`holder_certificate_number`,
+			`holder_certificate_type`,
+			`holder_address`,
+			`permissions`,
+			`login_pwd`,
+			`pwd_changed`,
+			`login_time`,
+			`secret_key`,
+			`state`,
+			`source`,
+			`version`,
+			`firm_id`,
+			`firm_name`,
+			`create_time`,
 			`modify_time`
 		FROM
 			account_user_account
 		WHERE
 			id = #{id}
 	</select>
-	
+
 	<update id="update">
 		UPDATE account_user_account
 	 	<set>
@@ -155,7 +155,7 @@
 		WHERE
 			id = #{id}
 	</update>
-	
+
 	<delete id="batchRemove">
 		DELETE
 		FROM
@@ -187,5 +187,38 @@
 			and a.account_id = #{accountId}
 		</if>
 		limit 1
+	</select>
+	<select id="getByAccountId" resultType="com.dili.account.entity.UserAccountDo">
+		SELECT
+			`id`,
+			`account_id`,
+			`parent_account_id`,
+			`custormer_id`,
+			`fund_account_id`,
+			`type`,
+			`usage_type`,
+			`holder_name`,
+			`holder_gender`,
+			`holder_mobile`,
+			`holder_certificate_number`,
+			`holder_certificate_type`,
+			`holder_address`,
+			`permissions`,
+			`login_pwd`,
+			`pwd_changed`,
+			`login_time`,
+			`secret_key`,
+			`state`,
+			`source`,
+			`version`,
+			`firm_id`,
+			`firm_name`,
+			`create_time`,
+			`modify_time`
+		FROM
+			account_user_account
+		WHERE
+			account_id = #{accountId}
+		AND state != 4
 	</select>
 </mapper>

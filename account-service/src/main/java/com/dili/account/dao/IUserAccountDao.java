@@ -34,6 +34,8 @@ public interface IUserAccountDao {
      */
 	UserAccountDo getById(Long id);
 
+	UserAccountDo getByAccountId(Long accountId);
+
     /**
      * 修改
      * @param userAccount

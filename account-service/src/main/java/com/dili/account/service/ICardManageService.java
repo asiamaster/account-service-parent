@@ -5,7 +5,7 @@ import com.dili.account.dto.CardRequestDto;
 
 /**
  * @description： 卡片管理服务，包括退卡，换卡，补卡，挂失，解挂
- * 
+ *
  * @author ：WangBo
  * @time ：2020年4月26日下午5:59:10
  */
@@ -14,7 +14,7 @@ public interface ICardManageService {
 	/**
 	 * 退卡
 	 */
-	public void returnCard(CardRequestDto cardParam);
+	void returnCard(CardRequestDto cardParam);
 
 //	/**
 //	 * 换卡
@@ -26,10 +26,10 @@ public interface ICardManageService {
 //	 */
 //	public void reissueCard(CardManageParamDto cardParam);
 //
-//	/**
-//	 * 挂失卡片
-//	 */
-//	public void lostCard(Long accountId, String loginPwd);
+	/**
+	 * 挂失卡片
+	 */
+	 void reportLoss(CardRequestDto cardParam);
 //
 //	/**
 //	 * 解挂卡片

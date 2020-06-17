@@ -2,100 +2,126 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.dili.account.dao.IUserCardDao">
-	
+
 	<select id="selectList" resultType="com.dili.account.entity.UserCardDo">
 		SELECT
-			`id`, 
-			`device_id`, 
-			`account_id`, 
-			`card_no`, 
-			`category`, 
-			`type`, 
-			`usage_type`, 
-			`verify_code`, 
-			`cash_pledge`, 
-			`last`, 
-			`state`, 
-			`version`, 
-			`creator_id`, 
-			`creator`, 
-			`firm_id`, 
-			`firm_name`, 
-			`create_time`, 
+			`id`,
+			`device_id`,
+			`account_id`,
+			`card_no`,
+			`category`,
+			`type`,
+			`usage_type`,
+			`verify_code`,
+			`cash_pledge`,
+			`last`,
+			`state`,
+			`version`,
+			`creator_id`,
+			`creator`,
+			`firm_id`,
+			`firm_name`,
+			`create_time`,
 			`modify_time`
 		FROM
 			account_user_card
 		ORDER BY
 			id DESC
 	</select>
-	
+
 	<insert id="save">
 		INSERT INTO account_user_card (
-			`device_id`, 
-			`account_id`, 
-			`card_no`, 
-			`category`, 
-			`type`, 
-			`usage_type`, 
-			`verify_code`, 
-			`cash_pledge`, 
-			`last`, 
-			`state`, 
-			`version`, 
-			`creator_id`, 
-			`creator`, 
-			`firm_id`, 
-			`firm_name`, 
-			`create_time`, 
+			`device_id`,
+			`account_id`,
+			`card_no`,
+			`category`,
+			`type`,
+			`usage_type`,
+			`verify_code`,
+			`cash_pledge`,
+			`last`,
+			`state`,
+			`version`,
+			`creator_id`,
+			`creator`,
+			`firm_id`,
+			`firm_name`,
+			`create_time`,
 			`modify_time`
 		)
 		VALUES (
-			#{deviceId}, 
-			#{accountId}, 
-			#{cardNo}, 
-			#{category}, 
-			#{type}, 
-			#{usageType}, 
-			#{verifyCode}, 
-			#{cashPledge}, 
-			#{last}, 
-			#{state}, 
-			#{version}, 
-			#{creatorId}, 
-			#{creator}, 
-			#{firmId}, 
-			#{firmName}, 
-			#{createTime}, 
+			#{deviceId},
+			#{accountId},
+			#{cardNo},
+			#{category},
+			#{type},
+			#{usageType},
+			#{verifyCode},
+			#{cashPledge},
+			#{last},
+			#{state},
+			#{version},
+			#{creatorId},
+			#{creator},
+			#{firmId},
+			#{firmName},
+			#{createTime},
 			#{modifyTime}
 		)
 	</insert>
-	
+
 	<select id="getById" resultType="com.dili.account.entity.UserCardDo">
 		SELECT
-			`id`, 
-			`device_id`, 
-			`account_id`, 
-			`card_no`, 
-			`category`, 
-			`type`, 
-			`usage_type`, 
-			`verify_code`, 
-			`cash_pledge`, 
-			`last`, 
-			`state`, 
-			`version`, 
-			`creator_id`, 
-			`creator`, 
-			`firm_id`, 
-			`firm_name`, 
-			`create_time`, 
+			`id`,
+			`device_id`,
+			`account_id`,
+			`card_no`,
+			`category`,
+			`type`,
+			`usage_type`,
+			`verify_code`,
+			`cash_pledge`,
+			`last`,
+			`state`,
+			`version`,
+			`creator_id`,
+			`creator`,
+			`firm_id`,
+			`firm_name`,
+			`create_time`,
 			`modify_time`
 		FROM
 			account_user_card
 		WHERE
 			id = #{id}
 	</select>
-	
+	<select id="getByAccountId" resultType="com.dili.account.entity.UserCardDo">
+		SELECT
+			`id`,
+			`device_id`,
+			`account_id`,
+			`card_no`,
+			`category`,
+			`type`,
+			`usage_type`,
+			`verify_code`,
+			`cash_pledge`,
+			`last`,
+			`state`,
+			`version`,
+			`creator_id`,
+			`creator`,
+			`firm_id`,
+			`firm_name`,
+			`create_time`,
+			`modify_time`
+		FROM
+			account_user_card
+		WHERE
+			account_id = #{accountId}
+		AND state != 4
+	</select>
+
 	<update id="update">
 		UPDATE account_user_card
 	 	<set>
@@ -120,7 +146,7 @@
 		WHERE
 			id = #{id}
 	</update>
-	
+
 	<delete id="batchRemove">
 		DELETE
 		FROM
@@ -131,10 +157,10 @@
 			#{id}
 		</foreach>
 	</delete>
-	
+
 	<!-- 更新卡状态 -->
 	<update id="updateState">
-		UPDATE account_user_card SET state = #{state}, version = version + 1, modify_time = NOW() WHERE account_id` = #{accountId} and version=#{version} 
+		UPDATE account_user_card SET state = #{state}, version = version + 1, modify_time = NOW() WHERE account_id = #{accountId} and version=#{version}
 	</update>
 
 </mapper>

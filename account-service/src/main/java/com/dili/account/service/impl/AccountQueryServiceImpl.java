@@ -1,8 +1,23 @@
 package com.dili.account.service.impl;
 
+import com.dili.account.common.ExceptionMsg;
+import com.dili.account.dao.IUserAccountDao;
+import com.dili.account.dao.IUserCardDao;
+import com.dili.account.dto.CardAggregationDto;
+import com.dili.account.dto.CustomerResponseDto;
+import com.dili.account.dto.UserAccountCardQuery;
+import com.dili.account.dto.UserAccountResponseDto;
+import com.dili.account.dto.UserCardResponseDto;
+import com.dili.account.entity.UserAccountDo;
+import com.dili.account.entity.UserCardDo;
+import com.dili.account.service.IAccountQueryService;
+import com.dili.ss.constant.ResultCode;
+import com.dili.ss.exception.BusinessException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.dili.account.service.IAccountQueryService;
+import java.util.List;
+import java.util.Optional;
 
 /**
  * @description： 用户账户信息查询service实现
@@ -11,7 +26,65 @@ import com.dili.account.service.IAccountQueryService;
  * @time ：2020年4月22日下午5:53:40
  */
 @Service("accountQueryService")
-public class AccountQueryServiceImpl/* implements IAccountQueryService */ {
+public class AccountQueryServiceImpl implements IAccountQueryService {
+    @Autowired
+    private IUserAccountDao userAccountDao;
+    @Autowired
+    private IUserCardDao userCardDao;
+
+    @Override
+    public List<CardAggregationDto> listAccount(UserAccountCardQuery queryParam) {
+        return null;
+    }
+
+    @Override
+    public CardAggregationDto getOnly(String cardNo, Long accountId) {
+
+        return null;
+    }
+
+    @Override
+    public CardAggregationDto getByAccountIdWithNotNull(Long accountId) {
+        return this.getByAccountIdWithNotNull(accountId, false);
+    }
+
+    @Override
+    public CardAggregationDto getByAccountIdWithNotNull(Long accountId, boolean needCustomerInfo) {
+        UserCardDo card = userCardDao.getByAccountId(accountId);
+        Optional.ofNullable(card)
+                .orElseThrow(() -> new BusinessException(ResultCode.DATA_ERROR, ExceptionMsg.CARD_NOT_EXIST.getName()));
+        UserAccountDo userAccount = userAccountDao.getByAccountId(card.getAccountId());
+        Optional.ofNullable(userAccount)
+                .orElseThrow(() -> new BusinessException(ResultCode.DATA_ERROR, ExceptionMsg.ACCOUNT_NOT_EXIST.getName()));
+        CustomerResponseDto customer = null;
+        //TODO 远程查询客户信息
+        if (needCustomerInfo) {
+            customer = new CustomerResponseDto();
+        }
+
+        return this.combine(card, userAccount, customer);
+    }
+
+    private CardAggregationDto combine(UserCardDo card, UserAccountDo account, CustomerResponseDto customer) {
+        CardAggregationDto cardAggregationDto = new CardAggregationDto();
+        cardAggregationDto.setFirmId(account.getFirmId());
+
+        UserAccountResponseDto userAccount = new UserAccountResponseDto();
+        userAccount.setAccountId(account.getAccountId());
+        userAccount.setBizUsageType(account.getUsageType());
+        userAccount.setLoginPwd(account.getLoginPwd());
+        cardAggregationDto.setUserAccount(userAccount);
+
+        UserCardResponseDto userCard = new UserCardResponseDto();
+        userCard.setCardId(card.getId());
+        userCard.setCardNo(card.getCardNo());
+        userCard.setCategory(card.getCategory());
+        userCard.setState(card.getState());
+        cardAggregationDto.setUserCard(userCard);
+
+        cardAggregationDto.setCustomerInfo(customer);
+        return cardAggregationDto;
+    }
 
 //	@Resource
 //	private IUserAccountCardDao userAccountCardDao;

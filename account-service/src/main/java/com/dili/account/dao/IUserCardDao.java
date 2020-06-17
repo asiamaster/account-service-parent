@@ -34,6 +34,8 @@ public interface IUserCardDao {
      */
 	UserCardDo getById(Long id);
 
+	UserCardDo getByAccountId(Long accountId);
+
     /**
      * 修改
      * @param userCard
@@ -47,7 +49,7 @@ public interface IUserCardDao {
      * @return
      */
 	int batchRemove(Long[] id);
-	
+
 	/**
 	 * 更新卡状态
 	 * @param accountId 卡账号

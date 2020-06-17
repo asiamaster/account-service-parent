@@ -1,9 +1,9 @@
 package com.dili.account.service;
 
-import java.util.List;
-
-import com.dili.account.dto.UserAccountCardDto;
+import com.dili.account.dto.CardAggregationDto;
 import com.dili.account.dto.UserAccountCardQuery;
+
+import java.util.List;
 
 
 /**
@@ -14,19 +14,20 @@ import com.dili.account.dto.UserAccountCardQuery;
  */
 public interface IAccountQueryService {
 
-	/**
-	 * 查询账户数据列表
-	 * @return
-	 */
-	public List<UserAccountCardDto> listAccount(UserAccountCardQuery queryParam);
-	
-	
-	/**
-	 * 查询指定唯一账户数据
-	 * @return
-	 */
-	public UserAccountCardDto getOnly(String cardNo,Long accountId);
+    /**
+     * 查询账户数据列表
+     * @return
+     */
+    List<CardAggregationDto> listAccount(UserAccountCardQuery queryParam);
 
-	
 
+    /**
+     * 查询指定唯一账户数据
+     * @return
+     */
+    CardAggregationDto getOnly(String cardNo, Long accountId);
+
+    CardAggregationDto getByAccountIdWithNotNull(Long accountId);
+
+    CardAggregationDto getByAccountIdWithNotNull(Long accountId, boolean needCustomerInfo);
 }

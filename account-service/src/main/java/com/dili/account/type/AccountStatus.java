@@ -8,7 +8,10 @@ import java.io.Serializable;
  *
  */
 public enum AccountStatus implements Serializable {
-	NORMAL(1, "正常"), LIMITED(2, "受限"), FREEZE(3, "冻结"), LOGOUT(4, "注销");
+	NORMAL(1, "正常"),
+	LIMITED(2, "受限"),
+	FREEZE(3, "冻结"),
+	LOGOUT(4, "注销");
 
 	private int type;
 	private String name;
@@ -48,7 +51,7 @@ public enum AccountStatus implements Serializable {
 
 	/**
 	 * 账户是否正常状态
-	 * 
+	 *
 	 * @param no
 	 * @return
 	 */

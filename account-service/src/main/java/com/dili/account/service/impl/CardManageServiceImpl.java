@@ -1,5 +1,7 @@
 package com.dili.account.service.impl;
 
+import com.dili.account.service.card.CardStateManager;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,18 +12,25 @@ import com.dili.account.service.ICardManageService;
 
 /**
  * @description： 卡片退卡换卡等操作service实现
- * 
+ *
  * @author ：WangBo
  * @time ：2020年4月28日下午5:09:47
  */
 @Service("cardManageService")
 public class CardManageServiceImpl implements ICardManageService {
-	
+	@Autowired
+	private CardStateManager cardStateManager;
+
 	@Override
 	@Transactional
 	public void returnCard(CardRequestDto cardParam) {
 		CardCommandCreator.getInstance().createCardCommand(CardCommandType.RETURNED);
 	}
+
+    @Override
+    public void reportLoss(CardRequestDto cardParam) {
+        cardStateManager.doReportLoss(cardParam);
+    }
 //
 //	@Override
 //	@Transactional
