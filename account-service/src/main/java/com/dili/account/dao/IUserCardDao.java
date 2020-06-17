@@ -1,10 +1,10 @@
 package com.dili.account.dao;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
+import org.springframework.data.repository.query.Param;
 
 import java.util.List;
-import com.dili.account.entity.UserCardEntity;
+import com.dili.account.entity.UserCardDo;
 
 /**
  * 用户卡片信息（包括电子卡）
@@ -18,28 +18,28 @@ public interface IUserCardDao {
      * @param search
      * @return
      */
-	List<UserCardEntity> selectList(UserCardEntity userCard);
+	List<UserCardDo> selectList(UserCardDo userCard);
 
     /**
      * 新增
      * @param userCard
      * @return
      */
-	int save(UserCardEntity userCard);
+	int save(UserCardDo userCard);
 
     /**
      * 根据id查询
      * @param id
      * @return
      */
-	UserCardEntity getById(Long id);
+	UserCardDo getById(Long id);
 
     /**
      * 修改
      * @param userCard
      * @return
      */
-	int update(UserCardEntity userCard);
+	int update(UserCardDo userCard);
 
     /**
      * 删除
@@ -55,5 +55,12 @@ public interface IUserCardDao {
 	 * @param version
 	 * @return
 	 */
+	int updateState(@Param("accountId") Long accountId, @Param("state") Integer state, @Param("version") Integer version);
+
+	/**
+	 * 通过账号查询卡信息
+	 * @param accountId 卡账号
+	 */
+	UserCardDo findCardByAccountId(@Param("accountId") Long accountId);
 	int updateState(@Param("accountId") Long accountId, @Param("state") Integer state, @Param("version") Integer version);
 }

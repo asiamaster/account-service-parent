@@ -4,7 +4,7 @@ import com.dili.account.dto.UserAccountDto;
 import com.dili.account.dto.UserAccountQuery;
 import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
-import com.dili.account.entity.UserAccountEntity;
+import com.dili.account.entity.UserAccountDo;
 
 /**
  * 用户账户信息
@@ -18,28 +18,28 @@ public interface IUserAccountDao {
      * @param search
      * @return
      */
-	List<UserAccountEntity> selectList(UserAccountEntity userAccount);
+	List<UserAccountDo> selectList(UserAccountDo userAccount);
 
     /**
      * 新增
      * @param userAccount
      * @return
      */
-	int save(UserAccountEntity userAccount);
+	int save(UserAccountDo userAccount);
 
     /**
      * 根据id查询
      * @param id
      * @return
      */
-	UserAccountEntity getById(Long id);
+	UserAccountDo getById(Long id);
 
     /**
      * 修改
      * @param userAccount
      * @return
      */
-	int update(UserAccountEntity userAccount);
+	int update(UserAccountDo userAccount);
 
     /**
      * 删除

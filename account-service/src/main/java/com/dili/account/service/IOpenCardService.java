@@ -1,5 +1,8 @@
 package com.dili.account.service;
 
+import com.dili.account.dto.OpenCardDto;
+import com.dili.account.dto.OpenCardResponseDto;
+
 /**
  * @description： 用户开卡service接口
  *
@@ -8,22 +11,21 @@ package com.dili.account.service;
  */
 public interface IOpenCardService {
 
-//	OpenCardResponseDto openCard(OpenCardDto openCardInfo);
+	OpenCardResponseDto openCard(OpenCardDto openCardInfo);
 
-//	public List<UserInfoEntity> listUser();
-//
-//	/**
-//	 * 开主卡
-//	 * @param openCardInfo
-//	 * @return
-//	 */
-//	public OpenCardResponseDto openMasterCard(OpenCardDto openCardInfo);
-//
-//	/**
-//	 * 开副卡
-//	 * @param openCardInfo
-//	 * @return
-//	 */
-//	public OpenCardResponseDto openSlaveCard(OpenCardDto openCardInfo);
+
+	/**
+	 * 开主卡
+	 * @param openCardInfo
+	 * @return
+	 */
+	public OpenCardResponseDto openMasterCard(OpenCardDto openCardInfo);
+
+	/**
+	 * 开副卡
+	 * @param openCardInfo
+	 * @return
+	 */
+	public OpenCardResponseDto openSlaveCard(OpenCardDto openCardInfo);
 
 }

@@ -3,7 +3,7 @@
 
 <mapper namespace="com.dili.account.dao.IUserCardDao">
 	
-	<select id="selectList" resultType="com.dili.account.entity.UserCardEntity">
+	<select id="selectList" resultType="com.dili.account.entity.UserCardDo">
 		SELECT
 			`id`, 
 			`device_id`, 
@@ -70,7 +70,7 @@
 		)
 	</insert>
 	
-	<select id="getById" resultType="com.dili.account.entity.UserCardEntity">
+	<select id="getById" resultType="com.dili.account.entity.UserCardDo">
 		SELECT
 			`id`, 
 			`device_id`, 
