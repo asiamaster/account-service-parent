@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.diligrp.xtrade.user.dao.IUserAccountDao">
+	
+	<select id="selectList" resultType="com.diligrp.xtrade.user.domain.entity.UserAccountEntity">
+		SELECT
+			`id`, 
+			`login_user_id`, 
+			`user_info_id`, 
+			`crm_custormer_id`, 
+			`use_permission`, 
+			`fund_account_id`, 
+			`login_pwd`, 
+			`trade_pwd`, 
+			`parent_account_id`, 
+			`latest_card_id`, 
+			`account_type`, 
+			`biz_usage_type`, 
+			`create_source`, 
+			`market_id`, 
+			`created_time`, 
+			`modified_time`
+		FROM
+			user_account
+		ORDER BY
+			id DESC
+	</select>
+	
+	<insert id="save">
+		INSERT INTO user_account (
+			`id`, 
+			`login_user_id`, 
+			`user_info_id`, 
+			`crm_custormer_id`, 
+			`use_permission`, 
+			`fund_account_id`, 
+			`login_pwd`, 
+			`trade_pwd`, 
+			`parent_account_id`, 
+			`latest_card_id`, 
+			`account_type`, 
+			`biz_usage_type`, 
+			`create_source`, 
+			`market_id`, 
+			`created_time`, 
+			`modified_time`
+		)
+		VALUES (
+			#{id}, 
+			#{loginUserId}, 
+			#{userInfoId}, 
+			#{crmCustormerId}, 
+			#{usePermission}, 
+			#{fundAccountId}, 
+			#{loginPwd}, 
+			#{tradePwd}, 
+			#{parentAccountId}, 
+			#{latestCardId}, 
+			#{accountType}, 
+			#{bizUsageType}, 
+			#{createSource}, 
+			#{marketId}, 
+			#{createdTime}, 
+			#{modifiedTime}
+		)
+	</insert>
+	
+	<select id="getById" resultType="com.diligrp.xtrade.user.domain.entity.UserAccountEntity">
+		SELECT
+			`id`, 
+			`login_user_id`, 
+			`user_info_id`, 
+			`crm_custormer_id`, 
+			`use_permission`, 
+			`fund_account_id`, 
+			`login_pwd`, 
+			`trade_pwd`, 
+			`parent_account_id`, 
+			`latest_card_id`, 
+			`account_type`, 
+			`biz_usage_type`, 
+			`create_source`, 
+			`market_id`, 
+			`created_time`, 
+			`modified_time`
+		FROM
+			user_account
+		WHERE
+			id = #{id}
+	</select>
+	
+	<update id="update">
+		UPDATE user_account
+	 	<set>
+			<if test="loginUserId != null">`login_user_id` = #{loginUserId}, </if>
+			<if test="userInfoId != null">`user_info_id` = #{userInfoId}, </if>
+			<if test="crmCustormerId != null">`crm_custormer_id` = #{crmCustormerId}, </if>
+			<if test="usePermission != null">`use_permission` = #{usePermission}, </if>
+			<if test="fundAccountId != null">`fund_account_id` = #{fundAccountId}, </if>
+			<if test="loginPwd != null">`login_pwd` = #{loginPwd}, </if>
+			<if test="tradePwd != null">`trade_pwd` = #{tradePwd}, </if>
+			<if test="parentAccountId != null">`parent_account_id` = #{parentAccountId}, </if>
+			<if test="latestCardId != null">`latest_card_id` = #{latestCardId}, </if>
+			<if test="accountType != null">`account_type` = #{accountType}, </if>
+			<if test="bizUsageType != null">`biz_usage_type` = #{bizUsageType}, </if>
+			<if test="createSource != null">`create_source` = #{createSource}, </if>
+			<if test="marketId != null">`market_id` = #{marketId}, </if>
+			<if test="createdTime != null">`created_time` = #{createdTime}, </if>
+			<if test="modifiedTime != null">`modified_time` = #{modifiedTime}</if>
+		</set>
+		WHERE
+			id = #{id}
+	</update>
+	
+	<delete id="batchRemove">
+		DELETE
+		FROM
+			user_account
+		WHERE
+			id IN
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>
