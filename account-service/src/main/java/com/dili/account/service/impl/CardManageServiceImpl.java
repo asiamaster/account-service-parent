@@ -1,14 +1,16 @@
 package com.dili.account.service.impl;
 
-import com.dili.account.service.card.CardStateManager;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.dili.account.dto.CardRequestDto;
+import com.dili.account.entity.CardAggregationWrapper;
+import com.dili.account.entity.UserCardDo;
 import com.dili.account.manage.commad.CardCommandCreator;
 import com.dili.account.manage.commad.CardCommandType;
 import com.dili.account.service.ICardManageService;
+import com.dili.account.service.card.CardStateManager;
+import com.dili.uap.sdk.manager.SessionRedisManager;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * @description： 卡片退卡换卡等操作service实现
@@ -18,24 +20,31 @@ import com.dili.account.service.ICardManageService;
  */
 @Service("cardManageService")
 public class CardManageServiceImpl implements ICardManageService {
-	@Autowired
-	private CardStateManager cardStateManager;
-
-	@Override
-	@Transactional
-	public void returnCard(CardRequestDto cardParam) {
-		CardCommandCreator.getInstance().createCardCommand(CardCommandType.RETURNED);
-	}
+    @Autowired
+    private CardStateManager cardStateManager;
 
     @Override
+    @Transactional
+    public void returnCard(CardRequestDto cardParam) {
+        CardCommandCreator.getInstance().createCardCommand(CardCommandType.RETURNED);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
     public void reportLoss(CardRequestDto cardParam) {
         cardStateManager.doReportLoss(cardParam);
     }
 
-	@Override
-	public void changeCard(CardRequestDto cardParam) {
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void changeCard(CardRequestDto cardParam) {
+        CardAggregationWrapper wrapper = cardStateManager.doChange(cardParam);
+        UserCardDo userCard = wrapper.getUserCard();
 
-	}
+        UserCardDo newCard = (UserCardDo) userCard.clone();
+
+    }
+
 //
 //	@Override
 //	@Transactional
@@ -213,4 +222,5 @@ public class CardManageServiceImpl implements ICardManageService {
 //		lockCard.setStatus(CardStatus.NORMAL.getCode());
 //		userCardDao.updateByAccountId(lockCard);
 //	}
+
 }

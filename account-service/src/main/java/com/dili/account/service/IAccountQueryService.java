@@ -2,6 +2,7 @@ package com.dili.account.service;
 
 import com.dili.account.dto.CardAggregationDto;
 import com.dili.account.dto.UserAccountCardQuery;
+import com.dili.account.entity.CardAggregationWrapper;
 
 import java.util.List;
 
@@ -31,11 +32,11 @@ public interface IAccountQueryService {
     * @author miaoguoxin
     * @date 2020/6/17
     */
-    CardAggregationDto getByAccountIdWithNotNull(Long accountId);
+    CardAggregationWrapper getByAccountIdWithNotNull(Long accountId);
     /**
      * 查询卡账户、卡、客户的聚合信息
      * @author miaoguoxin
      * @date 2020/6/17
      */
-    CardAggregationDto getByAccountIdWithNotNull(Long accountId, boolean needCustomerInfo);
+    CardAggregationWrapper getByAccountIdWithNotNull(Long accountId, boolean needCustomerInfo);
 }

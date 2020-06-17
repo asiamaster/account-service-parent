@@ -2,6 +2,7 @@ package com.dili.account.service.card;
 
 import com.dili.account.dao.IUserCardDao;
 import com.dili.account.dto.CardAggregationDto;
+import com.dili.account.entity.CardAggregationWrapper;
 import com.dili.account.entity.UserCardDo;
 import com.dili.account.service.IAccountQueryService;
 import com.dili.account.service.state.IState;
@@ -26,15 +27,15 @@ public abstract class AbstractCardState implements IState {
         this.accountQueryService = SpringUtil.getBean(IAccountQueryService.class);
     }
 
-    public final CardAggregationDto doTransition(Long accountId, Integer targetState) {
-        CardAggregationDto cardAggregationDto = accountQueryService.getByAccountIdWithNotNull(accountId);
-        this.validateCanTransition(cardAggregationDto);
+    public final CardAggregationWrapper doTransition(Long accountId, Integer targetState) {
+        CardAggregationWrapper cardAggregationWrapper = accountQueryService.getByAccountIdWithNotNull(accountId);
+        this.validateCanTransition(cardAggregationWrapper);
         UserCardDo userCardDo = new UserCardDo();
-        userCardDo.setId(cardAggregationDto.getUserCard().getCardId());
+        userCardDo.setId(cardAggregationWrapper.getUserCard().getId());
         userCardDo.setState(targetState);
         userCardDo.setModifyTime(LocalDateTime.now());
         userCardDao.update(userCardDo);
-        return cardAggregationDto;
+        return cardAggregationWrapper;
     }
 
 
@@ -45,6 +46,6 @@ public abstract class AbstractCardState implements IState {
      * @author miaoguoxin
      * @date 2020/6/16
      */
-    protected abstract void validateCanTransition(CardAggregationDto cardAggregationDto);
+    protected abstract void validateCanTransition(CardAggregationWrapper cardAggregationWrapper);
 
 }
