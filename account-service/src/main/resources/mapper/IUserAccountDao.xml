@@ -167,4 +167,25 @@
 		</foreach>
 	</delete>
 
+	<!-- 根据卡号或者账户id查询账户信息 附带卡信息 -->
+	<select id="findOneWithCardInfo" parameterType="com.dili.account.dto.UserAccountQuery" resultType="com.dili.account.dto.UserAccountDto">
+		select
+		a.*,
+		b.card_no,
+		b.type as cardType,
+		b.state as cardState,
+		b.version as cardVersion
+		from
+		account_user_account a
+		inner join
+		account_user_card b on a.account_id = b.account_id
+		where 1=1
+		<if test="cardNo != null and cardNo != ''">
+			and b.card_no = #{cardNo}
+		</if>
+		<if test="accountId != null">
+			and a.account_id = #{accountId}
+		</if>
+		limit 1
+	</select>
 </mapper>

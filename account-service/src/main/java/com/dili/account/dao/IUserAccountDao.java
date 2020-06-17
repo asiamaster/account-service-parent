@@ -1,5 +1,7 @@
 package com.dili.account.dao;
 
+import com.dili.account.dto.UserAccountDto;
+import com.dili.account.dto.UserAccountQuery;
 import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
 import com.dili.account.entity.UserAccountEntity;
@@ -45,4 +47,12 @@ public interface IUserAccountDao {
      * @return
      */
 	int batchRemove(Long[] id);
+
+
+	/**
+	 * 根据卡号 或者 账户ID查询账户信息
+	 * @param query
+	 * @return
+	 */
+	UserAccountDto findOneWithCardInfo(UserAccountQuery query);
 }
