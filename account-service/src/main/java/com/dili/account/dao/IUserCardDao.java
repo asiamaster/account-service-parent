@@ -1,6 +1,8 @@
 package com.dili.account.dao;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.data.repository.query.Param;
+
 import java.util.List;
 import com.dili.account.entity.UserCardDo;
 
@@ -45,4 +47,14 @@ public interface IUserCardDao {
      * @return
      */
 	int batchRemove(Long[] id);
+	
+	/**
+	 * 更新卡状态
+	 * @param accountId 卡账号
+	 * @param state
+	 * @param version
+	 * @return
+	 */
+	int updateState(@Param("accountId") Long accountId, @Param("state") Long state, @Param("version") Integer version);
+	
 }
