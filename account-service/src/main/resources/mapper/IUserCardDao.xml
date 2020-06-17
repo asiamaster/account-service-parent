@@ -131,5 +131,10 @@
 			#{id}
 		</foreach>
 	</delete>
+	
+	<!-- 更新卡状态 -->
+	<update id="updateState">
+		UPDATE account_user_card SET state = #{state}, version = version + 1, modify_time = NOW() WHERE account_id` = #{accountId} and version=#{version} 
+	</update>
 
 </mapper>
