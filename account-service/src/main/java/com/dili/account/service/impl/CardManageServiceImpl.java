@@ -1,8 +1,6 @@
 package com.dili.account.service.impl;
 
 import com.dili.account.service.card.CardStateManager;
-import com.dili.account.type.CardStatus;
-import com.dili.ss.exception.BusinessException;
 
 import javax.annotation.Resource;
 
@@ -12,14 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.dili.account.dao.IUserCardDao;
 import com.dili.account.dto.CardRequestDto;
-import com.dili.account.dto.PayAccountDto;
 import com.dili.account.entity.CardAggregationWrapper;
 import com.dili.account.entity.UserCardDo;
-import com.dili.account.manage.commad.CardCommandCreator;
-import com.dili.account.manage.commad.CardCommandType;
 import com.dili.account.rpc.resolver.PayRpcResolver;
 import com.dili.account.service.ICardManageService;
-import com.dili.uap.sdk.manager.SessionRedisManager;
 
 /**
  * @description： 卡片退卡换卡等操作service实现

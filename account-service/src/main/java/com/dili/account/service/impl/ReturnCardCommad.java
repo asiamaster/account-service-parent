@@ -1,4 +1,4 @@
-package com.dili.account.manage.commad;
+package com.dili.account.service.impl;
 
 import javax.annotation.Resource;
 
@@ -8,8 +8,8 @@ import com.dili.account.dao.IUserCardDao;
 import com.dili.account.dto.CardRequestDto;
 import com.dili.account.dto.PayAccountDto;
 import com.dili.account.entity.UserCardDo;
-import com.dili.account.manage.ICardCommand;
 import com.dili.account.rpc.resolver.PayRpcResolver;
+import com.dili.account.service.ICardCommand;
 import com.dili.account.type.CardStatus;
 import com.dili.ss.exception.BusinessException;
 
