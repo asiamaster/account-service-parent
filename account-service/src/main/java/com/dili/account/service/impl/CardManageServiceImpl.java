@@ -15,9 +15,28 @@ import com.dili.account.service.IPasswordService;
 import com.dili.account.type.CardStatus;
 import com.dili.ss.constant.ResultCode;
 import com.dili.ss.exception.BusinessException;
+import com.dili.account.service.card.CardStateManager;
+import com.dili.account.type.CardStatus;
+import com.dili.ss.exception.BusinessException;
+
+import java.util.List;
+
+import javax.annotation.Resource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
+
+import com.dili.account.dao.IUserAccountDao;
+import com.dili.account.dao.IUserCardDao;
+import com.dili.account.dto.CardRequestDto;
+import com.dili.account.dto.PayAccountDto;
+import com.dili.account.entity.CardAggregationWrapper;
+import com.dili.account.entity.UserAccountDo;
+import com.dili.account.entity.UserCardDo;
+import com.dili.account.rpc.resolver.PayRpcResolver;
+import com.dili.account.service.ICardManageService;
 
 import java.time.LocalDateTime;
 
@@ -39,12 +58,41 @@ public class CardManageServiceImpl implements ICardManageService {
     private IUserCardDao userCardDao;
     @Autowired
     private IUserAccountDao userAccountDao;
+	@Autowired
+	private CardStateManager cardStateManager;
+	@Resource
+	private IUserCardDao iUserCardDao;
+	@Resource
+	private IUserAccountDao iUserAccountDao;
+	@Resource
+	private PayRpcResolver payRpcResolver;
 
-    @Override
-    @Transactional
-    public void returnCard(CardRequestDto cardParam) {
-        CardCommandCreator.getInstance().createCardCommand(CardCommandType.RETURNED);
-    }
+	@Override
+	@Transactional
+	public void returnCard(CardRequestDto cardRequest) {
+		UserCardDo userCardDo = iUserCardDao.findCardByAccountId(cardRequest.getAccountId());
+		if (userCardDo == null) {
+			throw new BusinessException("9999999999","卡信息不存在");
+		}
+		if (CardStatus.RETURNED.getCode() == userCardDo.getState()) {
+			throw new BusinessException("9999999999","该卡已退");
+		}
+		if (CardStatus.NORMAL.getCode() == userCardDo.getState()) {
+			throw new BusinessException("9999999999","卡非正常状态,不能退卡");
+		}
+		List<UserAccountDo> accounts = iUserAccountDao.findSlavesByParent(cardRequest.getAccountId());
+		if (!CollectionUtils.isEmpty(accounts)) {
+			throw new BusinessException("9999999999","该卡存在副卡,不能退卡");
+		}
+		PayAccountDto payAccountDto = payRpcResolver.resolverByUserAccount(cardRequest.getAccountId());
+		if (payAccountDto.getBalance() != 0L) {
+			throw new BusinessException("9999999999","卡余额不为0,不能退卡");
+		}
+		int update = iUserCardDao.updateState(cardRequest.getAccountId(), CardStatus.RETURNED.getCode(), userCardDo.getVersion());
+		if (update == 0) {
+			throw new BusinessException("9999999999","退卡操作失败");
+		}
+	}
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -199,6 +247,19 @@ public class CardManageServiceImpl implements ICardManageService {
 //		cardRepositoryService.inUse(cardParam.getNewCardNo());
 //	}
 //
+//	@Override
+//	public void lostCard(Long accountId, String loginPwd) {
+//		UserAccountCardDto cardAccount = checkCardStatus(accountId, null);
+//		// 校验密码
+//		passwordService.checkLoginPwd(cardAccount.getAccountId(), loginPwd);
+//
+//		// 修改卡状态
+//		UserCardEntity lostCard = new UserCardEntity();
+//		lostCard.setId(cardAccount.getCardId());
+//		lostCard.setStatus(CardStatus.LOSS.getCode());
+//		lostCard.setModifiedTime(LocalDateTime.now());
+//		userCardDao.update(lostCard);
+//	}
 //
 //	@Override
 //	@Transactional
