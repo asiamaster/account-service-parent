@@ -1,7 +1,7 @@
 package com.dili.account.manage.commad;
 
 import com.dili.account.manage.ICardCommand;
-import com.dili.account.utills.SpringBeanUtils;
+import com.dili.ss.util.SpringUtil;
 
 public class CardCommandCreator {
 	
@@ -19,7 +19,7 @@ public class CardCommandCreator {
 	}
 	
 	public ICardCommand createCardCommand(CardCommandType cardCommandType) {
-		return (ICardCommand) SpringBeanUtils.getBean(cardCommandType.getName());
+		return (ICardCommand) SpringUtil.getBean(cardCommandType.getName());
 	}
 	
 }

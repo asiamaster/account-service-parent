@@ -1,6 +1,7 @@
 package com.dili.account.service;
 
 import com.dili.account.dto.CardManageParamDto;
+import com.dili.account.dto.CardRequestDto;
 
 /**
  * @description： 卡片管理服务，包括退卡，换卡，补卡，挂失，解挂
@@ -13,40 +14,40 @@ public interface ICardManageService {
 	/**
 	 * 退卡
 	 */
-	public void returnCard(CardManageParamDto cardParam);
+	public void returnCard(CardRequestDto cardParam);
 
-	/**
-	 * 换卡
-	 */
-	public void changeCard(CardManageParamDto cardParam);
-
-	/**
-	 * 补卡
-	 */
-	public void reissueCard(CardManageParamDto cardParam);
-
-	/**
-	 * 挂失卡片
-	 */
-	public void lostCard(Long accountId, String loginPwd);
-
-	/**
-	 * 解挂卡片
-	 */
-	public void unLostCard(Long accountId, String loginPwd);
-
-	/**
-	 * 根据卡号锁定卡
-	 */
-	public void lockCard(String cardNo);
-
-	/**
-	 * 根据账户ID锁定卡
-	 */
-	public void lockCard(Long accountId);
-
-	/**
-	 * 根据账户ID解锁卡片
-	 */
-	public void unLock(Long accountId, String loginPwd);
+//	/**
+//	 * 换卡
+//	 */
+//	public void changeCard(CardManageParamDto cardParam);
+//
+//	/**
+//	 * 补卡
+//	 */
+//	public void reissueCard(CardManageParamDto cardParam);
+//
+//	/**
+//	 * 挂失卡片
+//	 */
+//	public void lostCard(Long accountId, String loginPwd);
+//
+//	/**
+//	 * 解挂卡片
+//	 */
+//	public void unLostCard(Long accountId, String loginPwd);
+//
+//	/**
+//	 * 根据卡号锁定卡
+//	 */
+//	public void lockCard(String cardNo);
+//
+//	/**
+//	 * 根据账户ID锁定卡
+//	 */
+//	public void lockCard(Long accountId);
+//
+//	/**
+//	 * 根据账户ID解锁卡片
+//	 */
+//	public void unLock(Long accountId, String loginPwd);
 }
