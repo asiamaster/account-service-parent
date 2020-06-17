@@ -1,6 +1,12 @@
 package com.dili.account.service.impl;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.dili.account.dto.CardRequestDto;
+import com.dili.account.manage.commad.CardCommandCreator;
+import com.dili.account.manage.commad.CardCommandType;
+import com.dili.account.service.ICardManageService;
 
 /**
  * @description： 卡片退卡换卡等操作service实现
@@ -9,39 +15,13 @@ import org.springframework.stereotype.Service;
  * @time ：2020年4月28日下午5:09:47
  */
 @Service("cardManageService")
-public class CardManageServiceImpl/* implements ICardManageService */{
-
-//	@Resource
-//	private IUserAccountCardDao userAccountCardDao;
-//	@Resource
-//	private IUserAccountDao userAccountDao;
-//	@Resource
-//	private IUserCardDao userCardDao;
-//	@Resource
-//	private IPasswordService passwordService;
-//	@Resource
-//	private ICardRepositoryService cardRepositoryService;
-//	@Resource
-//	private KeyGeneratorManager keyGeneratorManager;
-//
-//	@Override
-//	@Transactional
-//	public void returnCard(CardManageParamDto cardParam) {
-//		UserAccountCardDto cardAccount = checkCardStatus(cardParam.getAccountId(), null);
-//		if (cardAccount.getStatus() != CardStatus.NORMAL.getCode()) {
-//			throw new AppException("该卡{}为非正常状态，不允许退卡，请联系管理员!", cardAccount.getAccountId());
-//		}
-//		passwordService.checkLoginPwd(cardAccount.getAccountId(), cardParam.getLoginPwd());
-//		// 修改卡状态
-//		UserCardEntity updateCard = new UserCardEntity();
-//		updateCard.setId(cardAccount.getCardId());
-//		updateCard.setStatus(CardStatus.RETURNED.getCode());
-//		updateCard.setModifiedTime(LocalDateTime.now());
-//		userCardDao.update(updateCard);
-//
-//		// 卡片仓库状态修改
-//		cardRepositoryService.activateCard(cardAccount.getCardNo());
-//	}
+public class CardManageServiceImpl implements ICardManageService {
+	
+	@Override
+	@Transactional
+	public void returnCard(CardRequestDto cardParam) {
+		CardCommandCreator.getInstance().createCardCommand(CardCommandType.RETURNED);
+	}
 //
 //	@Override
 //	@Transactional
