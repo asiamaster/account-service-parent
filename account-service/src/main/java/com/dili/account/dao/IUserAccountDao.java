@@ -47,4 +47,9 @@ public interface IUserAccountDao {
      * @return
      */
 	int batchRemove(Long[] id);
+	
+	/**
+	 * 查询副卡账户信息
+	 */
+	List<UserAccountDo> findSlavesByParent(Long parentAccountId);
 }
