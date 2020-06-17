@@ -2,6 +2,8 @@ package com.dili.account.service.impl;
 
 import org.springframework.stereotype.Service;
 
+import com.dili.account.dto.OpenCardDto;
+import com.dili.account.dto.OpenCardResponseDto;
 import com.dili.account.service.IOpenCardService;
 
 /**
@@ -11,7 +13,25 @@ import com.dili.account.service.IOpenCardService;
  * @time ：2020年4月22日下午5:53:40
  */
 @Service("openCardService")
-public class OpenCardServiceImpl/* implements IOpenCardService */{
+public class OpenCardServiceImpl implements IOpenCardService{
+
+	@Override
+	public OpenCardResponseDto openCard(OpenCardDto openCardInfo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public OpenCardResponseDto openMasterCard(OpenCardDto openCardInfo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public OpenCardResponseDto openSlaveCard(OpenCardDto openCardInfo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 //	@Resource
 //	private ICardRepositoryService cardRepositoryService;

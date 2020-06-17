@@ -10,6 +10,9 @@ import org.springframework.web.bind.annotation.RestController;
 import com.dili.account.dto.OpenCardDto;
 import com.dili.account.dto.OpenCardResponseDto;
 import com.dili.account.service.IOpenCardService;
+import com.dili.account.type.AccountType;
+import com.dili.account.type.CardType;
+import com.dili.account.util.AssertUtils;
 import com.dili.ss.domain.BaseOutput;
 
 /**
@@ -28,17 +31,17 @@ public class OpenCardController {
 	@Resource
 	private IOpenCardService openCardService;
 
-//	/**
-//	 * 主卡开卡
-//	 */
-//	@PostMapping("openMasterCard")
-//	public BaseOutput<?> openMasterCard(@RequestBody OpenCardDto openCardInfo) {
-//		// 主要参数校验
-//		checkMasterParam(openCardInfo);
-//		// 开卡
-//		OpenCardResponseDto response = openCardService.openMasterCard(openCardInfo);
-//		return BaseOutput.success(response);
-//	}
+	/**
+	 * 主卡开卡
+	 */
+	@PostMapping("openMasterCard")
+	public BaseOutput<?> openMasterCard(@RequestBody OpenCardDto openCardInfo) {
+		// 主要参数校验
+		checkMasterParam(openCardInfo);
+		// 开卡
+		OpenCardResponseDto response = openCardService.openMasterCard(openCardInfo);
+		return BaseOutput.success("success").setData(response);
+	}
 //
 //	/**
 //	 * 副卡开卡
@@ -52,26 +55,26 @@ public class OpenCardController {
 //		return Message.success(response);
 //	}
 //
-//	/**
-//	 * 主卡参数校验
-//	 * @param openCardInfo
-//	 */
-//	private void checkMasterParam(OpenCardDto openCardInfo) {
-//		AssertUtils.notEmpty(openCardInfo.getName(), "开卡用户名不能为空!");
-//		AssertUtils.notEmpty(openCardInfo.getCredentialNo(), "开卡用户名证件号不能为空!");
-//		AssertUtils.notEmpty(openCardInfo.getMobile(), "开卡手机号不能为空!");
-//		AssertUtils.notEmpty(openCardInfo.getMarketId(), "开卡市场编码不能为空!");
-//		// 实体卡
-//		if (CardType.PHYSICAL_CARD.getCode() == openCardInfo.getSeinsweise()) {
-//			AssertUtils.notEmpty(openCardInfo.getMarketId(), "卡号不能为空!");
-//		}
-//		// 对公用户
-//		if (openCardInfo.getAccountType() == AccountType.PUBLIC.getCode()) {
-//			AssertUtils.notEmpty(openCardInfo.getLegalName(), "法人姓名不能为空!");
-//			AssertUtils.notEmpty(openCardInfo.getLegalNo(), "法人证件号不能为空!");
-//			AssertUtils.notEmpty(openCardInfo.getLegalCredentialType(), "法人证件类型不能为空!");
-//		}
-//	}
+	/**
+	 * 主卡参数校验
+	 * @param openCardInfo
+	 */
+	private void checkMasterParam(OpenCardDto openCardInfo) {
+		AssertUtils.notEmpty(openCardInfo.getName(), "开卡用户名不能为空!");
+		AssertUtils.notEmpty(openCardInfo.getCredentialNo(), "开卡用户名证件号不能为空!");
+		AssertUtils.notEmpty(openCardInfo.getMobile(), "开卡手机号不能为空!");
+		AssertUtils.notEmpty(openCardInfo.getMarketId(), "开卡市场编码不能为空!");
+		// 实体卡
+		if (CardType.PHYSICAL_CARD.getCode() == openCardInfo.getSeinsweise()) {
+			AssertUtils.notEmpty(openCardInfo.getMarketId(), "卡号不能为空!");
+		}
+		// 对公用户
+		if (openCardInfo.getAccountType() == AccountType.PUBLIC.getCode()) {
+			AssertUtils.notEmpty(openCardInfo.getLegalName(), "法人姓名不能为空!");
+			AssertUtils.notEmpty(openCardInfo.getLegalNo(), "法人证件号不能为空!");
+			AssertUtils.notEmpty(openCardInfo.getLegalCredentialType(), "法人证件类型不能为空!");
+		}
+	}
 //	
 //	public static void main(String[] args) throws Exception {
 //		OpenCardDto openInfo = new OpenCardDto();
