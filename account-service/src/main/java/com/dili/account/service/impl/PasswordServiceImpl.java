@@ -1,69 +1,39 @@
 package com.dili.account.service.impl;
 
+import javax.annotation.Resource;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.dili.account.dao.IUserAccountDao;
+import com.dili.account.dto.CardRequestDto;
+import com.dili.account.service.IPasswordService;
+
 /**
  * @author: xiaosa
  * @date: 2020/4/27
- * @version: 电子结算重构 4.4.0
  * @description: 密码相关的操作
  */
 @Service
-public class PasswordServiceImpl/* implements IPasswordService */{
+public class PasswordServiceImpl implements IPasswordService{
 
 	private static final Logger log = LoggerFactory.getLogger(PasswordServiceImpl.class);
-//
-//	@Resource
-//	private IUserAccountDao userAccountDao;
-//	@Resource
-//	private IUserAccountCardDao userAccountCardDao;
-//	@Resource
-//	private IRedisSystemService redisSystemService;
-//	@Resource
-//	private ICardManageService cardManageService;
-//
-//	private static String PWD_ERROR_TIME_REDISKEY = "USER_SERVICE:PWD_ERROR_TIME:";
-//
-//	/**
-//	 * @author: xiaosa
-//	 * @date: 2020/4/27
-//	 * @param: passwordDto
-//	 * @return:
-//	 * @description：修改登陆密码
-//	 */
-//	@Override
-//	public void modifyLoginPwd(PasswordManageResponseDto passwordDto) throws Exception {
-//		UserAccountEntity userAccountDoInfo = userAccountDao.getById(passwordDto.getAccountId());
-//		if (userAccountDoInfo == null) {
-//			throw new AppException(100000, "该用户不存在");
-//		}
-//		String inputOldLoginPwd = PasswordUtils.encrypt(passwordDto.getOldLoginPwd(), Constant.LOGIN_PWD_SECRETKEY);
-//		if (!inputOldLoginPwd.equals(userAccountDoInfo.getLoginPwd())) {
-//			throw new AppException(100000, "原登陆密码不匹配，请重新输入");
-//		}
-//		userAccountDoInfo.setLoginPwd(PasswordUtils.encrypt(passwordDto.getLoginPwd(), Constant.LOGIN_PWD_SECRETKEY));
-//		userAccountDao.update(userAccountDoInfo);
-//	}
-//
-//	/**
-//	 * @author: xiaosa
-//	 * @date: 2020/4/27
-//	 * @param: passwordDto
-//	 * @return:
-//	 * @description：重置登陆密码
-//	 */
-//	@Override
-//	public void resetLoginPwd(PasswordManageResponseDto passwordDto) throws Exception {
-//		UserAccountEntity userAccountDoInfo = userAccountDao.getById(passwordDto.getAccountId());
-//		if (userAccountDoInfo == null) {
-//			throw new AppException(100000, "该用户不存在");
-//		}
-//		userAccountDoInfo.setLoginPwd(PasswordUtils.encrypt(passwordDto.getLoginPwd(), Constant.LOGIN_PWD_SECRETKEY));
-//		userAccountDao.update(userAccountDoInfo);
-//	}
-//
+
+	@Resource
+	private IUserAccountDao userAccountDao;
+
+	@Override
+	public void modifyLoginPwd(CardRequestDto cardRequestDto) throws Exception {
+		
+	}
+
+	@Override
+	public void resetLoginPwd(CardRequestDto cardRequestDto) throws Exception {
+		
+		
+	}
+	
 //	/**
 //	 * @author: xiaosa
 //	 * @date: 2020/4/27
