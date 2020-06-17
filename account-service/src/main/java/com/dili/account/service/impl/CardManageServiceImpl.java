@@ -1,16 +1,25 @@
 package com.dili.account.service.impl;
 
+import com.dili.account.dao.IUserAccountDao;
+import com.dili.account.dao.IUserCardDao;
 import com.dili.account.dto.CardRequestDto;
 import com.dili.account.entity.CardAggregationWrapper;
+import com.dili.account.entity.UserAccountDo;
 import com.dili.account.entity.UserCardDo;
 import com.dili.account.manage.commad.CardCommandCreator;
 import com.dili.account.manage.commad.CardCommandType;
+import com.dili.account.service.IAccountQueryService;
 import com.dili.account.service.ICardManageService;
-import com.dili.account.service.card.CardStateManager;
-import com.dili.uap.sdk.manager.SessionRedisManager;
+import com.dili.account.service.ICardStorageService;
+import com.dili.account.service.IPasswordService;
+import com.dili.account.type.CardStatus;
+import com.dili.ss.constant.ResultCode;
+import com.dili.ss.exception.BusinessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
 
 /**
  * @description： 卡片退卡换卡等操作service实现
@@ -21,7 +30,15 @@ import org.springframework.transaction.annotation.Transactional;
 @Service("cardManageService")
 public class CardManageServiceImpl implements ICardManageService {
     @Autowired
-    private CardStateManager cardStateManager;
+    private IPasswordService passwordService;
+    @Autowired
+    private ICardStorageService cardStorageService;
+    @Autowired
+    private IAccountQueryService accountQueryService;
+    @Autowired
+    private IUserCardDao userCardDao;
+    @Autowired
+    private IUserAccountDao userAccountDao;
 
     @Override
     @Transactional
@@ -32,17 +49,66 @@ public class CardManageServiceImpl implements ICardManageService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void reportLoss(CardRequestDto cardParam) {
-        cardStateManager.doReportLoss(cardParam);
+        CardAggregationWrapper wrapper = accountQueryService.getByAccountIdWithNotNull(cardParam.getAccountId());
+        UserCardDo userCard = wrapper.getUserCard();
+
+        this.validateCanReportLoss(userCard, cardParam);
+
+        this.changeState(userCard, CardStatus.LOSS.getCode());
     }
+
 
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void changeCard(CardRequestDto cardParam) {
-        CardAggregationWrapper wrapper = cardStateManager.doChange(cardParam);
-        UserCardDo userCard = wrapper.getUserCard();
+        CardAggregationWrapper wrapper = accountQueryService.getByAccountIdWithNotNull(cardParam.getAccountId());
 
-        UserCardDo newCard = (UserCardDo) userCard.clone();
+        this.validateCanChangeCard(wrapper, cardParam);
+        UserCardDo oldCard = wrapper.getUserCard();
+        //退还旧卡
+        this.changeState(oldCard, CardStatus.RETURNED.getCode());
 
+        UserCardDo newCard = this.cloneWhenChangeCard(oldCard, cardParam);
+        userCardDao.save(newCard);
+
+        //老卡作废,新卡出库
+        cardStorageService.voidCard(oldCard.getCardNo(), "");
+        cardStorageService.inUse(newCard.getCardNo());
+
+        UserAccountDo userAccount = new UserAccountDo();
+        userAccount.setAccountId(newCard.getAccountId());
+    }
+
+    private void validateCanReportLoss(UserCardDo userCard, CardRequestDto cardParam) {
+        if (userCard.getState() != CardStatus.NORMAL.getCode()) {
+            throw new BusinessException(ResultCode.DATA_ERROR, "该卡为非正常状态，不能进行此操作");
+        }
+        //passwordService.checkLoginPwd(cardParam.getAccountId(), cardParam.getLoginPwd());
+    }
+
+    private void validateCanChangeCard(CardAggregationWrapper wrapper, CardRequestDto cardParam) {
+        if (wrapper.getUserCard().getState() == CardStatus.RETURNED.getCode()) {
+            throw new BusinessException(ResultCode.DATA_ERROR, "该卡为退还状态，不能进行此操作");
+        }
+        //passwordService.checkLoginPwd(cardParam.getAccountId(), cardParam.getLoginPwd());
+    }
+
+    private void changeState(UserCardDo userCard, Integer targetState) {
+        UserCardDo updateDo = new UserCardDo();
+        updateDo.setId(userCard.getId());
+        updateDo.setState(targetState);
+        updateDo.setModifyTime(LocalDateTime.now());
+        userCardDao.update(updateDo);
+    }
+
+    private UserCardDo cloneWhenChangeCard(UserCardDo old, CardRequestDto param) {
+        UserCardDo newCard = (UserCardDo) old.clone();
+        newCard.setCardNo(param.getNewCardNo());
+        newCard.setLast(1);
+        newCard.setCreator(param.getOperator().getOpName());
+        newCard.setCreatorId(param.getOperator().getOpId());
+        newCard.setState(CardStatus.NORMAL.getCode());
+        return newCard;
     }
 
 //
@@ -133,19 +199,6 @@ public class CardManageServiceImpl implements ICardManageService {
 //		cardRepositoryService.inUse(cardParam.getNewCardNo());
 //	}
 //
-//	@Override
-//	public void lostCard(Long accountId, String loginPwd) {
-//		UserAccountCardDto cardAccount = checkCardStatus(accountId, null);
-//		// 校验密码
-//		passwordService.checkLoginPwd(cardAccount.getAccountId(), loginPwd);
-//
-//		// 修改卡状态
-//		UserCardEntity lostCard = new UserCardEntity();
-//		lostCard.setId(cardAccount.getCardId());
-//		lostCard.setStatus(CardStatus.LOSS.getCode());
-//		lostCard.setModifiedTime(LocalDateTime.now());
-//		userCardDao.update(lostCard);
-//	}
 //
 //	@Override
 //	@Transactional

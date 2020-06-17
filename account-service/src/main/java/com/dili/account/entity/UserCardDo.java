@@ -52,7 +52,7 @@ public class UserCardDo implements Serializable, Cloneable {
     private LocalDateTime modifyTime;
 
     public UserCardDo() {
-        this.createTime = LocalDateTime.now();
+
     }
 
     @Override
