@@ -27,9 +27,17 @@ public interface ICardManageService {
 //	public void reissueCard(CardManageParamDto cardParam);
 //
 	/**
-	 * 挂失卡片
-	 */
+	* 挂失
+	* @author miaoguoxin
+	* @date 2020/6/17
+	*/
 	 void reportLoss(CardRequestDto cardParam);
+	 /**
+	 * 换卡
+	 * @author miaoguoxin
+	 * @date 2020/6/17
+	 */
+	 void changeCard(CardRequestDto cardParam);
 //
 //	/**
 //	 * 解挂卡片

@@ -21,6 +21,7 @@ public class CardStateManager {
     private IPasswordService passwordService;
 
 
+
     public void doReportLoss(CardRequestDto cardParam) {
         AbstractCardState state = new AbstractCardState() {
             @Override
@@ -32,5 +33,9 @@ public class CardStateManager {
             }
         };
         state.doTransition(cardParam.getAccountId(), CardStatus.LOSS.getCode());
+    }
+
+    public void doChange(CardRequestDto cardParam){
+
     }
 }

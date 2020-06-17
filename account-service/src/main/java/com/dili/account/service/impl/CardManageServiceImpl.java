@@ -31,6 +31,11 @@ public class CardManageServiceImpl implements ICardManageService {
     public void reportLoss(CardRequestDto cardParam) {
         cardStateManager.doReportLoss(cardParam);
     }
+
+	@Override
+	public void changeCard(CardRequestDto cardParam) {
+
+	}
 //
 //	@Override
 //	@Transactional
