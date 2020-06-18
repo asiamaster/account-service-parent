@@ -36,7 +36,7 @@
 			id DESC
 	</select>
 
-	<insert id="save">
+	<insert id="save" useGeneratedKeys="true" keyProperty="id">
 		INSERT INTO account_user_account (
 			`account_id`,
 			`parent_account_id`,
@@ -200,7 +200,7 @@
 			account_id = #{accountId}
 		AND state != 4
 	</select>
-	
+
 	<select id="findSlavesByParent" resultType="com.dili.account.entity.UserAccountDo">
 			SELECT
 			`id`,

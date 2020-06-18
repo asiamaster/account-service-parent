@@ -3,6 +3,7 @@ package com.dili.account.service.impl;
 import com.dili.account.dao.IUserAccountDao;
 import com.dili.account.dao.IUserCardDao;
 import com.dili.account.dto.CardRequestDto;
+import com.dili.account.dto.OperatorRequestDto;
 import com.dili.account.dto.PayAccountDto;
 import com.dili.account.entity.CardAggregationWrapper;
 import com.dili.account.entity.UserAccountDo;
@@ -64,7 +65,7 @@ public class CardManageServiceImpl implements ICardManageService {
         }
         //密码校验
         passwordService.checkPassword(cardRequest.getAccountId(), cardRequest.getLoginPwd());
-       //副卡校验
+        //副卡校验
         List<UserAccountDo> accounts = iUserAccountDao.findSlavesByParent(cardRequest.getAccountId());
         if (!CollectionUtils.isEmpty(accounts)) {
             throw new BusinessException(ResultCode.DATA_ERROR, "该卡存在副卡,不能退卡");
@@ -88,8 +89,9 @@ public class CardManageServiceImpl implements ICardManageService {
         UserCardDo userCard = wrapper.getUserCard();
 
         this.validateCanReportLoss(userCard, cardParam);
-
         this.changeState(userCard, CardStatus.LOSS.getCode());
+        this.setCreator(userCard, cardParam.getOperator());
+        userCardDao.update(userCard);
     }
 
 
@@ -100,10 +102,13 @@ public class CardManageServiceImpl implements ICardManageService {
 
         this.validateCanChangeCard(wrapper, cardParam);
         UserCardDo oldCard = wrapper.getUserCard();
+        UserCardDo newCard = this.cloneWhenChangeCard(oldCard, cardParam);
         //退还旧卡
         this.changeState(oldCard, CardStatus.RETURNED.getCode());
+        this.setCreator(oldCard, cardParam.getOperator());
+        this.setCreator(newCard, cardParam.getOperator());
 
-        UserCardDo newCard = this.cloneWhenChangeCard(oldCard, cardParam);
+        userCardDao.update(oldCard);
         userCardDao.save(newCard);
 
         //老卡作废,新卡出库
@@ -130,22 +135,19 @@ public class CardManageServiceImpl implements ICardManageService {
         if (userCard.getState() != CardStatus.NORMAL.getCode()) {
             throw new BusinessException(ResultCode.DATA_ERROR, "该卡为非正常状态，不能进行此操作");
         }
-        //passwordService.checkLoginPwd(cardParam.getAccountId(), cardParam.getLoginPwd());
+        passwordService.checkPassword(cardParam.getAccountId(), cardParam.getLoginPwd());
     }
 
     private void validateCanChangeCard(CardAggregationWrapper wrapper, CardRequestDto cardParam) {
         if (wrapper.getUserCard().getState() == CardStatus.RETURNED.getCode()) {
             throw new BusinessException(ResultCode.DATA_ERROR, "该卡为退还状态，不能进行此操作");
         }
-        //passwordService.checkLoginPwd(cardParam.getAccountId(), cardParam.getLoginPwd());
+        passwordService.checkPassword(cardParam.getAccountId(), cardParam.getLoginPwd());
     }
 
     private void changeState(UserCardDo userCard, Integer targetState) {
-        UserCardDo updateDo = new UserCardDo();
-        updateDo.setId(userCard.getId());
-        updateDo.setState(targetState);
-        updateDo.setModifyTime(LocalDateTime.now());
-        userCardDao.update(updateDo);
+        userCard.setState(targetState);
+        userCard.setModifyTime(LocalDateTime.now());
     }
 
     private UserCardDo cloneWhenChangeCard(UserCardDo old, CardRequestDto param) {
@@ -156,6 +158,11 @@ public class CardManageServiceImpl implements ICardManageService {
         newCard.setCreatorId(param.getOperator().getOpId());
         newCard.setState(CardStatus.NORMAL.getCode());
         return newCard;
+    }
+
+    private void setCreator(UserCardDo userCard, OperatorRequestDto operator) {
+        userCard.setCreatorId(operator.getOpId());
+        userCard.setCreator(operator.getOpName());
     }
 
 //

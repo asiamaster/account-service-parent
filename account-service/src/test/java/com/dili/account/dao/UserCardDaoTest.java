@@ -17,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
  * @Date: 2020/6/18 10:10
  * @Description:
  */
-class IUserCardDaoTest extends BaseTest {
+class UserCardDaoTest extends BaseTest {
 
     @Autowired
     private IUserCardDao userCardDao;
