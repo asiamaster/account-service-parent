@@ -44,16 +44,12 @@ public class CardManageServiceImpl implements ICardManageService {
     @Autowired
     private IUserAccountDao userAccountDao;
     @Resource
-    private IUserCardDao iUserCardDao;
-    @Resource
-    private IUserAccountDao iUserAccountDao;
-    @Resource
     private PayRpcResolver payRpcResolver;
 
     @Override
     @Transactional
     public void returnCard(CardRequestDto cardRequest) {
-        UserCardDo userCardDo = iUserCardDao.findCardByAccountId(cardRequest.getAccountId());
+        UserCardDo userCardDo = userCardDao.findCardByAccountId(cardRequest.getAccountId());
         if (userCardDo == null) {
             throw new BusinessException(ResultCode.DATA_ERROR, "卡信息不存在");
         }
@@ -66,7 +62,7 @@ public class CardManageServiceImpl implements ICardManageService {
         //密码校验
         passwordService.checkPassword(cardRequest.getAccountId(), cardRequest.getLoginPwd());
         //副卡校验
-        List<UserAccountDo> accounts = iUserAccountDao.findSlavesByParent(cardRequest.getAccountId());
+        List<UserAccountDo> accounts = userAccountDao.findSlavesByParent(cardRequest.getAccountId());
         if (!CollectionUtils.isEmpty(accounts)) {
             throw new BusinessException(ResultCode.DATA_ERROR, "该卡存在副卡,不能退卡");
         }
@@ -76,7 +72,7 @@ public class CardManageServiceImpl implements ICardManageService {
             throw new BusinessException(ResultCode.DATA_ERROR, "卡余额不为0,不能退卡");
         }
         //更新卡状态
-        int update = iUserCardDao.updateState(cardRequest.getAccountId(), CardStatus.RETURNED.getCode(), userCardDo.getVersion());
+        int update = userCardDao.updateState(cardRequest.getAccountId(), CardStatus.RETURNED.getCode(), userCardDo.getVersion());
         if (update == 0) {
             throw new BusinessException(ResultCode.DATA_ERROR, "退卡操作失败");
         }
