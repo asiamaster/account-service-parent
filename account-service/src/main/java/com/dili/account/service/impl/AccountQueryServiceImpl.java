@@ -55,21 +55,14 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
         UserAccountDo userAccount = userAccountDao.getByAccountId(card.getAccountId());
         Optional.ofNullable(userAccount)
                 .orElseThrow(() -> new BusinessException(ResultCode.DATA_ERROR, ExceptionMsg.ACCOUNT_NOT_EXIST.getName()));
-        CustomerResponseDto customer = null;
-        //TODO 远程查询客户信息
-        if (needCustomerInfo) {
-            customer = new CustomerResponseDto();
-        }
-
-        return this.combine(card, userAccount, customer);
+        return this.combine(card, userAccount);
     }
 
-    private CardAggregationWrapper combine(UserCardDo card, UserAccountDo account, CustomerResponseDto customer) {
+    private CardAggregationWrapper combine(UserCardDo card, UserAccountDo account) {
         CardAggregationWrapper cardAggregationDto = new CardAggregationWrapper();
         cardAggregationDto.setFirmId(account.getFirmId());
         cardAggregationDto.setUserAccount(account);
         cardAggregationDto.setUserCard(card);
-        cardAggregationDto.setCustomerInfo(customer);
         return cardAggregationDto;
     }
 

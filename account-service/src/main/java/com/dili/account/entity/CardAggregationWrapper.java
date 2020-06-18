@@ -1,9 +1,6 @@
 package com.dili.account.entity;
 
 
-import com.dili.account.dto.CustomerResponseDto;
-import com.dili.account.dto.UserAccountResponseDto;
-import com.dili.account.dto.UserCardResponseDto;
 
 /**
  * 卡片聚合信息
@@ -17,8 +14,6 @@ public class CardAggregationWrapper {
 	private UserAccountDo userAccount;
 	/**卡信息*/
 	private UserCardDo userCard;
-	/**客户信息*/
-	private CustomerResponseDto customerInfo;
 
 	public String getFirmId() {
 		return firmId;
@@ -52,11 +47,4 @@ public class CardAggregationWrapper {
 		this.userCard = userCard;
 	}
 
-	public CustomerResponseDto getCustomerInfo() {
-		return customerInfo;
-	}
-
-	public void setCustomerInfo(CustomerResponseDto customerInfo) {
-		this.customerInfo = customerInfo;
-	}
 }

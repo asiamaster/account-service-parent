@@ -34,7 +34,7 @@ public interface IAccountQueryService {
     */
     CardAggregationWrapper getByAccountIdWithNotNull(Long accountId);
     /**
-     * 查询卡账户、卡、客户的聚合信息
+     * 查询卡账户、卡聚合信息
      * @author miaoguoxin
      * @date 2020/6/17
      */
