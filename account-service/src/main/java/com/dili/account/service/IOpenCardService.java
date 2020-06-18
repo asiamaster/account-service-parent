@@ -11,8 +11,6 @@ import com.dili.account.dto.OpenCardResponseDto;
  */
 public interface IOpenCardService {
 
-	OpenCardResponseDto openCard(OpenCardDto openCardInfo);
-
 
 	/**
 	 * 开主卡
