@@ -34,8 +34,17 @@ public class PasswordServiceImpl implements IPasswordService{
 
 	@Override
 	public void resetLoginPwd(CardRequestDto cardRequestDto) throws Exception {
-		
-		
+		UserAccountDo userAccountDo = userAccountDao.getByAccountId(cardRequestDto.getAccountId());
+		if (userAccountDo == null) {
+			throw new BusinessException("9999999999","卡信息不存在");
+		}
+		if (!cardRequestDto.getLoginPwd().equals(cardRequestDto.getSecondLoginPwd())) {
+			throw new BusinessException("9999999999","两次输入密码不匹配");
+		}
+		UserAccountDo userAccount = new UserAccountDo();
+		userAccount.setAccountId(cardRequestDto.getAccountId());
+		userAccount.setLoginPwd(PasswordUtils.encrypt(cardRequestDto.getLoginPwd(), userAccountDo.getSecretKey()));
+		userAccountDao.update(userAccount);
 	}
 
 	@Override
