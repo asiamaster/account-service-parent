@@ -12,6 +12,7 @@ import com.dili.account.dto.CardRequestDto;
 import com.dili.account.entity.UserAccountDo;
 import com.dili.account.service.IPasswordService;
 import com.dili.account.util.PasswordUtils;
+import com.dili.ss.constant.ResultCode;
 import com.dili.ss.exception.BusinessException;
 
 /**
@@ -36,10 +37,10 @@ public class PasswordServiceImpl implements IPasswordService{
 	public void resetLoginPwd(CardRequestDto cardRequestDto) throws Exception {
 		UserAccountDo userAccountDo = userAccountDao.getByAccountId(cardRequestDto.getAccountId());
 		if (userAccountDo == null) {
-			throw new BusinessException("9999999999","卡信息不存在");
+			throw new BusinessException(ResultCode.DATA_ERROR,"卡信息不存在");
 		}
 		if (!cardRequestDto.getLoginPwd().equals(cardRequestDto.getSecondLoginPwd())) {
-			throw new BusinessException("9999999999","两次输入密码不匹配");
+			throw new BusinessException(ResultCode.DATA_ERROR,"两次输入密码不匹配");
 		}
 		UserAccountDo userAccount = new UserAccountDo();
 		userAccount.setAccountId(cardRequestDto.getAccountId());
@@ -50,15 +51,15 @@ public class PasswordServiceImpl implements IPasswordService{
 	@Override
 	public void checkPassword(Long accountId, String password) {
 		if (accountId == null || StringUtils.isBlank(password)) {
-			throw new BusinessException("9999999999","参数错误");
+			throw new BusinessException(ResultCode.DATA_ERROR,"参数错误");
 		}
 		UserAccountDo userAccountDo = userAccountDao.getByAccountId(accountId);
 		if (userAccountDo == null) {
-			throw new BusinessException("9999999999","卡信息不存在");
+			throw new BusinessException(ResultCode.DATA_ERROR,"卡信息不存在");
 		}
 		String encryptPwd = PasswordUtils.encrypt(password, userAccountDo.getSecretKey());
 		if (!userAccountDo.getLoginPwd().equals(encryptPwd)) {
-			throw new BusinessException("9999999999","密码错误");
+			throw new BusinessException(ResultCode.DATA_ERROR,"密码错误");
 		}
 	}
 }
