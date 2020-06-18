@@ -28,6 +28,13 @@ public interface IPasswordService {
 	 * @description：重置登陆密码
 	 */
 	void resetLoginPwd(CardRequestDto cardRequestDto) throws Exception;
+	
+	/**
+	 * 密码校验
+	 * @param accountId 账号id
+	 * @param password 密码
+	 */
+	void checkPassword(Long accountId, String password);
 
 	/**
 	 * 验证密码
