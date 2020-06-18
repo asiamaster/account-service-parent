@@ -62,14 +62,19 @@ public class CardManageServiceImpl implements ICardManageService {
         if (CardStatus.NORMAL.getCode() == userCardDo.getState()) {
             throw new BusinessException("9999999999", "卡非正常状态,不能退卡");
         }
+        
+        passwordService.checkPassword(cardRequest.getAccountId(), cardRequest.getLoginPwd());
+       
         List<UserAccountDo> accounts = iUserAccountDao.findSlavesByParent(cardRequest.getAccountId());
         if (!CollectionUtils.isEmpty(accounts)) {
             throw new BusinessException("9999999999", "该卡存在副卡,不能退卡");
         }
+        
         PayAccountDto payAccountDto = payRpcResolver.resolverByUserAccount(cardRequest.getAccountId());
         if (payAccountDto.getBalance() != 0L) {
             throw new BusinessException("9999999999", "卡余额不为0,不能退卡");
         }
+        
         int update = iUserCardDao.updateState(cardRequest.getAccountId(), CardStatus.RETURNED.getCode(), userCardDo.getVersion());
         if (update == 0) {
             throw new BusinessException("9999999999", "退卡操作失败");
