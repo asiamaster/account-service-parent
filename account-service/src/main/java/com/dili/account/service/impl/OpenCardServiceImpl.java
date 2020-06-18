@@ -16,12 +16,6 @@ import com.dili.account.service.IOpenCardService;
 public class OpenCardServiceImpl implements IOpenCardService{
 
 	@Override
-	public OpenCardResponseDto openCard(OpenCardDto openCardInfo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
 	public OpenCardResponseDto openMasterCard(OpenCardDto openCardInfo) {
 		// TODO Auto-generated method stub
 		return null;
