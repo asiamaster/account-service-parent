@@ -1,5 +1,10 @@
 package com.dili.account.dto;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
+import com.dili.account.validator.CardValidator;
+
 /**
  *
  * 卡请求相关
@@ -11,10 +16,13 @@ public class CardRequestDto {
 	/** 新卡号 */
 	private String newCardNo;
 	/** 账户ID */
+	/** 货主账号 */
+//    @NotNull(message = "账号不能为空", groups = {CardValidator.Operation.class})
 	private Long accountId;
 	/** 原来登录密码 */
 	private String oldLoginPwd;
 	/** 登录密码 */
+//	@NotBlank(message = "密码不能为空", groups = {CardValidator.Operation.class})
 	private String loginPwd;
 	/** 二次输入登录密码 */
 	private String secondLoginPwd;

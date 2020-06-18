@@ -5,10 +5,12 @@ import com.dili.account.dto.CardManageParamDto;
 import com.dili.account.dto.CardRequestDto;
 import com.dili.account.service.ICardManageService;
 import com.dili.account.util.AssertUtils;
+import com.dili.account.validator.CardValidator;
 import com.dili.ss.domain.BaseOutput;
 import com.dili.ss.exception.BusinessException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,7 +39,7 @@ public class CardManageController {
 	 * 退卡
 	 */
 	@PostMapping("/returnCard")
-	public BaseOutput<Boolean> returnCard(@RequestBody CardRequestDto cardRequest) {
+	public BaseOutput<Boolean> returnCard(@RequestBody @Validated(CardValidator.Operation.class) CardRequestDto cardRequest) {
 		cardManageService.returnCard(cardRequest);
 		return BaseOutput.success();
 	}
