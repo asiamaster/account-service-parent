@@ -3,9 +3,8 @@
 
 <mapper namespace="com.dili.account.dao.IUserCardDao">
 
-	<select id="selectList" resultType="com.dili.account.entity.UserCardDo">
-		SELECT
-			`id`,
+	<sql id="Base_Column">
+		`id`,
 			`device_id`,
 			`account_id`,
 			`card_no`,
@@ -23,6 +22,10 @@
 			`firm_name`,
 			`create_time`,
 			`modify_time`
+	</sql>
+	<select id="selectList" resultType="com.dili.account.entity.UserCardDo">
+		SELECT
+			<include refid="Base_Column"/>
 		FROM
 			account_user_card
 		ORDER BY
@@ -72,24 +75,7 @@
 
 	<select id="getById" resultType="com.dili.account.entity.UserCardDo">
 		SELECT
-			`id`,
-			`device_id`,
-			`account_id`,
-			`card_no`,
-			`category`,
-			`type`,
-			`usage_type`,
-			`verify_code`,
-			`cash_pledge`,
-			`last`,
-			`state`,
-			`version`,
-			`creator_id`,
-			`creator`,
-			`firm_id`,
-			`firm_name`,
-			`create_time`,
-			`modify_time`
+		<include refid="Base_Column"/>
 		FROM
 			account_user_card
 		WHERE
@@ -97,24 +83,7 @@
 	</select>
 	<select id="getByAccountId" resultType="com.dili.account.entity.UserCardDo">
 		SELECT
-			`id`,
-			`device_id`,
-			`account_id`,
-			`card_no`,
-			`category`,
-			`type`,
-			`usage_type`,
-			`verify_code`,
-			`cash_pledge`,
-			`last`,
-			`state`,
-			`version`,
-			`creator_id`,
-			`creator`,
-			`firm_id`,
-			`firm_name`,
-			`create_time`,
-			`modify_time`
+		<include refid="Base_Column"/>
 		FROM
 			account_user_card
 		WHERE
@@ -122,7 +91,17 @@
 		AND state != 4
 	</select>
 
-	<update id="update">
+    <select id="getByCardNo" resultType="com.dili.account.entity.UserCardDo">
+		SELECT
+		<include refid="Base_Column"/>
+		FROM
+		account_user_card
+		WHERE
+		card_no = #{cardNo}
+		AND state != 4
+	</select>
+
+    <update id="update">
 		UPDATE account_user_card
 	 	<set>
 			<if test="deviceId != null">`device_id` = #{deviceId}, </if>

@@ -4,15 +4,11 @@ import java.util.List;
 
 /**
  * @description： 用户信息查询参数
- * 
+ *
  * @author ：WangBo
  * @time ：2020年4月26日下午4:30:03
  */
 public class UserAccountCardQuery {
-	/** CRM客户ID（冗余） */
-	private Long crmCustormerId;
-	/** 使用权限(充值、提现、交费等),多个以逗号分隔 */
-	private String usePermission;
 	/** 排除的卡类型 */
 	private List<Integer> exclusionsCardCategorys;
 	/** 包含的卡类型 */
@@ -33,22 +29,6 @@ public class UserAccountCardQuery {
 	private Long accountId;
 	/** 主账户ID */
 	private Long parentAccountId;
-
-	public Long getCrmCustormerId() {
-		return crmCustormerId;
-	}
-
-	public void setCrmCustormerId(Long crmCustormerId) {
-		this.crmCustormerId = crmCustormerId;
-	}
-
-	public String getUsePermission() {
-		return usePermission;
-	}
-
-	public void setUsePermission(String usePermission) {
-		this.usePermission = usePermission;
-	}
 
 	public List<Integer> getExclusionsCardCategorys() {
 		return exclusionsCardCategorys;

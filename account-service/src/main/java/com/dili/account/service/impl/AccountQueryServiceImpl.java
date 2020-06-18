@@ -3,13 +3,13 @@ package com.dili.account.service.impl;
 import com.dili.account.common.ExceptionMsg;
 import com.dili.account.dao.IUserAccountDao;
 import com.dili.account.dao.IUserCardDao;
-import com.dili.account.dto.CardAggregationDto;
-import com.dili.account.dto.CustomerResponseDto;
 import com.dili.account.dto.UserAccountCardQuery;
+import com.dili.account.dto.UserAccountCardResponseDto;
 import com.dili.account.entity.CardAggregationWrapper;
 import com.dili.account.entity.UserAccountDo;
 import com.dili.account.entity.UserCardDo;
 import com.dili.account.service.IAccountQueryService;
+import com.dili.account.type.UsePermissionType;
 import com.dili.ss.constant.ResultCode;
 import com.dili.ss.exception.BusinessException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,15 +32,21 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
     private IUserCardDao userCardDao;
 
     @Override
-    public List<CardAggregationDto> listAccount(UserAccountCardQuery queryParam) {
+    public List<UserAccountCardResponseDto> listAccount(UserAccountCardQuery queryParam) {
         return null;
     }
 
     @Override
-    public CardAggregationDto getOnly(String cardNo, Long accountId) {
-
-        return null;
+    public UserAccountCardResponseDto getByCardNoForRest(String cardNo) {
+        UserCardDo card = userCardDao.getByCardNo(cardNo);
+        Optional.ofNullable(card)
+                .orElseThrow(() -> new BusinessException(ResultCode.DATA_ERROR, ExceptionMsg.CARD_NOT_EXIST.getName()));
+        UserAccountDo userAccount = userAccountDao.getByAccountId(card.getAccountId());
+        Optional.ofNullable(userAccount)
+                .orElseThrow(() -> new BusinessException(ResultCode.DATA_ERROR, ExceptionMsg.ACCOUNT_NOT_EXIST.getName()));
+        return this.convertFromAccountUnionCard(card, userAccount);
     }
+
 
     @Override
     public CardAggregationWrapper getByAccountIdWithNotNull(Long accountId) {
@@ -64,6 +70,23 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
         cardAggregationDto.setUserAccount(account);
         cardAggregationDto.setUserCard(card);
         return cardAggregationDto;
+    }
+
+    private UserAccountCardResponseDto convertFromAccountUnionCard(UserCardDo card, UserAccountDo account) {
+        UserAccountCardResponseDto responseDto = new UserAccountCardResponseDto();
+        responseDto.setCardId(card.getId());
+        responseDto.setCardCategory(card.getCategory());
+        responseDto.setCardNo(card.getCardNo());
+        responseDto.setCardState(card.getState());
+        responseDto.setCardUsageType(card.getUsageType());
+        responseDto.setFirmId(account.getFirmId());
+        responseDto.setAccountId(account.getAccountId());
+        responseDto.setFundAccountId(account.getFundAccountId());
+        responseDto.setCustomerId(account.getCustormerId());
+        responseDto.setPermissionList(UsePermissionType.getPermissionList(account.getPermissions()));
+        responseDto.setParentAccountId(account.getParentAccountId());
+        responseDto.setBizUsageType(account.getUsageType());
+        return responseDto;
     }
 
 //	@Resource

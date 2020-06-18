@@ -1,5 +1,17 @@
 package com.dili.account.controller;
 
+import com.dili.account.dto.UserAccountCardResponseDto;
+import com.dili.account.service.IAccountQueryService;
+import com.dili.ss.constant.ResultCode;
+import com.dili.ss.domain.BaseOutput;
+import com.dili.ss.exception.AppException;
+import com.dili.ss.exception.BusinessException;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -9,50 +21,26 @@ import org.springframework.web.bind.annotation.RestController;
  * @time ：2020年4月28日下午3:30:27
  */
 @RestController
-@RequestMapping(value = "user")
+@RequestMapping(value = "api/account")
 public class QueryAccountController {
-//	private static final Logger log = LoggerFactory.getLogger(QueryAccountController.class);
-//
-//	@Resource
-//	private IAccountQueryService accountQueryService;
-//
-//	/**
-//	 * 查询唯一数据
-//	 */
-//	@PostMapping("queryOnlyAccount")
-//	public Message<UserAccountCardDto> queryOnlyAccount(@RequestBody UserAccountCardQuery queryParam) {
-//		log.info("queryOnlyAccount > " + JsonUtils.toJsonString(queryParam));
-//		if(queryParam.getAccountId() == null && queryParam.getCardNo() == null) {
-//			new AppException("请至少设置一个查询参数!");
-//		}
-//		return Message.success(accountQueryService.getOnly(queryParam.getCardNo(), queryParam.getAccountId()));
-//	}
-//
-//	/**
-//	 * 查询列表
-//	 */
-//	@PostMapping(value = "queryListAccount")
-//	public Message<List<UserAccountCardDto>> queryListAccount(@RequestBody UserAccountCardQuery queryParam) {
-//		log.info("queryListAccount > " + JsonUtils.toJsonString(queryParam));
-//		checkParamIsNull(queryParam);
-//		return Message.success(accountQueryService.listAccount(queryParam));
-//	}
-//
-//	/**
-//	 * 校验对象字段，所有字段都为空则抛出异常
-//	 */
-//	private void checkParamIsNull(Object o) {
-//		try {
-//			Field[] fields = o.getClass().getDeclaredFields();
-//			for (Field f : fields) {
-//				f.setAccessible(true);
-//				if (f.get(o) != null) {
-//					return;
-//				}
-//			}
-//		} catch (Exception e) {
-//			log.error("查询参数检查出错", e);
-//		}
-//		throw new AppException("请至少设置一个查询参数!");
-//	}
+    private static final Logger LOGGER = LoggerFactory.getLogger(QueryAccountController.class);
+
+    @Autowired
+    private IAccountQueryService accountQueryService;
+
+
+    /**
+     * 根据卡号查卡账户信息
+     */
+    @GetMapping("getOneAccountCard/{cardNo}")
+    public BaseOutput<UserAccountCardResponseDto> getOneAccountCard(@PathVariable String cardNo) {
+        try {
+            if (StringUtils.isBlank(cardNo)) {
+                throw new BusinessException(ResultCode.PARAMS_ERROR, "卡号不能为空");
+            }
+            return BaseOutput.successData(accountQueryService.getByCardNoForRest(cardNo));
+        } catch (BusinessException e) {
+            return BaseOutput.create(e.getErrorCode(),e.getErrorMsg());
+        }
+    }
 }

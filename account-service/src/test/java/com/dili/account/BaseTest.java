@@ -17,6 +17,7 @@ import com.dili.account.util.AesCipher;
 import com.dili.account.util.PasswordUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
@@ -27,6 +28,7 @@ import java.time.LocalDateTime;
  * @Description:
  */
 @SpringBootTest
+@AutoConfigureMockMvc
 public class BaseTest {
     protected static Logger LOGGER = LoggerFactory.getLogger(BaseTest.class);
 
