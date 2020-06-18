@@ -34,7 +34,7 @@ import java.util.List;
 public class CardManageServiceImpl implements ICardManageService {
     @Autowired
     private IPasswordService passwordService;
-    @Autowired
+    @Autowired(required = false)
     private ICardStorageService cardStorageService;
     @Autowired
     private IAccountQueryService accountQueryService;

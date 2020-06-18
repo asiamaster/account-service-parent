@@ -1,5 +1,6 @@
 package com.dili.account.service;
 
+import com.dili.account.BaseTest;
 import com.dili.account.dao.IUserCardDao;
 import com.dili.account.dto.CardRequestDto;
 import com.dili.account.entity.UserCardDo;
@@ -18,8 +19,8 @@ import static org.mockito.Mockito.when;
  * @Date: 2020/6/16 19:53
  * @Description:
  */
-@SpringBootTest
-class CardManageServiceTest {
+
+class CardManageServiceTest extends BaseTest {
     @Autowired
     private ICardManageService cardManageService;
 

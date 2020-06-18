@@ -6,8 +6,6 @@ import com.dili.account.dao.IUserCardDao;
 import com.dili.account.dto.CardAggregationDto;
 import com.dili.account.dto.CustomerResponseDto;
 import com.dili.account.dto.UserAccountCardQuery;
-import com.dili.account.dto.UserAccountResponseDto;
-import com.dili.account.dto.UserCardResponseDto;
 import com.dili.account.entity.CardAggregationWrapper;
 import com.dili.account.entity.UserAccountDo;
 import com.dili.account.entity.UserCardDo;
