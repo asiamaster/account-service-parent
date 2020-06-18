@@ -38,11 +38,11 @@ public interface ICardManageService {
 	 * @date 2020/6/17
 	 */
 	 void changeCard(CardRequestDto cardParam);
-//
-//	/**
-//	 * 解挂卡片
-//	 */
-//	public void unLostCard(Long accountId, String loginPwd);
+
+	/**
+	 * 解挂卡片
+	 */
+	void unLostCard(CardRequestDto cardParam);
 //
 //	/**
 //	 * 根据卡号锁定卡

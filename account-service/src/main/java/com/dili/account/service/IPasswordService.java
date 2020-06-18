@@ -29,4 +29,10 @@ public interface IPasswordService {
 	 */
 	void resetLoginPwd(CardRequestDto cardRequestDto) throws Exception;
 
+	/**
+	 * 验证密码
+	 * @param encryptPwd 加密密码
+	 * @param loginPwd 明文
+	 */
+	void checkLoginPwd(String encryptPwd, String loginPwd);
 }
