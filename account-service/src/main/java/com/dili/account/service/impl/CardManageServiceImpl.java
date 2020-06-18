@@ -114,7 +114,7 @@ public class CardManageServiceImpl implements ICardManageService {
         if (CardStatus.LOSS.getCode() != userCard.getState()) {//非挂失状态卡片，不允许解挂
             throw new BusinessException(ResultCode.DATA_ERROR, "该卡为非挂失状态,不能进行此操作");
         }
-        //TODO 密码验证
+        passwordService.checkPassword(cardParam.getAccountId(), cardParam.getLoginPwd());
         int i = userCardDao.updateState(cardParam.getAccountId(), CardStatus.NORMAL.getCode(), userCard.getVersion());
         if (i != 1) {
             throw new BusinessException(ResultCode.DATA_ERROR, "解挂失操作失败");

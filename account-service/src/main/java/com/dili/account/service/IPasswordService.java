@@ -35,11 +35,4 @@ public interface IPasswordService {
 	 * @param password 密码
 	 */
 	void checkPassword(Long accountId, String password);
-
-	/**
-	 * 验证密码
-	 * @param encryptPwd 加密密码
-	 * @param loginPwd 明文
-	 */
-	void checkLoginPwd(String encryptPwd, String loginPwd);
 }
