@@ -111,6 +111,21 @@ public class CardManageServiceImpl implements ICardManageService {
         cardStorageService.inUse(newCard.getCardNo());
     }
 
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public void unLostCard(CardRequestDto cardParam) {
+        CardAggregationWrapper wrapper = accountQueryService.getByAccountIdWithNotNull(cardParam.getAccountId());
+        UserCardDo userCard = wrapper.getUserCard();
+        if (CardStatus.LOSS.getCode() != userCard.getState()) {//非挂失状态卡片，不允许解挂
+            throw new BusinessException(ResultCode.DATA_ERROR, "该卡为非挂失状态,不能进行此操作");
+        }
+        passwordService.checkPassword(cardParam.getAccountId(), cardParam.getLoginPwd());
+        int i = userCardDao.updateState(cardParam.getAccountId(), CardStatus.NORMAL.getCode(), userCard.getVersion());
+        if (i != 1) {
+            throw new BusinessException(ResultCode.DATA_ERROR, "解挂失操作失败");
+        }
+    }
+
     private void validateCanReportLoss(UserCardDo userCard, CardRequestDto cardParam) {
         if (userCard.getState() != CardStatus.NORMAL.getCode()) {
             throw new BusinessException(ResultCode.DATA_ERROR, "该卡为非正常状态，不能进行此操作");

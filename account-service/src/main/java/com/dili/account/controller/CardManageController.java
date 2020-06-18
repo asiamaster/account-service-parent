@@ -1,11 +1,20 @@
 package com.dili.account.controller;
 
-import javax.annotation.Resource;
-
+import cn.hutool.core.util.StrUtil;
+import com.dili.account.dto.CardManageParamDto;
+import com.dili.account.dto.CardRequestDto;
+import com.dili.account.service.ICardManageService;
+import com.dili.account.util.AssertUtils;
+import com.dili.ss.domain.BaseOutput;
+import com.dili.ss.exception.BusinessException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import javax.annotation.Resource;
 
 import com.dili.account.dto.CardRequestDto;
 import com.dili.account.service.ICardManageService;
@@ -19,6 +28,7 @@ import com.dili.ss.domain.BaseOutput;
 @RestController
 @RequestMapping(value = "/account")
 public class CardManageController {
+    private static Logger LOGGER = LoggerFactory.getLogger(CardManageController.class);
 
 	@Resource
 	private ICardManageService cardManageService;
@@ -31,4 +41,26 @@ public class CardManageController {
 		cardManageService.returnCard(cardRequest);
 		return BaseOutput.success();
 	}
+
+    /**
+     * 解挂卡片
+     */
+    @PostMapping("unLostCard")
+    public BaseOutput<?> unLostCard(@RequestBody CardRequestDto cardParam) {
+        try {
+            if (cardParam.getAccountId() == null) {
+                return BaseOutput.failure("账户ID为空");
+            }
+            if (StrUtil.isBlank(cardParam.getLoginPwd())) {
+                return BaseOutput.failure("密码为空");
+            }
+            cardManageService.unLostCard(cardParam);
+            return BaseOutput.success();
+        } catch (BusinessException e) {
+            return BaseOutput.failure(e.getErrorMsg());
+        } catch (Exception e) {
+            LOGGER.error("unLostCard", e);
+            return BaseOutput.failure();
+        }
+    }
 }

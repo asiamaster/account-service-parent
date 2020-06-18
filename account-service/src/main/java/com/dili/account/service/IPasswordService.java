@@ -35,5 +35,4 @@ public interface IPasswordService {
 	 * @param password 密码
 	 */
 	void checkPassword(Long accountId, String password);
-
 }
