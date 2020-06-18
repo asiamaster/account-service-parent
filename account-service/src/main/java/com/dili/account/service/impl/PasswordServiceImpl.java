@@ -48,7 +48,7 @@ public class PasswordServiceImpl implements IPasswordService{
 	}
 
 	@Override
-	public void checkPasswor(Long accountId, String password) {
+	public void checkPassword(Long accountId, String password) {
 		if (accountId == null || StringUtils.isBlank(password)) {
 			throw new BusinessException("9999999999","参数错误");
 		}
