@@ -1,10 +1,5 @@
 package com.dili.account.dto;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-
-import com.dili.account.validator.CardValidator;
-
 /**
  *
  * 卡请求相关
