@@ -39,7 +39,7 @@ public class CardManageController {
 	 * 退卡
 	 */
 	@PostMapping("/returnCard")
-	public BaseOutput<Boolean> returnCard(@RequestBody @Validated(CardValidator.Operation.class) CardRequestDto cardRequest) {
+	public BaseOutput<Boolean> returnCard(@RequestBody CardRequestDto cardRequest) {
 		cardManageService.returnCard(cardRequest);
 		return BaseOutput.success();
 	}
