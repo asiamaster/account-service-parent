@@ -32,8 +32,6 @@ class UserAccountDaoTest extends BaseTest {
     }
 
     @Test
-    //@Transactional
-    //@Rollback
     void testSave() {
         int save = userAccountDao.save(account);
         LOGGER.info("获取的到account：{}", JSON.toJSONString(account));

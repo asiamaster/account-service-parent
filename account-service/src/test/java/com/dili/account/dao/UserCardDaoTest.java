@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.annotation.Rollback;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
@@ -52,10 +54,9 @@ class UserCardDaoTest extends BaseTest {
     }
 
     @Test
+    @Transactional
+    @Rollback
     void testUpdateState(){
-        this.userCardDao = Mockito.mock(IUserCardDao.class);
-        Mockito.when(userCardDao.updateState(1L,1,1))
-                .thenReturn(5);
-        assertEquals(1,userCardDao.updateState(1L,1,1));
+        userCardDao.updateState(1L,1,1);
     }
 }

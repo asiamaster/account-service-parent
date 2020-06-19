@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dili.account.dao.IUserAccountCardDao">
+
+
+    <resultMap id="Aggregation_Result" type="com.dili.account.entity.CardAggregationWrapper">
+        <id column="account_id" property="accountId"/>
+        <result column="firm_id" property="firmId"/>
+        <association property="userAccount" javaType="com.dili.account.entity.UserAccountDo">
+            <result column="id" property="id"/>
+            <result column="account_id" property="accountId"/>
+            <result column="parent_account_id" property="parentAccountId"/>
+            <result column="custormer_id" property="custormerId"/>
+            <result column="fund_account_id" property="fundAccountId"/>
+            <result column="type" property="type"/>
+            <result column="usage_type" property="usageType"/>
+            <result column="holder_name" property="holderName"/>
+            <result column="holder_gender" property="holderGender"/>
+            <result column="holder_mobile" property="holderMobile"/>
+            <result column="holder_certificate_number" property="holderCertificateNumber"/>
+            <result column="holder_certificate_type" property="holderCertificateType"/>
+            <result column="holder_address" property="holderAddress"/>
+            <result column="permissions" property="permissions"/>
+            <result column="login_pwd" property="loginPwd"/>
+            <result column="pwd_changed" property="pwdChanged"/>
+            <result column="login_time" property="loginTime"/>
+            <result column="secret_key" property="secretKey"/>
+            <result column="state" property="state"/>
+            <result column="secret_key" property="secretKey"/>
+            <result column="source" property="source"/>
+            <result column="version" property="version"/>
+            <result column="firm_id" property="firmId"/>
+            <result column="firm_name" property="firmName"/>
+            <result column="create_time" property="createTime"/>
+            <result column="modify_time" property="modifyTime"/>
+        </association>
+        <association column="card_id" property="userCard" javaType="com.dili.account.entity.UserCardDo">
+            <result column="card_id" property="id"/>
+            <result column="account_id" property="accountId"/>
+            <result column="card_device_id" property="deviceId"/>
+            <result column="card_no" property="cardNo"/>
+            <result column="card_category" property="category"/>
+            <result column="card_type" property="type"/>
+            <result column="card_usage_type" property="usageType"/>
+            <result column="card_verify_code" property="verifyCode"/>
+            <result column="card_cash_pledge" property="cashPledge"/>
+            <result column="card_last" property="last"/>
+            <result column="card_state" property="state"/>
+            <result column="card_creator_id" property="creatorId"/>
+            <result column="card_creator" property="creator"/>
+            <result column="card_version" property="version"/>
+            <result column="firm_id" property="firmId"/>
+            <result column="firm_name" property="firmName"/>
+            <result column="card_create_time" property="createTime"/>
+            <result column="card_modify_time" property="modifyTime"/>
+        </association>
+    </resultMap>
+
+    <sql id="Base_Account_Column">
+        aua.`id`,
+            aua.`account_id`,
+            aua.`parent_account_id`,
+            aua.`custormer_id`,
+            aua.`fund_account_id`,
+            aua.`type`,
+            aua.`usage_type`,
+            aua.`holder_name`,
+            aua.`holder_gender`,
+            aua.`holder_mobile`,
+            aua.`holder_certificate_number`,
+            aua.`holder_certificate_type`,
+            aua.`holder_address`,
+            aua.`permissions`,
+            aua.`login_pwd`,
+            aua.`pwd_changed`,
+            aua.`login_time`,
+            aua.`secret_key`,
+            aua.`state`,
+            aua.`source`,
+            aua.`version`,
+            aua.`firm_id`,
+            aua.`firm_name`,
+            aua.`create_time`,
+            aua.`modify_time`
+    </sql>
+
+    <sql id="Base_Card_Column">
+        auc.`id` AS card_id,
+        auc.`device_id` AS card_device_id,
+        auc.`card_no`,
+        auc.`category` AS card_category,
+        auc.`type` AS card_type,
+        auc.`usage_type` AS card_usage_type,
+        auc.`verify_code` AS card_verify_code,
+        auc.`cash_pledge` AS card_cash_pledge,
+        auc.`last` AS card_last,
+        auc.`state` AS card_state,
+        auc.`version` AS card_version,
+        auc.`creator_id` AS card_creator_id,
+        auc.`creator` AS card_creator,
+        auc.create_time AS card_create_time,
+        auc.modify_time AS card_modify_time
+    </sql>
+    <select id="getListByCondition" resultMap="Aggregation_Result">
+        SELECT
+        <include refid="Base_Account_Column"/>
+        ,
+        <include refid="Base_Card_Column"/>
+        FROM
+        account_user_account aua
+        LEFT JOIN account_user_card auc on aua.account_id = auc.account_id
+        <where>
+            <if test="custormerIds!=null and custormerIds.size>0">
+                AND aua.custormer_id IN
+                <foreach item="item" collection="custormerIds" separator="," open="(" close=")" index="">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="accountIds!=null and accountIds.size>0">
+                AND aua.account_id IN
+                <foreach item="item" collection="accountIds" separator="," open="(" close=")" index="">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="cardNos!=null and cardNos.size>0">
+                AND auc.card_no IN
+                <foreach item="item" collection="cardNos" separator="," open="(" close=")" index="">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="parentAccountId!=null">
+                AND aua.parent_account_id = #{parentAccountId}
+            </if>
+            <if test="cardCategory!=null">
+                AND auc.category = #{cardCategory}
+            </if>
+            <if test="cardState!=null">
+                AND auc.state = #{cardState}
+            </if>
+            <if test="startDate !=null">
+                AND auc.create_time &gt;= #{startDate}
+            </if>
+            <if test="endDate !=null">
+                AND auc.create_time &lt;= #{endDate}
+            </if>
+        </where>
+        ORDER BY
+        auc.create_time DESC
+    </select>
+</mapper>

@@ -1,5 +1,8 @@
 package com.dili.account.dto;
 
+import org.hibernate.validator.constraints.Range;
+
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -8,42 +11,62 @@ import java.util.List;
  * @author ：WangBo
  * @time ：2020年4月26日下午4:30:03
  */
-public class UserAccountCardQuery {
-	/** 排除的卡类型 */
-	private List<Integer> exclusionsCardCategorys;
-	/** 包含的卡类型 */
-	private List<Integer> cardCategorys;
+public class UserAccountCardQuery extends BaseDto{
+	/**客户id*/
+	private List<Long> custormerIds;
 	/** 多个账户ID */
 	private List<Long> accountIds;
 	/** 多个卡号 */
 	private List<String> cardNos;
-	/** 手机号 */
-	private String mobile;
-	/** 姓名 */
-	private String name;
-	/** 证件号 */
-	private String credentialNo;
-	/** 卡号 */
-	private String cardNo;
-	/** 账户ID */
-	private Long accountId;
 	/** 主账户ID */
 	private Long parentAccountId;
+	/**结束时间*/
+	private LocalDateTime startDate;
+	/**开始时间*/
+	private LocalDateTime endDate;
+	/**卡类别 {@link com.dili.account.type.CardCategory}*/
+	private Integer cardCategory;
+	/**卡状态 {@link com.dili.account.type.CardStatus}*/
+	private Integer cardState;
 
-	public List<Integer> getExclusionsCardCategorys() {
-		return exclusionsCardCategorys;
+	public Integer getCardCategory() {
+		return cardCategory;
 	}
 
-	public void setExclusionsCardCategorys(List<Integer> exclusionsCardCategorys) {
-		this.exclusionsCardCategorys = exclusionsCardCategorys;
+	public void setCardCategory(Integer cardCategory) {
+		this.cardCategory = cardCategory;
 	}
 
-	public List<Integer> getCardCategorys() {
-		return cardCategorys;
+	public Integer getCardState() {
+		return cardState;
 	}
 
-	public void setCardCategorys(List<Integer> cardCategorys) {
-		this.cardCategorys = cardCategorys;
+	public void setCardState(Integer cardState) {
+		this.cardState = cardState;
+	}
+
+	public LocalDateTime getStartDate() {
+		return startDate;
+	}
+
+	public void setStartDate(LocalDateTime startDate) {
+		this.startDate = startDate;
+	}
+
+	public LocalDateTime getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(LocalDateTime endDate) {
+		this.endDate = endDate;
+	}
+
+	public List<Long> getCustormerIds() {
+		return custormerIds;
+	}
+
+	public void setCustormerIds(List<Long> custormerIds) {
+		this.custormerIds = custormerIds;
 	}
 
 	public List<Long> getAccountIds() {
@@ -52,46 +75,6 @@ public class UserAccountCardQuery {
 
 	public void setAccountIds(List<Long> accountIds) {
 		this.accountIds = accountIds;
-	}
-
-	public String getMobile() {
-		return mobile;
-	}
-
-	public void setMobile(String mobile) {
-		this.mobile = mobile;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getCredentialNo() {
-		return credentialNo;
-	}
-
-	public void setCredentialNo(String credentialNo) {
-		this.credentialNo = credentialNo;
-	}
-
-	public String getCardNo() {
-		return cardNo;
-	}
-
-	public void setCardNo(String cardNo) {
-		this.cardNo = cardNo;
-	}
-
-	public Long getAccountId() {
-		return accountId;
-	}
-
-	public void setAccountId(Long accountId) {
-		this.accountId = accountId;
 	}
 
 	public Long getParentAccountId() {

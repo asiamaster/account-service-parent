@@ -2,6 +2,7 @@ package com.dili.account;
 
 import cn.hutool.core.util.RandomUtil;
 import com.dili.account.controller.CardManageController;
+import com.dili.account.dto.UserAccountCardQuery;
 import com.dili.account.entity.UserAccountDo;
 import com.dili.account.entity.UserCardDo;
 import com.dili.account.type.AccountStatus;
@@ -15,12 +16,15 @@ import com.dili.account.type.CreateSource;
 import com.dili.account.type.UsePermissionType;
 import com.dili.account.util.AesCipher;
 import com.dili.account.util.PasswordUtils;
+import com.dili.ss.util.DateUtils;
+import org.assertj.core.util.Lists;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.time.LocalDateTime;
+import java.util.Date;
 
 /**
  * @Auther: miaoguoxin
@@ -86,5 +90,29 @@ public class BaseTest {
         int code = UsePermissionType.RECHARGE.getCode();
         int code1 = UsePermissionType.TRANSACTION.getCode();
         return code + "," + code1;
+    }
+
+    protected static UserAccountCardQuery createQueryParam() {
+        UserAccountCardQuery query = new UserAccountCardQuery();
+        query.setAccountIds(Lists.newArrayList(862066L));
+        return query;
+    }
+
+    protected static UserAccountCardQuery createQueryParamDate() {
+        UserAccountCardQuery query = new UserAccountCardQuery();
+        Date startDate = DateUtils.formatDateStr2Date("2020-06-18 13:21:41");
+        query.setStartDate(DateUtils.dateToLocalDateTime(startDate));
+        Date endDate = DateUtils.formatDateStr2Date("2020-06-19 13:43:43");
+        query.setEndDate(DateUtils.dateToLocalDateTime(endDate));
+        return query;
+    }
+
+    protected static UserAccountCardQuery createQueryParamAll() {
+        UserAccountCardQuery query = new UserAccountCardQuery();
+        query.setAccountIds(Lists.newArrayList(862066L));
+        query.setCardCategory(CardCategory.MASTER.getCode());
+        Date startDate = DateUtils.formatDateStr2Date("2020-06-18 13:21:41");
+        query.setStartDate(DateUtils.dateToLocalDateTime(startDate));
+        return query;
     }
 }

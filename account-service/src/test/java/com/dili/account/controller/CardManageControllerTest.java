@@ -3,6 +3,7 @@ package com.dili.account.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.dili.account.BaseTest;
+import com.dili.account.dto.CardRequestDto;
 import com.dili.account.dto.UserAccountCardResponseDto;
 import com.dili.ss.domain.BaseOutput;
 import org.junit.jupiter.api.Test;
@@ -15,25 +16,35 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.nio.charset.StandardCharsets;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 /**
  * @Auther: miaoguoxin
- * @Date: 2020/6/18 15:37
+ * @Date: 2020/6/19 10:52
  * @Description:
  */
-class QueryAccountControllerTest extends BaseTest {
-
+class CardManageControllerTest extends BaseTest {
     @Autowired
     private MockMvc mockMvc;
 
     @Test
-    void getOneAccountCard() throws Exception {
-        String cardNo = "2494445928";
-        MvcResult mvcResult = mockMvc.perform(get("/api/account/getOneAccountCard/{cardNo}", cardNo)
-                .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE))
+    void testReturnCard() {
+    }
+
+    @Test
+    void testUnLostCard() {
+    }
+
+    @Test
+    void testReportLossCard() throws Exception {
+        CardRequestDto cardParam = new CardRequestDto();
+        String cardNo ="2494445928";
+        MvcResult mvcResult = mockMvc.perform(post("/api/card/reportLossCard")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JSON.toJSONString(cardParam))
+        )
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andDo(MockMvcResultHandlers.print())
                 .andReturn();
@@ -45,10 +56,6 @@ class QueryAccountControllerTest extends BaseTest {
     }
 
     @Test
-    void testGetPage() {
-    }
-
-    @Test
-    void getList() {
+    void testChangeCard() {
     }
 }

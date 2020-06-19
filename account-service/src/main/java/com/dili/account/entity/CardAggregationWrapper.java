@@ -6,14 +6,24 @@ package com.dili.account.entity;
  * 卡片聚合信息
  */
 public class CardAggregationWrapper {
+	/**账户id*/
+	private Long accountId;
 	/** 市场编码 */
 	private Long firmId;
 	/** 禁用状态（管理员使用:1-启用2-禁用） */
-	private Integer systemDisableStatus;
+	//private Integer systemDisableStatus;
 	/**卡账户*/
 	private UserAccountDo userAccount;
 	/**卡信息*/
 	private UserCardDo userCard;
+
+	public Long getAccountId() {
+		return accountId;
+	}
+
+	public void setAccountId(Long accountId) {
+		this.accountId = accountId;
+	}
 
 	public Long getFirmId() {
 		return firmId;
@@ -21,14 +31,6 @@ public class CardAggregationWrapper {
 
 	public void setFirmId(Long firmId) {
 		this.firmId = firmId;
-	}
-
-	public Integer getSystemDisableStatus() {
-		return systemDisableStatus;
-	}
-
-	public void setSystemDisableStatus(Integer systemDisableStatus) {
-		this.systemDisableStatus = systemDisableStatus;
 	}
 
 	public UserAccountDo getUserAccount() {

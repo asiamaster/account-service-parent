@@ -3,6 +3,8 @@ package com.dili.account.service;
 import com.dili.account.dto.UserAccountCardQuery;
 import com.dili.account.dto.UserAccountCardResponseDto;
 import com.dili.account.entity.CardAggregationWrapper;
+import com.dili.ss.domain.BaseOutput;
+import com.dili.ss.domain.PageOutput;
 
 import java.util.List;
 
@@ -28,7 +30,19 @@ public interface IAccountQueryService {
      */
     UserAccountCardResponseDto getByCardNoForRest(String cardNo);
 
+    /**
+    * 卡列表条件查询
+    * @author miaoguoxin
+    * @date 2020/6/19
+    */
+    List<UserAccountCardResponseDto> getListByConditionForRest(UserAccountCardQuery queryParam);
 
+    /**
+     * 卡列表条件查询（带分页count）
+     * @author miaoguoxin
+     * @date 2020/6/19
+     */
+    PageOutput<List<UserAccountCardResponseDto>> getPageByConditionForRest(UserAccountCardQuery queryParam);
     /**
      * 查询卡账户、卡、客户的聚合信息
      * @author miaoguoxin

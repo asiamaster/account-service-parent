@@ -34,18 +34,19 @@ public interface IUserCardDao {
      */
 	UserCardDo getById(Long id);
 	/**
-	* 根据账户id查询
+	* 根据账户id查询(已排除退卡状态)
 	* @author miaoguoxin
 	* @date 2020/6/18
 	*/
 	UserCardDo getByAccountId(Long accountId);
 
 	/**
-	* 根据卡号查询
+	* 根据卡号查询(已排除退卡状态)
 	* @author miaoguoxin
 	* @date 2020/6/18
 	*/
 	UserCardDo getByCardNo(String cardNo);
+
     /**
      * 修改
      * @param userCard
