@@ -3,10 +3,10 @@ package com.dili.account.controller;
 import cn.hutool.core.util.StrUtil;
 import com.dili.account.dto.CardRequestDto;
 import com.dili.account.entity.CardAggregationWrapper;
+import com.dili.account.exception.AccountBizException;
 import com.dili.account.service.ICardManageService;
 import com.dili.account.validator.CardValidator;
 import com.dili.ss.domain.BaseOutput;
-import com.dili.ss.exception.BusinessException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.validation.annotation.Validated;
@@ -53,8 +53,8 @@ public class CardManageController {
             }
             CardAggregationWrapper wrapper = cardManageService.unLostCard(cardParam);
             return BaseOutput.success().setData(wrapper);
-        } catch (BusinessException e) {
-            return BaseOutput.failure(e.getErrorMsg());
+        } catch (AccountBizException e) {
+            return BaseOutput.failure(e.getMessage());
         } catch (Exception e) {
             LOGGER.error("unLostCard", e);
             return BaseOutput.failure();
@@ -68,7 +68,7 @@ public class CardManageController {
      */
     @PostMapping("/reportLossCard")
     public BaseOutput<?> reportLossCard(@RequestBody @Validated({CardValidator.Generic.class})
-                                                    CardRequestDto cardParam) {
+                                                CardRequestDto cardParam) {
         cardManageService.reportLoss(cardParam);
         return BaseOutput.success();
     }

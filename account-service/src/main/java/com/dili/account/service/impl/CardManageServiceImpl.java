@@ -8,6 +8,7 @@ import com.dili.account.dto.PayAccountDto;
 import com.dili.account.entity.CardAggregationWrapper;
 import com.dili.account.entity.UserAccountDo;
 import com.dili.account.entity.UserCardDo;
+import com.dili.account.exception.AccountBizException;
 import com.dili.account.rpc.resolver.PayRpcResolver;
 import com.dili.account.service.IAccountQueryService;
 import com.dili.account.service.ICardManageService;
@@ -51,30 +52,30 @@ public class CardManageServiceImpl implements ICardManageService {
     public void returnCard(CardRequestDto cardRequest) {
         UserCardDo userCardDo = userCardDao.findCardByAccountId(cardRequest.getAccountId());
         if (userCardDo == null) {
-            throw new BusinessException(ResultCode.DATA_ERROR, "卡信息不存在");
+            throw new AccountBizException(ResultCode.DATA_ERROR, "卡信息不存在");
         }
         if (CardStatus.RETURNED.getCode() == userCardDo.getState()) {
-            throw new BusinessException(ResultCode.DATA_ERROR, "该卡已退");
+            throw new AccountBizException(ResultCode.DATA_ERROR, "该卡已退");
         }
         if (CardStatus.NORMAL.getCode() == userCardDo.getState()) {
-            throw new BusinessException(ResultCode.DATA_ERROR, "卡非正常状态,不能退卡");
+            throw new AccountBizException(ResultCode.DATA_ERROR, "卡非正常状态,不能退卡");
         }
         //密码校验
         passwordService.checkPassword(cardRequest.getAccountId(), cardRequest.getLoginPwd());
         //副卡校验
         List<UserAccountDo> accounts = userAccountDao.findSlavesByParent(cardRequest.getAccountId());
         if (!CollectionUtils.isEmpty(accounts)) {
-            throw new BusinessException(ResultCode.DATA_ERROR, "该卡存在副卡,不能退卡");
+            throw new AccountBizException(ResultCode.DATA_ERROR, "该卡存在副卡,不能退卡");
         }
         //余额校验
         PayAccountDto payAccountDto = payRpcResolver.resolverByUserAccount(cardRequest.getAccountId());
         if (payAccountDto.getBalance() != 0L) {
-            throw new BusinessException(ResultCode.DATA_ERROR, "卡余额不为0,不能退卡");
+            throw new AccountBizException(ResultCode.DATA_ERROR, "卡余额不为0,不能退卡");
         }
         //更新卡状态
         int update = userCardDao.updateState(cardRequest.getAccountId(), CardStatus.RETURNED.getCode(), userCardDo.getVersion());
         if (update == 0) {
-            throw new BusinessException(ResultCode.DATA_ERROR, "退卡操作失败");
+            throw new AccountBizException(ResultCode.DATA_ERROR, "退卡操作失败");
         }
     }
 
@@ -119,29 +120,29 @@ public class CardManageServiceImpl implements ICardManageService {
         CardAggregationWrapper wrapper = accountQueryService.getByAccountIdWithNotNull(cardParam.getAccountId());
         UserCardDo userCard = wrapper.getUserCard();
         if (CardStatus.LOSS.getCode() != userCard.getState()) {//非挂失状态卡片，不允许解挂
-            throw new BusinessException(ResultCode.DATA_ERROR, "该卡为非挂失状态,不能进行此操作");
+            throw new AccountBizException(ResultCode.DATA_ERROR, "该卡为非挂失状态,不能进行此操作");
         }
         passwordService.checkPassword(cardParam.getAccountId(), cardParam.getLoginPwd());
         int i = userCardDao.updateState(cardParam.getAccountId(), CardStatus.NORMAL.getCode(), userCard.getVersion());
         if (i != 1) {
-            throw new BusinessException(ResultCode.DATA_ERROR, "解挂失操作失败");
+            throw new AccountBizException(ResultCode.DATA_ERROR, "解挂失操作失败");
         }
         return wrapper;
     }
 
     private void validateCanReportLoss(UserCardDo userCard, CardRequestDto cardParam) {
         if (userCard.getState() != CardStatus.NORMAL.getCode()) {
-            throw new BusinessException(ResultCode.DATA_ERROR, "该卡为非正常状态，不能进行此操作");
+            throw new AccountBizException(ResultCode.DATA_ERROR, "该卡为非正常状态，不能进行此操作");
         }
         passwordService.checkPassword(cardParam.getAccountId(), cardParam.getLoginPwd());
     }
 
     private void validateCanChangeCard(CardAggregationWrapper wrapper, CardRequestDto cardParam) {
         if (wrapper.getUserCard().getState() == CardStatus.RETURNED.getCode()) {
-            throw new BusinessException(ResultCode.DATA_ERROR, "该卡为退还状态，不能进行此操作");
+            throw new AccountBizException(ResultCode.DATA_ERROR, "该卡为退还状态，不能进行此操作");
         }
         if (wrapper.getUserCard().getCardNo().equalsIgnoreCase(cardParam.getNewCardNo())){
-            throw new BusinessException(ResultCode.DATA_ERROR, "新老卡片的卡号不能相同");
+            throw new AccountBizException(ResultCode.DATA_ERROR, "新老卡片的卡号不能相同");
         }
         passwordService.checkPassword(cardParam.getAccountId(), cardParam.getLoginPwd());
     }

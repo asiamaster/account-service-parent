@@ -17,7 +17,7 @@ import java.util.List;
  */
 public interface IAccountQueryService {
     /**
-     * 根据卡号查询唯一数据
+     * 根据卡号查询唯一数据(不包含退卡状态)
      * @return
      */
     UserAccountCardResponseDto getByCardNoForRest(String cardNo);

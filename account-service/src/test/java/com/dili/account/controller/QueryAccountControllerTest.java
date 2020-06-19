@@ -35,7 +35,7 @@ class QueryAccountControllerTest extends BaseTest {
 
     @Test
     void getOneAccountCard() throws Exception {
-        String cardNo = "2494445928";
+        String cardNo = "24944459289";
         MvcResult mvcResult = mockMvc.perform(get("/api/account/getOneAccountCard/{cardNo}", cardNo)
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED_VALUE))
                 .andExpect(MockMvcResultMatchers.status().isOk())

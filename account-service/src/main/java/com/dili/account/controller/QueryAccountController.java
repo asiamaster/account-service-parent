@@ -2,12 +2,12 @@ package com.dili.account.controller;
 
 import com.dili.account.dto.UserAccountCardQuery;
 import com.dili.account.dto.UserAccountCardResponseDto;
+import com.dili.account.exception.AccountBizException;
 import com.dili.account.service.IAccountQueryService;
 import com.dili.account.validator.ConstantValidator;
 import com.dili.ss.constant.ResultCode;
 import com.dili.ss.domain.BaseOutput;
 import com.dili.ss.domain.PageOutput;
-import com.dili.ss.exception.BusinessException;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,7 +42,7 @@ public class QueryAccountController {
     @GetMapping("getOneAccountCard/{cardNo}")
     public BaseOutput<UserAccountCardResponseDto> getOneAccountCard(@PathVariable String cardNo) {
         if (StringUtils.isBlank(cardNo)) {
-            throw new BusinessException(ResultCode.PARAMS_ERROR, "卡号不能为空");
+            throw new AccountBizException(ResultCode.PARAMS_ERROR, "卡号不能为空");
         }
         return BaseOutput.successData(accountQueryService.getByCardNoForRest(cardNo));
     }

@@ -9,12 +9,12 @@ import com.dili.account.dto.UserAccountCardResponseDto;
 import com.dili.account.entity.CardAggregationWrapper;
 import com.dili.account.entity.UserAccountDo;
 import com.dili.account.entity.UserCardDo;
+import com.dili.account.exception.AccountBizException;
 import com.dili.account.service.IAccountQueryService;
 import com.dili.account.type.UsePermissionType;
 import com.dili.account.util.PageUtils;
 import com.dili.ss.constant.ResultCode;
 import com.dili.ss.domain.PageOutput;
-import com.dili.ss.exception.BusinessException;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,10 +44,10 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
     public UserAccountCardResponseDto getByCardNoForRest(String cardNo) {
         UserCardDo card = userCardDao.getByCardNo(cardNo);
         Optional.ofNullable(card)
-                .orElseThrow(() -> new BusinessException(ResultCode.DATA_ERROR, ExceptionMsg.CARD_NOT_EXIST.getName()));
+                .orElseThrow(() -> new AccountBizException(ResultCode.DATA_ERROR, ExceptionMsg.CARD_NOT_EXIST.getName()));
         UserAccountDo userAccount = userAccountDao.getByAccountId(card.getAccountId());
         Optional.ofNullable(userAccount)
-                .orElseThrow(() -> new BusinessException(ResultCode.DATA_ERROR, ExceptionMsg.ACCOUNT_NOT_EXIST.getName()));
+                .orElseThrow(() -> new AccountBizException(ResultCode.DATA_ERROR, ExceptionMsg.ACCOUNT_NOT_EXIST.getName()));
         return this.convertFromAccountUnionCard(card, userAccount);
     }
 
@@ -77,10 +77,10 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
     public CardAggregationWrapper getByAccountIdWithNotNull(Long accountId, boolean needCustomerInfo) {
         UserCardDo card = userCardDao.getByAccountId(accountId);
         Optional.ofNullable(card)
-                .orElseThrow(() -> new BusinessException(ResultCode.DATA_ERROR, ExceptionMsg.CARD_NOT_EXIST.getName()));
+                .orElseThrow(() -> new AccountBizException(ResultCode.DATA_ERROR, ExceptionMsg.CARD_NOT_EXIST.getName()));
         UserAccountDo userAccount = userAccountDao.getByAccountId(card.getAccountId());
         Optional.ofNullable(userAccount)
-                .orElseThrow(() -> new BusinessException(ResultCode.DATA_ERROR, ExceptionMsg.ACCOUNT_NOT_EXIST.getName()));
+                .orElseThrow(() -> new AccountBizException(ResultCode.DATA_ERROR, ExceptionMsg.ACCOUNT_NOT_EXIST.getName()));
         return this.combine(card, userAccount);
     }
 
