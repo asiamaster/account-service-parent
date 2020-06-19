@@ -94,10 +94,8 @@ class CardManageServiceTest extends BaseTest {
         CardRequestDto cardParam = new CardRequestDto();
         cardParam.setAccountId(wrapper.getUserAccount().getAccountId());
         cardParam.setLoginPwd("12345678");
-        OperatorRequestDto operator = new OperatorRequestDto();
-        operator.setOpId(userCard.getCreatorId());
-        operator.setOpName(userCard.getCreator());
-        cardParam.setOperator(operator);
+        cardParam.setOpId(userCard.getCreatorId());
+        cardParam.setOpName(userCard.getCreator());
         return cardParam;
     }
 

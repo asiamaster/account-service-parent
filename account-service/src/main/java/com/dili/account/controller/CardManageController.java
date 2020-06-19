@@ -61,12 +61,22 @@ public class CardManageController {
         }
     }
 
+    /**
+    *  卡片挂失
+    * @author miaoguoxin
+    * @date 2020/6/19
+    */
     @PostMapping("/reportLossCard")
     public BaseOutput<?> reportLossCard(@RequestBody CardRequestDto cardParam){
         cardManageService.reportLoss(cardParam);
         return BaseOutput.success();
     }
 
+    /**
+    * 换卡
+    * @author miaoguoxin
+    * @date 2020/6/19
+    */
     @PostMapping("/changeCard")
     public BaseOutput<?> changeCard(@RequestBody CardRequestDto cardParam){
         cardManageService.changeCard(cardParam);

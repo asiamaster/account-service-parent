@@ -10,7 +10,7 @@ import java.util.List;
  */
 public class UserAccountCardResponseDto implements Serializable {
     /**市场id*/
-    private String firmId;
+    private Long firmId;
     /**卡账号id*/
     private Long accountId;
     /** 父卡账号 */
@@ -42,11 +42,11 @@ public class UserAccountCardResponseDto implements Serializable {
         this.customerId = customerId;
     }
 
-    public String getFirmId() {
+    public Long getFirmId() {
         return firmId;
     }
 
-    public void setFirmId(String firmId) {
+    public void setFirmId(Long firmId) {
         this.firmId = firmId;
     }
 

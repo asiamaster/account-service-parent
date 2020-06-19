@@ -39,7 +39,7 @@ public class BaseTest {
         userAccountDo.setAccountId(RandomUtil.randomLong(1000000));
         userAccountDo.setParentAccountId(0L);
         userAccountDo.setFundAccountId(RandomUtil.randomLong(1000000));
-        userAccountDo.setFirmId("1");
+        userAccountDo.setFirmId(1L);
         userAccountDo.setFirmName("测试市场");
         userAccountDo.setCustormerId(RandomUtil.randomLong(1000000));
         try {
@@ -70,7 +70,7 @@ public class BaseTest {
         userCardDo.setCategory(CardCategory.MASTER.getCode());
         userCardDo.setCreator("测试小哥");
         userCardDo.setCreatorId(1L);
-        userCardDo.setFirmId("1");
+        userCardDo.setFirmId(1L);
         userCardDo.setFirmName("测试市场");
         userCardDo.setLast(1);
         userCardDo.setVersion(1);
