@@ -6,7 +6,7 @@ package com.dili.account.type;
  * @author ：WangBo
  * @time ：2020年4月27日下午1:45:02
  */
-public enum CardRepositoryStatus
+public enum CardStorageState
 {
 	USED("在用",1),
 	ACTIVE("激活",2),
@@ -15,15 +15,15 @@ public enum CardRepositoryStatus
 	private String name;
     private int code;
     
-	private CardRepositoryStatus(String name, int code)
+	private CardStorageState(String name, int code)
 	{
 		this.name = name;
 		this.code = code;
 	}
 	
-	public static CardRepositoryStatus getCardRepositoryStatus(int code)
+	public static CardStorageState getCardRepositoryStatus(int code)
     {
-        for (CardRepositoryStatus repositoryStatus : CardRepositoryStatus.values()) {
+        for (CardStorageState repositoryStatus : CardStorageState.values()) {
             if (repositoryStatus.getCode() == code) {
                 return repositoryStatus;
             }
@@ -33,7 +33,7 @@ public enum CardRepositoryStatus
 
     public static String getName(int code)
     {
-        for (CardRepositoryStatus repositoryStatus : CardRepositoryStatus.values()) {
+        for (CardStorageState repositoryStatus : CardStorageState.values()) {
             if (repositoryStatus.getCode() == code) {
                 return repositoryStatus.name;
             }

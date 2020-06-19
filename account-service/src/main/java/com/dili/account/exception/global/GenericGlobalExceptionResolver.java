@@ -1,5 +1,6 @@
 package com.dili.account.exception.global;
 
+import com.dili.account.exception.AccountBizException;
 import com.dili.ss.constant.ResultCode;
 import com.dili.ss.domain.BaseOutput;
 import com.dili.ss.exception.BusinessException;
@@ -87,6 +88,14 @@ public class GenericGlobalExceptionResolver {
         return BaseOutput.create(e.getErrorCode(), e.getMessage());
     }
 
+    /**
+     * 业务异常处理
+     */
+    @ExceptionHandler({AccountBizException.class})
+    public BaseOutput<?> handlerAppExceptionn(AccountBizException e) {
+        return BaseOutput.create(e.getCode(), e.getMessage());
+    }
+    
     /**
      * 处理未自定义的异常
      */
