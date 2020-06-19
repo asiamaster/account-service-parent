@@ -109,23 +109,4 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
         responseDto.setBizUsageType(account.getUsageType());
         return responseDto;
     }
-
-//	@Resource
-//	private IUserAccountCardDao userAccountCardDao;
-//
-//	@Override
-//	public List<UserAccountCardDto> listAccount(UserAccountCardQuery queryParam) {
-//		return userAccountCardDao.selectList(queryParam);
-//	}
-//
-//	@Override
-//	public UserAccountCardDto getOnly(String cardNo, Long accountId) {
-//		UserAccountCardQuery queryParam = new UserAccountCardQuery();
-//		queryParam.setCardNo(cardNo);
-//		queryParam.setAccountId(accountId);
-//		UserAccountCardDto userAccount = userAccountCardDao.getOnly(queryParam);
-//		userAccount.setLoginPwd(null);
-//		return userAccount;
-//	}
-
 }

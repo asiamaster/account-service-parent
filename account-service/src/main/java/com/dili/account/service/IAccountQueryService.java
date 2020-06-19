@@ -16,11 +16,8 @@ import java.util.List;
  * @time ：2020年4月22日下午5:48:22
  */
 public interface IAccountQueryService {
-
-
-
     /**
-     * 查询指定唯一账户数据
+     * 根据卡号查询唯一数据
      * @return
      */
     UserAccountCardResponseDto getByCardNoForRest(String cardNo);
