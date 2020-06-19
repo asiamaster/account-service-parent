@@ -86,14 +86,14 @@ public class CardManageServiceImpl implements ICardManageService {
 
         this.validateCanReportLoss(userCard, cardParam);
         this.changeState(userCard, CardStatus.LOSS.getCode());
-        this.setCreator(userCard, cardParam.getOperator());
+        this.setCreator(userCard, cardParam);
         userCardDao.update(userCard);
     }
 
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public void changeCard(CardRequestDto cardParam) {
+    public UserCardDo changeCard(CardRequestDto cardParam) {
         CardAggregationWrapper wrapper = accountQueryService.getByAccountIdWithNotNull(cardParam.getAccountId());
 
         this.validateCanChangeCard(wrapper, cardParam);
@@ -101,8 +101,8 @@ public class CardManageServiceImpl implements ICardManageService {
         UserCardDo newCard = this.cloneWhenChangeCard(oldCard, cardParam);
         //退还旧卡
         this.changeState(oldCard, CardStatus.RETURNED.getCode());
-        this.setCreator(oldCard, cardParam.getOperator());
-        this.setCreator(newCard, cardParam.getOperator());
+        this.setCreator(oldCard, cardParam);
+        this.setCreator(newCard, cardParam);
 
         userCardDao.update(oldCard);
         userCardDao.save(newCard);
@@ -110,6 +110,7 @@ public class CardManageServiceImpl implements ICardManageService {
         //老卡作废,新卡出库
         cardStorageService.voidCard(oldCard.getCardNo(), "");
         cardStorageService.inUse(newCard.getCardNo());
+        return newCard;
     }
 
     @Transactional(rollbackFor = Exception.class)
@@ -138,6 +139,9 @@ public class CardManageServiceImpl implements ICardManageService {
         if (wrapper.getUserCard().getState() == CardStatus.RETURNED.getCode()) {
             throw new BusinessException(ResultCode.DATA_ERROR, "该卡为退还状态，不能进行此操作");
         }
+        if (wrapper.getUserCard().getCardNo().equalsIgnoreCase(cardParam.getNewCardNo())){
+            throw new BusinessException(ResultCode.DATA_ERROR, "新老卡片的卡号不能相同");
+        }
         passwordService.checkPassword(cardParam.getAccountId(), cardParam.getLoginPwd());
     }
 
@@ -150,15 +154,17 @@ public class CardManageServiceImpl implements ICardManageService {
         UserCardDo newCard = (UserCardDo) old.clone();
         newCard.setCardNo(param.getNewCardNo());
         newCard.setLast(1);
-        newCard.setCreator(param.getOperator().getOpName());
-        newCard.setCreatorId(param.getOperator().getOpId());
+        newCard.setCreator(param.getOpName());
+        newCard.setCreatorId(param.getOpId());
         newCard.setState(CardStatus.NORMAL.getCode());
+        newCard.setCreateTime(LocalDateTime.now());
+        newCard.setModifyTime(LocalDateTime.now());
         return newCard;
     }
 
-    private void setCreator(UserCardDo userCard, OperatorRequestDto operator) {
-        userCard.setCreatorId(operator.getOpId());
-        userCard.setCreator(operator.getOpName());
+    private void setCreator(UserCardDo userCard, CardRequestDto requestDto) {
+        userCard.setCreatorId(requestDto.getOpId());
+        userCard.setCreator(requestDto.getOpName());
     }
 
 //

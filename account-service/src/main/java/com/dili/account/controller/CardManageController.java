@@ -59,4 +59,16 @@ public class CardManageController {
             return BaseOutput.failure();
         }
     }
+
+    @PostMapping("/reportLossCard")
+    public BaseOutput<?> reportLossCard(@RequestBody CardRequestDto cardParam){
+        cardManageService.reportLoss(cardParam);
+        return BaseOutput.success();
+    }
+
+    @PostMapping("/changeCard")
+    public BaseOutput<?> changeCard(@RequestBody CardRequestDto cardParam){
+        cardManageService.changeCard(cardParam);
+        return BaseOutput.success();
+    }
 }

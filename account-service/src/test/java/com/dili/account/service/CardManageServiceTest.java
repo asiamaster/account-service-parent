@@ -1,5 +1,7 @@
 package com.dili.account.service;
 
+import cn.hutool.core.util.RandomUtil;
+import com.alibaba.fastjson.JSON;
 import com.dili.account.BaseTest;
 import com.dili.account.dao.IUserAccountDao;
 import com.dili.account.dao.IUserCardDao;
@@ -14,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.mock.mockito.MockBean;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -33,6 +37,8 @@ class CardManageServiceTest extends BaseTest {
     private IUserCardDao userCardDao;
     @MockBean
     private IUserAccountDao userAccountDao;
+    @MockBean
+    private ICardStorageService cardStorageService;
 
 
     @Test
@@ -48,14 +54,39 @@ class CardManageServiceTest extends BaseTest {
         when(userAccountDao.getByAccountId(userCard.getAccountId()))
                 .thenReturn(wrapper.getUserAccount());
         cardManageService.reportLoss(cardParam);
+
         assertEquals(CardStatus.LOSS.getCode(), userCard.getState());
         verify(userCardDao, times(1)).update(userCard);
     }
 
 
     @Test
-    void changeCard() {
+    void testChangeCard() {
+        CardAggregationWrapper wrapper = this.createWrapper(CardStatus.NORMAL);
+        //wrapper.getUserCard().setState(CardStatus.RETURNED.getCode());
+        CardRequestDto cardParam = this.createParams(wrapper);
+        cardParam.setNewCardNo(RandomUtil.randomString(RANDOM_STR, 10));
+        cardParam.setLoginPwd("12345678");
+        UserCardDo userCard = wrapper.getUserCard();
 
+        when(accountQueryService.getByAccountIdWithNotNull(cardParam.getAccountId()))
+                .thenReturn(wrapper);
+        when(userCardDao.update(userCard)).thenReturn(1);
+        when(userAccountDao.getByAccountId(userCard.getAccountId()))
+                .thenReturn(wrapper.getUserAccount());
+
+        UserCardDo newCard = cardManageService.changeCard(cardParam);
+        assertNotNull(newCard.getCardNo());
+        assertNotEquals(userCard.getCardNo(),newCard.getCardNo());
+        assertEquals(CardStatus.RETURNED.getCode(), userCard.getState());
+        assertEquals(1,userCardDao.update(userCard));
+        verify(userCardDao, times(1)).save(newCard);
+        verify(cardStorageService, times(1)).voidCard(userCard.getCardNo(),"");
+        verify(cardStorageService, times(1)).inUse(newCard.getCardNo());
+        assertEquals(CardStatus.NORMAL.getCode(),newCard.getState());
+        assertNotNull(newCard.getCreateTime());
+        assertNotNull(newCard.getModifyTime());
+        LOGGER.info("返回的新卡:{}", JSON.toJSONString(newCard));
     }
 
     private CardRequestDto createParams(CardAggregationWrapper wrapper) {
@@ -83,6 +114,7 @@ class CardManageServiceTest extends BaseTest {
         wrapper.setUserAccount(account);
         return wrapper;
     }
+
 
 
 }

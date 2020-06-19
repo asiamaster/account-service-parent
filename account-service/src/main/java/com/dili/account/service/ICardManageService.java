@@ -2,6 +2,7 @@ package com.dili.account.service;
 
 import com.dili.account.dto.CardManageParamDto;
 import com.dili.account.dto.CardRequestDto;
+import com.dili.account.entity.UserCardDo;
 
 /**
  * @description： 卡片管理服务，包括退卡，换卡，补卡，挂失，解挂
@@ -37,7 +38,7 @@ public interface ICardManageService {
 	 * @author miaoguoxin
 	 * @date 2020/6/17
 	 */
-	 void changeCard(CardRequestDto cardParam);
+	 UserCardDo changeCard(CardRequestDto cardParam);
 
 	/**
 	 * 解挂卡片

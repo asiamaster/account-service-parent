@@ -32,7 +32,7 @@ import java.time.LocalDateTime;
 public class BaseTest {
     protected static Logger LOGGER = LoggerFactory.getLogger(BaseTest.class);
 
-    private static final String RANDOM_STR = "1234567890";
+    protected static final String RANDOM_STR = "1234567890";
 
     protected static UserAccountDo createAccount() {
         UserAccountDo userAccountDo = new UserAccountDo();

@@ -1,36 +1,35 @@
 package com.dili.account.dto;
 
+import com.dili.account.validator.CardValidator;
+
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 /**
  *
  * 卡请求相关
  *
  */
-public class CardRequestDto {
+public class CardRequestDto extends BaseDto{
 	/** 卡号 */
 	private String cardNo;
 	/** 新卡号 */
+	@NotBlank(message = "新卡卡号不能为空",groups = CardValidator.ChangeCard.class)
 	private String newCardNo;
 	/** 账户ID */
 	/** 货主账号 */
-//    @NotNull(message = "账号不能为空", groups = {CardValidator.Operation.class})
+	@NotNull(message = "账号id不能为空",groups = CardValidator.Generic.class)
+	@Min(value = 1,message = "id最小为1",groups = CardValidator.Generic.class)
 	private Long accountId;
 	/** 原来登录密码 */
 	private String oldLoginPwd;
 	/** 登录密码 */
-//	@NotBlank(message = "密码不能为空", groups = {CardValidator.Operation.class})
+	@NotNull(message = "账号id不能为空",groups = CardValidator.Generic.class)
+	@Min(value = 1,message = "id最小为1",groups = CardValidator.Generic.class)
 	private String loginPwd;
 	/** 二次输入登录密码 */
 	private String secondLoginPwd;
-	/**操作员信息*/
-	private OperatorRequestDto operator;
-
-	public OperatorRequestDto getOperator() {
-		return operator;
-	}
-
-	public void setOperator(OperatorRequestDto operator) {
-		this.operator = operator;
-	}
 
 	public String getCardNo() {
 		return cardNo;

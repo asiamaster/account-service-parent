@@ -5,7 +5,9 @@ import com.dili.account.entity.UserCardDo;
 import com.dili.account.type.CardStatus;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.mock.mockito.MockBean;
 
 import java.time.LocalDateTime;
 
@@ -47,5 +49,13 @@ class UserCardDaoTest extends BaseTest {
         int update = userCardDao.update(card);
         assertEquals(CardStatus.LOSS.getCode(), card.getState());
         assertEquals(1, update);
+    }
+
+    @Test
+    void testUpdateState(){
+        this.userCardDao = Mockito.mock(IUserCardDao.class);
+        Mockito.when(userCardDao.updateState(1L,1,1))
+                .thenReturn(5);
+        assertEquals(1,userCardDao.updateState(1L,1,1));
     }
 }

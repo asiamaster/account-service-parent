@@ -67,7 +67,9 @@ public interface IUserCardDao {
 	 * @param version
 	 * @return
 	 */
-	int updateState(@Param("accountId") Long accountId, @Param("state") Integer state, @Param("version") Integer version);
+	int updateState(@Param("accountId") Long accountId,
+					@Param("state") Integer state,
+					@Param("version") Integer version);
 
 	/**
 	 * 通过账号查询卡信息
