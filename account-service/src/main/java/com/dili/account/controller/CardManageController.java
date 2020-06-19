@@ -2,6 +2,7 @@ package com.dili.account.controller;
 
 import javax.annotation.Resource;
 
+import com.dili.account.entity.CardAggregationWrapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -42,7 +43,7 @@ public class CardManageController {
      * 解挂卡片
      */
     @PostMapping("/unLostCard")
-    public BaseOutput<?> unLostCard(@RequestBody CardRequestDto cardParam) {
+    public BaseOutput<CardAggregationWrapper> unLostCard(@RequestBody CardRequestDto cardParam) {
         try {
             if (cardParam.getAccountId() == null) {
                 return BaseOutput.failure("账户ID为空");
@@ -50,8 +51,8 @@ public class CardManageController {
             if (StrUtil.isBlank(cardParam.getLoginPwd())) {
                 return BaseOutput.failure("密码为空");
             }
-            cardManageService.unLostCard(cardParam);
-            return BaseOutput.success();
+            CardAggregationWrapper wrapper = cardManageService.unLostCard(cardParam);
+            return BaseOutput.success().setData(wrapper);
         } catch (BusinessException e) {
             return BaseOutput.failure(e.getErrorMsg());
         } catch (Exception e) {

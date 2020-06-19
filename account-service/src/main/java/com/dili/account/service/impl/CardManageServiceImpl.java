@@ -114,7 +114,7 @@ public class CardManageServiceImpl implements ICardManageService {
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public void unLostCard(CardRequestDto cardParam) {
+    public CardAggregationWrapper unLostCard(CardRequestDto cardParam) {
         CardAggregationWrapper wrapper = accountQueryService.getByAccountIdWithNotNull(cardParam.getAccountId());
         UserCardDo userCard = wrapper.getUserCard();
         if (CardStatus.LOSS.getCode() != userCard.getState()) {//非挂失状态卡片，不允许解挂
@@ -125,6 +125,7 @@ public class CardManageServiceImpl implements ICardManageService {
         if (i != 1) {
             throw new BusinessException(ResultCode.DATA_ERROR, "解挂失操作失败");
         }
+        return wrapper;
     }
 
     private void validateCanReportLoss(UserCardDo userCard, CardRequestDto cardParam) {
