@@ -32,7 +32,7 @@ public class LoginUserDo implements Serializable {
 	/** 数据版本号 */
 	private Integer version; 
 	/** 商户ID */
-	private String firmId; 
+	private Long firmId; 
 	/** 商户名称 */
 	private String firmName; 
 	/** 创建时间 */
@@ -189,14 +189,14 @@ public class LoginUserDo implements Serializable {
     /**
      * setter for 商户ID
      */
-	public void setFirmId(String firmId) {
+	public void setFirmId(Long firmId) {
 		this.firmId = firmId;
 	}
 
     /**
      * getter for 商户ID
      */
-	public String getFirmId() {
+	public Long getFirmId() {
 		return firmId;
 	}
 
