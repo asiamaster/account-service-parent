@@ -2,6 +2,7 @@ package com.dili.account.service;
 
 import com.dili.account.dto.CardManageParamDto;
 import com.dili.account.dto.CardRequestDto;
+import com.dili.account.entity.CardAggregationWrapper;
 import com.dili.account.entity.UserCardDo;
 
 /**
@@ -41,9 +42,9 @@ public interface ICardManageService {
 	 UserCardDo changeCard(CardRequestDto cardParam);
 
 	/**
-	 * 解挂卡片
+	 * 解挂卡片 返回操作卡及账户信息以便日志记录
 	 */
-	void unLostCard(CardRequestDto cardParam);
+	CardAggregationWrapper unLostCard(CardRequestDto cardParam);
 //
 //	/**
 //	 * 根据卡号锁定卡

@@ -29,8 +29,10 @@ public class CardStorageDo implements Serializable {
 	private Long creatorId; 
 	/** 操作员名称 */
 	private String creator; 
+	/** 备注 */
+	private String notes; 
 	/** 商户ID */
-	private String firmId; 
+	private Long firmId; 
 	/** 商户名称 */
 	private String firmName; 
 	/** 创建时间 */
@@ -171,16 +173,30 @@ public class CardStorageDo implements Serializable {
 	}
 
     /**
+     * setter for 备注
+     */
+	public void setNotes(String notes) {
+		this.notes = notes;
+	}
+
+    /**
+     * getter for 备注
+     */
+	public String getNotes() {
+		return notes;
+	}
+
+    /**
      * setter for 商户ID
      */
-	public void setFirmId(String firmId) {
+	public void setFirmId(Long firmId) {
 		this.firmId = firmId;
 	}
 
     /**
      * getter for 商户ID
      */
-	public String getFirmId() {
+	public Long getFirmId() {
 		return firmId;
 	}
 
@@ -241,6 +257,7 @@ public class CardStorageDo implements Serializable {
                ", state='" + state + '\'' +
                ", creatorId='" + creatorId + '\'' +
                ", creator='" + creator + '\'' +
+               ", notes='" + notes + '\'' +
                ", firmId='" + firmId + '\'' +
                ", firmName='" + firmName + '\'' +
                ", createTime='" + createTime + '\'' +

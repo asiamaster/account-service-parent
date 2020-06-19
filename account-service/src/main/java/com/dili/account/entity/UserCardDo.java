@@ -43,7 +43,7 @@ public class UserCardDo implements Serializable, Cloneable {
     /** 员工名称-保留字段 */
     private String creator;
     /** 商户ID */
-    private String firmId;
+    private Long firmId;
     /** 商户名称 */
     private String firmName;
     /** 创建时间 */
@@ -180,11 +180,11 @@ public class UserCardDo implements Serializable, Cloneable {
         return creator;
     }
 
-    public void setFirmId(String firmId) {
+    public void setFirmId(Long firmId) {
         this.firmId = firmId;
     }
 
-    public String getFirmId() {
+    public Long getFirmId() {
         return firmId;
     }
 
