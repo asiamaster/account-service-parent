@@ -16,16 +16,15 @@ import com.dili.account.service.ICardStorageService;
 import com.dili.account.util.AssertUtils;
 import com.dili.ss.domain.BaseOutput;
 import com.dili.ss.domain.PageOutput;
-import com.github.pagehelper.Page;
 
 /**
- * 卡片仓库服务，入库、报废
- * 
+ * @description： 
+ *          卡片仓库服务，入库、报废
  * @author ：WangBo
- * @time ：2020年4月28日下午4:05:36
+ * @time ：2020年6月19日下午5:36:46
  */
 @RestController
-@RequestMapping(value = "card/storage")
+@RequestMapping(value = "api/account/storage")
 public class CardStorageController {
 
 	@Resource

@@ -84,7 +84,7 @@
 			card_no = #{cardNo}
 	</select>
 	
-	<update id="update">
+	<update id="updateByCardNo">
 		UPDATE account_card_storage
 	 	<set>
 			<if test="deviceId != null">`device_id` = #{deviceId}, </if>

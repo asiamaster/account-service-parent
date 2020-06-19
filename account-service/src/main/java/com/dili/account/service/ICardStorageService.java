@@ -2,7 +2,6 @@ package com.dili.account.service;
 
 import java.util.List;
 
-import com.dili.account.common.Page;
 import com.dili.account.dto.CardAddStarogeDto;
 import com.dili.account.dto.CardRepoQueryParam;
 import com.dili.account.entity.CardStorageDo;
@@ -40,5 +39,18 @@ public interface ICardStorageService {
 	 * 更新为作废
 	 */
 	public void voidCard(String cardNo, String remark);
+	
+	/**
+     * 根据卡号修改状态
+     * <br><i>只支持修改状态，修改时间为当前时间
+     * @param cardStorage
+     * @return
+     */
+	int updateByCardNo(CardStorageDo cardStorage);
+
+	/**
+	 * 根据卡号查询
+	 */
+	CardStorageDo getByCardNo(String cardNo);
 
 }

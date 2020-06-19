@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -20,10 +21,10 @@ import com.dili.ss.domain.PageOutput;
 import com.github.pagehelper.PageHelper;
 
 /**
- * @description： 卡片入库service实现
- *
+ * @description： 
+ *          卡片入库service实现
  * @author ：WangBo
- * @time ：2020年4月22日下午5:53:40
+ * @time ：2020年6月19日下午5:16:13
  */
 @Service("cardStorageService")
 public class CardStorageServiceImpl implements ICardStorageService {
@@ -33,6 +34,7 @@ public class CardStorageServiceImpl implements ICardStorageService {
 	@Resource
 	private ICardStorageDao cardStorageDao;
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public PageOutput<List<CardStorageDo>> listPage(CardRepoQueryParam queryParam) {
 		PageHelper.startPage(queryParam.getPageNumber(), queryParam.getPageSize());
@@ -138,6 +140,26 @@ public class CardStorageServiceImpl implements ICardStorageService {
 		return null;
 	}
 
+	@Override
+	public int updateByCardNo(CardStorageDo cardStorage) {
+		checkCardState(cardStorage.getCardNo());
+		// 修改状态
+		CardStorageDo updateParam = new CardStorageDo();
+		updateParam.setCardNo(cardStorage.getCardNo());
+		updateParam.setState(cardStorage.getState());
+		updateParam.setModifyTime(LocalDateTime.now());
+		cardStorageDao.updateByCardNo(updateParam);
+		return 0;
+	}
+
+	@Override
+	public CardStorageDo getByCardNo(String cardNo) {
+		if (StringUtils.isBlank(cardNo)) {
+			return null;
+		}
+		return  cardStorageDao.getByCardNo(cardNo);
+	}
+	
 	private static final String NONEXISTENT_ERRMSG = "该卡{}未入库!";
 	private static final String IN_USE_ERRMSG = "该卡{}已在使用中!";
 	private static final String NOT_IN_USE_ERRMSG = "该卡{}未被使用，操作失败!";

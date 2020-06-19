@@ -45,7 +45,7 @@ public interface ICardStorageDao {
 	CardStorageDo getByCardNo(Long id);
 
     /**
-     * 修改
+     * 根据卡号修改数据
      * @param cardStorage
      * @return
      */
