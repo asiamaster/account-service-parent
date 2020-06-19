@@ -39,10 +39,6 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
     @Autowired
     private IUserAccountCardDao userAccountCardDao;
 
-    @Override
-    public List<UserAccountCardResponseDto> listAccount(UserAccountCardQuery queryParam) {
-        return null;
-    }
 
     @Override
     public UserAccountCardResponseDto getByCardNoForRest(String cardNo) {

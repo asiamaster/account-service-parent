@@ -3,8 +3,10 @@ package com.dili.account.controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.TypeReference;
 import com.dili.account.BaseTest;
+import com.dili.account.dto.UserAccountCardQuery;
 import com.dili.account.dto.UserAccountCardResponseDto;
 import com.dili.ss.domain.BaseOutput;
+import com.dili.ss.domain.PageOutput;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -14,10 +16,12 @@ import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 /**
  * @Auther: miaoguoxin
@@ -45,7 +49,20 @@ class QueryAccountControllerTest extends BaseTest {
     }
 
     @Test
-    void testGetPage() {
+    void testGetPage() throws Exception {
+        UserAccountCardQuery param = createQueryParamDate();
+        param.setPageNum(1);
+        param.setPageSize(1);
+        String resultJson = mockMvc.perform(post("/api/account/getPage")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JSON.toJSONString(param))
+        )
+                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andDo(MockMvcResultHandlers.print())
+                .andReturn().getResponse().getContentAsString(StandardCharsets.UTF_8);
+
+        PageOutput<List<UserAccountCardResponseDto>> page = JSON.parseObject(resultJson,new TypeReference<>(){});
+        assertTrue(page.isSuccess());
     }
 
     @Test

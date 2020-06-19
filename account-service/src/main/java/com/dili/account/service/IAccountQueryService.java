@@ -17,11 +17,6 @@ import java.util.List;
  */
 public interface IAccountQueryService {
 
-    /**
-     * 查询账户数据列表
-     * @return
-     */
-    List<UserAccountCardResponseDto> listAccount(UserAccountCardQuery queryParam);
 
 
     /**
