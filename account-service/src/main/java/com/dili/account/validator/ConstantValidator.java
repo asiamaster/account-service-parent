@@ -8,6 +8,9 @@ package com.dili.account.validator;
  */
 public class ConstantValidator {
 
+    public interface Default {
+    }
+
     public interface Insert {
 
     }

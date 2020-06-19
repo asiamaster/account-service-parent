@@ -1,21 +1,21 @@
 package com.dili.account.controller;
 
-import javax.annotation.Resource;
-
+import cn.hutool.core.util.StrUtil;
+import com.dili.account.dto.CardRequestDto;
 import com.dili.account.entity.CardAggregationWrapper;
+import com.dili.account.service.ICardManageService;
+import com.dili.account.validator.CardValidator;
+import com.dili.ss.domain.BaseOutput;
+import com.dili.ss.exception.BusinessException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.dili.account.dto.CardRequestDto;
-import com.dili.account.service.ICardManageService;
-import com.dili.ss.domain.BaseOutput;
-import com.dili.ss.exception.BusinessException;
-
-import cn.hutool.core.util.StrUtil;
+import javax.annotation.Resource;
 
 /**
  * 卡片管理服务，退卡、挂失、解挂、补卡等
@@ -23,21 +23,21 @@ import cn.hutool.core.util.StrUtil;
  * @time ：2020年4月28日下午4:04:46
  */
 @RestController
-@RequestMapping(value = "/api/account")
+@RequestMapping(value = "/api/card")
 public class CardManageController {
     private static Logger LOGGER = LoggerFactory.getLogger(CardManageController.class);
 
-	@Resource
-	private ICardManageService cardManageService;
+    @Resource
+    private ICardManageService cardManageService;
 
-	/**
-	 * 退卡
-	 */
-	@PostMapping("/returnCard")
-	public BaseOutput<Boolean> returnCard(@RequestBody CardRequestDto cardRequest) {
-		cardManageService.returnCard(cardRequest);
-		return BaseOutput.success();
-	}
+    /**
+     * 退卡
+     */
+    @PostMapping("/returnCard")
+    public BaseOutput<Boolean> returnCard(@RequestBody CardRequestDto cardRequest) {
+        cardManageService.returnCard(cardRequest);
+        return BaseOutput.success();
+    }
 
     /**
      * 解挂卡片
@@ -62,23 +62,26 @@ public class CardManageController {
     }
 
     /**
-    *  卡片挂失
-    * @author miaoguoxin
-    * @date 2020/6/19
-    */
+     *  卡片挂失
+     * @author miaoguoxin
+     * @date 2020/6/19
+     */
     @PostMapping("/reportLossCard")
-    public BaseOutput<?> reportLossCard(@RequestBody CardRequestDto cardParam){
+    public BaseOutput<?> reportLossCard(@RequestBody @Validated({CardValidator.Generic.class})
+                                                    CardRequestDto cardParam) {
         cardManageService.reportLoss(cardParam);
         return BaseOutput.success();
     }
 
     /**
-    * 换卡
-    * @author miaoguoxin
-    * @date 2020/6/19
-    */
+     * 换卡
+     * @author miaoguoxin
+     * @date 2020/6/19
+     */
     @PostMapping("/changeCard")
-    public BaseOutput<?> changeCard(@RequestBody CardRequestDto cardParam){
+    public BaseOutput<?> changeCard(@RequestBody
+                                    @Validated({CardValidator.Generic.class, CardValidator.ChangeCard.class})
+                                            CardRequestDto cardParam) {
         cardManageService.changeCard(cardParam);
         return BaseOutput.success();
     }
