@@ -1,21 +1,21 @@
 package com.dili.account.dao;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-
-import java.util.List;
-
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.alibaba.fastjson.JSON;
 import com.dili.account.BaseTest;
 import com.dili.account.dto.UserAccountCardQuery;
 import com.dili.account.entity.CardAggregationWrapper;
 import com.dili.account.entity.UserAccountDo;
 import com.dili.account.entity.UserCardDo;
+import com.dili.account.type.CardType;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  * @Auther: miaoguoxin
@@ -53,17 +53,18 @@ class IUserAccountCardDaoTest extends BaseTest {
 
     @Test
     void testGetListByConditionWithAll() {
-        UserAccountCardQuery queryParam = this.createQueryParamAll();
+        UserAccountCardQuery queryParam = createQueryParamAll();
         List<CardAggregationWrapper> pageByCondition = userAccountCardDao.getListByCondition(queryParam);
         LOGGER.info("testGetPageByConditionWithAll获取到的实体:{},长度:{}", JSON.toJSONString(pageByCondition), pageByCondition.size());
         for (CardAggregationWrapper wrapper : pageByCondition) {
             this.assertResult(wrapper);
+            assertEquals(CardType.MASTER.getCode(), wrapper.getUserCard().getType());
         }
     }
 
     @Test
     void testGetPageWithDate() {
-        UserAccountCardQuery queryParam = this.createQueryParamDate();
+        UserAccountCardQuery queryParam = createQueryParamDate();
         Page<Object> page = PageHelper.startPage(1, 10);
         List<CardAggregationWrapper> pageByCondition = userAccountCardDao.getListByCondition(queryParam);
         LOGGER.info(page.getTotal() + "");

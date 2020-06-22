@@ -24,17 +24,17 @@ public class UserAccountCardQuery extends BaseDto{
 	private LocalDateTime startDate;
 	/**开始时间*/
 	private LocalDateTime endDate;
-	/**卡类别 {@link com.dili.account.type.CardCategory}*/
-	private Integer cardCategory;
+	/**卡类别 {@link com.dili.account.type.CardType}*/
+	private Integer cardType;
 	/**卡状态 {@link com.dili.account.type.CardStatus}*/
 	private Integer cardState;
 
-	public Integer getCardCategory() {
-		return cardCategory;
+	public Integer getCardType() {
+		return cardType;
 	}
 
-	public void setCardCategory(Integer cardCategory) {
-		this.cardCategory = cardCategory;
+	public void setCardType(Integer cardType) {
+		this.cardType = cardType;
 	}
 
 	public Integer getCardState() {

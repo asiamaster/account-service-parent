@@ -131,8 +131,8 @@
             <if test="parentAccountId!=null">
                 AND aua.parent_account_id = #{parentAccountId}
             </if>
-            <if test="cardCategory!=null">
-                AND auc.category = #{cardCategory}
+            <if test="cardType!=null">
+                AND auc.type = #{cardType}
             </if>
             <if test="cardState!=null">
                 AND auc.state = #{cardState}

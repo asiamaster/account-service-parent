@@ -67,14 +67,8 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
         return PageUtils.convert2PageOutput(page, result);
     }
 
-
     @Override
     public CardAggregationWrapper getByAccountIdWithNotNull(Long accountId) {
-        return this.getByAccountIdWithNotNull(accountId, false);
-    }
-
-    @Override
-    public CardAggregationWrapper getByAccountIdWithNotNull(Long accountId, boolean needCustomerInfo) {
         UserCardDo card = userCardDao.getByAccountId(accountId);
         Optional.ofNullable(card)
                 .orElseThrow(() -> new AccountBizException(ResultCode.DATA_ERROR, ExceptionMsg.CARD_NOT_EXIST.getName()));

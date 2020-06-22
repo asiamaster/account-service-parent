@@ -76,13 +76,15 @@ class CardManageServiceTest extends BaseTest {
                 .thenReturn(wrapper.getUserAccount());
 
         UserCardDo newCard = cardManageService.changeCard(cardParam);
+
+        verify(userCardDao, times(1)).save(newCard);
+        verify(cardStorageService, times(1)).voidCard(userCard.getCardNo(),"");
+        verify(cardStorageService, times(1)).inUse(newCard.getCardNo());
         assertNotNull(newCard.getCardNo());
         assertNotEquals(userCard.getCardNo(),newCard.getCardNo());
         assertEquals(CardStatus.RETURNED.getCode(), userCard.getState());
         assertEquals(1,userCardDao.update(userCard));
-        verify(userCardDao, times(1)).save(newCard);
-        verify(cardStorageService, times(1)).voidCard(userCard.getCardNo(),"");
-        verify(cardStorageService, times(1)).inUse(newCard.getCardNo());
+        assertEquals(userCard.getAccountId(),newCard.getAccountId());
         assertEquals(CardStatus.NORMAL.getCode(),newCard.getState());
         assertNotNull(newCard.getCreateTime());
         assertNotNull(newCard.getModifyTime());
