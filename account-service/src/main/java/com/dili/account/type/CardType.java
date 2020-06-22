@@ -7,9 +7,15 @@ package com.dili.account.type;
  * @time ：2020年4月24日上午9:58:20
  */
 public enum CardType {
-	ELEC_CARD("电子卡", 1),
+	MASTER("主卡", 10),
 
-	PHYSICAL_CARD("物理实体卡", 2);
+	SLAVE("副卡", 20),
+
+	ANONYMOUS("匿名卡", 30),
+
+	UNION("联营卡", 40),
+
+	BANK("银行卡", 60);
 
 	private String name;
 	private int code;
