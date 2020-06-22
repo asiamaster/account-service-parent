@@ -1,7 +1,7 @@
 package com.dili.account.controller;
 
 import cn.hutool.core.collection.CollUtil;
-import com.dili.account.dto.SerialRequestDto;
+import com.dili.account.dto.SerialDto;
 import com.dili.account.service.ISerialRecordService;
 import com.dili.ss.domain.BaseOutput;
 import org.slf4j.Logger;
@@ -29,7 +29,7 @@ public class SerialRecordController {
      * @return
      */
     @RequestMapping(value = "/batchSave")
-    public BaseOutput<?> save(@RequestBody SerialRequestDto serialRequestDto) {
+    public BaseOutput<?> save(@RequestBody SerialDto serialRequestDto) {
         try {
             if (CollUtil.isEmpty(serialRequestDto.getSerialRecordList())) {
                 return BaseOutput.failure("操作流水记录列表为空");

@@ -3,7 +3,6 @@ package com.dili.account.service.impl;
 import com.dili.account.dao.IUserAccountDao;
 import com.dili.account.dao.IUserCardDao;
 import com.dili.account.dto.CardRequestDto;
-import com.dili.account.dto.OperatorRequestDto;
 import com.dili.account.dto.PayAccountDto;
 import com.dili.account.entity.CardAggregationWrapper;
 import com.dili.account.entity.UserAccountDo;
@@ -16,7 +15,6 @@ import com.dili.account.service.ICardStorageService;
 import com.dili.account.service.IPasswordService;
 import com.dili.account.type.CardStatus;
 import com.dili.ss.constant.ResultCode;
-import com.dili.ss.exception.BusinessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -116,7 +114,7 @@ public class CardManageServiceImpl implements ICardManageService {
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public CardAggregationWrapper unLostCard(CardRequestDto cardParam) {
+    public void unLostCard(CardRequestDto cardParam) {
         CardAggregationWrapper wrapper = accountQueryService.getByAccountIdWithNotNull(cardParam.getAccountId());
         UserCardDo userCard = wrapper.getUserCard();
         if (CardStatus.LOSS.getCode() != userCard.getState()) {//非挂失状态卡片，不允许解挂
@@ -127,7 +125,6 @@ public class CardManageServiceImpl implements ICardManageService {
         if (i != 1) {
             throw new AccountBizException(ResultCode.DATA_ERROR, "解挂失操作失败");
         }
-        return wrapper;
     }
 
     private void validateCanReportLoss(UserCardDo userCard, CardRequestDto cardParam) {
