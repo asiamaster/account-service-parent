@@ -10,7 +10,7 @@
             <result column="id" property="id"/>
             <result column="account_id" property="accountId"/>
             <result column="parent_account_id" property="parentAccountId"/>
-            <result column="custormer_id" property="custormerId"/>
+            <result column="customer_id" property="customerId"/>
             <result column="fund_account_id" property="fundAccountId"/>
             <result column="type" property="type"/>
             <result column="usage_type" property="usageType"/>
@@ -60,7 +60,7 @@
         aua.`id`,
             aua.`account_id`,
             aua.`parent_account_id`,
-            aua.`custormer_id`,
+            aua.`customer_id`,
             aua.`fund_account_id`,
             aua.`type`,
             aua.`usage_type`,
@@ -110,9 +110,9 @@
         account_user_account aua
         LEFT JOIN account_user_card auc on aua.account_id = auc.account_id
         <where>
-            <if test="custormerIds!=null and custormerIds.size>0">
-                AND aua.custormer_id IN
-                <foreach item="item" collection="custormerIds" separator="," open="(" close=")" index="">
+            <if test="customerIds!=null and customerIds.size>0">
+                AND aua.customer_id IN
+                <foreach item="item" collection="customerIds" separator="," open="(" close=")" index="">
                     #{item}
                 </foreach>
             </if>

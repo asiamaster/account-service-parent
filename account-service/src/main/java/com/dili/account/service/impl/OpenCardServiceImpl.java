@@ -1,38 +1,36 @@
 package com.dili.account.service.impl;
 
+import java.util.List;
+
+import javax.annotation.Resource;
+
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.dili.account.dto.OpenCardDto;
 import com.dili.account.dto.OpenCardResponseDto;
+import com.dili.account.dto.UserAccountCardQuery;
+import com.dili.account.dto.UserAccountCardResponseDto;
+import com.dili.account.entity.CardStorageDo;
+import com.dili.account.exception.AccountBizException;
+import com.dili.account.service.IAccountQueryService;
+import com.dili.account.service.ICardStorageService;
 import com.dili.account.service.IOpenCardService;
+import com.google.common.collect.Lists;
 
 /**
- * @description： 开卡service实现
- *
+ * @description： 
+ *           开卡service实现
  * @author ：WangBo
- * @time ：2020年4月22日下午5:53:40
+ * @time ：2020年6月19日下午5:54:23
  */
 @Service("openCardService")
 public class OpenCardServiceImpl implements IOpenCardService{
 
-	@Override
-	public OpenCardResponseDto openMasterCard(OpenCardDto openCardInfo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public OpenCardResponseDto openSlaveCard(OpenCardDto openCardInfo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-//	@Resource
-//	private ICardRepositoryService cardRepositoryService;
-//	@Resource
-//	private IUserAmountLimitService amountLimitService;
-//	@Resource
-//	private IUserInfoDao userInfoDao;
+	@Resource
+	private ICardStorageService ICardStorageService;
+	@Resource
+	private IAccountQueryService accountQueryService;
 //	@Resource
 //	private IUserAccountDao userAccountDao;
 //	@Resource
@@ -47,6 +45,73 @@ public class OpenCardServiceImpl implements IOpenCardService{
 //	private CrmRpc crmRpc;
 //	@Resource
 //	private PayRpc payRpc;
+	
+	
+	
+	@Override
+	@Transactional(rollbackFor = Exception.class)
+	public OpenCardResponseDto openMasterCard(OpenCardDto openCardInfo) {
+		// 判断卡状态是否异常
+		UserAccountCardResponseDto cardExists = accountQueryService.getByCardNoForRest(openCardInfo.getCardNo());
+		if (cardExists != null) {
+			throw new AccountBizException("该卡{}已被{}使用，不能开卡!", openCardInfo.getCardNo(), cardExists.getAccountId());
+		}
+		// 判断客户是否已办理过主卡，寿光每个人只能有一张交易主卡,其它市场允许办两张卡，则判断只能一张交易买家卡和一张交易卖家卡
+		UserAccountCardQuery queryParam = new UserAccountCardQuery();
+		queryParam.setCustomerIds(Lists.newArrayList(openCardInfo.getCustormerId()));
+		List<UserAccountCardResponseDto> userAccountList = accountQueryService.getListByConditionForRest(queryParam);
+		if (userAccountList.size() > 0) {
+			// TODO 是否允许两张卡
+			throw new AccountBizException("客户{}已办理过交易主卡{}", openCardInfo.getName(), userAccountList.get(0).getCardNo());
+		}
+		// 判断卡类型，并将卡片改为使用中
+		CardStorageDo cardStorageDo = ICardStorageService.inUse(openCardInfo.getCardNo());
+//		if (cardStorageDo.getType() != CardCategory.MASTER.getCode()) {
+//			throw new AccountBizException("该卡{}不是主卡，操作失败!", openCardInfo.getCardNo());
+//		}
+//
+//		// 对公户保存法人信息
+//		UserLegalEntity userLegal = new UserLegalEntity();
+//		if (AccountType.PUBLIC.getCode() == openCardInfo.getAccountType()) {
+//			userLegal = buildUserLegal(openCardInfo);
+//			userLegalDao.save(userLegal);
+//		}
+//		// 保存用户信息，如果已有用户信息则使用原信息
+//		UserInfoEntity queryParam = new UserInfoEntity();
+//		queryParam.setCrmCustormerId(openCardInfo.getCrmCustormerId());
+//		UserInfoEntity userInfo = userInfoDao.getOnlyOne(queryParam);
+//		if (userInfo == null) {
+//			userInfo = buildUserInfo(openCardInfo);
+//			userInfo.setLegalId(userLegal.getId());
+//			userInfoDao.save(userInfo);
+//		}
+//		// 构建账户信息
+//		UserAccountEntity userAccount = buildUserAccount(openCardInfo, userInfo.getId());
+//
+//		// 保存卡片信息
+//		UserCardEntity userCard = buildUserCard(openCardInfo, userAccount.getId());
+//		userCardDao.save(userCard);
+//
+//		// 保存账户信息
+//		userAccount.setLatestCardId(userCard.getId());
+//		userAccountDao.save(userAccount);
+//
+//		// 保存使用额度权限
+//		UserAmountLimitEntity userLimit = buildUserLimit(openCardInfo, userAccount.getId());
+//		amountLimitService.save(userLimit);
+//
+//		// 返回数据
+//		OpenCardResponseDto response = new OpenCardResponseDto();
+//		response.setAccountId(userAccount.getId());
+//		return response;
+		return null;
+	}
+
+	@Override
+	public OpenCardResponseDto openSlaveCard(OpenCardDto openCardInfo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 //
 //	@Override
 //	public List<UserInfoEntity> listUser() {

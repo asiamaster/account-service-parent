@@ -1,9 +1,14 @@
 package com.dili.account.dto;
 
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
 import java.time.LocalDateTime;
+
+import com.dili.account.type.AccountType;
+import com.dili.account.type.CardBizType;
+import com.dili.account.type.CardType;
+import com.dili.account.type.CreateSource;
+import com.dili.account.type.CustomerAreaType;
+import com.dili.account.type.UsePermissionType;
 
 /**
  * @description： 开卡所需要的用户信息
@@ -15,9 +20,9 @@ public class OpenCardDto {
 	/** 用户姓名 */
 	private String name;
 	/** CRM系统客户ID */
-	private Long crmCustormerId;
+	private Long custormerId;
 	/** 客户类型 {@link AccountType} */
-	private Integer custormerType;
+	private Integer customerType;
 	/** 性别 */
 	private Integer gender;
 	/** 证件类型 */
@@ -85,20 +90,20 @@ public class OpenCardDto {
 		this.name = name;
 	}
 
-	public Long getCrmCustormerId() {
-		return crmCustormerId;
+	public Long getCustormerId() {
+		return custormerId;
 	}
 
-	public void setCrmCustormerId(Long crmCustormerId) {
-		this.crmCustormerId = crmCustormerId;
+	public void setCustormerId(Long custormerId) {
+		this.custormerId = custormerId;
 	}
 
-	public Integer getCustormerType() {
-		return custormerType;
+	public Integer getCustomerType() {
+		return customerType;
 	}
 
-	public void setCustormerType(Integer custormerType) {
-		this.custormerType = custormerType;
+	public void setCustomerType(Integer customerType) {
+		this.customerType = customerType;
 	}
 
 	public Integer getGender() {

@@ -1,24 +1,21 @@
 package com.dili.account.dao;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.alibaba.fastjson.JSON;
 import com.dili.account.BaseTest;
 import com.dili.account.dto.UserAccountCardQuery;
 import com.dili.account.entity.CardAggregationWrapper;
 import com.dili.account.entity.UserAccountDo;
 import com.dili.account.entity.UserCardDo;
-import com.dili.account.type.CardCategory;
-import com.dili.ss.util.DateUtils;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import org.assertj.core.util.Lists;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.Date;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
  * @Auther: miaoguoxin
@@ -88,7 +85,7 @@ class IUserAccountCardDaoTest extends BaseTest {
         assertNotNull(userAccount.getAccountId());
         assertNotNull(userAccount.getId());
         assertNotNull(userAccount.getFundAccountId());
-        assertNotNull(userAccount.getCustormerId());
+        assertNotNull(userAccount.getCustomerId());
     }
 
 }

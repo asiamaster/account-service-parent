@@ -9,9 +9,8 @@ import com.dili.account.type.AccountStatus;
 import com.dili.account.type.AccountType;
 import com.dili.account.type.AccountUsageType;
 import com.dili.account.type.CardBizType;
-import com.dili.account.type.CardCategory;
-import com.dili.account.type.CardStatus;
 import com.dili.account.type.CardType;
+import com.dili.account.type.CardStatus;
 import com.dili.account.type.CreateSource;
 import com.dili.account.type.UsePermissionType;
 import com.dili.account.util.AesCipher;
@@ -45,7 +44,7 @@ public class BaseTest {
         userAccountDo.setFundAccountId(RandomUtil.randomLong(1000000));
         userAccountDo.setFirmId(1L);
         userAccountDo.setFirmName("测试市场");
-        userAccountDo.setCustormerId(RandomUtil.randomLong(1000000));
+        userAccountDo.setCustomerId(RandomUtil.randomLong(1000000));
         try {
             userAccountDo.setSecretKey(AesCipher.generateSecretKey());
         } catch (Exception e) {
@@ -71,7 +70,7 @@ public class BaseTest {
         userCardDo.setAccountId(RandomUtil.randomLong(1000000));
         userCardDo.setDeviceId("test_" + RandomUtil.randomString(RANDOM_STR, 10));
         userCardDo.setCardNo(RandomUtil.randomString(RANDOM_STR, 10));
-        userCardDo.setCategory(CardCategory.MASTER.getCode());
+        userCardDo.setCategory(CardType.MASTER.getCode());
         userCardDo.setCreator("测试小哥");
         userCardDo.setCreatorId(1L);
         userCardDo.setFirmId(1L);
@@ -80,7 +79,7 @@ public class BaseTest {
         userCardDo.setVersion(1);
         userCardDo.setCreateTime(LocalDateTime.now());
         userCardDo.setModifyTime(LocalDateTime.now());
-        userCardDo.setType(CardType.PHYSICAL_CARD.getCode());
+//        userCardDo.setType(CardType.PHYSICAL_CARD.getCode());
         userCardDo.setUsageType(CardBizType.BUYER.getCode());
         userCardDo.setVerifyCode(RandomUtil.randomString(RANDOM_STR, 3));
         return userCardDo;
@@ -110,7 +109,7 @@ public class BaseTest {
     protected static UserAccountCardQuery createQueryParamAll() {
         UserAccountCardQuery query = new UserAccountCardQuery();
         query.setAccountIds(Lists.newArrayList(862066L));
-        query.setCardCategory(CardCategory.MASTER.getCode());
+        query.setCardCategory(CardType.MASTER.getCode());
         Date startDate = DateUtils.formatDateStr2Date("2020-06-18 13:21:41");
         query.setStartDate(DateUtils.dateToLocalDateTime(startDate));
         return query;

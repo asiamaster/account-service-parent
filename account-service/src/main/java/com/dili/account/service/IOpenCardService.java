@@ -4,10 +4,10 @@ import com.dili.account.dto.OpenCardDto;
 import com.dili.account.dto.OpenCardResponseDto;
 
 /**
- * @description： 用户开卡service接口
- *
+ * @description： 
+ *          用户开卡service接口
  * @author ：WangBo
- * @time ：2020年4月22日下午5:48:22
+ * @time ：2020年6月19日下午5:54:10
  */
 public interface IOpenCardService {
 

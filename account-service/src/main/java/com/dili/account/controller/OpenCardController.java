@@ -65,9 +65,9 @@ public class OpenCardController {
 		AssertUtils.notEmpty(openCardInfo.getMobile(), "开卡手机号不能为空!");
 		AssertUtils.notEmpty(openCardInfo.getMarketId(), "开卡市场编码不能为空!");
 		// 实体卡
-		if (CardType.PHYSICAL_CARD.getCode() == openCardInfo.getSeinsweise()) {
-			AssertUtils.notEmpty(openCardInfo.getMarketId(), "卡号不能为空!");
-		}
+//		if (CardType.PHYSICAL_CARD.getCode() == openCardInfo.getSeinsweise()) {
+//			AssertUtils.notEmpty(openCardInfo.getMarketId(), "卡号不能为空!");
+//		}
 		// 对公用户
 		if (openCardInfo.getAccountType() == AccountType.PUBLIC.getCode()) {
 			AssertUtils.notEmpty(openCardInfo.getLegalName(), "法人姓名不能为空!");

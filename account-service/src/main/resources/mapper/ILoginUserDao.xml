@@ -6,7 +6,7 @@
 	<select id="selectList" resultType="com.dili.account.entity.LoginUserDo">
 		SELECT
 			`id`, 
-			`custormer_id`, 
+			`customer_id`, 
 			`login_name`, 
 			`password`, 
 			`nick_name`, 
@@ -27,7 +27,7 @@
 	
 	<insert id="save">
 		INSERT INTO account_login_user (
-			`custormer_id`, 
+			`customer_id`, 
 			`login_name`, 
 			`password`, 
 			`nick_name`, 
@@ -42,7 +42,7 @@
 			`modifiy_time`
 		)
 		VALUES (
-			#{custormerId}, 
+			#{customerId}, 
 			#{loginName}, 
 			#{password}, 
 			#{nickName}, 
@@ -61,7 +61,7 @@
 	<select id="getById" resultType="com.dili.account.entity.LoginUserDo">
 		SELECT
 			`id`, 
-			`custormer_id`, 
+			`customer_id`, 
 			`login_name`, 
 			`password`, 
 			`nick_name`, 
@@ -83,7 +83,7 @@
 	<update id="update">
 		UPDATE account_login_user
 	 	<set>
-			<if test="custormerId != null">`custormer_id` = #{custormerId}, </if>
+			<if test="customerId != null">`customer_id` = #{customerId}, </if>
 			<if test="loginName != null">`login_name` = #{loginName}, </if>
 			<if test="password != null">`password` = #{password}, </if>
 			<if test="nickName != null">`nick_name` = #{nickName}, </if>

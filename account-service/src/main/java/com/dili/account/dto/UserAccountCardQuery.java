@@ -13,7 +13,7 @@ import java.util.List;
  */
 public class UserAccountCardQuery extends BaseDto{
 	/**客户id*/
-	private List<Long> custormerIds;
+	private List<Long> customerIds;
 	/** 多个账户ID */
 	private List<Long> accountIds;
 	/** 多个卡号 */
@@ -61,12 +61,12 @@ public class UserAccountCardQuery extends BaseDto{
 		this.endDate = endDate;
 	}
 
-	public List<Long> getCustormerIds() {
-		return custormerIds;
+	public List<Long> getCustomerIds() {
+		return customerIds;
 	}
 
-	public void setCustormerIds(List<Long> custormerIds) {
-		this.custormerIds = custormerIds;
+	public void setCustomerIds(List<Long> customerIds) {
+		this.customerIds = customerIds;
 	}
 
 	public List<Long> getAccountIds() {

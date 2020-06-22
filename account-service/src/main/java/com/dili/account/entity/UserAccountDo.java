@@ -18,7 +18,7 @@ public class UserAccountDo implements Serializable {
 	/** 父账号ID */
 	private Long parentAccountId;
 	/** 客户ID */
-	private Long custormerId;
+	private Long customerId;
 	/** 资金账号 */
 	private Long fundAccountId;
 	/** 账号类型-买家账户/卖家账户 */
@@ -98,12 +98,12 @@ public class UserAccountDo implements Serializable {
 		return parentAccountId;
 	}
 
-	public Long getCustormerId() {
-		return custormerId;
+	public Long getCustomerId() {
+		return customerId;
 	}
 
-	public void setCustormerId(Long custormerId) {
-		this.custormerId = custormerId;
+	public void setCustomerId(Long customerId) {
+		this.customerId = customerId;
 	}
 
 	public void setFundAccountId(Long fundAccountId) {
@@ -273,36 +273,5 @@ public class UserAccountDo implements Serializable {
 	public LocalDateTime getModifyTime() {
 		return modifyTime;
 	}
-
-    @Override
-    public String toString() {
-        return "UserAccountEntity{" +
-               "id='" + id + '\'' +
-               ", accountId='" + accountId + '\'' +
-               ", parentAccountId='" + parentAccountId + '\'' +
-               ", custormerId='" + custormerId + '\'' +
-               ", fundAccountId='" + fundAccountId + '\'' +
-               ", type='" + type + '\'' +
-               ", usageType='" + usageType + '\'' +
-               ", holderName='" + holderName + '\'' +
-               ", holderGender='" + holderGender + '\'' +
-               ", holderMobile='" + holderMobile + '\'' +
-               ", holderCertificateNumber='" + holderCertificateNumber + '\'' +
-               ", holderCertificateType='" + holderCertificateType + '\'' +
-               ", holderAddress='" + holderAddress + '\'' +
-               ", permissions='" + permissions + '\'' +
-               ", loginPwd='" + loginPwd + '\'' +
-               ", pwdChanged='" + pwdChanged + '\'' +
-               ", loginTime='" + loginTime + '\'' +
-               ", secretKey='" + secretKey + '\'' +
-               ", state='" + state + '\'' +
-               ", source='" + source + '\'' +
-               ", version='" + version + '\'' +
-               ", firmId='" + firmId + '\'' +
-               ", firmName='" + firmName + '\'' +
-               ", createTime='" + createTime + '\'' +
-               ", modifyTime='" + modifyTime + '\'' +
-               '}';
-    }
 
 }

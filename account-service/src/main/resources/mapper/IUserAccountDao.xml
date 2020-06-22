@@ -8,7 +8,7 @@
 			`id`,
 			`account_id`,
 			`parent_account_id`,
-			`custormer_id`,
+			`customer_id`,
 			`fund_account_id`,
 			`type`,
 			`usage_type`,
@@ -40,7 +40,7 @@
 		INSERT INTO account_user_account (
 			`account_id`,
 			`parent_account_id`,
-			`custormer_id`,
+			`customer_id`,
 			`fund_account_id`,
 			`type`,
 			`usage_type`,
@@ -66,7 +66,7 @@
 		VALUES (
 			#{accountId},
 			#{parentAccountId},
-			#{custormerId},
+			#{customerId},
 			#{fundAccountId},
 			#{type},
 			#{usageType},
@@ -96,7 +96,7 @@
 			`id`,
 			`account_id`,
 			`parent_account_id`,
-			`custormer_id`,
+			`customer_id`,
 			`fund_account_id`,
 			`type`,
 			`usage_type`,
@@ -129,7 +129,7 @@
 	 	<set>
 			<if test="accountId != null">`account_id` = #{accountId}, </if>
 			<if test="parentAccountId != null">`parent_account_id` = #{parentAccountId}, </if>
-			<if test="custormerId != null">`custormer_id` = #{custormerId}, </if>
+			<if test="customerId != null">`customer_id` = #{customerId}, </if>
 			<if test="fundAccountId != null">`fund_account_id` = #{fundAccountId}, </if>
 			<if test="type != null">`type` = #{type}, </if>
 			<if test="usageType != null">`usage_type` = #{usageType}, </if>
@@ -172,7 +172,7 @@
 			`id`,
 			`account_id`,
 			`parent_account_id`,
-			`custormer_id`,
+			`customer_id`,
 			`fund_account_id`,
 			`type`,
 			`usage_type`,
@@ -206,7 +206,7 @@
 			`id`,
 			`account_id`,
 			`parent_account_id`,
-			`custormer_id`,
+			`customer_id`,
 			`fund_account_id`,
 			`type`,
 			`usage_type`,
