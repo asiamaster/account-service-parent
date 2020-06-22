@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dili.account.dao.ISerialRecordDao">
+	
+	<select id="selectList" resultType="com.dili.account.entity.SerialRecordDo">
+		SELECT
+			`id`, 
+			`serial_no`, 
+			`account_id`, 
+			`card_no`, 
+			`customer_id`, 
+			`customer_no`, 
+			`customer_name`, 
+			`action`, 
+			`start_balance`, 
+			`amount`, 
+			`end_balance`, 
+			`trade_type`, 
+			`trade_channel`, 
+			`trade_no`, 
+			`fund_item`, 
+			`fund_item_name`, 
+			`operator_id`, 
+			`operator_no`, 
+			`operator_name`, 
+			`operate_time`, 
+			`notes`, 
+			`firm_id`
+		FROM
+			account_serial_record
+		ORDER BY
+			id DESC
+	</select>
+	
+	<insert id="save">
+		INSERT INTO account_serial_record (
+			`serial_no`, 
+			`account_id`, 
+			`card_no`, 
+			`customer_id`, 
+			`customer_no`, 
+			`customer_name`, 
+			`action`, 
+			`start_balance`, 
+			`amount`, 
+			`end_balance`, 
+			`trade_type`, 
+			`trade_channel`, 
+			`trade_no`, 
+			`fund_item`, 
+			`fund_item_name`, 
+			`operator_id`, 
+			`operator_no`, 
+			`operator_name`, 
+			`operate_time`, 
+			`notes`, 
+			`firm_id`
+		)
+		VALUES (
+			#{serialNo}, 
+			#{accountId}, 
+			#{cardNo}, 
+			#{customerId}, 
+			#{customerNo}, 
+			#{customerName}, 
+			#{action}, 
+			#{startBalance}, 
+			#{amount}, 
+			#{endBalance}, 
+			#{tradeType}, 
+			#{tradeChannel}, 
+			#{tradeNo}, 
+			#{fundItem}, 
+			#{fundItemName}, 
+			#{operatorId}, 
+			#{operatorNo}, 
+			#{operatorName}, 
+			#{operateTime}, 
+			#{notes}, 
+			#{firmId}
+		)
+	</insert>
+	
+	<select id="getById" resultType="com.dili.account.entity.SerialRecordDo">
+		SELECT
+			`id`, 
+			`serial_no`, 
+			`account_id`, 
+			`card_no`, 
+			`customer_id`, 
+			`customer_no`, 
+			`customer_name`, 
+			`action`, 
+			`start_balance`, 
+			`amount`, 
+			`end_balance`, 
+			`trade_type`, 
+			`trade_channel`, 
+			`trade_no`, 
+			`fund_item`, 
+			`fund_item_name`, 
+			`operator_id`, 
+			`operator_no`, 
+			`operator_name`, 
+			`operate_time`, 
+			`notes`, 
+			`firm_id`
+		FROM
+			account_serial_record
+		WHERE
+			id = #{id}
+	</select>
+	
+	<update id="update">
+		UPDATE account_serial_record
+	 	<set>
+			<if test="serialNo != null">`serial_no` = #{serialNo}, </if>
+			<if test="accountId != null">`account_id` = #{accountId}, </if>
+			<if test="cardNo != null">`card_no` = #{cardNo}, </if>
+			<if test="customerId != null">`customer_id` = #{customerId}, </if>
+			<if test="customerNo != null">`customer_no` = #{customerNo}, </if>
+			<if test="customerName != null">`customer_name` = #{customerName}, </if>
+			<if test="action != null">`action` = #{action}, </if>
+			<if test="startBalance != null">`start_balance` = #{startBalance}, </if>
+			<if test="amount != null">`amount` = #{amount}, </if>
+			<if test="endBalance != null">`end_balance` = #{endBalance}, </if>
+			<if test="tradeType != null">`trade_type` = #{tradeType}, </if>
+			<if test="tradeChannel != null">`trade_channel` = #{tradeChannel}, </if>
+			<if test="tradeNo != null">`trade_no` = #{tradeNo}, </if>
+			<if test="fundItem != null">`fund_item` = #{fundItem}, </if>
+			<if test="fundItemName != null">`fund_item_name` = #{fundItemName}, </if>
+			<if test="operatorId != null">`operator_id` = #{operatorId}, </if>
+			<if test="operatorNo != null">`operator_no` = #{operatorNo}, </if>
+			<if test="operatorName != null">`operator_name` = #{operatorName}, </if>
+			<if test="operateTime != null">`operate_time` = #{operateTime}, </if>
+			<if test="notes != null">`notes` = #{notes}, </if>
+			<if test="firmId != null">`firm_id` = #{firmId}</if>
+		</set>
+		WHERE
+			id = #{id}
+	</update>
+	
+	<delete id="batchRemove">
+		DELETE
+		FROM
+			account_serial_record
+		WHERE
+			id IN
+		<foreach item="id" collection="array" open="(" separator="," close=")">
+			#{id}
+		</foreach>
+	</delete>
+
+</mapper>
