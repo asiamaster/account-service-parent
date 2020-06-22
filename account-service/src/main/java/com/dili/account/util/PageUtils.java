@@ -11,7 +11,7 @@ import com.github.pagehelper.Page;
  */
 public class PageUtils {
 
-    public static <T> PageOutput<T> convert2PageOutput(Page page, T result) {
+    public static <T> PageOutput<T> convert2PageOutput(Page<?> page, T result) {
         PageOutput<T> pageOutput = new PageOutput<>(ResultCode.OK, "success");
         pageOutput.setPageNum(page.getPageNum());
         pageOutput.setPageSize(page.getPageSize());
