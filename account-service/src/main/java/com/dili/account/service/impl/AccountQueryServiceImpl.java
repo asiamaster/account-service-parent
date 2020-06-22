@@ -62,7 +62,7 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
 
     @Override
     public PageOutput<List<UserAccountCardResponseDto>> getPageByConditionForRest(UserAccountCardQuery param) {
-        Page page = PageHelper.startPage(param.getPageNum(), param.getPageSize());
+        Page<?> page = PageHelper.startPage(param.getPageNum(), param.getPageSize());
         List<UserAccountCardResponseDto> result = this.getListByConditionForRest(param);
         return PageUtils.convert2PageOutput(page, result);
     }
@@ -90,7 +90,7 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
     private UserAccountCardResponseDto convertFromAccountUnionCard(UserCardDo card, UserAccountDo account) {
         UserAccountCardResponseDto responseDto = new UserAccountCardResponseDto();
         responseDto.setCardId(card.getId());
-        responseDto.setCardCategory(card.getCategory());
+        responseDto.setCardType(card.getType());
         responseDto.setCardNo(card.getCardNo());
         responseDto.setCardState(card.getState());
         responseDto.setCardUsageType(card.getUsageType());

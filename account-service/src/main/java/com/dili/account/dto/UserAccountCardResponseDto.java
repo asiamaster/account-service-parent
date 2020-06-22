@@ -29,8 +29,8 @@ public class UserAccountCardResponseDto implements Serializable {
     private String cardNo;
     /**卡用途 {@link com.dili.account.type.CardBizType}*/
     private Integer cardUsageType;
-    /** 卡类别-主/副/临时/联营 {@link com.dili.account.type.CardCategory}*/
-    private Integer cardCategory;
+    /** 卡类型-主/副/临时/联营 {@link com.dili.account.type.CardType}*/
+    private Integer cardType;
     /** 卡片状态 {@link com.dili.account.type.CardStatus} */
     private Integer cardState;
 
@@ -114,12 +114,12 @@ public class UserAccountCardResponseDto implements Serializable {
         this.permissionList = permissionList;
     }
 
-    public Integer getCardCategory() {
-        return cardCategory;
+    public Integer getCardType() {
+        return cardType;
     }
 
-    public void setCardCategory(Integer cardCategory) {
-        this.cardCategory = cardCategory;
+    public void setCardType(Integer cardType) {
+        this.cardType = cardType;
     }
 
     public Integer getCardState() {
