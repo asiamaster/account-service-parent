@@ -30,6 +30,8 @@ public class CardRequestDto extends BaseDto{
 	private String loginPwd;
 	/** 二次输入登录密码 */
 	private String secondLoginPwd;
+	/** 客户id*/
+	private Long customerId;
 
 	public String getCardNo() {
 		return cardNo;

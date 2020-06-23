@@ -2,7 +2,6 @@ package com.dili.account.controller;
 
 import cn.hutool.core.util.StrUtil;
 import com.dili.account.dto.CardRequestDto;
-import com.dili.account.entity.CardAggregationWrapper;
 import com.dili.account.exception.AccountBizException;
 import com.dili.account.service.ICardManageService;
 import com.dili.account.validator.CardValidator;
@@ -43,7 +42,7 @@ public class CardManageController {
      * 解挂卡片
      */
     @PostMapping("/unLostCard")
-    public BaseOutput<CardAggregationWrapper> unLostCard(@RequestBody CardRequestDto cardParam) {
+    public BaseOutput<?> unLostCard(@RequestBody CardRequestDto cardParam) {
         try {
             if (cardParam.getAccountId() == null) {
                 return BaseOutput.failure("账户ID为空");
@@ -51,8 +50,8 @@ public class CardManageController {
             if (StrUtil.isBlank(cardParam.getLoginPwd())) {
                 return BaseOutput.failure("密码为空");
             }
-            CardAggregationWrapper wrapper = cardManageService.unLostCard(cardParam);
-            return BaseOutput.success().setData(wrapper);
+            cardManageService.unLostCard(cardParam);
+            return BaseOutput.success();
         } catch (AccountBizException e) {
             return BaseOutput.failure(e.getMessage());
         } catch (Exception e) {

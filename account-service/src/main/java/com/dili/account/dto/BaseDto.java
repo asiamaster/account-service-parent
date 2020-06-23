@@ -19,6 +19,8 @@ public class BaseDto implements Serializable {
     private String opName;
     /** 操作员工号*/
     private String opNo;
+    /** 商户ID*/
+    private Long firmId;
     /**页码*/
     @NotNull(message = "页码不能为空", groups = ConstantValidator.Page.class)
     @Min(value = 1, message = "页码最小为1", groups = ConstantValidator.Page.class)
@@ -66,5 +68,13 @@ public class BaseDto implements Serializable {
 
     public void setOpNo(String opNo) {
         this.opNo = opNo;
+    }
+
+    public Long getFirmId() {
+        return firmId;
+    }
+
+    public void setFirmId(Long firmId) {
+        this.firmId = firmId;
     }
 }

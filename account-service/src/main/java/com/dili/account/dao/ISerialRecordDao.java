@@ -45,4 +45,10 @@ public interface ISerialRecordDao {
      * @return
      */
 	int batchRemove(Long[] id);
+
+	/**
+	 * 批量新增
+	 * @param serialRecordList
+	 */
+    int batchSave(List<SerialRecordDo> serialRecordList);
 }
