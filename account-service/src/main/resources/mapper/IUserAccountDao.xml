@@ -3,21 +3,14 @@
 
 <mapper namespace="com.dili.account.dao.IUserAccountDao">
 
-	<select id="selectList" resultType="com.dili.account.entity.UserAccountDo">
-		SELECT
-			`id`,
+	<sql id="Base_Column">
+		`id`,
 			`account_id`,
 			`parent_account_id`,
 			`customer_id`,
 			`fund_account_id`,
 			`type`,
 			`usage_type`,
-			`holder_name`,
-			`holder_gender`,
-			`holder_mobile`,
-			`holder_certificate_number`,
-			`holder_certificate_type`,
-			`holder_address`,
 			`permissions`,
 			`login_pwd`,
 			`pwd_changed`,
@@ -30,6 +23,11 @@
 			`firm_name`,
 			`create_time`,
 			`modify_time`
+	</sql>
+
+	<select id="selectList" resultType="com.dili.account.entity.UserAccountDo">
+		SELECT
+			<include refid="Base_Column"/>
 		FROM
 			account_user_account
 		ORDER BY
@@ -44,12 +42,6 @@
 			`fund_account_id`,
 			`type`,
 			`usage_type`,
-			`holder_name`,
-			`holder_gender`,
-			`holder_mobile`,
-			`holder_certificate_number`,
-			`holder_certificate_type`,
-			`holder_address`,
 			`permissions`,
 			`login_pwd`,
 			`pwd_changed`,
@@ -70,12 +62,6 @@
 			#{fundAccountId},
 			#{type},
 			#{usageType},
-			#{holderName},
-			#{holderGender},
-			#{holderMobile},
-			#{holderCertificateNumber},
-			#{holderCertificateType},
-			#{holderAddress},
 			#{permissions},
 			#{loginPwd},
 			#{pwdChanged},
@@ -93,31 +79,7 @@
 
 	<select id="getById" resultType="com.dili.account.entity.UserAccountDo">
 		SELECT
-			`id`,
-			`account_id`,
-			`parent_account_id`,
-			`customer_id`,
-			`fund_account_id`,
-			`type`,
-			`usage_type`,
-			`holder_name`,
-			`holder_gender`,
-			`holder_mobile`,
-			`holder_certificate_number`,
-			`holder_certificate_type`,
-			`holder_address`,
-			`permissions`,
-			`login_pwd`,
-			`pwd_changed`,
-			`login_time`,
-			`secret_key`,
-			`state`,
-			`source`,
-			`version`,
-			`firm_id`,
-			`firm_name`,
-			`create_time`,
-			`modify_time`
+			<include refid="Base_Column"/>
 		FROM
 			account_user_account
 		WHERE
@@ -133,12 +95,6 @@
 			<if test="fundAccountId != null">`fund_account_id` = #{fundAccountId}, </if>
 			<if test="type != null">`type` = #{type}, </if>
 			<if test="usageType != null">`usage_type` = #{usageType}, </if>
-			<if test="holderName != null">`holder_name` = #{holderName}, </if>
-			<if test="holderGender != null">`holder_gender` = #{holderGender}, </if>
-			<if test="holderMobile != null">`holder_mobile` = #{holderMobile}, </if>
-			<if test="holderCertificateNumber != null">`holder_certificate_number` = #{holderCertificateNumber}, </if>
-			<if test="holderCertificateType != null">`holder_certificate_type` = #{holderCertificateType}, </if>
-			<if test="holderAddress != null">`holder_address` = #{holderAddress}, </if>
 			<if test="permissions != null">`permissions` = #{permissions}, </if>
 			<if test="loginPwd != null">`login_pwd` = #{loginPwd}, </if>
 			<if test="pwdChanged != null">`pwd_changed` = #{pwdChanged}, </if>
@@ -169,31 +125,7 @@
 
 	<select id="getByAccountId" resultType="com.dili.account.entity.UserAccountDo">
 		SELECT
-			`id`,
-			`account_id`,
-			`parent_account_id`,
-			`customer_id`,
-			`fund_account_id`,
-			`type`,
-			`usage_type`,
-			`holder_name`,
-			`holder_gender`,
-			`holder_mobile`,
-			`holder_certificate_number`,
-			`holder_certificate_type`,
-			`holder_address`,
-			`permissions`,
-			`login_pwd`,
-			`pwd_changed`,
-			`login_time`,
-			`secret_key`,
-			`state`,
-			`source`,
-			`version`,
-			`firm_id`,
-			`firm_name`,
-			`create_time`,
-			`modify_time`
+		<include refid="Base_Column"/>
 		FROM
 			account_user_account
 		WHERE
@@ -202,32 +134,8 @@
 	</select>
 
 	<select id="findSlavesByParent" resultType="com.dili.account.entity.UserAccountDo">
-			SELECT
-			`id`,
-			`account_id`,
-			`parent_account_id`,
-			`customer_id`,
-			`fund_account_id`,
-			`type`,
-			`usage_type`,
-			`holder_name`,
-			`holder_gender`,
-			`holder_mobile`,
-			`holder_certificate_number`,
-			`holder_certificate_type`,
-			`holder_address`,
-			`permissions`,
-			`login_pwd`,
-			`pwd_changed`,
-			`login_time`,
-			`secret_key`,
-			`state`,
-			`source`,
-			`version`,
-			`firm_id`,
-			`firm_name`,
-			`create_time`,
-			`modify_time`
+		SELECT
+		<include refid="Base_Column"/>
 		FROM
 			account_user_account
 		WHERE

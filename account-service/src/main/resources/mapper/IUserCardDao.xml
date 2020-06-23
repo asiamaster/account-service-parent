@@ -4,13 +4,12 @@
 <mapper namespace="com.dili.account.dao.IUserCardDao">
 
 	<sql id="Base_Column">
-		`id`,
+		    `id`,
 			`device_id`,
 			`account_id`,
 			`card_no`,
 			`category`,
 			`type`,
-			`usage_type`,
 			`verify_code`,
 			`cash_pledge`,
 			`last`,
@@ -39,7 +38,6 @@
 			`card_no`,
 			`category`,
 			`type`,
-			`usage_type`,
 			`verify_code`,
 			`cash_pledge`,
 			`last`,
@@ -58,7 +56,6 @@
 			#{cardNo},
 			#{category},
 			#{type},
-			#{usageType},
 			#{verifyCode},
 			#{cashPledge},
 			#{last},

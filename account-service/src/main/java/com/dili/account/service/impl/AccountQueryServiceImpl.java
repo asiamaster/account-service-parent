@@ -11,6 +11,7 @@ import com.dili.account.entity.UserAccountDo;
 import com.dili.account.entity.UserCardDo;
 import com.dili.account.exception.AccountBizException;
 import com.dili.account.service.IAccountQueryService;
+import com.dili.account.type.AccountUsageType;
 import com.dili.account.type.UsePermissionType;
 import com.dili.account.util.PageUtils;
 import com.dili.ss.constant.ResultCode;
@@ -102,7 +103,7 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
         responseDto.setCardType(card.getType());
         responseDto.setCardNo(card.getCardNo());
         responseDto.setCardState(card.getState());
-        responseDto.setCardUsageType(card.getUsageType());
+        responseDto.setUsageType(AccountUsageType.getUsageTypeList(account.getUsageType()));
         responseDto.setCardCreateTime(card.getCreateTime());
         responseDto.setFirmId(account.getFirmId());
         responseDto.setAccountId(account.getAccountId());
@@ -110,7 +111,7 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
         responseDto.setCustomerId(account.getCustomerId());
         responseDto.setPermissionList(UsePermissionType.getPermissionList(account.getPermissions()));
         responseDto.setParentAccountId(account.getParentAccountId());
-        responseDto.setBizUsageType(account.getUsageType());
+        responseDto.setAccountType(account.getType());
         return responseDto;
     }
 }

@@ -8,7 +8,6 @@ import com.dili.account.entity.UserCardDo;
 import com.dili.account.type.AccountStatus;
 import com.dili.account.type.AccountType;
 import com.dili.account.type.AccountUsageType;
-import com.dili.account.type.CardBizType;
 import com.dili.account.type.CardCategory;
 import com.dili.account.type.CardType;
 import com.dili.account.type.CardStatus;
@@ -52,10 +51,9 @@ public class BaseTest {
             e.printStackTrace();
         }
         userAccountDo.setLoginPwd(PasswordUtils.encrypt("12345678", userAccountDo.getSecretKey()));
-        userAccountDo.setHolderName("测试小明");
         userAccountDo.setPermissions(genPermission());
-        userAccountDo.setUsageType(AccountUsageType.TRADE.getCode());
-        userAccountDo.setType(AccountType.PERSONAL.getCode());
+        userAccountDo.setUsageType(AccountUsageType.TRADE.getCode()+",");
+        userAccountDo.setType(AccountType.PURCHASE.getCode());
         userAccountDo.setSource(CreateSource.COUNTER.getCode());
         userAccountDo.setState(AccountStatus.NORMAL.getType());
         userAccountDo.setVersion(1);
@@ -81,7 +79,6 @@ public class BaseTest {
         userCardDo.setModifyTime(LocalDateTime.now());
         userCardDo.setCategory(CardCategory.PARK.getCode());
         userCardDo.setType(CardType.MASTER.getCode());
-        userCardDo.setUsageType(CardBizType.BUYER.getCode());
         userCardDo.setVerifyCode(RandomUtil.randomString(RANDOM_STR, 3));
         return userCardDo;
     }

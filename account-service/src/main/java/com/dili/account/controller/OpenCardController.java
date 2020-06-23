@@ -69,11 +69,11 @@ public class OpenCardController {
 //			AssertUtils.notEmpty(openCardInfo.getMarketId(), "卡号不能为空!");
 //		}
 		// 对公用户
-		if (openCardInfo.getAccountType() == AccountType.PUBLIC.getCode()) {
-			AssertUtils.notEmpty(openCardInfo.getLegalName(), "法人姓名不能为空!");
-			AssertUtils.notEmpty(openCardInfo.getLegalNo(), "法人证件号不能为空!");
-			AssertUtils.notEmpty(openCardInfo.getLegalCredentialType(), "法人证件类型不能为空!");
-		}
+//		if (openCardInfo.getAccountType() == AccountType.PUBLIC.getCode()) {
+//			AssertUtils.notEmpty(openCardInfo.getLegalName(), "法人姓名不能为空!");
+//			AssertUtils.notEmpty(openCardInfo.getLegalNo(), "法人证件号不能为空!");
+//			AssertUtils.notEmpty(openCardInfo.getLegalCredentialType(), "法人证件类型不能为空!");
+//		}
 	}
 //	
 //	public static void main(String[] args) throws Exception {
