@@ -1,10 +1,9 @@
 package com.dili.account.dto;
 
-
 import java.time.LocalDateTime;
 
 import com.dili.account.type.AccountType;
-import com.dili.account.type.CardBizType;
+import com.dili.account.type.CardCategory;
 import com.dili.account.type.CardType;
 import com.dili.account.type.CreateSource;
 import com.dili.account.type.CustomerAreaType;
@@ -20,9 +19,9 @@ public class OpenCardDto {
 	/** 用户姓名 */
 	private String name;
 	/** CRM系统客户ID */
-	private Long custormerId;
+	private Long customerId;
 	/** 客户类型 {@link AccountType} */
-	private Integer customerType;
+	private String type;
 	/** 性别 */
 	private Integer gender;
 	/** 证件类型 */
@@ -60,7 +59,7 @@ public class OpenCardDto {
 	/** 交易密码 */
 	private String tradePwd;
 	/** 卡交易类型 {@link CardBizType} */
-	private Integer bizUsageType;
+	private Integer usageType;
 	/** 开户来源 {@link CreateSource} */
 	private Integer createSource;
 	/** 业务权限集合 {@link UsePermissionType},以逗号分隔 */
@@ -90,20 +89,20 @@ public class OpenCardDto {
 		this.name = name;
 	}
 
-	public Long getCustormerId() {
-		return custormerId;
+	public Long getCustomerId() {
+		return customerId;
 	}
 
-	public void setCustormerId(Long custormerId) {
-		this.custormerId = custormerId;
+	public void setCustomerId(Long customerId) {
+		this.customerId = customerId;
 	}
 
-	public Integer getCustomerType() {
-		return customerType;
+	public String getType() {
+		return type;
 	}
 
-	public void setCustomerType(Integer customerType) {
-		this.customerType = customerType;
+	public void setCustomerType(String type) {
+		this.type = type;
 	}
 
 	public Integer getGender() {
@@ -218,12 +217,12 @@ public class OpenCardDto {
 		this.accountType = accountType;
 	}
 
-	public Integer getBizUsageType() {
-		return bizUsageType;
+	public Integer getUsageType() {
+		return usageType;
 	}
 
-	public void setBizUsageType(Integer bizUsageType) {
-		this.bizUsageType = bizUsageType;
+	public void setUsageType(Integer usageType) {
+		this.usageType = usageType;
 	}
 
 	public Integer getCreateSource() {
