@@ -29,7 +29,7 @@ public class UserAccountCardResponseDto implements Serializable {
     /** 卡号 */
     private String cardNo;
     /**卡账户用途 {@link com.dili.account.type.AccountUsageType}*/
-    private Integer usageType;
+    private String usageType;
     /** 卡类型-主/副/临时/联营 {@link com.dili.account.type.CardType}*/
     private Integer cardType;
     /** 卡片状态 {@link com.dili.account.type.CardStatus} */
@@ -101,11 +101,11 @@ public class UserAccountCardResponseDto implements Serializable {
         this.cardNo = cardNo;
     }
 
-    public Integer getUsageType() {
+    public String getUsageType() {
         return usageType;
     }
 
-    public void setUsageType(Integer usageType) {
+    public void setUsageType(String usageType) {
         this.usageType = usageType;
     }
 

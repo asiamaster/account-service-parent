@@ -110,7 +110,7 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
         responseDto.setCustomerId(account.getCustomerId());
         responseDto.setPermissionList(UsePermissionType.getPermissionList(account.getPermissions()));
         responseDto.setParentAccountId(account.getParentAccountId());
-        responseDto.setAccountType(account.getUsageType());
+        responseDto.setAccountType(account.getType());
         return responseDto;
     }
 }

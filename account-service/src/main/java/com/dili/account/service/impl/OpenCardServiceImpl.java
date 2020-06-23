@@ -271,11 +271,9 @@ public class OpenCardServiceImpl implements IOpenCardService {
 		userAccount.setCustomerId(openCardInfo.getCustomerId());
 		userAccount.setFundAccountId(fundAccountId);
 
-		userAccount.setUsageType(openCardInfo.getUsageType());
-
 		if (CustomerType.PURCHASE.getCode().equalsIgnoreCase(openCardInfo.getType())) {
 			userAccount.setType(AccountType.PURCHASE.getCode());
-			userAccount.setUsageType(AccountUsageType.TRADE.getCode());
+			userAccount.setUsageType(AccountUsageType.TRADE.getCode()+",");
 			Integer[] codes = { UsePermissionType.RECHARGE.getCode(), 
 								UsePermissionType.WEALTH.getCode(),
 								UsePermissionType.TRANSACTION.getCode(),
@@ -283,7 +281,7 @@ public class OpenCardServiceImpl implements IOpenCardService {
 			userAccount.setPermissions(UsePermissionType.getPermissions(codes));
 		} else if (CustomerType.SALE.getCode().equalsIgnoreCase(openCardInfo.getType())) {
 			userAccount.setType(AccountType.SALE.getCode());
-			userAccount.setUsageType(AccountUsageType.TRADE.getCode());
+			userAccount.setUsageType(AccountUsageType.TRADE.getCode()+",");
 			Integer[] codes = { UsePermissionType.RECHARGE.getCode(), 
 								UsePermissionType.WEALTH.getCode(),
 								UsePermissionType.TRANSACTION.getCode(),
