@@ -1,6 +1,7 @@
 package com.dili.account.dto;
 
 import com.dili.account.entity.SerialRecordDo;
+import com.dili.ss.domain.BaseDomain;
 
 import java.util.List;
 
@@ -8,13 +9,15 @@ import java.util.List;
  * 流水相关dto
  * @author xuliang
  */
-public class SerialDto {
+public class SerialDto extends BaseDomain {
 
     /** 流水号*/
     private String serialNo;
     /** 资金项目*/
     private Integer fundItem;
-    /** 客户id*/
+    /** 账户ID*/
+    private Long accountId;
+    /** 客户ID*/
     private Long customerId;
     /** 卡号*/
     private String cardNo;
@@ -28,6 +31,8 @@ public class SerialDto {
     private Long startBalance;
     /** 总的期末余额*/
     private Long endBalance;
+    /** 商户ID*/
+    private Long firmId;
     /** 流水列表 */
     private List<SerialRecordDo> serialRecordList;
 
@@ -45,6 +50,14 @@ public class SerialDto {
 
     public void setFundItem(Integer fundItem) {
         this.fundItem = fundItem;
+    }
+
+    public Long getAccountId() {
+        return accountId;
+    }
+
+    public void setAccountId(Long accountId) {
+        this.accountId = accountId;
     }
 
     public Long getCustomerId() {
@@ -101,6 +114,14 @@ public class SerialDto {
 
     public void setEndBalance(Long endBalance) {
         this.endBalance = endBalance;
+    }
+
+    public Long getFirmId() {
+        return firmId;
+    }
+
+    public void setFirmId(Long firmId) {
+        this.firmId = firmId;
     }
 
     public List<SerialRecordDo> getSerialRecordList() {

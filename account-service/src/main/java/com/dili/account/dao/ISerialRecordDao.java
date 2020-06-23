@@ -1,8 +1,10 @@
 package com.dili.account.dao;
 
-import org.apache.ibatis.annotations.Mapper;
-import java.util.List;
+import com.dili.account.dto.SerialDto;
 import com.dili.account.entity.SerialRecordDo;
+import org.apache.ibatis.annotations.Mapper;
+
+import java.util.List;
 
 /**
  * 业务端账户流水
@@ -51,4 +53,11 @@ public interface ISerialRecordDao {
 	 * @param serialRecordList
 	 */
     int batchSave(List<SerialRecordDo> serialRecordList);
+
+	/**
+	 * 查询操作记录列表
+	 * @param serialDto
+	 * @return
+	 */
+	List<SerialRecordDo> list(SerialDto serialDto);
 }
