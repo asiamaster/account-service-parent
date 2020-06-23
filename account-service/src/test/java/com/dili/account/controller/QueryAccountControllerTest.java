@@ -50,7 +50,8 @@ class QueryAccountControllerTest extends BaseTest {
 
     @Test
     void testGetPage() throws Exception {
-        UserAccountCardQuery param = createQueryParamDate();
+        UserAccountCardQuery param = new UserAccountCardQuery();
+        param.setOrderByColumn("card_type");
         param.setPageNum(1);
         param.setPageSize(1);
         String resultJson = mockMvc.perform(post("/api/account/getPage")

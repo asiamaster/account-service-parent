@@ -87,9 +87,9 @@
     <sql id="Base_Card_Column">
         auc.`id` AS card_id,
         auc.`device_id` AS card_device_id,
-        auc.`card_no`,
+        auc.`card_no`   AS card_no,
         auc.`category` AS card_category,
-        auc.`type` AS card_type,
+        auc.`type`     AS card_type,
         auc.`usage_type` AS card_usage_type,
         auc.`verify_code` AS card_verify_code,
         auc.`cash_pledge` AS card_cash_pledge,
@@ -101,14 +101,7 @@
         auc.create_time AS card_create_time,
         auc.modify_time AS card_modify_time
     </sql>
-    <select id="getListByCondition" resultMap="Aggregation_Result">
-        SELECT
-        <include refid="Base_Account_Column"/>
-        ,
-        <include refid="Base_Card_Column"/>
-        FROM
-        account_user_account aua
-        LEFT JOIN account_user_card auc on aua.account_id = auc.account_id
+    <sql id="Where_Condition">
         <where>
             <if test="customerIds!=null and customerIds.size>0">
                 AND aua.customer_id IN
@@ -144,7 +137,17 @@
                 AND auc.create_time &lt;= #{endDate}
             </if>
         </where>
+    </sql>
+    <select id="getListByCondition" resultMap="Aggregation_Result">
+        SELECT
+        <include refid="Base_Account_Column"/>
+        ,
+        <include refid="Base_Card_Column"/>
+        FROM
+        account_user_account aua
+        LEFT JOIN account_user_card auc on aua.account_id = auc.account_id
+        <include refid="Where_Condition"/>
         ORDER BY
-        auc.create_time DESC
+        ${orderByColumn} ${orderBy}
     </select>
 </mapper>

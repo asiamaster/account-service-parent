@@ -72,4 +72,5 @@ public class QueryAccountController {
                                                                         UserAccountCardQuery param) {
         return BaseOutput.successData(accountQueryService.getListByConditionForRest(param));
     }
+
 }

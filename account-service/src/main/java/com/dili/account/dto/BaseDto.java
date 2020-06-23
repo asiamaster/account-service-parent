@@ -1,6 +1,7 @@
 package com.dili.account.dto;
 
 import com.dili.account.validator.ConstantValidator;
+import com.dili.account.validator.IsOrderBy;
 import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.Min;
@@ -29,6 +30,27 @@ public class BaseDto implements Serializable {
     @NotNull(message = "分页条数不能为空", groups = ConstantValidator.Page.class)
     @Range(min = 1, max = 100, message = "每页最少1条，最多100条", groups = ConstantValidator.Page.class)
     private Integer pageSize;
+    /**顺序or降序 ASC、DESC*/
+    @IsOrderBy(message = "排序不正确", groups = ConstantValidator.Page.class)
+    private String orderBy;
+    /**排序字段*/
+    private String orderByColumn;
+
+    public String getOrderBy() {
+        return orderBy;
+    }
+
+    public void setOrderBy(String orderBy) {
+        this.orderBy = orderBy;
+    }
+
+    public String getOrderByColumn() {
+        return orderByColumn;
+    }
+
+    public void setOrderByColumn(String orderByColumn) {
+        this.orderByColumn = orderByColumn;
+    }
 
     public Integer getPageNum() {
         return pageNum;

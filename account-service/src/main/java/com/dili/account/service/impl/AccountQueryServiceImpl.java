@@ -15,8 +15,10 @@ import com.dili.account.type.UsePermissionType;
 import com.dili.account.util.PageUtils;
 import com.dili.ss.constant.ResultCode;
 import com.dili.ss.domain.PageOutput;
+import com.dili.ss.exception.BusinessException;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -53,6 +55,13 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
 
     @Override
     public List<UserAccountCardResponseDto> getListByConditionForRest(UserAccountCardQuery queryParam) {
+        //设置默认排序字段，避免xml写太多判断
+        if (StringUtils.isBlank(queryParam.getOrderBy())) {
+            queryParam.setOrderBy("DESC");
+        }
+        if (StringUtils.isBlank(queryParam.getOrderByColumn())){
+            queryParam.setOrderByColumn("createTime");
+        }
         List<CardAggregationWrapper> list = userAccountCardDao.getListByCondition(queryParam);
         return list.stream().map(wrapper -> this.convertFromAccountUnionCard(
                 wrapper.getUserCard(),
