@@ -51,9 +51,8 @@ public class BaseTest {
             e.printStackTrace();
         }
         userAccountDo.setLoginPwd(PasswordUtils.encrypt("12345678", userAccountDo.getSecretKey()));
-        userAccountDo.setHolderName("测试小明");
         userAccountDo.setPermissions(genPermission());
-        userAccountDo.setUsageType(AccountUsageType.TRADE.getCode());
+        userAccountDo.setUsageType(AccountUsageType.TRADE.getCode()+",");
         userAccountDo.setType(AccountType.PURCHASE.getCode());
         userAccountDo.setSource(CreateSource.COUNTER.getCode());
         userAccountDo.setState(AccountStatus.NORMAL.getType());

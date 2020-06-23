@@ -9,13 +9,13 @@ package com.dili.account.type;
 public enum AccountUsageType {
 	
 	/** 交易账户 */
-	TRADE("交易账户", 1), 
+	TRADE("交易账户", 11), 
 	/** 缴费账户 */
-	PAY_FEES("缴费账户", 2), 
+	PAY_FEES("缴费账户", 12), 
 	/** 水电预存款账户 */
-	UTILITIES("水电预存款账户", 3), 
+	UTILITIES("水电预存款账户", 13), 
 	/** 理财账户 */
-	WEALTH("理财账户", 4),
+	WEALTH("理财账户", 14),
 	;
 
 	private String name;

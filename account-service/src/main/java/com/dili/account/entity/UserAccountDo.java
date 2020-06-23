@@ -23,8 +23,8 @@ public class UserAccountDo implements Serializable {
 	private Long fundAccountId;
 	/** 账号类型-买家账户/卖家账户 */
 	private Integer type;
-	/** 账户用途-交易账户/水电费账户 */
-	private Integer usageType;
+	/** 账户用途-交易账户/水电费账户 ,多个以逗号分隔*/
+	private String usageType;
 	/** 使用权限(充值、提现、交费等),多个以逗号分隔 */
 	private String permissions;
 	/** 登陆密码 */
@@ -110,11 +110,11 @@ public class UserAccountDo implements Serializable {
 		return type;
 	}
 
-	public void setUsageType(Integer usageType) {
+	public void setUsageType(String usageType) {
 		this.usageType = usageType;
 	}
 
-	public Integer getUsageType() {
+	public String getUsageType() {
 		return usageType;
 	}
 
