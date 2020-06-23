@@ -94,6 +94,7 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
         responseDto.setCardNo(card.getCardNo());
         responseDto.setCardState(card.getState());
         responseDto.setCardUsageType(card.getUsageType());
+        responseDto.setCardCreateTime(card.getCreateTime());
         responseDto.setFirmId(account.getFirmId());
         responseDto.setAccountId(account.getAccountId());
         responseDto.setFundAccountId(account.getFundAccountId());

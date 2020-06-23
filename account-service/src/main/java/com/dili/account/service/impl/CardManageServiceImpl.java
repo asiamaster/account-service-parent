@@ -36,7 +36,7 @@ import java.util.List;
 public class CardManageServiceImpl implements ICardManageService {
     @Autowired
     private IPasswordService passwordService;
-    @Autowired(required = false)
+    @Autowired
     private ICardStorageService cardStorageService;
     @Autowired
     private IAccountQueryService accountQueryService;
@@ -87,7 +87,7 @@ public class CardManageServiceImpl implements ICardManageService {
 
         this.validateCanReportLoss(userCard, cardParam);
         this.changeState(userCard, CardStatus.LOSS.getCode());
-        this.setCreator(userCard, cardParam);
+       // this.setCreator(userCard, cardParam);
         userCardDao.update(userCard);
     }
 
@@ -102,7 +102,7 @@ public class CardManageServiceImpl implements ICardManageService {
         UserCardDo newCard = this.cloneWhenChangeCard(oldCard, cardParam);
         //退还旧卡
         this.changeState(oldCard, CardStatus.RETURNED.getCode());
-        this.setCreator(oldCard, cardParam);
+        //this.setCreator(oldCard, cardParam);
         this.setCreator(newCard, cardParam);
 
         userCardDao.update(oldCard);

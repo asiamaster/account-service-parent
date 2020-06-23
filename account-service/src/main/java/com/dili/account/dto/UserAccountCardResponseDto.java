@@ -1,6 +1,7 @@
 package com.dili.account.dto;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -33,6 +34,7 @@ public class UserAccountCardResponseDto implements Serializable {
     private Integer cardType;
     /** 卡片状态 {@link com.dili.account.type.CardStatus} */
     private Integer cardState;
+    private LocalDateTime cardCreateTime;
 
     public Long getCustomerId() {
         return customerId;
@@ -128,5 +130,13 @@ public class UserAccountCardResponseDto implements Serializable {
 
     public void setCardState(Integer cardState) {
         this.cardState = cardState;
+    }
+
+    public LocalDateTime getCardCreateTime() {
+        return cardCreateTime;
+    }
+
+    public void setCardCreateTime(LocalDateTime cardCreateTime) {
+        this.cardCreateTime = cardCreateTime;
     }
 }
