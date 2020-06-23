@@ -14,12 +14,6 @@
             <result column="fund_account_id" property="fundAccountId"/>
             <result column="type" property="type"/>
             <result column="usage_type" property="usageType"/>
-            <result column="holder_name" property="holderName"/>
-            <result column="holder_gender" property="holderGender"/>
-            <result column="holder_mobile" property="holderMobile"/>
-            <result column="holder_certificate_number" property="holderCertificateNumber"/>
-            <result column="holder_certificate_type" property="holderCertificateType"/>
-            <result column="holder_address" property="holderAddress"/>
             <result column="permissions" property="permissions"/>
             <result column="login_pwd" property="loginPwd"/>
             <result column="pwd_changed" property="pwdChanged"/>
@@ -64,12 +58,6 @@
             aua.`fund_account_id`,
             aua.`type`,
             aua.`usage_type`,
-            aua.`holder_name`,
-            aua.`holder_gender`,
-            aua.`holder_mobile`,
-            aua.`holder_certificate_number`,
-            aua.`holder_certificate_type`,
-            aua.`holder_address`,
             aua.`permissions`,
             aua.`login_pwd`,
             aua.`pwd_changed`,

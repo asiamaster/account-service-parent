@@ -25,18 +25,6 @@ public class UserAccountDo implements Serializable {
 	private Integer type;
 	/** 账户用途-交易账户/水电费账户 */
 	private Integer usageType;
-	/** 持有人姓名 */
-	private String holderName;
-	/** 持有人性别 */
-	private Integer holderGender;
-	/** 持有人手机号 */
-	private String holderMobile;
-	/** 持有人证件号码 */
-	private String holderCertificateNumber;
-	/** 持有人证件类型 */
-	private String holderCertificateType;
-	/** 持有人联系地址 */
-	private String holderAddress;
 	/** 使用权限(充值、提现、交费等),多个以逗号分隔 */
 	private String permissions;
 	/** 登陆密码 */
@@ -128,54 +116,6 @@ public class UserAccountDo implements Serializable {
 
 	public Integer getUsageType() {
 		return usageType;
-	}
-
-	public void setHolderName(String holderName) {
-		this.holderName = holderName;
-	}
-
-	public String getHolderName() {
-		return holderName;
-	}
-
-	public void setHolderGender(Integer holderGender) {
-		this.holderGender = holderGender;
-	}
-
-	public Integer getHolderGender() {
-		return holderGender;
-	}
-
-	public void setHolderMobile(String holderMobile) {
-		this.holderMobile = holderMobile;
-	}
-
-	public String getHolderMobile() {
-		return holderMobile;
-	}
-
-	public void setHolderCertificateNumber(String holderCertificateNumber) {
-		this.holderCertificateNumber = holderCertificateNumber;
-	}
-
-	public String getHolderCertificateNumber() {
-		return holderCertificateNumber;
-	}
-
-	public void setHolderCertificateType(String holderCertificateType) {
-		this.holderCertificateType = holderCertificateType;
-	}
-
-	public String getHolderCertificateType() {
-		return holderCertificateType;
-	}
-
-	public void setHolderAddress(String holderAddress) {
-		this.holderAddress = holderAddress;
-	}
-
-	public String getHolderAddress() {
-		return holderAddress;
 	}
 
 	public void setPermissions(String permissions) {

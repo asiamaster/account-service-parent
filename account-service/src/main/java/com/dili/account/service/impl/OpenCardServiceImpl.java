@@ -282,9 +282,15 @@ public class OpenCardServiceImpl implements IOpenCardService {
 								UsePermissionType.PAY_FEES.getCode()};
 			userAccount.setPermissions(UsePermissionType.getPermissions(codes));
 		} else if (CustomerType.SALE.getCode().equalsIgnoreCase(openCardInfo.getType())) {
-			
+			userAccount.setType(AccountType.SALE.getCode());
+			userAccount.setUsageType(AccountUsageType.TRADE.getCode());
+			Integer[] codes = { UsePermissionType.RECHARGE.getCode(), 
+								UsePermissionType.WEALTH.getCode(),
+								UsePermissionType.TRANSACTION.getCode(),
+								UsePermissionType.PAY_FEES.getCode()};
+			userAccount.setPermissions(UsePermissionType.getPermissions(codes));
 		} else if (CustomerType.DRIVER.getCode().equalsIgnoreCase(openCardInfo.getType())) {
-
+			
 		}
 
 //		userAccount.setAccountType(openCardInfo.getCustormerType());

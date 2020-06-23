@@ -11,12 +11,6 @@
 			`fund_account_id`,
 			`type`,
 			`usage_type`,
-			`holder_name`,
-			`holder_gender`,
-			`holder_mobile`,
-			`holder_certificate_number`,
-			`holder_certificate_type`,
-			`holder_address`,
 			`permissions`,
 			`login_pwd`,
 			`pwd_changed`,
@@ -48,12 +42,6 @@
 			`fund_account_id`,
 			`type`,
 			`usage_type`,
-			`holder_name`,
-			`holder_gender`,
-			`holder_mobile`,
-			`holder_certificate_number`,
-			`holder_certificate_type`,
-			`holder_address`,
 			`permissions`,
 			`login_pwd`,
 			`pwd_changed`,
@@ -74,12 +62,6 @@
 			#{fundAccountId},
 			#{type},
 			#{usageType},
-			#{holderName},
-			#{holderGender},
-			#{holderMobile},
-			#{holderCertificateNumber},
-			#{holderCertificateType},
-			#{holderAddress},
 			#{permissions},
 			#{loginPwd},
 			#{pwdChanged},
@@ -113,12 +95,6 @@
 			<if test="fundAccountId != null">`fund_account_id` = #{fundAccountId}, </if>
 			<if test="type != null">`type` = #{type}, </if>
 			<if test="usageType != null">`usage_type` = #{usageType}, </if>
-			<if test="holderName != null">`holder_name` = #{holderName}, </if>
-			<if test="holderGender != null">`holder_gender` = #{holderGender}, </if>
-			<if test="holderMobile != null">`holder_mobile` = #{holderMobile}, </if>
-			<if test="holderCertificateNumber != null">`holder_certificate_number` = #{holderCertificateNumber}, </if>
-			<if test="holderCertificateType != null">`holder_certificate_type` = #{holderCertificateType}, </if>
-			<if test="holderAddress != null">`holder_address` = #{holderAddress}, </if>
 			<if test="permissions != null">`permissions` = #{permissions}, </if>
 			<if test="loginPwd != null">`login_pwd` = #{loginPwd}, </if>
 			<if test="pwdChanged != null">`pwd_changed` = #{pwdChanged}, </if>
