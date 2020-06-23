@@ -35,7 +35,6 @@
             <result column="card_no" property="cardNo"/>
             <result column="card_category" property="category"/>
             <result column="card_type" property="type"/>
-            <result column="card_usage_type" property="usageType"/>
             <result column="card_verify_code" property="verifyCode"/>
             <result column="card_cash_pledge" property="cashPledge"/>
             <result column="card_last" property="last"/>
@@ -78,7 +77,6 @@
         auc.`card_no`   AS card_no,
         auc.`category` AS card_category,
         auc.`type`     AS card_type,
-        auc.`usage_type` AS card_usage_type,
         auc.`verify_code` AS card_verify_code,
         auc.`cash_pledge` AS card_cash_pledge,
         auc.`last` AS card_last,

@@ -1,7 +1,5 @@
 package com.dili.account.dto;
 
-import org.hibernate.validator.constraints.Range;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
