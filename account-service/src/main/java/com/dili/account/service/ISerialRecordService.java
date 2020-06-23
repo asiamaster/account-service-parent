@@ -1,6 +1,8 @@
 package com.dili.account.service;
 
+import com.dili.account.dto.SerialDto;
 import com.dili.account.entity.SerialRecordDo;
+import com.dili.ss.domain.PageOutput;
 
 import java.util.List;
 
@@ -20,4 +22,11 @@ public interface ISerialRecordService {
      * 批量新增
      */
     void batchSave(List<SerialRecordDo> serialRecordList);
+
+    /**
+     * 分页查询
+     * @param serialDto
+     * @return
+     */
+    PageOutput<List<SerialRecordDo>> listPage(SerialDto serialDto);
 }

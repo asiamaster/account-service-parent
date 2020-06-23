@@ -203,4 +203,63 @@
 		</foreach>
 	</insert>
 
+	<!-- 查询操作流水记录列表 -->
+	<select id="list" parameterType="com.dili.account.dto.SerialDto" resultType="com.dili.account.entity.SerialRecordDo">
+        SELECT
+			`id`,
+			`serial_no`,
+			`account_id`,
+			`card_no`,
+			`customer_id`,
+			`customer_no`,
+			`customer_name`,
+			`action`,
+			`start_balance`,
+			`amount`,
+			`end_balance`,
+			`trade_type`,
+			`trade_channel`,
+			`trade_no`,
+			`fund_item`,
+			`fund_item_name`,
+			`operator_id`,
+			`operator_no`,
+			`operator_name`,
+			`operate_time`,
+			`notes`,
+			`firm_id`
+		FROM
+			account_serial_record
+		where 1 = 1
+		<if test="firmId != null">
+			and `firm_id` = #{firmId}
+		</if>
+		<if test="serialNo != null and serialNo != ''">
+			and `serial_no` = #{serialNo}
+		</if>
+		<if test="accountId != null">
+			and `account_id` = #{accountId}
+		</if>
+		<if test="fundItem != null">
+			and `fund_item` = #{fundItem}
+		</if>
+		<if test="customerId != null">
+			and `customer_id` = #{customerId}
+		</if>
+		<if test="cardNo != null and cardNo != ''">
+			and `card_no` = #{cardNo}
+		</if>
+		<if test="operatorId != null">
+			and `operator_id` = #{operatorId}
+		</if>
+		<if test="operateTimeStart != null and operateTimeStart != ''">
+			and `operate_time` &gt;= #{operateTimeStart}
+		</if>
+		<if test="operateTimeEnd != null and operateTimeEnd != ''">
+			and `operate_time` &lt;= #{operateTimeEnd}
+		</if>
+		<if test="sort != null and sort != '' and order != null and order != ''">
+			ORDER BY ${sort} ${order}
+		</if>
+	</select>
 </mapper>
