@@ -3,9 +3,8 @@
 
 <mapper namespace="com.dili.account.dao.IUserAccountDao">
 
-	<select id="selectList" resultType="com.dili.account.entity.UserAccountDo">
-		SELECT
-			`id`,
+	<sql id="Base_Column">
+		`id`,
 			`account_id`,
 			`parent_account_id`,
 			`customer_id`,
@@ -30,6 +29,11 @@
 			`firm_name`,
 			`create_time`,
 			`modify_time`
+	</sql>
+
+	<select id="selectList" resultType="com.dili.account.entity.UserAccountDo">
+		SELECT
+			<include refid="Base_Column"/>
 		FROM
 			account_user_account
 		ORDER BY
@@ -93,31 +97,7 @@
 
 	<select id="getById" resultType="com.dili.account.entity.UserAccountDo">
 		SELECT
-			`id`,
-			`account_id`,
-			`parent_account_id`,
-			`customer_id`,
-			`fund_account_id`,
-			`type`,
-			`usage_type`,
-			`holder_name`,
-			`holder_gender`,
-			`holder_mobile`,
-			`holder_certificate_number`,
-			`holder_certificate_type`,
-			`holder_address`,
-			`permissions`,
-			`login_pwd`,
-			`pwd_changed`,
-			`login_time`,
-			`secret_key`,
-			`state`,
-			`source`,
-			`version`,
-			`firm_id`,
-			`firm_name`,
-			`create_time`,
-			`modify_time`
+			<include refid="Base_Column"/>
 		FROM
 			account_user_account
 		WHERE
@@ -169,31 +149,7 @@
 
 	<select id="getByAccountId" resultType="com.dili.account.entity.UserAccountDo">
 		SELECT
-			`id`,
-			`account_id`,
-			`parent_account_id`,
-			`customer_id`,
-			`fund_account_id`,
-			`type`,
-			`usage_type`,
-			`holder_name`,
-			`holder_gender`,
-			`holder_mobile`,
-			`holder_certificate_number`,
-			`holder_certificate_type`,
-			`holder_address`,
-			`permissions`,
-			`login_pwd`,
-			`pwd_changed`,
-			`login_time`,
-			`secret_key`,
-			`state`,
-			`source`,
-			`version`,
-			`firm_id`,
-			`firm_name`,
-			`create_time`,
-			`modify_time`
+		<include refid="Base_Column"/>
 		FROM
 			account_user_account
 		WHERE
@@ -202,32 +158,8 @@
 	</select>
 
 	<select id="findSlavesByParent" resultType="com.dili.account.entity.UserAccountDo">
-			SELECT
-			`id`,
-			`account_id`,
-			`parent_account_id`,
-			`customer_id`,
-			`fund_account_id`,
-			`type`,
-			`usage_type`,
-			`holder_name`,
-			`holder_gender`,
-			`holder_mobile`,
-			`holder_certificate_number`,
-			`holder_certificate_type`,
-			`holder_address`,
-			`permissions`,
-			`login_pwd`,
-			`pwd_changed`,
-			`login_time`,
-			`secret_key`,
-			`state`,
-			`source`,
-			`version`,
-			`firm_id`,
-			`firm_name`,
-			`create_time`,
-			`modify_time`
+		SELECT
+		<include refid="Base_Column"/>
 		FROM
 			account_user_account
 		WHERE

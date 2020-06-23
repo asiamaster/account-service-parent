@@ -16,8 +16,8 @@ public class UserAccountCardResponseDto implements Serializable {
     private Long accountId;
     /** 父卡账号 */
     private Long parentAccountId;
-    /** 卡交易类型: 1-买家 2-卖家 */
-    private Integer bizUsageType;
+    /** 卡交易类型: 1-买家 2-卖家 {@link com.dili.account.type.AccountType}*/
+    private Integer accountType;
     /** 资金账号ID */
     private Long fundAccountId;
     /**客户id*/
@@ -28,12 +28,13 @@ public class UserAccountCardResponseDto implements Serializable {
     private Long cardId;
     /** 卡号 */
     private String cardNo;
-    /**卡用途 {@link com.dili.account.type.CardBizType}*/
-    private Integer cardUsageType;
+    /**卡账户用途 {@link com.dili.account.type.AccountUsageType}*/
+    private Integer usageType;
     /** 卡类型-主/副/临时/联营 {@link com.dili.account.type.CardType}*/
     private Integer cardType;
     /** 卡片状态 {@link com.dili.account.type.CardStatus} */
     private Integer cardState;
+    /**开卡时间*/
     private LocalDateTime cardCreateTime;
 
     public Long getCustomerId() {
@@ -68,12 +69,12 @@ public class UserAccountCardResponseDto implements Serializable {
         this.parentAccountId = parentAccountId;
     }
 
-    public Integer getBizUsageType() {
-        return bizUsageType;
+    public Integer getAccountType() {
+        return accountType;
     }
 
-    public void setBizUsageType(Integer bizUsageType) {
-        this.bizUsageType = bizUsageType;
+    public void setAccountType(Integer accountType) {
+        this.accountType = accountType;
     }
 
     public Long getFundAccountId() {
@@ -100,12 +101,12 @@ public class UserAccountCardResponseDto implements Serializable {
         this.cardNo = cardNo;
     }
 
-    public Integer getCardUsageType() {
-        return cardUsageType;
+    public Integer getUsageType() {
+        return usageType;
     }
 
-    public void setCardUsageType(Integer cardUsageType) {
-        this.cardUsageType = cardUsageType;
+    public void setUsageType(Integer usageType) {
+        this.usageType = usageType;
     }
 
     public List<String> getPermissionList() {

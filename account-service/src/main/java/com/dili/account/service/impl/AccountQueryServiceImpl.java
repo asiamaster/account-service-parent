@@ -102,7 +102,7 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
         responseDto.setCardType(card.getType());
         responseDto.setCardNo(card.getCardNo());
         responseDto.setCardState(card.getState());
-        responseDto.setCardUsageType(card.getUsageType());
+        responseDto.setUsageType(account.getUsageType());
         responseDto.setCardCreateTime(card.getCreateTime());
         responseDto.setFirmId(account.getFirmId());
         responseDto.setAccountId(account.getAccountId());
@@ -110,7 +110,7 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
         responseDto.setCustomerId(account.getCustomerId());
         responseDto.setPermissionList(UsePermissionType.getPermissionList(account.getPermissions()));
         responseDto.setParentAccountId(account.getParentAccountId());
-        responseDto.setBizUsageType(account.getUsageType());
+        responseDto.setAccountType(account.getUsageType());
         return responseDto;
     }
 }

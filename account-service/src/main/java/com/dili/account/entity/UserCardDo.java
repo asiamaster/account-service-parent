@@ -26,8 +26,6 @@ public class UserCardDo implements Serializable, Cloneable {
     private Integer category;
     /** 类型-主/副/临时 */
     private Integer type;
-    /** 用途-买家/卖家卡 */
-    private Integer usageType;
     /** 验证码 */
     private String verifyCode;
     /** 卡片押金-分 */
@@ -116,13 +114,6 @@ public class UserCardDo implements Serializable, Cloneable {
         return type;
     }
 
-    public void setUsageType(Integer usageType) {
-        this.usageType = usageType;
-    }
-
-    public Integer getUsageType() {
-        return usageType;
-    }
 
     public void setVerifyCode(String verifyCode) {
         this.verifyCode = verifyCode;
@@ -221,7 +212,6 @@ public class UserCardDo implements Serializable, Cloneable {
                 ", cardNo='" + cardNo + '\'' +
                 ", category='" + category + '\'' +
                 ", type='" + type + '\'' +
-                ", usageType='" + usageType + '\'' +
                 ", verifyCode='" + verifyCode + '\'' +
                 ", cashPledge='" + cashPledge + '\'' +
                 ", last='" + last + '\'' +
