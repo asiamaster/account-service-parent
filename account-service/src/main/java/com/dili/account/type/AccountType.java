@@ -1,8 +1,5 @@
 package com.dili.account.type;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * @description： 账户类型
  * 
@@ -10,33 +7,24 @@ import java.util.List;
  * @time ：2020年4月22日下午6:50:34
  */
 public enum AccountType {
-	PERSONAL("个人账户", 1),
+	/** 买家卡 */
+	PURCHASE("买家卡", 1),
 
-	PUBLIC("对公账户", 2),
+	/** 卖家卡 */
+	SALE("卖家卡", 2),
 
-	/** 临时卡用 **/
-	Anonymous("不记名", 3);
+	/** 缴费卡 */
+	PAY_FEES("缴费卡", 3);
 
 	private String name;
-	private int code;
+	private Integer code;
 
-	private AccountType(String name, int code) {
+	private AccountType(String name, Integer code) {
 		this.name = name;
 		this.code = code;
 	}
 
-	public static List<AccountType> getEnumItemList() {
-		AccountType[] itemList = AccountType.values();
-		List<AccountType> filteredItemList = new ArrayList<AccountType>();
-		for (AccountType status : itemList) {
-			if (status.getCode() != Anonymous.code) {
-				filteredItemList.add(status);
-			}
-		}
-		return filteredItemList;
-	}
-
-	public static AccountType getAccountType(int code) {
+	public static AccountType getAccountType(Integer code) {
 		for (AccountType type : AccountType.values()) {
 			if (type.getCode() == code) {
 				return type;
@@ -45,10 +33,10 @@ public enum AccountType {
 		return null;
 	}
 
-	public static String getName(int code) {
-//    	if(code == null||code == 0) {
-//    		return "";
-//    	}
+	public static String getName(Integer code) {
+		if (code == null || code == 0) {
+			return "";
+		}
 		for (AccountType type : AccountType.values()) {
 			if (type.getCode() == code) {
 				return type.name;
@@ -65,11 +53,11 @@ public enum AccountType {
 		this.name = name;
 	}
 
-	public int getCode() {
+	public Integer getCode() {
 		return code;
 	}
 
-	public void setCode(int code) {
+	public void setCode(Integer code) {
 		this.code = code;
 	}
 

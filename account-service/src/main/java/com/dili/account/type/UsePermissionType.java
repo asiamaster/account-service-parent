@@ -3,11 +3,13 @@ package com.dili.account.type;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+
 /**
  * @description： 账户固定权限 充值、提现、交易、二次交易、转账
  * 
  * @author ：WangBo
- * @time ：2018年8月6日下午4:52:05
+ * @time ：2020年6月23日下午3:44:19
  */
 public enum UsePermissionType {
 
@@ -17,8 +19,12 @@ public enum UsePermissionType {
 	WITHDRAW("提现", 12),
 	/** 交易 */
 	TRANSACTION("交易", 13),
-	/** 转账 */
-	TRANSFER("转账", 14);
+	/** 市场缴费业务 */
+	PAY_FEES("市场缴费业务", 14),
+	/** 水、电扣费 */
+	UTILITIES("水、电扣费", 15),
+	/** 理财业务 */
+	WEALTH("理财业务", 16),;
 
 	private String name;
 	private int code;
@@ -28,11 +34,21 @@ public enum UsePermissionType {
 		this.code = code;
 	}
 
-	public static List<String> getPermissionList(String permissions){
+	public static List<String> getPermissionList(String permissions) {
 		String[] split = permissions.split(",");
 		return Arrays.asList(split);
 	}
-	
+
+	/**
+	 * 将类型code以“,”分隔，末尾增加“,”
+	 * 
+	 * @param types
+	 * @return
+	 */
+	public static String getPermissions(Integer... types) {
+		return StringUtils.join(types, ",") + ",";
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -47,10 +63,5 @@ public enum UsePermissionType {
 
 	public void setCode(int code) {
 		this.code = code;
-	}
-	
-	public static void main(String[] args) {
-		String permission="12,23,24,,";
-		System.out.println(getPermissionList(permission));
 	}
 }
