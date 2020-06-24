@@ -133,7 +133,6 @@
         account_user_account aua
         LEFT JOIN account_user_card auc on aua.account_id = auc.account_id
         <include refid="Where_Condition"/>
-        ORDER BY
-        ${orderByColumn} ${orderBy}
+        ORDER BY ${orderByColumn} ${sort}
     </select>
 </mapper>

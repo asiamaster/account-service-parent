@@ -61,8 +61,8 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
     @Override
     public List<UserAccountCardResponseDto> getListByConditionForRest(UserAccountCardQuery queryParam) {
         //设置默认排序字段，避免xml写太多判断
-        if (StringUtils.isBlank(queryParam.getOrderBy())) {
-            queryParam.setOrderBy("DESC");
+        if (StringUtils.isBlank(queryParam.getSort())) {
+            queryParam.setSort("DESC");
         }
         if (StringUtils.isBlank(queryParam.getOrderByColumn())) {
             queryParam.setOrderByColumn("card_create_time");
