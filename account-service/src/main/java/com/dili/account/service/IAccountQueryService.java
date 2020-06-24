@@ -16,6 +16,15 @@ import java.util.List;
  * @time ：2020年4月22日下午5:48:22
  */
 public interface IAccountQueryService {
+
+    /**
+    * 卡片是否存在
+    * @param
+    * @return
+    * @author miaoguoxin
+    * @date 2020/6/24
+    */
+    Boolean cardExist(String cardNo);
     /**
      * 根据卡号查询唯一数据(不包含退卡状态)
      * @return

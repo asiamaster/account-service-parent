@@ -35,6 +35,17 @@ public class QueryAccountController {
     @Autowired
     private IAccountQueryService accountQueryService;
 
+    /**
+    * 判断卡号是否存在
+    * @param
+    * @return
+    * @author miaoguoxin
+    * @date 2020/6/24
+    */
+    @GetMapping("existCard/{cardNo}")
+    public BaseOutput<Boolean> existCard(@PathVariable String cardNo ){
+        return BaseOutput.successData(accountQueryService.cardExist(cardNo));
+    }
 
     /**
      * 根据卡号查卡账户信息

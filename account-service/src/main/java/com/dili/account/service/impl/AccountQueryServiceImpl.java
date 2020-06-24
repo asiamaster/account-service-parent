@@ -16,7 +16,6 @@ import com.dili.account.type.UsePermissionType;
 import com.dili.account.util.PageUtils;
 import com.dili.ss.constant.ResultCode;
 import com.dili.ss.domain.PageOutput;
-import com.dili.ss.exception.BusinessException;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.apache.commons.lang3.StringUtils;
@@ -44,6 +43,11 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
 
 
     @Override
+    public Boolean cardExist(String cardNo) {
+        return userCardDao.getByCardNo(cardNo) != null;
+    }
+
+    @Override
     public UserAccountCardResponseDto getByCardNoForRest(String cardNo) {
         UserCardDo card = userCardDao.getByCardNo(cardNo);
         Optional.ofNullable(card)
@@ -60,7 +64,7 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
         if (StringUtils.isBlank(queryParam.getOrderBy())) {
             queryParam.setOrderBy("DESC");
         }
-        if (StringUtils.isBlank(queryParam.getOrderByColumn())){
+        if (StringUtils.isBlank(queryParam.getOrderByColumn())) {
             queryParam.setOrderByColumn("createTime");
         }
         List<CardAggregationWrapper> list = userAccountCardDao.getListByCondition(queryParam);
