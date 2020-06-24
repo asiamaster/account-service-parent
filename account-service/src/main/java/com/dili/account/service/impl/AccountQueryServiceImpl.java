@@ -65,7 +65,7 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
             queryParam.setOrderBy("DESC");
         }
         if (StringUtils.isBlank(queryParam.getOrderByColumn())) {
-            queryParam.setOrderByColumn("createTime");
+            queryParam.setOrderByColumn("card_create_time");
         }
         List<CardAggregationWrapper> list = userAccountCardDao.getListByCondition(queryParam);
         return list.stream().map(wrapper -> this.convertFromAccountUnionCard(
