@@ -14,7 +14,7 @@ import com.dili.ss.domain.BaseOutput;
  * 密码相关操作
  */
 @RestController
-@RequestMapping("/account")
+@RequestMapping("/api/card")
 public class PasswordManageController {
 
     @Autowired
