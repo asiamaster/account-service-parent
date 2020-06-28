@@ -9,6 +9,7 @@
 			`parent_account_id`,
 			`customer_id`,
 			`fund_account_id`,
+			`card_exist`,
 			`type`,
 			`usage_type`,
 			`permissions`,
@@ -18,6 +19,7 @@
 			`secret_key`,
 			`state`,
 			`source`,
+			`disabled_state`,
 			`version`,
 			`firm_id`,
 			`firm_name`,
@@ -40,6 +42,7 @@
 			`parent_account_id`,
 			`customer_id`,
 			`fund_account_id`,
+			`card_exist`,
 			`type`,
 			`usage_type`,
 			`permissions`,
@@ -50,6 +53,9 @@
 			`state`,
 			`source`,
 			`version`,
+			`disabled_state`,
+			`creator_id`,
+			`creator`,
 			`firm_id`,
 			`firm_name`,
 			`create_time`,
@@ -60,6 +66,7 @@
 			#{parentAccountId},
 			#{customerId},
 			#{fundAccountId},
+			#{cardExist},
 			#{type},
 			#{usageType},
 			#{permissions},
@@ -70,6 +77,9 @@
 			#{state},
 			#{source},
 			#{version},
+			#{disabledState},
+			#{creatorId},
+			#{creator},
 			#{firmId},
 			#{firmName},
 			#{createTime},
@@ -93,6 +103,7 @@
 			<if test="parentAccountId != null">`parent_account_id` = #{parentAccountId}, </if>
 			<if test="customerId != null">`customer_id` = #{customerId}, </if>
 			<if test="fundAccountId != null">`fund_account_id` = #{fundAccountId}, </if>
+			<if test="cardExist != null">`card_exist` = #{cardExist}, </if>
 			<if test="type != null">`type` = #{type}, </if>
 			<if test="usageType != null">`usage_type` = #{usageType}, </if>
 			<if test="permissions != null">`permissions` = #{permissions}, </if>
