@@ -40,14 +40,6 @@ public class GenericGlobalExceptionResolver {
     }
 
     /**
-     * 参数断言异常处理
-     */
-    @ExceptionHandler({IllegalArgumentException.class})
-    public BaseOutput<?> handleIllegalArgsException(IllegalArgumentException ex) {
-        return BaseOutput.create(ResultCode.PARAMS_ERROR, ex.getMessage());
-    }
-
-    /**
      * 单参数校验异常处理
      */
     @ExceptionHandler({ConstraintViolationException.class})

@@ -137,7 +137,7 @@ public class CardStorageServiceImpl implements ICardStorageService {
 			LOG.error(VOID_ERRMSG, cardNo);
 			throw new AccountBizException(VOID_ERRMSG);
 		}
-		return null;
+		return repository;
 	}
 
 	@Override

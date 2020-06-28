@@ -42,7 +42,7 @@ public class UidRpcResovler {
 	 * @return
 	 * @throws InterruptedException
 	 */
-	public String bizNumberRetry(String type, int count) throws InterruptedException {
+	public String bizNumberRetry(String type, int count){
 		int retryCount = 0;
 		BaseOutput<String> baseOutput = BaseOutput.failure();
 		do {
@@ -51,7 +51,11 @@ public class UidRpcResovler {
 				return baseOutput.getData();
 			}
 			++retryCount;
-			Thread.sleep(500L);
+			try {
+				Thread.sleep(500L);
+			} catch (InterruptedException e) {
+				throw new AccountBizException(ResultCode.DATA_ERROR, "远程调用编号生成服务失败");
+			}
 		} while (retryCount < count);
 		throw new AccountBizException(ResultCode.DATA_ERROR, "远程调用编号生成服务失败");
 	}

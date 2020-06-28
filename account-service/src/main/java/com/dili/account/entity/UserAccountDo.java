@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 
 /**
  * 用户账户信息
+ * 
  * @author bob
  */
 public class UserAccountDo implements Serializable {
@@ -21,9 +22,11 @@ public class UserAccountDo implements Serializable {
 	private Long customerId;
 	/** 资金账号 */
 	private Long fundAccountId;
+	/** 实体卡是否存在 */
+	private Integer cardExist;
 	/** 账号类型-买家账户/卖家账户 */
 	private Integer type;
-	/** 账户用途-交易账户/水电费账户 ,多个以逗号分隔*/
+	/** 账户用途-交易账户/水电费账户 ,多个以逗号分隔 */
 	private String usageType;
 	/** 使用权限(充值、提现、交费等),多个以逗号分隔 */
 	private String permissions;
@@ -41,6 +44,12 @@ public class UserAccountDo implements Serializable {
 	private Integer source;
 	/** 数据版本号 */
 	private Integer version;
+	/** 禁用状态 */
+	private Integer disabledState;
+	/** 操作人员 */
+	private Long creatorId;
+	/** 员工名称-保留字段 */
+	private String creator;
 	/** 商户ID */
 	private Long firmId;
 	/** 商户名称 */
@@ -49,23 +58,24 @@ public class UserAccountDo implements Serializable {
 	private LocalDateTime createTime;
 	/** 修改时间 */
 	private LocalDateTime modifyTime;
-    /**
-     * UserAccountEntity constructor
-     */
+
+	/**
+	 * UserAccountEntity constructor
+	 */
 	public UserAccountDo() {
 		super();
 	}
 
-    /**
-     * setter for
-     */
+	/**
+	 * setter for
+	 */
 	public void setId(Long id) {
 		this.id = id;
 	}
 
-    /**
-     * getter for
-     */
+	/**
+	 * getter for
+	 */
 	public Long getId() {
 		return id;
 	}
@@ -212,6 +222,38 @@ public class UserAccountDo implements Serializable {
 
 	public LocalDateTime getModifyTime() {
 		return modifyTime;
+	}
+
+	public Integer getCardExist() {
+		return cardExist;
+	}
+
+	public void setCardExist(Integer cardExist) {
+		this.cardExist = cardExist;
+	}
+
+	public Long getCreatorId() {
+		return creatorId;
+	}
+
+	public void setCreatorId(Long creatorId) {
+		this.creatorId = creatorId;
+	}
+
+	public String getCreator() {
+		return creator;
+	}
+
+	public void setCreator(String creator) {
+		this.creator = creator;
+	}
+
+	public Integer getDisabledState() {
+		return disabledState;
+	}
+
+	public void setDisabledState(Integer disabledState) {
+		this.disabledState = disabledState;
 	}
 
 }

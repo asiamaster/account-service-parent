@@ -17,21 +17,7 @@ public class AccountBizException extends RuntimeException {
     /** */
     private static final long serialVersionUID = 4248326393464652492L;
 
-    /**
-     * Constructor for AopConfigException.
-     *
-     * @param msg the detail message
-     */
-    public AccountBizException(String code, String msg) {
-        super(msg.replace("{}", ""));
-        this.code = code;
-    }
-
-    public AccountBizException(String msg) {
-        super(msg.replace("{}", ""));
-        this.code = ErrorCode.GENERAL_CODE;
-    }
-
+    
     /**
      * 抛出默认错误码（100000）异常，并打印日志
      * <br><i>由于前端可能直接使用该异常信息，有些信息不需要用户看到，所以抛出的异常信息会去掉占位符</i>
@@ -42,6 +28,11 @@ public class AccountBizException extends RuntimeException {
         super(msg.replace("{}", ""));
         this.code = ErrorCode.GENERAL_CODE;
         log.error(msg, obj);
+    }
+
+    public AccountBizException(String msg) {
+        super(msg.replace("{}", ""));
+        this.code = ErrorCode.GENERAL_CODE;
     }
 
     @Override

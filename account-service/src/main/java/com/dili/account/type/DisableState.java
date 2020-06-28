@@ -8,7 +8,7 @@ package com.dili.account.type;
 /**
  * 禁用启用状态
  */
-public enum SystemDisableStatus {
+public enum DisableState {
 	/** 启用 */
 	ENABLED(1, "启用"),
 	/** 禁用 */
@@ -17,7 +17,7 @@ public enum SystemDisableStatus {
 	private Integer code;
 	private String name;
 
-	private SystemDisableStatus(Integer code, String name) {
+	private DisableState(Integer code, String name) {
 		this.code = code;
 		this.name = name;
 	}
