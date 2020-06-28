@@ -1,5 +1,9 @@
 package com.dili.account.dto;
 
+import com.alibaba.fastjson.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -34,9 +38,41 @@ public class UserAccountCardResponseDto implements Serializable {
     private Integer cardType;
     /** 卡片状态 {@link com.dili.account.type.CardStatus} */
     private Integer cardState;
+    /**账户状态 {@link com.dili.account.type.AccountStatus}*/
+    private Integer accountState;
     /**开卡时间*/
+    @JSONField(format = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime cardCreateTime;
+    /**建卡人名字*/
+    private String creator;
+    /**建卡人id*/
+    private Long creatorId;
 
+    public String getCreator() {
+        return creator;
+    }
+
+    public void setCreator(String creator) {
+        this.creator = creator;
+    }
+
+    public Long getCreatorId() {
+        return creatorId;
+    }
+
+    public void setCreatorId(Long creatorId) {
+        this.creatorId = creatorId;
+    }
+
+    public Integer getAccountState() {
+        return accountState;
+    }
+
+    public void setAccountState(Integer accountState) {
+        this.accountState = accountState;
+    }
 
     public Long getCustomerId() {
         return customerId;
