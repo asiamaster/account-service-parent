@@ -10,8 +10,6 @@ import java.util.List;
  * @time ：2020年4月26日下午4:30:03
  */
 public class UserAccountCardQuery extends BaseDto{
-	/**user_account表的主键id*/
-	private List<Long> userAccountIds;
 	/**客户id*/
 	private List<Long> customerIds;
 	/** 多个账户ID */
@@ -29,13 +27,6 @@ public class UserAccountCardQuery extends BaseDto{
 	/**卡状态 {@link com.dili.account.type.CardStatus}*/
 	private Integer cardState;
 
-	public List<Long> getUserAccountIds() {
-		return userAccountIds;
-	}
-
-	public void setUserAccountIds(List<Long> userAccountIds) {
-		this.userAccountIds = userAccountIds;
-	}
 
 	public Integer getCardType() {
 		return cardType;

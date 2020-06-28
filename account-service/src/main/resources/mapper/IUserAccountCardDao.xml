@@ -89,12 +89,6 @@
     </sql>
     <sql id="Where_Condition">
         <where>
-            <if test="userAccountIds !=null and userAccountIds.size>0">
-                AND aua.`id` IN
-                <foreach item="item" collection="userAccountIds" separator="," open="(" close=")" index="">
-                    #{item}
-                </foreach>
-            </if>
             <if test="customerIds!=null and customerIds.size>0">
                 AND aua.customer_id IN
                 <foreach item="item" collection="customerIds" separator="," open="(" close=")" index="">

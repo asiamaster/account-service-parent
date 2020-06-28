@@ -70,11 +70,11 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
         //查询关联卡，primaryCard为主卡就查副卡，副卡就查主卡
         if (CardType.isMaster(primaryCard.getCardType())) {
             UserAccountCardQuery param = new UserAccountCardQuery();
-            param.setParentAccountId(primaryCard.getUserAccountId());
+            param.setParentAccountId(primaryCard.getAccountId());
             associationCards = this.getListByConditionForRest(param);
         } else if (CardType.isSlave(primaryCard.getCardType())) {
             UserAccountCardQuery param = new UserAccountCardQuery();
-            param.setUserAccountIds(Lists.newArrayList(primaryCard.getParentAccountId()));
+            param.setAccountIds(Lists.newArrayList(primaryCard.getParentAccountId()));
             associationCards = this.getListByConditionForRest(param);
         }
         result.setPrimary(primaryCard);
@@ -127,7 +127,6 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
 
     private UserAccountCardResponseDto convertFromAccountUnionCard(UserCardDo card, UserAccountDo account) {
         UserAccountCardResponseDto responseDto = new UserAccountCardResponseDto();
-        responseDto.setUserAccountId(account.getId());
         responseDto.setCardId(card.getId());
         responseDto.setCardType(card.getType());
         responseDto.setCardNo(card.getCardNo());

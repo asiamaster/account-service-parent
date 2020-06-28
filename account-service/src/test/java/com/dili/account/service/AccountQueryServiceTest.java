@@ -70,11 +70,11 @@ class AccountQueryServiceTest extends BaseTest {
 
     @Test
     void testGetByCardNoWithAssociationForRest() {
-        AccountWithAssociationResponseDto rest1 = accountQueryService.getByCardNoWithAssociationForRest("4386151004");
+        AccountWithAssociationResponseDto rest1 = accountQueryService.getByCardNoWithAssociationForRest("888800034670");
         UserAccountCardResponseDto primary = rest1.getPrimary();
         assertTrue(CardType.isMaster(primary.getCardType()));
         LOGGER.info("获取到结果1:{}",JSON.toJSONString(rest1));
-        AccountWithAssociationResponseDto rest2 = accountQueryService.getByCardNoWithAssociationForRest("2227794629");
+        AccountWithAssociationResponseDto rest2 = accountQueryService.getByCardNoWithAssociationForRest("888800034671");
         assertTrue(CardType.isSlave(rest2.getPrimary().getCardType()));
         LOGGER.info("获取到结果2:{}",JSON.toJSONString(rest2));
     }
