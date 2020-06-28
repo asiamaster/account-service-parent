@@ -2,8 +2,10 @@ package com.dili.account.service;
 
 import com.alibaba.fastjson.JSON;
 import com.dili.account.BaseTest;
+import com.dili.account.dto.AccountWithAssociationResponseDto;
 import com.dili.account.dto.UserAccountCardQuery;
 import com.dili.account.dto.UserAccountCardResponseDto;
+import com.dili.account.type.CardType;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
@@ -64,5 +66,16 @@ class AccountQueryServiceTest extends BaseTest {
 
     @Test
     void getByAccountIdWithNotNull() {
+    }
+
+    @Test
+    void testGetByCardNoWithAssociationForRest() {
+        AccountWithAssociationResponseDto rest1 = accountQueryService.getByCardNoWithAssociationForRest("4386151004");
+        UserAccountCardResponseDto primary = rest1.getPrimary();
+        assertTrue(CardType.isMaster(primary.getCardType()));
+        LOGGER.info("获取到结果1:{}",JSON.toJSONString(rest1));
+        AccountWithAssociationResponseDto rest2 = accountQueryService.getByCardNoWithAssociationForRest("2227794629");
+        assertTrue(CardType.isSlave(rest2.getPrimary().getCardType()));
+        LOGGER.info("获取到结果2:{}",JSON.toJSONString(rest2));
     }
 }

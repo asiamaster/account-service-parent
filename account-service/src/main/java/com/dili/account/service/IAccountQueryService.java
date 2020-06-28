@@ -1,5 +1,6 @@
 package com.dili.account.service;
 
+import com.dili.account.dto.AccountWithAssociationResponseDto;
 import com.dili.account.dto.UserAccountCardQuery;
 import com.dili.account.dto.UserAccountCardResponseDto;
 import com.dili.account.entity.CardAggregationWrapper;
@@ -30,6 +31,13 @@ public interface IAccountQueryService {
      * @return
      */
     UserAccountCardResponseDto getByCardNoForRest(String cardNo);
+
+    /**
+    *  根据卡号查询关联的所有卡
+    * @author miaoguoxin
+    * @date 2020/6/28
+    */
+    AccountWithAssociationResponseDto getByCardNoWithAssociationForRest(String cardNo);
 
     /**
     * 卡列表条件查询

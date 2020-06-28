@@ -4,6 +4,7 @@ import com.dili.account.common.ExceptionMsg;
 import com.dili.account.dao.IUserAccountCardDao;
 import com.dili.account.dao.IUserAccountDao;
 import com.dili.account.dao.IUserCardDao;
+import com.dili.account.dto.AccountWithAssociationResponseDto;
 import com.dili.account.dto.UserAccountCardQuery;
 import com.dili.account.dto.UserAccountCardResponseDto;
 import com.dili.account.entity.CardAggregationWrapper;
@@ -12,16 +13,19 @@ import com.dili.account.entity.UserCardDo;
 import com.dili.account.exception.AccountBizException;
 import com.dili.account.service.IAccountQueryService;
 import com.dili.account.type.AccountUsageType;
+import com.dili.account.type.CardType;
 import com.dili.account.type.UsePermissionType;
 import com.dili.account.util.PageUtils;
 import com.dili.ss.constant.ResultCode;
 import com.dili.ss.domain.PageOutput;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -56,6 +60,26 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
         Optional.ofNullable(userAccount)
                 .orElseThrow(() -> new AccountBizException(ResultCode.DATA_ERROR, ExceptionMsg.ACCOUNT_NOT_EXIST.getName()));
         return this.convertFromAccountUnionCard(card, userAccount);
+    }
+
+    @Override
+    public AccountWithAssociationResponseDto getByCardNoWithAssociationForRest(String cardNo) {
+        AccountWithAssociationResponseDto result = new AccountWithAssociationResponseDto();
+        List<UserAccountCardResponseDto> associationCards = new ArrayList<>();
+        UserAccountCardResponseDto primaryCard = this.getByCardNoForRest(cardNo);
+        //查询关联卡，primaryCard为主卡就查副卡，副卡就查主卡
+        if (CardType.isMaster(primaryCard.getCardType())) {
+            UserAccountCardQuery param = new UserAccountCardQuery();
+            param.setParentAccountId(primaryCard.getUserAccountId());
+            associationCards = this.getListByConditionForRest(param);
+        } else if (CardType.isSlave(primaryCard.getCardType())) {
+            UserAccountCardQuery param = new UserAccountCardQuery();
+            param.setUserAccountIds(Lists.newArrayList(primaryCard.getParentAccountId()));
+            associationCards = this.getListByConditionForRest(param);
+        }
+        result.setPrimary(primaryCard);
+        result.setAssociation(associationCards);
+        return result;
     }
 
     @Override
@@ -103,6 +127,7 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
 
     private UserAccountCardResponseDto convertFromAccountUnionCard(UserCardDo card, UserAccountDo account) {
         UserAccountCardResponseDto responseDto = new UserAccountCardResponseDto();
+        responseDto.setUserAccountId(account.getId());
         responseDto.setCardId(card.getId());
         responseDto.setCardType(card.getType());
         responseDto.setCardNo(card.getCardNo());

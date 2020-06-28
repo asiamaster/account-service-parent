@@ -1,5 +1,6 @@
 package com.dili.account.controller;
 
+import com.dili.account.dto.AccountWithAssociationResponseDto;
 import com.dili.account.dto.UserAccountCardQuery;
 import com.dili.account.dto.UserAccountCardResponseDto;
 import com.dili.account.exception.AccountBizException;
@@ -36,14 +37,14 @@ public class QueryAccountController {
     private IAccountQueryService accountQueryService;
 
     /**
-    * 判断卡号是否存在
-    * @param
-    * @return
-    * @author miaoguoxin
-    * @date 2020/6/24
-    */
+     * 判断卡号是否存在
+     * @param
+     * @return
+     * @author miaoguoxin
+     * @date 2020/6/24
+     */
     @GetMapping("existCard/{cardNo}")
-    public BaseOutput<Boolean> existCard(@PathVariable String cardNo ){
+    public BaseOutput<Boolean> existCard(@PathVariable String cardNo) {
         return BaseOutput.successData(accountQueryService.cardExist(cardNo));
     }
 
@@ -56,6 +57,19 @@ public class QueryAccountController {
             throw new AccountBizException(ResultCode.PARAMS_ERROR, "卡号不能为空");
         }
         return BaseOutput.successData(accountQueryService.getByCardNoForRest(cardNo));
+    }
+
+    /**
+     *  查询包含关联卡的信息
+     * @author miaoguoxin
+     * @date 2020/6/28
+     */
+    @GetMapping("getAssociation/{cardNo}")
+    public BaseOutput<AccountWithAssociationResponseDto> getAssociationAccountCard(@PathVariable String cardNo) {
+        if (StringUtils.isBlank(cardNo)) {
+            throw new AccountBizException(ResultCode.PARAMS_ERROR, "卡号不能为空");
+        }
+        return BaseOutput.successData(accountQueryService.getByCardNoWithAssociationForRest(cardNo));
     }
 
     /**

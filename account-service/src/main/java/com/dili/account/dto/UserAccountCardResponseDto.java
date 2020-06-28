@@ -10,6 +10,8 @@ import java.util.List;
  * @Description: 卡账户响应Dto
  */
 public class UserAccountCardResponseDto implements Serializable {
+    /**user_account的主键id*/
+    private Long userAccountId;
     /**市场id*/
     private Long firmId;
     /**卡账号id*/
@@ -36,6 +38,14 @@ public class UserAccountCardResponseDto implements Serializable {
     private Integer cardState;
     /**开卡时间*/
     private LocalDateTime cardCreateTime;
+
+    public Long getUserAccountId() {
+        return userAccountId;
+    }
+
+    public void setUserAccountId(Long userAccountId) {
+        this.userAccountId = userAccountId;
+    }
 
     public Long getCustomerId() {
         return customerId;
