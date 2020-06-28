@@ -11,8 +11,7 @@ import com.dili.ss.constant.ResultCode;
 import com.dili.ss.domain.BaseOutput;
 
 /**
- * @description： 支付服务调用包装类 <br>
- * <i>增加重试及当结果失败失抛出异常的操作
+ * @description： 支付服务调用包装类 
  * 
  * @author ：WangBo
  * @time ：2020年6月22日下午6:07:02

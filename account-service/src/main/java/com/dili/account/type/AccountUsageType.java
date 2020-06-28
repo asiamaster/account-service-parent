@@ -3,6 +3,8 @@ package com.dili.account.type;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
+
 /**
  * @description： 账户用途类型
  *
@@ -43,6 +45,9 @@ public enum AccountUsageType {
 		return Arrays.asList(split);
 	}
 
+	public static String getCodes(Integer ...codes) {
+		return StringUtils.join(codes, ",") + ",";
+	}
 	public static String getName(int code) {
 //    	if(code == null||code == 0) {
 //    		return "";

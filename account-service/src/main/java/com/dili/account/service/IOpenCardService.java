@@ -16,6 +16,8 @@ public interface IOpenCardService {
 	 * 开主卡
 	 * @param openCardInfo
 	 * @return
+	 * @throws InterruptedException 
+	 * @throws Exception 
 	 */
 	public OpenCardResponseDto openMasterCard(OpenCardDto openCardInfo);
 
