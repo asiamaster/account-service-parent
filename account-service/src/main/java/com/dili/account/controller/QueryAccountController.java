@@ -93,8 +93,7 @@ public class QueryAccountController {
      * @date 2020/6/19
      */
     @PostMapping("getList")
-    public BaseOutput<List<UserAccountCardResponseDto>> getList(@RequestBody @Validated(ConstantValidator.Page.class)
-                                                                        UserAccountCardQuery param) {
+    public BaseOutput<List<UserAccountCardResponseDto>> getList(@RequestBody UserAccountCardQuery param) {
         return BaseOutput.successData(accountQueryService.getListByConditionForRest(param));
     }
 
