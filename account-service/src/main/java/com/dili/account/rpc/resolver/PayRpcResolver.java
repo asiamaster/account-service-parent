@@ -13,7 +13,7 @@ import com.dili.ss.domain.BaseOutput;
 
 /**
  * @description： 支付服务调用包装类
- * 
+ *
  * @author ：WangBo
  * @time ：2020年6月22日下午6:07:02
  */
@@ -35,13 +35,13 @@ public class PayRpcResolver {
 
 	/**
 	 * 调用支付服务
-	 * 
+	 *
 	 * @param accountInfo
 	 * @return 资金账号ID
 	 */
 	public Long createFundAccount(FundAccountDto accountInfo) {
 		BaseOutput<PayCreateFundReponseDto> baseOutput = BaseOutput.failure();
-		baseOutput = payRpc.createFundAccount(accountInfo, appid, token);
+		baseOutput = payRpc.createFundAccount(accountInfo);
 		if (baseOutput.isSuccess()) {
 			return baseOutput.getData().getAccountId();
 		}
