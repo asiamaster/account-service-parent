@@ -1,8 +1,5 @@
 package com.dili.account.exception;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 /**
  * @description： 业务异常
  *
@@ -10,46 +7,33 @@ import org.slf4j.LoggerFactory;
  * @time ：2019年6月22日下午4:22:55
  */
 public class AccountBizException extends RuntimeException {
-    private static final Logger log = LoggerFactory.getLogger(AccountBizException.class);
-    /**错误code码*/
-    private String code;
+	/** 错误code码 */
+	private String code;
 
-    /** */
-    private static final long serialVersionUID = 4248326393464652492L;
+	/** */
+	private static final long serialVersionUID = 4248326393464652492L;
 
-    
-    /**
-     * 抛出默认错误码（100000）异常，并打印日志
-     * <br><i>由于前端可能直接使用该异常信息，有些信息不需要用户看到，所以抛出的异常信息会去掉占位符</i>
-     * @param msg 错误信息，可使用log4j格式占位符
-     * @param obj 占位符日志参数
-     */
-    public AccountBizException(String msg, Object... obj) {
-        super(msg.replace("{}", ""));
-        this.code = ErrorCode.GENERAL_CODE;
-        log.error(msg, obj);
-    }
+	/**
+	 * Constructor for AopConfigException.
+	 *
+	 * @param msg the detail message
+	 */
+	public AccountBizException(String code, String msg) {
+		super(msg);
+		this.code = code;
+	}
 
-    public AccountBizException(String msg) {
-        super(msg.replace("{}", ""));
-        this.code = ErrorCode.GENERAL_CODE;
-    }
+	public AccountBizException(String msg) {
+		super(msg);
+		this.code = ErrorCode.GENERAL_CODE + "";
+	}
 
-    @Override
-    public Throwable fillInStackTrace() {
-        return this;
-    }
+	@Override
+	public Throwable fillInStackTrace() {
+		return this;
+	}
 
-    public String getCode() {
-        return code;
-    }
-//
-//	public AppException(String msg, Throwable cause)
-//	{
-//		super(msg, cause);
-//	}
-//
-//	public AppException(Throwable cause) {
-//        super(cause);
-//    }
+	public String getCode() {
+		return code;
+	}
 }

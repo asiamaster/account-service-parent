@@ -5,20 +5,22 @@ import org.springframework.stereotype.Component;
 
 import com.dili.account.dto.FundAccountDto;
 import com.dili.account.dto.PayAccountDto;
+import com.dili.account.dto.PayCreateFundReponseDto;
 import com.dili.account.exception.AccountBizException;
 import com.dili.account.rpc.PayRpc;
 import com.dili.ss.constant.ResultCode;
 import com.dili.ss.domain.BaseOutput;
 
 /**
- * @description： 支付服务调用包装类 
+ * @description： 支付服务调用包装类
  * 
  * @author ：WangBo
  * @time ：2020年6月22日下午6:07:02
  */
 @Component
 public class PayRpcResolver {
-
+	private Long appid = 100101L;
+	private String token = "abcd1234";
 	@Autowired
 	private PayRpc payRpc;
 
@@ -35,13 +37,13 @@ public class PayRpcResolver {
 	 * 调用支付服务
 	 * 
 	 * @param accountInfo
-	 * @return
+	 * @return 资金账号ID
 	 */
-	public String createFundAccount(FundAccountDto accountInfo) {
-		BaseOutput<String> baseOutput = BaseOutput.failure();
-		baseOutput = payRpc.createFundAccount(accountInfo);
+	public Long createFundAccount(FundAccountDto accountInfo) {
+		BaseOutput<PayCreateFundReponseDto> baseOutput = BaseOutput.failure();
+		baseOutput = payRpc.createFundAccount(accountInfo, appid, token);
 		if (baseOutput.isSuccess()) {
-			return baseOutput.getData();
+			return baseOutput.getData().getAccountId();
 		}
 		throw new AccountBizException(ResultCode.DATA_ERROR, "支付服务创建资金账户失败");
 	}

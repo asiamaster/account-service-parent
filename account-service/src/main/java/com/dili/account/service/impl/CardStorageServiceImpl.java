@@ -14,7 +14,7 @@ import com.dili.account.dao.ICardStorageDao;
 import com.dili.account.dto.CardAddStarogeDto;
 import com.dili.account.dto.CardRepoQueryParam;
 import com.dili.account.entity.CardStorageDo;
-import com.dili.account.exception.AccountBizException;
+import com.dili.account.exception.BizExceptionProxy;
 import com.dili.account.service.ICardStorageService;
 import com.dili.account.type.CardStorageState;
 import com.dili.ss.domain.PageOutput;
@@ -51,7 +51,7 @@ public class CardStorageServiceImpl implements ICardStorageService {
 		CardStorageDo repository = cardStorageDao.getByCardNo(addInfo.getCardNo());
 		if (repository != null) {
 			LOG.error(DUPLICATION_ERRMSG, addInfo.getCardNo());
-			throw new AccountBizException(DUPLICATION_ERRMSG);
+			throw BizExceptionProxy.exception(DUPLICATION_ERRMSG);
 		}
 		CardStorageDo cardInfo = new CardStorageDo();
 		cardInfo.setCardNo(addInfo.getCardNo());
@@ -78,7 +78,7 @@ public class CardStorageServiceImpl implements ICardStorageService {
 		// 该卡已在激活状态
 		if (repository.getState() == CardStorageState.ACTIVE.getCode()) {
 			LOG.error(NOT_IN_USE_ERRMSG, cardNo);
-			throw new AccountBizException(NOT_IN_USE_ERRMSG);
+			throw BizExceptionProxy.exception(NOT_IN_USE_ERRMSG);
 		}
 		// 更新为激活
 		CardStorageDo updateParam = new CardStorageDo();
@@ -97,7 +97,7 @@ public class CardStorageServiceImpl implements ICardStorageService {
 		// 该卡已在使用状态
 		if (repository.getState() == CardStorageState.USED.getCode()) {
 			LOG.error(IN_USE_ERRMSG, cardNo);
-			throw new AccountBizException(IN_USE_ERRMSG);
+			throw BizExceptionProxy.exception(IN_USE_ERRMSG);
 		}
 		// 更新为使用中
 		CardStorageDo updateParam = new CardStorageDo();
@@ -130,12 +130,12 @@ public class CardStorageServiceImpl implements ICardStorageService {
 		// 判断该卡是否存在
 		if (repository == null) {
 			LOG.error(NONEXISTENT_ERRMSG, cardNo);
-			throw new AccountBizException(NONEXISTENT_ERRMSG);
+			throw BizExceptionProxy.exception(NONEXISTENT_ERRMSG);
 		}
 		// 是否作废
 		if (repository.getState() == CardStorageState.VOID.getCode()) {
 			LOG.error(VOID_ERRMSG, cardNo);
-			throw new AccountBizException(VOID_ERRMSG);
+			throw BizExceptionProxy.exception(VOID_ERRMSG);
 		}
 		return repository;
 	}

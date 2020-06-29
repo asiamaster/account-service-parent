@@ -11,14 +11,16 @@ import org.springframework.transaction.annotation.Transactional;
 import com.dili.account.common.BizNoServiceType;
 import com.dili.account.dao.IUserAccountDao;
 import com.dili.account.dao.IUserCardDao;
+import com.dili.account.dto.FundAccountDto;
 import com.dili.account.dto.OpenCardDto;
 import com.dili.account.dto.OpenCardResponseDto;
 import com.dili.account.dto.UserAccountCardQuery;
 import com.dili.account.dto.UserAccountCardResponseDto;
+import com.dili.account.entity.CardAggregationWrapper;
 import com.dili.account.entity.CardStorageDo;
 import com.dili.account.entity.UserAccountDo;
 import com.dili.account.entity.UserCardDo;
-import com.dili.account.exception.AccountBizException;
+import com.dili.account.exception.BizExceptionProxy;
 import com.dili.account.rpc.resolver.PayRpcResolver;
 import com.dili.account.rpc.resolver.UidRpcResovler;
 import com.dili.account.service.IAccountQueryService;
@@ -30,6 +32,7 @@ import com.dili.account.type.AccountUsageType;
 import com.dili.account.type.CardCategory;
 import com.dili.account.type.CardStatus;
 import com.dili.account.type.CardType;
+import com.dili.account.type.CustomerOrgType;
 import com.dili.account.type.CustomerType;
 import com.dili.account.type.DisableState;
 import com.dili.account.type.UsePermissionType;
@@ -47,7 +50,7 @@ import com.google.common.collect.Lists;
 public class OpenCardServiceImpl implements IOpenCardService {
 
 	@Resource
-	private ICardStorageService ICardStorageService;
+	private ICardStorageService cardStorageService;
 	@Resource
 	private IAccountQueryService accountQueryService;
 	@Resource
@@ -64,7 +67,7 @@ public class OpenCardServiceImpl implements IOpenCardService {
 	public OpenCardResponseDto openMasterCard(OpenCardDto openCardInfo) {
 		// 判断卡状态是否异常
 		if (accountQueryService.cardExist(openCardInfo.getCardNo())) {
-			throw new AccountBizException("该卡{}已被{}使用，不能开卡!", openCardInfo.getCardNo());
+			throw BizExceptionProxy.exception("该卡{}已被{}使用，不能开卡!", openCardInfo.getCardNo());
 		}
 		// 判断客户是否已办理过主卡，寿光每个人只能有一张交易主卡,其它市场允许办两张卡，则判断只能一张交易买家卡和一张交易卖家卡
 		UserAccountCardQuery queryParam = new UserAccountCardQuery();
@@ -72,31 +75,27 @@ public class OpenCardServiceImpl implements IOpenCardService {
 		List<UserAccountCardResponseDto> userAccountList = accountQueryService.getListByConditionForRest(queryParam);
 		if (userAccountList.size() > 0) {
 			// TODO 是否允许两张卡
-			throw new AccountBizException("客户{}已办理过交易主卡{}", openCardInfo.getName(), userAccountList.get(0).getCardNo());
+			throw BizExceptionProxy.exception("客户{}已办理过交易主卡{}", openCardInfo.getName(), userAccountList.get(0).getCardNo());
 		}
 		// 判断卡类型，并将卡片改为使用中
-		CardStorageDo cardStorageDo = ICardStorageService.inUse(openCardInfo.getCardNo());
+		CardStorageDo cardStorageDo = cardStorageService.inUse(openCardInfo.getCardNo());
 		if (cardStorageDo.getType() != CardType.MASTER.getCode()) {
-			throw new AccountBizException("该卡{}不是主卡，操作失败!", openCardInfo.getCardNo());
+			throw BizExceptionProxy.exception("该卡{}不是主卡，操作失败!", openCardInfo.getCardNo());
 		}
 
 		// 创建资金账户
-//		FundAccountDto fundAccount = new FundAccountDto();
-//		String fundAccountIdStr = payRpcResolver.createFundAccount(fundAccount);
-//		Long fundAccountId = Long.parseLong(fundAccountIdStr);
-		Long fundAccountId = 33333L;
+		FundAccountDto fundAccount = buildFundAccount(openCardInfo);
+		Long fundAccountId = payRpcResolver.createFundAccount(fundAccount);
 
-		// 构建账户信息
+		// 保存账户信息
 		String accountIdStr = uidRpcResovler.bizNumberRetry(BizNoServiceType.ACCOUNT_ID, 3);
 		Long accountId = Long.parseLong(accountIdStr);
 		UserAccountDo userAccount = buildUserAccount(openCardInfo, accountId, fundAccountId);
+		userAccountDao.save(userAccount);
 
 		// 保存卡片信息
 		UserCardDo userCard = buildUserCard(openCardInfo, userAccount.getAccountId());
 		userCardDao.save(userCard);
-
-		// 保存账户信息
-		userAccountDao.save(userAccount);
 
 		// 返回数据
 		OpenCardResponseDto response = new OpenCardResponseDto();
@@ -105,60 +104,53 @@ public class OpenCardServiceImpl implements IOpenCardService {
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public OpenCardResponseDto openSlaveCard(OpenCardDto openCardInfo) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		// 判断卡状态是否异常
+		if (accountQueryService.cardExist(openCardInfo.getCardNo())) {
+			throw BizExceptionProxy.exception("该卡{}已被{}使用，不能开卡!", openCardInfo.getCardNo());
+		}
 
-//
-//	@Override
-//	@Transactional(rollbackFor = Exception.class)
-//	public OpenCardResponseDto openSlaveCard(OpenCardDto openCardInfo) {
-//		// 判断卡状态是否异常
-//		UserCardEntity userCardParam = new UserCardEntity();
-//		userCardParam.setCardNo(openCardInfo.getCardNo());
-//		UserCardEntity cardExists = userCardDao.getByIdCardNo(userCardParam);
-//		if (cardExists != null) {
-//			throw new AppException("该卡{}处于{}使用状态，请联系管理员!", openCardInfo.getCardNo(), cardExists.getAccountId());
-//		}
-//
-//		// 卡片改为使用中
-//		UserCardRepositoryEntity cardRep = cardRepositoryService.inUse(openCardInfo.getCardNo());
-//		if (cardRep.getCategory() != CardCategory.SLAVE.getCode()) {
-//			throw new AppException("该卡{}不是副卡，操作失败!", openCardInfo.getCardNo());
-//		}
-//
-//		// 获取主卡用户信息
-//		UserAccountEntity parentAccount = userAccountDao.getById(openCardInfo.getParentAccountId());
-//		if (parentAccount == null) {
-//			throw new AppException("{}主卡账户{}不存在!", openCardInfo.getCardNo(), openCardInfo.getParentAccountId());
-//		}
-//
-//		// 构建账户信息，使用主卡的用户信息
-//		UserAccountEntity userAccount = buildUserAccount(openCardInfo, parentAccount.getUserInfoId());
-//
-//		// 保存卡片信息
-//		UserCardEntity userCard = buildUserCard(openCardInfo, userAccount.getId());
-//		userCardDao.save(userCard);
-//
-//		// 保存账户信息
-//		userAccount.setParentAccountId(parentAccount.getId());
-//		userAccount.setLatestCardId(userCard.getId());
-//		userAccountDao.save(userAccount);
-//
-//		// 保存使用额度权限
-//		UserAmountLimitEntity userLimit = buildUserLimit(openCardInfo, userAccount.getId());
-//		amountLimitService.save(userLimit);
-//
-//		// 返回数据
-//		OpenCardResponseDto response = new OpenCardResponseDto();
-//		response.setAccountId(userAccount.getId());
-//		return response;
-//	}
+		// 判断卡类型，并将卡片改为使用中
+		CardStorageDo cardStorageDo = cardStorageService.inUse(openCardInfo.getCardNo());
+		if (cardStorageDo.getType() != CardType.SLAVE.getCode()) {
+			throw BizExceptionProxy.exception("该卡{}不是副卡，操作失败!", openCardInfo.getCardNo());
+		}
+
+		// 获取主卡用户信息
+		CardAggregationWrapper parentAccount = accountQueryService
+				.getByAccountIdWithNotNull(openCardInfo.getParentAccountId());
+		if (parentAccount == null) {
+			throw BizExceptionProxy.exception("{}主卡账户{}不存在!", openCardInfo.getCardNo(), openCardInfo.getParentAccountId());
+		}
+
+		// 创建资金账户
+		FundAccountDto fundAccount = buildFundAccount(openCardInfo);
+		Long fundAccountId = payRpcResolver.createFundAccount(fundAccount);
+
+		// 构建账户信息
+		String accountIdStr = uidRpcResovler.bizNumberRetry(BizNoServiceType.ACCOUNT_ID, 3);
+		Long accountId = Long.parseLong(accountIdStr);
+		UserAccountDo userAccount = buildUserAccount(openCardInfo, accountId, fundAccountId);
+		userAccountDao.save(userAccount);
+		
+		// 保存卡片信息
+		UserCardDo userCard = buildUserCard(openCardInfo, userAccount.getId());
+		userCardDao.save(userCard);
+
+		// 返回数据
+		OpenCardResponseDto response = new OpenCardResponseDto();
+		response.setAccountId(userAccount.getId());
+		return response;
+	}
+	
 	/**
 	 * 构建卡账户数据
-	 *
-	 * @throws Exception
+	 * 
+	 * @param openCardInfo
+	 * @param accountId     业务主键
+	 * @param fundAccountId 资金账号ID
+	 * @return
 	 */
 	private UserAccountDo buildUserAccount(OpenCardDto openCardInfo, Long accountId, Long fundAccountId) {
 		UserAccountDo userAccount = new UserAccountDo();
@@ -184,6 +176,27 @@ public class OpenCardServiceImpl implements IOpenCardService {
 		return userAccount;
 	}
 
+	/**
+	 * 构建卡账户数据
+	 * 
+	 * @param openCardInfo
+	 * @param accountId     业务主键
+	 * @param fundAccountId 资金账号ID
+	 * @return
+	 */
+	private FundAccountDto buildFundAccount(OpenCardDto openCardInfo) {
+		FundAccountDto fundAccount = new FundAccountDto();
+		fundAccount.setCustomerId(openCardInfo.getCustomerId());
+		fundAccount.setType(CustomerOrgType.getPayCode(openCardInfo.getOrganizationType()));
+		fundAccount.setUseFor(1);  // TODO 寿光只有一个交易账户，其它市场将允许多账户
+		fundAccount.setName(openCardInfo.getName());
+		fundAccount.setMobile(openCardInfo.getMobile());
+		fundAccount.setCode(openCardInfo.getCardNo());
+		fundAccount.setPassword(openCardInfo.getLoginPwd());
+		return fundAccount;
+	}
+	
+	
 	/**
 	 * 根据客户类型设置账户类型及相应权限
 	 * 

@@ -20,8 +20,10 @@ public class OpenCardDto {
 	private String name;
 	/** CRM系统客户ID */
 	private Long customerId;
-	/** 客户类型 {@link AccountType} */
+	/** 客户类型买卖 {@link AccountType} */
 	private String custormerType;
+	/** 个人、对公 */
+	private String organizationType;
 	/** 性别 */
 	private Integer gender;
 	/** 证件类型 */
@@ -330,6 +332,14 @@ public class OpenCardDto {
 
 	public void setCreator(String creator) {
 		this.creator = creator;
+	}
+
+	public String getOrganizationType() {
+		return organizationType;
+	}
+
+	public void setOrganizationType(String organizationType) {
+		this.organizationType = organizationType;
 	}
 
 }
