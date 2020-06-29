@@ -8,6 +8,7 @@ import com.dili.ss.domain.BaseOutput;
 import com.dili.ss.domain.PageOutput;
 
 import java.util.List;
+import java.util.Optional;
 
 
 /**
@@ -53,10 +54,18 @@ public interface IAccountQueryService {
      */
     PageOutput<List<UserAccountCardResponseDto>> getPageByConditionForRest(UserAccountCardQuery queryParam);
     /**
-     * 查询卡账户、卡、客户的聚合信息(不包含退卡状态)
+     * 查询卡账户、卡的聚合信息(不包含退卡状态)
      * @author miaoguoxin
      * @date 2020/6/17
      */
     CardAggregationWrapper getByAccountIdWithNotNull(Long accountId);
 
+    /**
+    *  查询卡账户、卡的聚合信息(不包含退卡状态),允许为null
+    * @param
+    * @return
+    * @author miaoguoxin
+    * @date 2020/6/29
+    */
+    Optional<CardAggregationWrapper> getByAccountId(Long accountId);
 }

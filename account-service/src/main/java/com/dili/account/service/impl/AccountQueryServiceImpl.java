@@ -116,6 +116,16 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
         return this.combine(card, userAccount);
     }
 
+    @Override
+    public Optional<CardAggregationWrapper> getByAccountId(Long accountId) {
+        UserCardDo card = userCardDao.getByAccountId(accountId);
+        if (card==null){
+            return Optional.empty();
+        }
+        UserAccountDo userAccount = userAccountDao.getByAccountId(card.getAccountId());
+        return Optional.of(this.combine(card, userAccount));
+    }
+
     private CardAggregationWrapper combine(UserCardDo card, UserAccountDo account) {
         CardAggregationWrapper wrapper = new CardAggregationWrapper();
         wrapper.setAccountId(account.getAccountId());

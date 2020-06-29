@@ -6,6 +6,7 @@ import com.dili.account.dto.AccountWithAssociationResponseDto;
 import com.dili.account.dto.UserAccountCardQuery;
 import com.dili.account.dto.UserAccountCardResponseDto;
 import com.dili.account.type.CardType;
+import com.dili.ss.domain.PageOutput;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.function.Executable;
@@ -62,6 +63,12 @@ class AccountQueryServiceTest extends BaseTest {
 
     @Test
     void getPageByConditionForRest() {
+        UserAccountCardQuery params = new UserAccountCardQuery();
+        params.setPageNum(1);
+        params.setPageSize(10);
+        params.setCustomerIds(Lists.newArrayList(1L));
+        PageOutput<List<UserAccountCardResponseDto>> pageByConditionForRest = accountQueryService.getPageByConditionForRest(params);
+
     }
 
     @Test
@@ -78,4 +85,6 @@ class AccountQueryServiceTest extends BaseTest {
         assertTrue(CardType.isSlave(rest2.getPrimary().getCardType()));
         LOGGER.info("获取到结果2:{}",JSON.toJSONString(rest2));
     }
+
+
 }

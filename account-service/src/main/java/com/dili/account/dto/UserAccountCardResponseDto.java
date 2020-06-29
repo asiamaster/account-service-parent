@@ -45,9 +45,9 @@ public class UserAccountCardResponseDto implements Serializable {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime cardCreateTime;
-    /**建卡人名字*/
+    /**创建人名字*/
     private String creator;
-    /**建卡人id*/
+    /**创建人id*/
     private Long creatorId;
 
     public String getCreator() {
