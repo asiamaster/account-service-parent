@@ -176,7 +176,7 @@
 			`notes`,
 			`firm_id`
 		) values
-		<foreach collection="serialRecordList" item="item" separator=",">
+		<foreach collection="list" item="item" separator=",">
 			(
 				#{item.serialNo},
 				#{item.accountId},
