@@ -1,5 +1,6 @@
 package com.dili.account.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.dili.account.dto.AccountWithAssociationResponseDto;
 import com.dili.account.dto.UserAccountCardQuery;
 import com.dili.account.dto.UserAccountCardResponseDto;
@@ -107,6 +108,7 @@ public class QueryAccountController {
      */
     @PostMapping("getList")
     public BaseOutput<List<UserAccountCardResponseDto>> getList(@RequestBody UserAccountCardQuery param) {
+        LOGGER.info("卡账户查询参数:{}", param);
         return BaseOutput.successData(accountQueryService.getListByConditionForRest(param));
     }
 

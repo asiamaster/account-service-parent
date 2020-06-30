@@ -27,6 +27,7 @@
             <result column="firm_name" property="firmName"/>
             <result column="create_time" property="createTime"/>
             <result column="modify_time" property="modifyTime"/>
+            <result column="disabled_state" property="disabledState"/>
         </association>
         <association column="card_id" property="userCard" javaType="com.dili.account.entity.UserCardDo">
             <result column="card_id" property="id"/>
@@ -68,7 +69,8 @@
             aua.`firm_id`,
             aua.`firm_name`,
             aua.`create_time`,
-            aua.`modify_time`
+            aua.`modify_time`,
+            aua.disabled_state
     </sql>
 
     <sql id="Base_Card_Column">
@@ -121,6 +123,12 @@
             </if>
             <if test="endDate !=null">
                 AND auc.create_time &lt;= #{endDate}
+            </if>
+            <if test="excludeReturn !=null and excludeReturn==1">
+                AND auc.state !=4
+            </if>
+            <if test="excludeDisabled !=null and excludeDisabled==1">
+                AND aua.disabled_state = 1
             </if>
         </where>
     </sql>

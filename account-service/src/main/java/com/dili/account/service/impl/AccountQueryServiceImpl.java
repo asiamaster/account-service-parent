@@ -78,12 +78,11 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
     @Override
     public List<UserAccountCardResponseDto> getListByConditionForRest(UserAccountCardQuery queryParam) {
         //设置默认排序字段，避免xml写太多判断
-        if (StringUtils.isBlank(queryParam.getSort())) {
-            queryParam.setSort("DESC");
-        }
-        if (StringUtils.isBlank(queryParam.getOrderByColumn())) {
-            queryParam.setOrderByColumn("card_create_time");
-        }
+        //默认排除退还状态和禁用状态
+        queryParam.setDefSort("DESC")
+                .setDefOrderByColumn("card_create_time")
+                .setDefExcludeReturn(1)
+                .setDefExcludeDisabled(1);
         List<CardAggregationWrapper> list = userAccountCardDao.getListByCondition(queryParam);
         return list.stream().map(wrapper -> this.convertFromAccountUnionCard(
                 wrapper.getUserCard(),
@@ -120,10 +119,10 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
     }
 
     /**
-    *  查询并校验卡账户（不能为禁用状态）
-    * @author miaoguoxin
-    * @date 2020/6/30
-    */
+     *  查询并校验卡账户（不能为禁用状态）
+     * @author miaoguoxin
+     * @date 2020/6/30
+     */
     private UserAccountCardResponseDto validateAndBuildAccountCard(UserCardDo card) {
         Optional.ofNullable(card)
                 .orElseThrow(() -> new AccountBizException(ResultCode.DATA_ERROR, ExceptionMsg.CARD_NOT_EXIST.getName()));
@@ -131,7 +130,7 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
         Optional.ofNullable(userAccount)
                 .orElseThrow(() -> new AccountBizException(ResultCode.DATA_ERROR, ExceptionMsg.ACCOUNT_NOT_EXIST.getName()));
 
-        if (DisableState.DISABLED.getCode().equals(userAccount.getDisabledState())){
+        if (DisableState.DISABLED.getCode().equals(userAccount.getDisabledState())) {
             throw new AccountBizException(ResultCode.DATA_ERROR, ExceptionMsg.ACCOUNT_DISABLED.getName());
         }
         return this.convertFromAccountUnionCard(card, userAccount);
