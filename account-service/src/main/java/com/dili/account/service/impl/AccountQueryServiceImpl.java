@@ -25,7 +25,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -65,18 +64,15 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
     @Override
     public AccountWithAssociationResponseDto getByCardNoWithAssociationForRest(String cardNo) {
         AccountWithAssociationResponseDto result = new AccountWithAssociationResponseDto();
-        List<UserAccountCardResponseDto> associationCards = new ArrayList<>();
         UserAccountCardResponseDto primaryCard = this.getByCardNoForRest(cardNo);
         //查询关联卡，primaryCard为主卡就查副卡，副卡就查主卡
+        UserAccountCardQuery param = new UserAccountCardQuery();
         if (CardType.isMaster(primaryCard.getCardType())) {
-            UserAccountCardQuery param = new UserAccountCardQuery();
             param.setParentAccountId(primaryCard.getAccountId());
-            associationCards = this.getListByConditionForRest(param);
         } else if (CardType.isSlave(primaryCard.getCardType())) {
-            UserAccountCardQuery param = new UserAccountCardQuery();
             param.setAccountIds(Lists.newArrayList(primaryCard.getParentAccountId()));
-            associationCards = this.getListByConditionForRest(param);
         }
+        List<UserAccountCardResponseDto> associationCards = this.getListByConditionForRest(param);
         result.setPrimary(primaryCard);
         result.setAssociation(associationCards);
         return result;
@@ -119,7 +115,7 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
     @Override
     public Optional<CardAggregationWrapper> getByAccountId(Long accountId) {
         UserCardDo card = userCardDao.getByAccountId(accountId);
-        if (card==null){
+        if (card == null) {
             return Optional.empty();
         }
         UserAccountDo userAccount = userAccountDao.getByAccountId(card.getAccountId());
