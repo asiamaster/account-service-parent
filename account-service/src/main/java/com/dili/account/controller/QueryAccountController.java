@@ -77,7 +77,7 @@ public class QueryAccountController {
      * @author miaoguoxin
      * @date 2020/6/28
      */
-    @GetMapping("getAssociationByAccountId/{cardNo}")
+    @GetMapping("getAssociationByAccountId/{accountId}")
     public BaseOutput<AccountWithAssociationResponseDto> getAssociationAccountCard(@PathVariable Long accountId) {
         if (accountId == null || accountId <= 0) {
             throw new AccountBizException(ResultCode.PARAMS_ERROR, "账户id不能为空");
