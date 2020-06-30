@@ -33,6 +33,8 @@ public interface IAccountQueryService {
      */
     UserAccountCardResponseDto getByCardNoForRest(String cardNo);
 
+    UserAccountCardResponseDto getByAccountIdForRest(Long accountId);
+
     /**
     *  根据卡号查询关联的所有卡
     * @author miaoguoxin
@@ -40,6 +42,7 @@ public interface IAccountQueryService {
     */
     AccountWithAssociationResponseDto getByCardNoWithAssociationForRest(String cardNo);
 
+    AccountWithAssociationResponseDto getByCardNoWithAssociationForRest(Long  accountId);
     /**
     * 卡列表条件查询
     * @author miaoguoxin

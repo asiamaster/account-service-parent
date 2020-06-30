@@ -27,7 +27,6 @@ public class UserAccountCardQuery extends BaseDto{
 	/**卡状态 {@link com.dili.account.type.CardStatus}*/
 	private Integer cardState;
 
-
 	public Integer getCardType() {
 		return cardType;
 	}

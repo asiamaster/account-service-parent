@@ -2,6 +2,7 @@ package com.dili.account.config;
 
 import feign.RequestInterceptor;
 import org.springframework.context.annotation.Bean;
+import org.springframework.web.bind.annotation.RequestHeader;
 
 /**
  * 支付服务的Feign配置

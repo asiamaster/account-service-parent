@@ -5,7 +5,7 @@ import java.time.LocalDateTime;
 
 /**
  * 用户账户信息
- * 
+ *
  * @author bob
  */
 public class UserAccountDo implements Serializable {
@@ -44,7 +44,7 @@ public class UserAccountDo implements Serializable {
 	private Integer source;
 	/** 数据版本号 */
 	private Integer version;
-	/** 禁用状态 */
+	/** 禁用状态 {@link com.dili.account.type.DisableState}*/
 	private Integer disabledState;
 	/** 操作人员 */
 	private Long creatorId;

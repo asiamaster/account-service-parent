@@ -14,6 +14,7 @@ import com.dili.account.exception.AccountBizException;
 import com.dili.account.service.IAccountQueryService;
 import com.dili.account.type.AccountUsageType;
 import com.dili.account.type.CardType;
+import com.dili.account.type.DisableState;
 import com.dili.account.type.UsePermissionType;
 import com.dili.account.util.PageUtils;
 import com.dili.ss.constant.ResultCode;
@@ -53,29 +54,26 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
     @Override
     public UserAccountCardResponseDto getByCardNoForRest(String cardNo) {
         UserCardDo card = userCardDao.getByCardNo(cardNo);
-        Optional.ofNullable(card)
-                .orElseThrow(() -> new AccountBizException(ResultCode.DATA_ERROR, ExceptionMsg.CARD_NOT_EXIST.getName()));
-        UserAccountDo userAccount = userAccountDao.getByAccountId(card.getAccountId());
-        Optional.ofNullable(userAccount)
-                .orElseThrow(() -> new AccountBizException(ResultCode.DATA_ERROR, ExceptionMsg.ACCOUNT_NOT_EXIST.getName()));
-        return this.convertFromAccountUnionCard(card, userAccount);
+        return this.validateAndBuildAccountCard(card);
+    }
+
+
+    @Override
+    public UserAccountCardResponseDto getByAccountIdForRest(Long accountId) {
+        UserCardDo card = userCardDao.getByAccountId(accountId);
+        return this.validateAndBuildAccountCard(card);
     }
 
     @Override
     public AccountWithAssociationResponseDto getByCardNoWithAssociationForRest(String cardNo) {
-        AccountWithAssociationResponseDto result = new AccountWithAssociationResponseDto();
         UserAccountCardResponseDto primaryCard = this.getByCardNoForRest(cardNo);
-        //查询关联卡，primaryCard为主卡就查副卡，副卡就查主卡
-        UserAccountCardQuery param = new UserAccountCardQuery();
-        if (CardType.isMaster(primaryCard.getCardType())) {
-            param.setParentAccountId(primaryCard.getAccountId());
-        } else if (CardType.isSlave(primaryCard.getCardType())) {
-            param.setAccountIds(Lists.newArrayList(primaryCard.getParentAccountId()));
-        }
-        List<UserAccountCardResponseDto> associationCards = this.getListByConditionForRest(param);
-        result.setPrimary(primaryCard);
-        result.setAssociation(associationCards);
-        return result;
+        return this.getAndBuildAssociationAccountCard(primaryCard);
+    }
+
+    @Override
+    public AccountWithAssociationResponseDto getByCardNoWithAssociationForRest(Long accountId) {
+        UserAccountCardResponseDto primaryCard = this.getByAccountIdForRest(accountId);
+        return this.getAndBuildAssociationAccountCard(primaryCard);
     }
 
     @Override
@@ -122,6 +120,24 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
         return Optional.of(this.combine(card, userAccount));
     }
 
+    /**
+    *  查询并校验卡账户（不能为禁用状态）
+    * @author miaoguoxin
+    * @date 2020/6/30
+    */
+    private UserAccountCardResponseDto validateAndBuildAccountCard(UserCardDo card) {
+        Optional.ofNullable(card)
+                .orElseThrow(() -> new AccountBizException(ResultCode.DATA_ERROR, ExceptionMsg.CARD_NOT_EXIST.getName()));
+        UserAccountDo userAccount = userAccountDao.getByAccountId(card.getAccountId());
+        Optional.ofNullable(userAccount)
+                .orElseThrow(() -> new AccountBizException(ResultCode.DATA_ERROR, ExceptionMsg.ACCOUNT_NOT_EXIST.getName()));
+
+        if (DisableState.DISABLED.getCode().equals(userAccount.getDisabledState())){
+            throw new AccountBizException(ResultCode.DATA_ERROR, ExceptionMsg.ACCOUNT_DISABLED.getName());
+        }
+        return this.convertFromAccountUnionCard(card, userAccount);
+    }
+
     private CardAggregationWrapper combine(UserCardDo card, UserAccountDo account) {
         CardAggregationWrapper wrapper = new CardAggregationWrapper();
         wrapper.setAccountId(account.getAccountId());
@@ -130,6 +146,22 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
         wrapper.setUserCard(card);
         return wrapper;
     }
+
+    private AccountWithAssociationResponseDto getAndBuildAssociationAccountCard(UserAccountCardResponseDto primaryCard) {
+        AccountWithAssociationResponseDto result = new AccountWithAssociationResponseDto();
+        //查询关联卡，primaryCard为主卡就查副卡，副卡就查主卡
+        UserAccountCardQuery param = new UserAccountCardQuery();
+        if (CardType.isMaster(primaryCard.getCardType())) {
+            param.setParentAccountId(primaryCard.getAccountId());
+        } else if (CardType.isSlave(primaryCard.getCardType())) {
+            param.setAccountIds(Lists.newArrayList(primaryCard.getParentAccountId()));
+        }
+        List<UserAccountCardResponseDto> associationCards = this.getListByConditionForRest(param);
+        result.setPrimary(primaryCard);
+        result.setAssociation(associationCards);
+        return result;
+    }
+
 
     private UserAccountCardResponseDto convertFromAccountUnionCard(UserCardDo card, UserAccountDo account) {
         UserAccountCardResponseDto responseDto = new UserAccountCardResponseDto();
