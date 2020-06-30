@@ -1,6 +1,6 @@
 package com.dili.account.dao;
 
-import com.dili.account.dto.SerialDto;
+import com.dili.account.dto.SerialQueryDto;
 import com.dili.account.entity.SerialRecordDo;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -56,8 +56,8 @@ public interface ISerialRecordDao {
 
 	/**
 	 * 查询操作记录列表
-	 * @param serialDto
+	 * @param serialQueryDto
 	 * @return
 	 */
-	List<SerialRecordDo> list(SerialDto serialDto);
+	List<SerialRecordDo> list(SerialQueryDto serialQueryDto);
 }

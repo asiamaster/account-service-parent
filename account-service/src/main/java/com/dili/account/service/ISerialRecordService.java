@@ -1,6 +1,6 @@
 package com.dili.account.service;
 
-import com.dili.account.dto.SerialDto;
+import com.dili.account.dto.SerialQueryDto;
 import com.dili.account.entity.SerialRecordDo;
 import com.dili.ss.domain.PageOutput;
 
@@ -25,8 +25,8 @@ public interface ISerialRecordService {
 
     /**
      * 分页查询
-     * @param serialDto
+     * @param serialQueryDto
      * @return
      */
-    PageOutput<List<SerialRecordDo>> listPage(SerialDto serialDto);
+    PageOutput<List<SerialRecordDo>> listPage(SerialQueryDto serialQueryDto);
 }

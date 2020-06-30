@@ -204,7 +204,7 @@
 	</insert>
 
 	<!-- 查询操作流水记录列表 -->
-	<select id="list" parameterType="com.dili.account.dto.SerialDto" resultType="com.dili.account.entity.SerialRecordDo">
+	<select id="list" parameterType="com.dili.account.dto.SerialQueryDto" resultType="com.dili.account.entity.SerialRecordDo">
         SELECT
 			`id`,
 			`serial_no`,

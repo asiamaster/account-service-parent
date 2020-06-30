@@ -2,6 +2,7 @@ package com.dili.account.controller;
 
 import cn.hutool.core.collection.CollUtil;
 import com.dili.account.dto.SerialDto;
+import com.dili.account.dto.SerialQueryDto;
 import com.dili.account.entity.SerialRecordDo;
 import com.dili.account.service.ISerialRecordService;
 import com.dili.ss.domain.BaseOutput;
@@ -47,13 +48,13 @@ public class SerialRecordController {
 
     /**
      * 分页查询操作流水列表
-     * @param serialDto
+     * @param serialQueryDto
      * @return
      */
     @RequestMapping(value = "/listPage")
-    public PageOutput<List<SerialRecordDo>> listPage(@RequestBody SerialDto serialDto) {
+    public PageOutput<List<SerialRecordDo>> listPage(@RequestBody SerialQueryDto serialQueryDto) {
         try {
-            return serialRecordService.listPage(serialDto);
+            return serialRecordService.listPage(serialQueryDto);
         } catch (Exception e) {
             LOGGER.error("listPage", e);
             return PageOutput.failure();

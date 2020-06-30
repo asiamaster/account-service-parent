@@ -1,7 +1,7 @@
 package com.dili.account.service.impl;
 
 import com.dili.account.dao.ISerialRecordDao;
-import com.dili.account.dto.SerialDto;
+import com.dili.account.dto.SerialQueryDto;
 import com.dili.account.entity.SerialRecordDo;
 import com.dili.account.service.ISerialRecordService;
 import com.dili.ss.domain.PageOutput;
@@ -34,9 +34,9 @@ public class SerialRecordServiceImpl implements ISerialRecordService {
 
 
     @Override
-    public PageOutput<List<SerialRecordDo>> listPage(SerialDto serialDto) {
-        PageHelper.startPage(serialDto.getPage(), serialDto.getRows());
-        List<SerialRecordDo> itemList = serialRecordDao.list(serialDto);
+    public PageOutput<List<SerialRecordDo>> listPage(SerialQueryDto serialQueryDto) {
+        PageHelper.startPage(serialQueryDto.getPage(), serialQueryDto.getRows());
+        List<SerialRecordDo> itemList = serialRecordDao.list(serialQueryDto);
         Page<SerialRecordDo> page = (Page)itemList;
         PageOutput<List<SerialRecordDo>> output = PageOutput.success();
         output.setData(itemList);
