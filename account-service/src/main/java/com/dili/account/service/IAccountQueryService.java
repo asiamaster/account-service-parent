@@ -28,20 +28,28 @@ public interface IAccountQueryService {
     */
     Boolean cardExist(String cardNo);
     /**
-     * 根据卡号查询唯一数据(不包含退卡状态)
+     * 根据卡号查询唯一数据(不包含退卡状态、不包含禁用状态)
      * @return
      */
     UserAccountCardResponseDto getByCardNoForRest(String cardNo);
-
+    /**
+    *  根据id查询唯一数据(不包含退卡状态、不包含禁用状态)
+    * @author miaoguoxin
+    * @date 2020/6/30
+    */
     UserAccountCardResponseDto getByAccountIdForRest(Long accountId);
 
     /**
-    *  根据卡号查询关联的所有卡
+    *  根据卡号查询关联的所有卡(不包含退卡状态、不包含禁用状态)
     * @author miaoguoxin
     * @date 2020/6/28
     */
     AccountWithAssociationResponseDto getByCardNoWithAssociationForRest(String cardNo);
-
+    /**
+    *  根据accountId查询关联的所有卡(不包含退卡状态、不包含禁用状态)
+    * @author miaoguoxin
+    * @date 2020/6/30
+    */
     AccountWithAssociationResponseDto getByCardNoWithAssociationForRest(Long  accountId);
     /**
     * 卡列表条件查询
