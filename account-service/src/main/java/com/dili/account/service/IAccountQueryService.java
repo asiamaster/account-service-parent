@@ -50,7 +50,7 @@ public interface IAccountQueryService {
     * @author miaoguoxin
     * @date 2020/6/30
     */
-    AccountWithAssociationResponseDto getByCardNoWithAssociationForRest(Long  accountId);
+    AccountWithAssociationResponseDto getByAccountIdWithAssociationForRest(Long  accountId);
     /**
     * 卡列表条件查询
     * @author miaoguoxin

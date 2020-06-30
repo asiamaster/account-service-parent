@@ -60,7 +60,7 @@ public class QueryAccountController {
     }
 
     /**
-     *  查询包含关联卡的信息
+     *  根据卡号查询包含关联卡的信息
      * @author miaoguoxin
      * @date 2020/6/28
      */
@@ -70,6 +70,19 @@ public class QueryAccountController {
             throw new AccountBizException(ResultCode.PARAMS_ERROR, "卡号不能为空");
         }
         return BaseOutput.successData(accountQueryService.getByCardNoWithAssociationForRest(cardNo));
+    }
+
+    /**
+     *  根据accountId查询包含关联卡的信息
+     * @author miaoguoxin
+     * @date 2020/6/28
+     */
+    @GetMapping("getAssociationByAccountId/{cardNo}")
+    public BaseOutput<AccountWithAssociationResponseDto> getAssociationAccountCard(@PathVariable Long accountId) {
+        if (accountId == null || accountId <= 0) {
+            throw new AccountBizException(ResultCode.PARAMS_ERROR, "账户id不能为空");
+        }
+        return BaseOutput.successData(accountQueryService.getByAccountIdWithAssociationForRest(accountId));
     }
 
     /**

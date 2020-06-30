@@ -57,7 +57,6 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
         return this.validateAndBuildAccountCard(card);
     }
 
-
     @Override
     public UserAccountCardResponseDto getByAccountIdForRest(Long accountId) {
         UserCardDo card = userCardDao.getByAccountId(accountId);
@@ -71,7 +70,7 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
     }
 
     @Override
-    public AccountWithAssociationResponseDto getByCardNoWithAssociationForRest(Long accountId) {
+    public AccountWithAssociationResponseDto getByAccountIdWithAssociationForRest(Long accountId) {
         UserAccountCardResponseDto primaryCard = this.getByAccountIdForRest(accountId);
         return this.getAndBuildAssociationAccountCard(primaryCard);
     }
