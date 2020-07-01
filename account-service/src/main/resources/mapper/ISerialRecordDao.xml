@@ -6,7 +6,8 @@
 	<select id="selectList" resultType="com.dili.account.entity.SerialRecordDo">
 		SELECT
 			`id`, 
-			`serial_no`, 
+			`serial_no`,
+			`type`,
 			`account_id`, 
 			`card_no`, 
 			`customer_id`, 
@@ -35,7 +36,8 @@
 	
 	<insert id="save">
 		INSERT INTO account_serial_record (
-			`serial_no`, 
+			`serial_no`,
+			`type`,
 			`account_id`, 
 			`card_no`, 
 			`customer_id`, 
@@ -58,7 +60,8 @@
 			`firm_id`
 		)
 		VALUES (
-			#{serialNo}, 
+			#{serialNo},
+			#{type},
 			#{accountId}, 
 			#{cardNo}, 
 			#{customerId}, 
@@ -85,7 +88,8 @@
 	<select id="getById" resultType="com.dili.account.entity.SerialRecordDo">
 		SELECT
 			`id`, 
-			`serial_no`, 
+			`serial_no`,
+			`type`,
 			`account_id`, 
 			`card_no`, 
 			`customer_id`, 
@@ -116,6 +120,7 @@
 		UPDATE account_serial_record
 	 	<set>
 			<if test="serialNo != null">`serial_no` = #{serialNo}, </if>
+			<if test="type != null">`type` = #{type}, </if>
 			<if test="accountId != null">`account_id` = #{accountId}, </if>
 			<if test="cardNo != null">`card_no` = #{cardNo}, </if>
 			<if test="customerId != null">`customer_id` = #{customerId}, </if>
@@ -155,6 +160,7 @@
 	<insert id="batchSave" parameterType="java.util.List">
 		INSERT INTO account_serial_record (
 			`serial_no`,
+			`type`,
 			`account_id`,
 			`card_no`,
 			`customer_id`,
@@ -179,6 +185,7 @@
 		<foreach collection="list" item="item" separator=",">
 			(
 				#{item.serialNo},
+				#{item.type},
 				#{item.accountId},
 				#{item.cardNo},
 				#{item.customerId},
@@ -208,6 +215,7 @@
         SELECT
 			`id`,
 			`serial_no`,
+			`type`,
 			`account_id`,
 			`card_no`,
 			`customer_id`,
@@ -236,6 +244,9 @@
 		</if>
 		<if test="serialNo != null and serialNo != ''">
 			and `serial_no` = #{serialNo}
+		</if>
+		<if test="type != null">
+			and `type` = #{type}
 		</if>
 		<if test="accountId != null">
 			and `account_id` = #{accountId}
