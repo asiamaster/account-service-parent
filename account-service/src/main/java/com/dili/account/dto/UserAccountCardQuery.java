@@ -113,20 +113,6 @@ public class UserAccountCardQuery extends BaseDto {
         this.excludeDisabled = excludeDisabled;
     }
 
-    public UserAccountCardQuery setDefSort(String defSort) {
-        if (StringUtils.isBlank(super.getSort())) {
-            super.setSort(defSort);
-        }
-        return this;
-    }
-
-    public UserAccountCardQuery setDefOrderByColumn(String defColumn) {
-        if (StringUtils.isBlank(super.getOrder())) {
-            super.setOrder(defColumn);
-        }
-        return this;
-    }
-
     public UserAccountCardQuery setDefExcludeReturn(Integer defExcludeReturn) {
         if (this.getExcludeReturn() == null) {
             this.setExcludeReturn(defExcludeReturn);

@@ -79,8 +79,8 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
         //设置默认排序字段，避免xml写太多判断
         //默认排除退还状态和禁用状态
         queryParam.setDefSort("card_create_time")
-                .setDefOrderByColumn("DESC")
-                .setDefExcludeReturn(1)
+                .setDefOrder("DESC");
+        queryParam.setDefExcludeReturn(1)
                 .setDefExcludeDisabled(1);
         List<CardAggregationWrapper> list = userAccountCardDao.getListByCondition(queryParam);
         return list.stream().map(wrapper -> this.convertFromAccountUnionCard(
