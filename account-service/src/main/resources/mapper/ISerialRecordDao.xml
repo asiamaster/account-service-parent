@@ -245,6 +245,9 @@
 		<if test="serialNo != null and serialNo != ''">
 			and `serial_no` = #{serialNo}
 		</if>
+		<if test="type != null">
+			and `type` = #{type}
+		</if>
 		<if test="accountId != null">
 			and `account_id` = #{accountId}
 		</if>
