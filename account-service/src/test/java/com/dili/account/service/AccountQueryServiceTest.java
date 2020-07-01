@@ -64,10 +64,10 @@ class AccountQueryServiceTest extends BaseTest {
     @Test
     void getPageByConditionForRest() {
         UserAccountCardQuery params = new UserAccountCardQuery();
-        params.setPageNum(1);
-        params.setPageSize(10);
+        params.setPage(1);
+        params.setRows(10);
         params.setCardState(1);
-        params.setCustomerIds(Lists.newArrayList(1L));
+        //params.setCustomerIds(Lists.newArrayList(1L));
         PageOutput<List<UserAccountCardResponseDto>> pageByConditionForRest = accountQueryService.getPageByConditionForRest(params);
 
     }

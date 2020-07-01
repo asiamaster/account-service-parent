@@ -40,7 +40,9 @@ class IUserAccountCardDaoTest extends BaseTest {
 
     @Test
     public void testGetListByConditionWithDate() {
-        UserAccountCardQuery queryParam = this.createQueryParamDate();
+        UserAccountCardQuery queryParam = new UserAccountCardQuery();
+        queryParam.setOrder("card_create_time");
+        queryParam.setSort("DESC");
         List<CardAggregationWrapper> pageByCondition = userAccountCardDao.getListByCondition(queryParam);
         LOGGER.info("testGetListByConditionWithDate获取到的实体:{},长度:{}",
                 JSON.toJSONString(pageByCondition),
