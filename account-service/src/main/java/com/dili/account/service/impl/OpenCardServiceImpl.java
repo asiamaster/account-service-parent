@@ -188,6 +188,7 @@ public class OpenCardServiceImpl implements IOpenCardService {
 		FundAccountDto fundAccount = new FundAccountDto();
 		fundAccount.setCustomerId(openCardInfo.getCustomerId());
 		fundAccount.setType(CustomerOrgType.getPayCode(openCardInfo.getOrganizationType()));
+		fundAccount.setType(1);
 		fundAccount.setUseFor(1);  // TODO 寿光只有一个交易账户，其它市场将允许多账户
 		fundAccount.setName(openCardInfo.getName());
 		fundAccount.setMobile(openCardInfo.getMobile());
