@@ -51,7 +51,7 @@
     </resultMap>
 
     <sql id="Base_Account_Column">
-        aua.`id`,
+            aua.`id`,
             aua.`account_id`,
             aua.`parent_account_id`,
             aua.`customer_id`,
@@ -91,6 +91,9 @@
     </sql>
     <sql id="Where_Condition">
         <where>
+            <if test="firmId != null">
+                AND aua.firm_id = #{firmId}
+            </if>
             <if test="customerIds!=null and customerIds.size>0">
                 AND aua.customer_id IN
                 <foreach item="item" collection="customerIds" separator="," open="(" close=")" index="">
