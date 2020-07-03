@@ -84,4 +84,27 @@ public class CardManageController {
         cardManageService.changeCard(cardParam);
         return BaseOutput.success();
     }
+
+
+    /**
+     * 解锁卡片
+     */
+    @PostMapping("/unLockCard")
+    public BaseOutput<?> unLockCard(@RequestBody CardRequestDto cardParam) {
+        try {
+            if (cardParam.getAccountId() == null) {
+                return BaseOutput.failure("账户ID为空");
+            }
+            if (StrUtil.isBlank(cardParam.getLoginPwd())) {
+                return BaseOutput.failure("密码为空");
+            }
+            cardManageService.unLockCard(cardParam);
+            return BaseOutput.success();
+        } catch (AccountBizException e) {
+            return BaseOutput.failure(e.getMessage());
+        } catch (Exception e) {
+            LOGGER.error("unLockCard", e);
+            return BaseOutput.failure();
+        }
+    }
 }
