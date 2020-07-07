@@ -20,7 +20,7 @@ public class UserAccountCardResponseDto implements Serializable {
     private Long accountId;
     /** 父卡账号 */
     private Long parentAccountId;
-    /** 卡交易类型: 1-买家 2-卖家 {@link com.dili.account.type.AccountType}*/
+    /** 卡交易类型: 1-买家 2-卖家 */
     private Integer accountType;
     /** 资金账号ID */
     private Long fundAccountId;

@@ -2,6 +2,7 @@ package com.dili.account.service.impl;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import javax.annotation.Resource;
 
@@ -118,10 +119,14 @@ public class OpenCardServiceImpl implements IOpenCardService {
 		}
 
 		// 获取主卡用户信息
-		CardAggregationWrapper parentAccount = accountQueryService
-				.getByAccountIdWithNotNull(openCardInfo.getParentAccountId());
-		if (parentAccount == null) {
+		Optional<CardAggregationWrapper> parentAccount = accountQueryService.getByAccountId(openCardInfo.getParentAccountId());
+		if (parentAccount.isEmpty()) {
 			throw BizExceptionProxy.exception("{}主卡账户{}不存在!", openCardInfo.getCardNo(), openCardInfo.getParentAccountId());
+		}
+		
+		Long parentAccountId = parentAccount.get().getUserAccount().getParentAccountId();
+		if (parentAccountId != null && parentAccountId != 0) {
+			throw BizExceptionProxy.exception("请刷正确的主卡!{}", openCardInfo.getParentAccountId());
 		}
 
 		// 创建资金账户
@@ -135,7 +140,7 @@ public class OpenCardServiceImpl implements IOpenCardService {
 		userAccountDao.save(userAccount);
 		
 		// 保存卡片信息
-		UserCardDo userCard = buildUserCard(openCardInfo, userAccount.getId());
+		UserCardDo userCard = buildUserCard(openCardInfo, accountId);
 		userCardDao.save(userCard);
 
 		// 返回数据
@@ -171,7 +176,8 @@ public class OpenCardServiceImpl implements IOpenCardService {
 		LocalDateTime now = LocalDateTime.now();
 		userAccount.setCreateTime(now);
 		userAccount.setModifyTime(now);
-
+		userAccount.setCreatorId(openCardInfo.getCreatorId());
+		userAccount.setCreator(openCardInfo.getCreator());
 		setAccountPermissions(userAccount, openCardInfo.getCustormerType());
 		return userAccount;
 	}
@@ -246,6 +252,8 @@ public class OpenCardServiceImpl implements IOpenCardService {
 			Integer[] permissionCodes = { UsePermissionType.RECHARGE.getCode(), UsePermissionType.WEALTH.getCode(),
 					UsePermissionType.WITHDRAW.getCode(), UsePermissionType.PAY_FEES.getCode() };
 			userAccount.setPermissions(UsePermissionType.getPermissions(permissionCodes));
+		}else {
+			throw BizExceptionProxy.exception("客户类型为[{}]，无法设置账户类型及相应权限!", customerType);
 		}
 	}
 

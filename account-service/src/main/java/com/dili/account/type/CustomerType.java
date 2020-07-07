@@ -9,10 +9,10 @@ package com.dili.account.type;
  */
 public enum CustomerType {
 	/** 买家卡 */
-	PURCHASE("买家卡", "purchaseSale"),
+	PURCHASE("买家卡", "inside_buyer"),
 
 	/** 卖家卡 */
-	SALE("卖家卡", "sale"),
+	SALE("卖家卡", "inside_seller"),
 
 	/** 司机 */
 	DRIVER("司机", "driver");
