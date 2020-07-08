@@ -52,7 +52,6 @@
 	</dependencies>
 	<build>
 		<!-- 资源文件过滤 -->
-		<finalName>account-service</finalName>
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
