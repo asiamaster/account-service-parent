@@ -148,7 +148,7 @@ public class OpenCardServiceImpl implements IOpenCardService {
 
 		// 返回数据
 		OpenCardResponseDto response = new OpenCardResponseDto();
-		response.setAccountId(userAccount.getId());
+		response.setAccountId(userAccount.getAccountId());
 		return response;
 	}
 
