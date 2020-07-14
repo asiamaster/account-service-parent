@@ -34,16 +34,11 @@ public class SerialRecordController {
      */
     @RequestMapping(value = "/batchSave")
     public BaseOutput<?> save(@RequestBody SerialDto serialDto) {
-        try {
-            if (CollUtil.isEmpty(serialDto.getSerialRecordList())) {
-                return BaseOutput.failure("操作流水记录列表为空");
-            }
-            serialRecordService.batchSave(serialDto.getSerialRecordList());
-            return BaseOutput.success();
-        } catch (Exception e) {
-            LOGGER.error("save", e);
-            return BaseOutput.failure();
+        if (CollUtil.isEmpty(serialDto.getSerialRecordList())) {
+            return BaseOutput.failure("操作流水记录列表为空");
         }
+        serialRecordService.batchSave(serialDto.getSerialRecordList());
+        return BaseOutput.success();
     }
 
     /**
@@ -53,11 +48,6 @@ public class SerialRecordController {
      */
     @RequestMapping(value = "/listPage")
     public PageOutput<List<SerialRecordDo>> listPage(@RequestBody SerialQueryDto serialQueryDto) {
-        try {
-            return serialRecordService.listPage(serialQueryDto);
-        } catch (Exception e) {
-            LOGGER.error("listPage", e);
-            return PageOutput.failure();
-        }
+        return serialRecordService.listPage(serialQueryDto);
     }
 }

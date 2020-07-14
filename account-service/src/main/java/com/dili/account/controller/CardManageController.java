@@ -2,7 +2,6 @@ package com.dili.account.controller;
 
 import cn.hutool.core.util.StrUtil;
 import com.dili.account.dto.CardRequestDto;
-import com.dili.account.exception.AccountBizException;
 import com.dili.account.service.ICardManageService;
 import com.dili.account.validator.CardValidator;
 import com.dili.ss.domain.BaseOutput;
@@ -43,21 +42,14 @@ public class CardManageController {
      */
     @PostMapping("/unLostCard")
     public BaseOutput<?> unLostCard(@RequestBody CardRequestDto cardParam) {
-        try {
-            if (cardParam.getAccountId() == null) {
-                return BaseOutput.failure("账户ID为空");
-            }
-            if (StrUtil.isBlank(cardParam.getLoginPwd())) {
-                return BaseOutput.failure("密码为空");
-            }
-            cardManageService.unLostCard(cardParam);
-            return BaseOutput.success();
-        } catch (AccountBizException e) {
-            return BaseOutput.failure(e.getMessage());
-        } catch (Exception e) {
-            LOGGER.error("unLostCard", e);
-            return BaseOutput.failure();
+        if (cardParam.getAccountId() == null) {
+            return BaseOutput.failure("账户ID为空");
         }
+        if (StrUtil.isBlank(cardParam.getLoginPwd())) {
+            return BaseOutput.failure("密码为空");
+        }
+        cardManageService.unLostCard(cardParam);
+        return BaseOutput.success();
     }
 
     /**
@@ -91,20 +83,13 @@ public class CardManageController {
      */
     @PostMapping("/unLockCard")
     public BaseOutput<?> unLockCard(@RequestBody CardRequestDto cardParam) {
-        try {
-            if (cardParam.getAccountId() == null) {
-                return BaseOutput.failure("账户ID为空");
-            }
-            if (StrUtil.isBlank(cardParam.getLoginPwd())) {
-                return BaseOutput.failure("密码为空");
-            }
-            cardManageService.unLockCard(cardParam);
-            return BaseOutput.success();
-        } catch (AccountBizException e) {
-            return BaseOutput.failure(e.getMessage());
-        } catch (Exception e) {
-            LOGGER.error("unLockCard", e);
-            return BaseOutput.failure();
+        if (cardParam.getAccountId() == null) {
+            return BaseOutput.failure("账户ID为空");
         }
+        if (StrUtil.isBlank(cardParam.getLoginPwd())) {
+            return BaseOutput.failure("密码为空");
+        }
+        cardManageService.unLockCard(cardParam);
+        return BaseOutput.success();
     }
 }
