@@ -65,11 +65,6 @@ public class CardManageServiceImpl implements ICardManageService {
         if (!CollectionUtils.isEmpty(accounts)) {
             throw new AccountBizException(ResultCode.DATA_ERROR, "该卡存在副卡,不能退卡");
         }
-        //余额校验
-        PayAccountDto payAccountDto = payRpcResolver.resolverByUserAccount(cardRequest.getAccountId());
-        if (payAccountDto.getBalance() != 0L) {
-            throw new AccountBizException(ResultCode.DATA_ERROR, "卡余额不为0,不能退卡");
-        }
         //更新卡状态
         int update = userCardDao.updateState(cardRequest.getAccountId(), CardStatus.RETURNED.getCode(), userCardDo.getVersion());
         if (update == 0) {
