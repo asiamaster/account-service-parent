@@ -23,7 +23,6 @@ import javax.annotation.Resource;
 @RestController
 @RequestMapping(value = "/api/card")
 public class CardManageController {
-    private static Logger LOGGER = LoggerFactory.getLogger(CardManageController.class);
 
     @Resource
     private ICardManageService cardManageService;
