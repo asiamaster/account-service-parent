@@ -64,7 +64,7 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
 
     @Override
     public AccountWithAssociationResponseDto getByCardNoWithAssociationForRest(String cardNo, Integer needReturn) {
-        UserCardDo card = userCardDao.getByCardNo(cardNo, 1);
+        UserCardDo card = userCardDao.getByCardNo(cardNo, needReturn);
         UserAccountCardResponseDto primaryCard = this.validateAndBuildAccountCard(card);
         return this.getAndBuildAssociationAccountCard(primaryCard);
     }

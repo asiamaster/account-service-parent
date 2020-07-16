@@ -70,7 +70,7 @@ public class QueryAccountController {
         if (StringUtils.isBlank(cardNo)) {
             throw new AccountBizException(ResultCode.PARAMS_ERROR, "卡号不能为空");
         }
-        return BaseOutput.successData(accountQueryService.getByCardNoWithAssociationForRest(cardNo));
+        return BaseOutput.successData(accountQueryService.getByCardNoWithAssociationForRest(cardNo,1));
     }
 
     /**
