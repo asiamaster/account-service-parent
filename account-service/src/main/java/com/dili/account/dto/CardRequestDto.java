@@ -18,7 +18,6 @@ public class CardRequestDto extends BaseDto{
 	@NotBlank(message = "新卡卡号不能为空",groups = CardValidator.ChangeCard.class)
 	private String newCardNo;
 	/** 账户ID */
-	/** 货主账号 */
 	@NotNull(message = "账号id不能为空",groups = CardValidator.Generic.class)
 	@Min(value = 1,message = "id最小为1",groups = CardValidator.Generic.class)
 	private Long accountId;
@@ -30,8 +29,6 @@ public class CardRequestDto extends BaseDto{
 	private String loginPwd;
 	/** 二次输入登录密码 */
 	private String secondLoginPwd;
-	/** 客户id*/
-	private Long customerId;
 
 	public String getCardNo() {
 		return cardNo;

@@ -47,12 +47,12 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
 
     @Override
     public Boolean cardExist(String cardNo) {
-        return userCardDao.getByCardNo(cardNo) != null;
+        return userCardDao.getByCardNo(cardNo, 0) != null;
     }
 
     @Override
     public UserAccountCardResponseDto getByCardNoForRest(String cardNo) {
-        UserCardDo card = userCardDao.getByCardNo(cardNo);
+        UserCardDo card = userCardDao.getByCardNo(cardNo, 0);
         return this.validateAndBuildAccountCard(card);
     }
 
@@ -63,8 +63,9 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
     }
 
     @Override
-    public AccountWithAssociationResponseDto getByCardNoWithAssociationForRest(String cardNo) {
-        UserAccountCardResponseDto primaryCard = this.getByCardNoForRest(cardNo);
+    public AccountWithAssociationResponseDto getByCardNoWithAssociationForRest(String cardNo, Integer needReturn) {
+        UserCardDo card = userCardDao.getByCardNo(cardNo, 1);
+        UserAccountCardResponseDto primaryCard = this.validateAndBuildAccountCard(card);
         return this.getAndBuildAssociationAccountCard(primaryCard);
     }
 

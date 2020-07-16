@@ -93,9 +93,12 @@
 		<include refid="Base_Column"/>
 		FROM
 		account_user_card
-		WHERE
-		card_no = #{cardNo}
-		AND state != 4
+		<where>
+			card_no = #{cardNo}
+			<if test="needReturn!=null and needReturn=0">
+				AND state != 4
+			</if>
+		</where>
 	</select>
 
     <update id="update">
@@ -106,7 +109,6 @@
 			<if test="cardNo != null">`card_no` = #{cardNo}, </if>
 			<if test="category != null">`category` = #{category}, </if>
 			<if test="type != null">`type` = #{type}, </if>
-			<if test="usageType != null">`usage_type` = #{usageType}, </if>
 			<if test="verifyCode != null">`verify_code` = #{verifyCode}, </if>
 			<if test="cashPledge != null">`cash_pledge` = #{cashPledge}, </if>
 			<if test="last != null">`last` = #{last}, </if>

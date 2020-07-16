@@ -16,9 +16,9 @@ import java.util.List;
 public class UserAccountCardResponseDto implements Serializable {
     /**市场id*/
     private Long firmId;
-    /**卡账号id*/
+    /** 账号id*/
     private Long accountId;
-    /** 父卡账号 */
+    /** 父账号id */
     private Long parentAccountId;
     /** 卡交易类型: 1-买家 2-卖家 {@link com.dili.account.type.AccountType}*/
     private Integer accountType;
