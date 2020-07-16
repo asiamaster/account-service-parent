@@ -106,7 +106,7 @@ public class QueryAccountController {
      * @author miaoguoxin
      * @date 2020/6/19
      */
-    @PostMapping("getList")
+    @PostMapping("/getList")
     public BaseOutput<List<UserAccountCardResponseDto>> getList(@RequestBody UserAccountCardQuery param) {
         LOGGER.info("卡账户查询参数:{}", param);
         return BaseOutput.successData(accountQueryService.getListByConditionForRest(param));

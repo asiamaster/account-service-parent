@@ -95,7 +95,7 @@
 		account_user_card
 		<where>
 			card_no = #{cardNo}
-			<if test="needReturn!=null and needReturn=0">
+			<if test="needReturn!=null and needReturn==0">
 				AND state != 4
 			</if>
 		</where>
