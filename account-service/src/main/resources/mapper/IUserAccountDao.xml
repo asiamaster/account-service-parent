@@ -8,6 +8,11 @@
 			`account_id`,
 			`parent_account_id`,
 			`customer_id`,
+			`name`, 
+			`code`, 
+			`certificate_type`, 
+			`certificate_number`, 
+			`cellphone`, 
 			`fund_account_id`,
 			`card_exist`,
 			`type`,
@@ -41,6 +46,11 @@
 			`account_id`,
 			`parent_account_id`,
 			`customer_id`,
+			`name`, 
+			`code`, 
+			`certificate_type`, 
+			`certificate_number`, 
+			`cellphone`, 
 			`fund_account_id`,
 			`card_exist`,
 			`type`,
@@ -65,6 +75,11 @@
 			#{accountId},
 			#{parentAccountId},
 			#{customerId},
+			#{name}, 
+			#{code}, 
+			#{certificateType}, 
+			#{certificateNumber}, 
+			#{cellphone},
 			#{fundAccountId},
 			#{cardExist},
 			#{type},
@@ -102,6 +117,11 @@
 			<if test="accountId != null">`account_id` = #{accountId}, </if>
 			<if test="parentAccountId != null">`parent_account_id` = #{parentAccountId}, </if>
 			<if test="customerId != null">`customer_id` = #{customerId}, </if>
+			<if test="name != null">`name` = #{name}, </if>
+			<if test="code != null">`code` = #{code}, </if>
+			<if test="certificateType != null">`certificate_type` = #{certificateType}, </if>
+			<if test="certificateNumber != null">`certificate_number` = #{certificateNumber}, </if>
+			<if test="cellphone != null">`cellphone` = #{cellphone}, </if>
 			<if test="fundAccountId != null">`fund_account_id` = #{fundAccountId}, </if>
 			<if test="cardExist != null">`card_exist` = #{cardExist}, </if>
 			<if test="type != null">`type` = #{type}, </if>

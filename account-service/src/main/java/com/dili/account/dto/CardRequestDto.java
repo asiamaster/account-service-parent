@@ -5,6 +5,7 @@ import com.dili.account.validator.CardValidator;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -24,8 +25,8 @@ public class CardRequestDto extends BaseDto{
 	/** 原来登录密码 */
 	private String oldLoginPwd;
 	/** 登录密码 */
-	@NotNull(message = "账号id不能为空",groups = CardValidator.Generic.class)
-	@Min(value = 1,message = "id最小为1",groups = CardValidator.Generic.class)
+	@NotNull(message = "密码不能为空",groups = CardValidator.Generic.class)
+	@Size(min = 6, max = 6, message = "密码必须6位",groups = CardValidator.Generic.class)
 	private String loginPwd;
 	/** 二次输入登录密码 */
 	private String secondLoginPwd;

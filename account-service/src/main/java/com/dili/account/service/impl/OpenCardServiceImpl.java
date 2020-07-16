@@ -2,6 +2,7 @@ package com.dili.account.service.impl;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 import javax.annotation.Resource;
 
@@ -75,7 +76,8 @@ public class OpenCardServiceImpl implements IOpenCardService {
 		List<UserAccountCardResponseDto> userAccountList = accountQueryService.getListByConditionForRest(queryParam);
 		if (userAccountList.size() > 0) {
 			// TODO 是否允许两张卡
-			throw BizExceptionProxy.exception("客户{}已办理过交易主卡{}", openCardInfo.getName(), userAccountList.get(0).getCardNo());
+			throw BizExceptionProxy.exception("客户{}已办理过交易主卡{}", openCardInfo.getName(),
+					userAccountList.get(0).getCardNo());
 		}
 		// 判断卡类型，并将卡片改为使用中
 		CardStorageDo cardStorageDo = cardStorageService.inUse(openCardInfo.getCardNo());
@@ -94,7 +96,7 @@ public class OpenCardServiceImpl implements IOpenCardService {
 		userAccountDao.save(userAccount);
 
 		// 保存卡片信息
-		UserCardDo userCard = buildUserCard(openCardInfo, userAccount.getAccountId());
+		UserCardDo userCard = buildUserCard(openCardInfo, userAccount.getAccountId(), CardType.MASTER);
 		userCardDao.save(userCard);
 
 		// 返回数据
@@ -118,10 +120,16 @@ public class OpenCardServiceImpl implements IOpenCardService {
 		}
 
 		// 获取主卡用户信息
-		CardAggregationWrapper parentAccount = accountQueryService
-				.getByAccountIdWithNotNull(openCardInfo.getParentAccountId());
-		if (parentAccount == null) {
-			throw BizExceptionProxy.exception("{}主卡账户{}不存在!", openCardInfo.getCardNo(), openCardInfo.getParentAccountId());
+		Optional<CardAggregationWrapper> parentAccount = accountQueryService
+				.getByAccountId(openCardInfo.getParentAccountId());
+		if (parentAccount.isEmpty()) {
+			throw BizExceptionProxy.exception("{}主卡账户{}不存在!", openCardInfo.getCardNo(),
+					openCardInfo.getParentAccountId());
+		}
+
+		Long parentAccountId = parentAccount.get().getUserAccount().getParentAccountId();
+		if (parentAccountId != null && parentAccountId != 0) {
+			throw BizExceptionProxy.exception("请刷正确的主卡!{}", openCardInfo.getParentAccountId());
 		}
 
 		// 创建资金账户
@@ -133,17 +141,17 @@ public class OpenCardServiceImpl implements IOpenCardService {
 		Long accountId = Long.parseLong(accountIdStr);
 		UserAccountDo userAccount = buildUserAccount(openCardInfo, accountId, fundAccountId);
 		userAccountDao.save(userAccount);
-		
+
 		// 保存卡片信息
-		UserCardDo userCard = buildUserCard(openCardInfo, userAccount.getId());
+		UserCardDo userCard = buildUserCard(openCardInfo, accountId, CardType.SLAVE);
 		userCardDao.save(userCard);
 
 		// 返回数据
 		OpenCardResponseDto response = new OpenCardResponseDto();
-		response.setAccountId(userAccount.getId());
+		response.setAccountId(userAccount.getAccountId());
 		return response;
 	}
-	
+
 	/**
 	 * 构建卡账户数据
 	 * 
@@ -171,7 +179,8 @@ public class OpenCardServiceImpl implements IOpenCardService {
 		LocalDateTime now = LocalDateTime.now();
 		userAccount.setCreateTime(now);
 		userAccount.setModifyTime(now);
-
+		userAccount.setCreatorId(openCardInfo.getCreatorId());
+		userAccount.setCreator(openCardInfo.getCreator());
 		setAccountPermissions(userAccount, openCardInfo.getCustormerType());
 		return userAccount;
 	}
@@ -188,15 +197,15 @@ public class OpenCardServiceImpl implements IOpenCardService {
 		FundAccountDto fundAccount = new FundAccountDto();
 		fundAccount.setCustomerId(openCardInfo.getCustomerId());
 		fundAccount.setType(CustomerOrgType.getPayCode(openCardInfo.getOrganizationType()));
-		fundAccount.setUseFor(1);  // TODO 寿光只有一个交易账户，其它市场将允许多账户
+		fundAccount.setType(1);
+		fundAccount.setUseFor(1); // TODO 寿光只有一个交易账户，其它市场将允许多账户
 		fundAccount.setName(openCardInfo.getName());
 		fundAccount.setMobile(openCardInfo.getMobile());
 		fundAccount.setCode(openCardInfo.getCardNo());
 		fundAccount.setPassword(openCardInfo.getLoginPwd());
 		return fundAccount;
 	}
-	
-	
+
 	/**
 	 * 根据客户类型设置账户类型及相应权限
 	 * 
@@ -245,13 +254,15 @@ public class OpenCardServiceImpl implements IOpenCardService {
 			Integer[] permissionCodes = { UsePermissionType.RECHARGE.getCode(), UsePermissionType.WEALTH.getCode(),
 					UsePermissionType.WITHDRAW.getCode(), UsePermissionType.PAY_FEES.getCode() };
 			userAccount.setPermissions(UsePermissionType.getPermissions(permissionCodes));
+		} else {
+			throw BizExceptionProxy.exception("客户类型为[{}]，无法设置账户类型及相应权限!", customerType);
 		}
 	}
 
 	/**
 	 * 构建卡片数据
 	 */
-	private UserCardDo buildUserCard(OpenCardDto openCardInfo, Long userAccountId) {
+	private UserCardDo buildUserCard(OpenCardDto openCardInfo, Long userAccountId, CardType cardType) {
 		UserCardDo userCard = new UserCardDo();
 		userCard.setAccountId(userAccountId);
 		userCard.setVersion(1);
@@ -259,7 +270,7 @@ public class OpenCardServiceImpl implements IOpenCardService {
 		// 如果是电子卡则生成电子卡号,实体卡则使用卡片上的卡号
 		userCard.setCardNo(openCardInfo.getCardNo());
 		userCard.setCategory(CardCategory.PARK.getCode());
-		userCard.setType(CardType.MASTER.getCode());
+		userCard.setType(cardType.getCode());
 		userCard.setFirmId(openCardInfo.getFirmId());
 		userCard.setFirmName(openCardInfo.getFirmName());
 		userCard.setState(CardStatus.NORMAL.getCode());

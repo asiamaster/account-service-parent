@@ -20,6 +20,16 @@ public class UserAccountDo implements Serializable {
 	private Long parentAccountId;
 	/** 客户ID */
 	private Long customerId;
+	/** 客户姓名（冗余customer） */
+	private String name;
+	/** 客户编号（冗余customer） */
+	private String code;
+	/** 证件类型（冗余customer） */
+	private String certificateType;
+	/** 证件号（冗余customer） */
+	private String certificateNumber;
+	/** 证件号（冗余customer） */
+	private String cellphone;
 	/** 资金账号 */
 	private Long fundAccountId;
 	/** 实体卡是否存在 */
@@ -44,7 +54,7 @@ public class UserAccountDo implements Serializable {
 	private Integer source;
 	/** 数据版本号 */
 	private Integer version;
-	/** 禁用状态 {@link com.dili.account.type.DisableState}*/
+	/** 禁用状态 {@link com.dili.account.type.DisableState} */
 	private Integer disabledState;
 	/** 操作人员 */
 	private Long creatorId;
@@ -254,6 +264,46 @@ public class UserAccountDo implements Serializable {
 
 	public void setDisabledState(Integer disabledState) {
 		this.disabledState = disabledState;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getCode() {
+		return code;
+	}
+
+	public void setCode(String code) {
+		this.code = code;
+	}
+
+	public String getCertificateType() {
+		return certificateType;
+	}
+
+	public void setCertificateType(String certificateType) {
+		this.certificateType = certificateType;
+	}
+
+	public String getCertificateNumber() {
+		return certificateNumber;
+	}
+
+	public void setCertificateNumber(String certificateNumber) {
+		this.certificateNumber = certificateNumber;
+	}
+
+	public String getCellphone() {
+		return cellphone;
+	}
+
+	public void setCellphone(String cellphone) {
+		this.cellphone = cellphone;
 	}
 
 }

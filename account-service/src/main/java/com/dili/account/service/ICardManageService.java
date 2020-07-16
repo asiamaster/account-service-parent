@@ -40,9 +40,15 @@ public interface ICardManageService {
 	 UserCardDo changeCard(CardRequestDto cardParam);
 
 	/**
-	 * 解挂卡片 返回操作卡及账户信息以便日志记录
+	 * 解挂卡片
 	 */
 	void unLostCard(CardRequestDto cardParam);
+
+	/**
+	 * 解锁卡片
+	 * @param cardParam
+	 */
+    void unLockCard(CardRequestDto cardParam);
 //
 //	/**
 //	 * 根据卡号锁定卡

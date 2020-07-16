@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 public class PayServiceFeignConfig {
 
     private static final String APPID = "100101";
-    private static final String TOKEN = "abcd1234abcd";
+    private static final String TOKEN = "abcd1234";
 
     @Bean
     public RequestInterceptor requestInterceptor() {
