@@ -174,11 +174,17 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
         responseDto.setFirmId(account.getFirmId());
         responseDto.setAccountId(account.getAccountId());
         responseDto.setFundAccountId(account.getFundAccountId());
-        responseDto.setCustomerId(account.getCustomerId());
         responseDto.setPermissionList(UsePermissionType.getPermissionList(account.getPermissions()));
         responseDto.setParentAccountId(account.getParentAccountId());
         responseDto.setAccountType(account.getType());
         responseDto.setAccountState(account.getState());
+
+        responseDto.setCustomerId(account.getCustomerId());
+        responseDto.setCustomerName(account.getName());
+        responseDto.setCustomerCode(account.getCode());
+        responseDto.setCustomerCellphone(account.getCellphone());
+        responseDto.setCustomerCertificateNumber(account.getCertificateNumber());
+        responseDto.setCustomerCertificateType(account.getCertificateType());
         return responseDto;
     }
 }

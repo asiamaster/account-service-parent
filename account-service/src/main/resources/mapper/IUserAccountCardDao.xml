@@ -11,6 +11,11 @@
             <result column="account_id" property="accountId"/>
             <result column="parent_account_id" property="parentAccountId"/>
             <result column="customer_id" property="customerId"/>
+            <result column="customer_name" property="name"/>
+            <result column="customer_code" property="code"/>
+            <result column="customer_certificate_type" property="certificateType"/>
+            <result column="customer_certificate_number" property="certificateNumber"/>
+            <result column="customer_cellphone" property="cellphone"/>
             <result column="fund_account_id" property="fundAccountId"/>
             <result column="type" property="type"/>
             <result column="usage_type" property="usageType"/>
@@ -55,6 +60,11 @@
             aua.`account_id`,
             aua.`parent_account_id`,
             aua.`customer_id`,
+            aua.`name` AS customer_name,
+            aua.`code` AS customer_code,
+            aua.`certificate_type` AS customer_certificate_type,
+            aua.`certificate_number` AS customer_certificate_number,
+            aua.`cellphone` AS customer_cellphone,
             aua.`fund_account_id`,
             aua.`type`,
             aua.`usage_type`,
