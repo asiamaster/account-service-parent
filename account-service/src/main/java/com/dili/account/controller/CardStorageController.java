@@ -24,7 +24,7 @@ import com.dili.ss.domain.PageOutput;
  * @time ：2020年6月19日下午5:36:46
  */
 @RestController
-@RequestMapping(value = "api/account/storage")
+@RequestMapping(value = "api/account/cardStorage")
 public class CardStorageController {
 
 	@Resource
@@ -33,8 +33,8 @@ public class CardStorageController {
 	/**
 	 * 卡片仓库列表查询，带分页
 	 */
-	@PostMapping("list")
-	public PageOutput<List<CardStorageDo>> list(@RequestBody CardRepoQueryParam param) {
+	@PostMapping("pageList")
+	public PageOutput<List<CardStorageDo>> pageList(@RequestBody CardRepoQueryParam param) {
 		return cardStorageService.listPage(param);
 	}
 	
@@ -45,7 +45,7 @@ public class CardStorageController {
 	public BaseOutput<?> addCard(@RequestBody CardAddStarogeDto addCardInfo) {
 		AssertUtils.notEmpty(addCardInfo.getCardNo(), "卡号不能为空!");
 		AssertUtils.notEmpty(addCardInfo.getCreator(), "入库操作人员不能为空!");
-//		AssertUtils.notEmpty(addCardInfo.getInstitutionCode(), "卡片内置所属机构不能为空!");
+		AssertUtils.notNull(addCardInfo.getFirmId(), "卡片所属市场不能为空!");
 		AssertUtils.notNull(addCardInfo.getType(), "卡片类型不能为空!");
 		cardStorageService.addCard(addCardInfo);
 		return BaseOutput.success();
