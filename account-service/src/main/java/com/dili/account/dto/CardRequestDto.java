@@ -1,11 +1,11 @@
 package com.dili.account.dto;
 
-import com.dili.account.validator.CardValidator;
-
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import com.dili.account.validator.CardValidator;
 
 /**
  *
@@ -13,6 +13,7 @@ import javax.validation.constraints.Size;
  *
  */
 public class CardRequestDto extends BaseDto{
+	private static final long serialVersionUID = 1L;
 	/** 卡号 */
 	private String cardNo;
 	/** 新卡号 */
@@ -29,6 +30,8 @@ public class CardRequestDto extends BaseDto{
 	@Size(min = 6, max = 6, message = "密码必须6位",groups = CardValidator.Generic.class)
 	private String loginPwd;
 	/** 二次输入登录密码 */
+	@NotNull(message = "确认密码不能为空",groups = CardValidator.ResetPassword.class)
+	@Size(min = 6, max = 6, message = "确认密码密码必须6位",groups = CardValidator.ResetPassword.class)
 	private String secondLoginPwd;
 
 	public String getCardNo() {
