@@ -1,6 +1,8 @@
 package com.dili.account.rpc;
 
 import com.dili.account.config.PayServiceFeignConfig;
+import com.dili.account.dto.BalanceResponseDto;
+import com.dili.account.dto.CreateTradeRequestDto;
 import com.dili.account.dto.FundAccountDto;
 import com.dili.account.dto.PayCreateFundReponseDto;
 import com.dili.ss.domain.BaseOutput;
@@ -25,4 +27,11 @@ public interface PayRpc {
      */
     @RequestMapping(value = "/payment/api/gateway.do?service=payment.account.service:register", method = RequestMethod.POST)
     BaseOutput<PayCreateFundReponseDto> createFundAccount(FundAccountDto type);
+    /**
+     * 查询余额
+     * @author miaoguoxin
+     * @date 2020/6/30
+     */
+    @RequestMapping(value = "/payment/api/gateway.do?service=payment.fund.service:query", method = RequestMethod.POST)
+    BaseOutput<BalanceResponseDto> getAccountBalance(CreateTradeRequestDto requestDto);
 }

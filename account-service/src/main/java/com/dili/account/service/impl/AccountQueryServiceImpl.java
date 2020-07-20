@@ -4,13 +4,16 @@ import com.dili.account.common.ExceptionMsg;
 import com.dili.account.dao.IUserAccountCardDao;
 import com.dili.account.dao.IUserAccountDao;
 import com.dili.account.dao.IUserCardDao;
+import com.dili.account.dto.AccountSimpleResponseDto;
 import com.dili.account.dto.AccountWithAssociationResponseDto;
+import com.dili.account.dto.BalanceResponseDto;
 import com.dili.account.dto.UserAccountCardQuery;
 import com.dili.account.dto.UserAccountCardResponseDto;
 import com.dili.account.entity.CardAggregationWrapper;
 import com.dili.account.entity.UserAccountDo;
 import com.dili.account.entity.UserCardDo;
 import com.dili.account.exception.AccountBizException;
+import com.dili.account.rpc.resolver.PayRpcResolver;
 import com.dili.account.service.IAccountQueryService;
 import com.dili.account.type.AccountUsageType;
 import com.dili.account.type.CardType;
@@ -43,6 +46,8 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
     private IUserCardDao userCardDao;
     @Autowired
     private IUserAccountCardDao userAccountCardDao;
+    @Autowired
+    private PayRpcResolver payRpcResolver;
 
 
     @Override
@@ -116,6 +121,13 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
         }
         UserAccountDo userAccount = userAccountDao.getByAccountId(card.getAccountId());
         return Optional.of(this.combine(card, userAccount));
+    }
+
+    @Override
+    public AccountSimpleResponseDto getByCardNoWithBalance(String cardNo) {
+        UserAccountCardResponseDto userAccount = this.getByCardNoForRest(cardNo);
+        BalanceResponseDto fund = payRpcResolver.findBalanceByFundAccountId(userAccount.getFundAccountId());
+        return new AccountSimpleResponseDto(fund, userAccount);
     }
 
     /**

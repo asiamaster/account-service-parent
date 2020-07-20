@@ -1,6 +1,6 @@
 package com.dili.account.controller;
 
-import com.alibaba.fastjson.JSON;
+import com.dili.account.dto.AccountSimpleResponseDto;
 import com.dili.account.dto.AccountWithAssociationResponseDto;
 import com.dili.account.dto.UserAccountCardQuery;
 import com.dili.account.dto.UserAccountCardResponseDto;
@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -70,7 +71,7 @@ public class QueryAccountController {
         if (StringUtils.isBlank(cardNo)) {
             throw new AccountBizException(ResultCode.PARAMS_ERROR, "卡号不能为空");
         }
-        return BaseOutput.successData(accountQueryService.getByCardNoWithAssociationForRest(cardNo,1));
+        return BaseOutput.successData(accountQueryService.getByCardNoWithAssociationForRest(cardNo, 1));
     }
 
     /**
@@ -93,14 +94,14 @@ public class QueryAccountController {
      * @author miaoguoxin
      * @date 2020/6/19
      */
-    @PostMapping("getPage")
+    @PostMapping("/getPage")
     public PageOutput<List<UserAccountCardResponseDto>> getPage(@RequestBody @Validated(ConstantValidator.Page.class)
                                                                         UserAccountCardQuery param) {
         return accountQueryService.getPageByConditionForRest(param);
     }
 
     /**
-     * 分页条件查询（没有total）
+     * 条件查询（没有total）
      * @param
      * @return
      * @author miaoguoxin
@@ -108,8 +109,20 @@ public class QueryAccountController {
      */
     @PostMapping("/getList")
     public BaseOutput<List<UserAccountCardResponseDto>> getList(@RequestBody UserAccountCardQuery param) {
-        LOGGER.info("卡账户查询参数:{}", param);
         return BaseOutput.successData(accountQueryService.getListByConditionForRest(param));
     }
 
+
+    /**
+     * 账户信息，包含余额
+     * @author miaoguoxin
+     * @date 2020/7/7
+     */
+    @GetMapping("/simpleInfo")
+    public BaseOutput<AccountSimpleResponseDto> getInfoByCardNo(String cardNo) {
+        if (StringUtils.isBlank(cardNo)) {
+            throw new AccountBizException(ResultCode.DATA_ERROR, "卡号不能为空");
+        }
+        return BaseOutput.successData(accountQueryService.getByCardNoWithBalance(cardNo));
+    }
 }

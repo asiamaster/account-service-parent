@@ -1,5 +1,6 @@
 package com.dili.account.service;
 
+import com.dili.account.dto.AccountSimpleResponseDto;
 import com.dili.account.dto.AccountWithAssociationResponseDto;
 import com.dili.account.dto.UserAccountCardQuery;
 import com.dili.account.dto.UserAccountCardResponseDto;
@@ -20,8 +21,6 @@ public interface IAccountQueryService {
 
     /**
      * 卡片是否存在
-     * @param
-     * @return
      * @author miaoguoxin
      * @date 2020/6/24
      */
@@ -78,10 +77,16 @@ public interface IAccountQueryService {
 
     /**
      *  查询卡账户、卡的聚合信息(不包含退卡状态),允许为null
-     * @param
-     * @return
      * @author miaoguoxin
      * @date 2020/6/29
      */
     Optional<CardAggregationWrapper> getByAccountId(Long accountId);
+
+    /**
+     * 查询账户信息（包含余额）
+     * @author miaoguoxin
+     * @date 2020/7/7
+     */
+    @Deprecated
+    AccountSimpleResponseDto getByCardNoWithBalance(String cardNo);
 }

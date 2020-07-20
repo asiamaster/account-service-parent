@@ -1,5 +1,7 @@
 package com.dili.account.rpc.resolver;
 
+import com.dili.account.dto.BalanceResponseDto;
+import com.dili.account.dto.CreateTradeRequestDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -46,5 +48,19 @@ public class PayRpcResolver {
 			return baseOutput.getData().getAccountId();
 		}
 		throw new AccountBizException(ResultCode.DATA_ERROR, "支付服务创建资金账户失败");
+	}
+	/**
+	 *  查询余额
+	 * @author miaoguoxin
+	 * @date 2020/6/30
+	 */
+	public BalanceResponseDto findBalanceByFundAccountId(Long fundAccountId) {
+		CreateTradeRequestDto requestDto = new CreateTradeRequestDto();
+		requestDto.setAccountId(fundAccountId);
+		BaseOutput<BalanceResponseDto> result = payRpc.getAccountBalance(requestDto);
+		if (!result.isSuccess()){
+			throw new AccountBizException(ResultCode.DATA_ERROR, result.getMessage());
+		}
+		return result.getData();
 	}
 }
