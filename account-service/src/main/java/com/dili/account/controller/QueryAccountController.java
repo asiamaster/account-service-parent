@@ -6,6 +6,7 @@ import com.dili.account.dto.UserAccountCardQuery;
 import com.dili.account.dto.UserAccountCardResponseDto;
 import com.dili.account.exception.AccountBizException;
 import com.dili.account.service.IAccountQueryService;
+import com.dili.account.util.AssertUtils;
 import com.dili.account.validator.ConstantValidator;
 import com.dili.ss.constant.ResultCode;
 import com.dili.ss.domain.BaseOutput;
@@ -97,6 +98,7 @@ public class QueryAccountController {
     @PostMapping("/getPage")
     public PageOutput<List<UserAccountCardResponseDto>> getPage(@RequestBody @Validated(ConstantValidator.Page.class)
                                                                         UserAccountCardQuery param) {
+        AssertUtils.notNull(param.getFirmId(),"市场id不能为空");
         return accountQueryService.getPageByConditionForRest(param);
     }
 
@@ -109,6 +111,7 @@ public class QueryAccountController {
      */
     @PostMapping("/getList")
     public BaseOutput<List<UserAccountCardResponseDto>> getList(@RequestBody UserAccountCardQuery param) {
+        AssertUtils.notNull(param.getFirmId(),"市场id不能为空");
         return BaseOutput.successData(accountQueryService.getListByConditionForRest(param));
     }
 
