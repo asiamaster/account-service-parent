@@ -1,11 +1,11 @@
 package com.dili.account.dto;
 
-import com.dili.account.validator.CardValidator;
-
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import com.dili.account.validator.CardValidator;
 
 /**
  *
@@ -13,6 +13,7 @@ import javax.validation.constraints.Size;
  *
  */
 public class CardRequestDto extends BaseDto{
+	private static final long serialVersionUID = 1L;
 	/** 卡号 */
 	private String cardNo;
 	/** 新卡号 */
