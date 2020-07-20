@@ -51,7 +51,7 @@ public class PasswordServiceImpl implements IPasswordService{
 	@Override
 	public void checkPassword(Long accountId, String password) {
 		if (accountId == null || StringUtils.isBlank(password)) {
-			throw new AccountBizException(ResultCode.DATA_ERROR,"参数错误");
+			throw new AccountBizException(ResultCode.DATA_ERROR,"密码校验参数错误");
 		}
 		UserAccountDo userAccountDo = userAccountDao.getByAccountId(accountId);
 		if (userAccountDo == null) {

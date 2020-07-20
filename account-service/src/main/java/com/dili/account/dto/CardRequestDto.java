@@ -29,6 +29,8 @@ public class CardRequestDto extends BaseDto{
 	@Size(min = 6, max = 6, message = "密码必须6位",groups = CardValidator.Generic.class)
 	private String loginPwd;
 	/** 二次输入登录密码 */
+	@NotNull(message = "确认密码不能为空",groups = CardValidator.ResetPassword.class)
+	@Size(min = 6, max = 6, message = "确认密码密码必须6位",groups = CardValidator.ResetPassword.class)
 	private String secondLoginPwd;
 
 	public String getCardNo() {
