@@ -32,6 +32,16 @@ public class UserAccountCardQuery extends BaseDto {
     private Integer excludeReturn;
     /**是否排除禁用状态*/
     private Integer excludeDisabled;
+    /**关键词，用于模糊查询等*/
+    private String keyWord;
+
+    public String getKeyWord() {
+        return keyWord;
+    }
+
+    public void setKeyWord(String keyWord) {
+        this.keyWord = keyWord;
+    }
 
     public Integer getCardType() {
         return cardType;
