@@ -21,7 +21,7 @@ public class BaseDto implements Serializable {
     private String opName;
     /** 操作员工号*/
     private String opNo;
-    /** 商户ID*/
+    /** 市场ID*/
     private Long firmId;
     /**页码*/
     @NotNull(message = "页码不能为空", groups = ConstantValidator.Page.class)

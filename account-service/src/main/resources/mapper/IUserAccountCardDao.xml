@@ -143,8 +143,8 @@
             <if test="excludeDisabled !=null and excludeDisabled==1">
                 AND aua.disabled_state = 1
             </if>
-            <if test="keyWord !=null and keyWord !=''">
-                AND auc.card_no LIKE concat('%',#{keyWord},'%')
+            <if test="keyword !=null and keyword !=''">
+                AND auc.card_no LIKE concat('%',#{keyword},'%')
             </if>
         </where>
     </sql>
