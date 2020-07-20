@@ -37,7 +37,7 @@ public class CardStorageServiceImpl implements ICardStorageService {
     @SuppressWarnings("unchecked")
     @Override
     public PageOutput<List<CardStorageDo>> listPage(CardRepoQueryParam queryParam) {
-        Page<CardStorageDo> page = PageHelper.startPage(queryParam.getPageNumber(), queryParam.getPageSize());
+        Page<CardStorageDo> page = PageHelper.startPage(queryParam.getPage(), queryParam.getRows());
         List<CardStorageDo> selectList = cardStorageDao.selectList(queryParam);
         return PageUtils.convert2PageOutput(page, selectList);
     }
