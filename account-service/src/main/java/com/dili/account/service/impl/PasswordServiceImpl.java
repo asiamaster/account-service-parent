@@ -23,7 +23,7 @@ import com.dili.ss.constant.ResultCode;
 @Service
 public class PasswordServiceImpl implements IPasswordService{
 
-	private static final Logger log = LoggerFactory.getLogger(PasswordServiceImpl.class);
+	public static final Logger log = LoggerFactory.getLogger(PasswordServiceImpl.class);
 
 	@Resource
 	private IUserAccountDao userAccountDao;
