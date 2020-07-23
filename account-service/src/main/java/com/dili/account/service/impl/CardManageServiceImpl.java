@@ -53,7 +53,7 @@ public class CardManageServiceImpl implements ICardManageService {
         if (userCardDo == null) {
             throw new AccountBizException(ResultCode.DATA_ERROR, "卡信息不存在");
         }
-        if (CardStatus.NORMAL.getCode() == userCardDo.getState()) {
+        if (CardStatus.NORMAL.getCode() != userCardDo.getState()) {
             throw new AccountBizException(ResultCode.DATA_ERROR, "卡非正常状态,不能退卡");
         }
         //密码校验
