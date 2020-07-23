@@ -36,6 +36,14 @@ public interface ICardStorageDao {
      * @return
      */
 	int save(CardStorageDo cardStorage);
+	
+	
+	/**
+	 * 批量新增
+	 * @param list
+	 * @return
+	 */
+	int batchSave(List<CardStorageDo> list);
 
     /**
      * 根据id查询

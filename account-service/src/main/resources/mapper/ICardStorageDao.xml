@@ -2,91 +2,92 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.dili.account.dao.ICardStorageDao">
-	
-	<select id="selectList" resultType="com.dili.account.entity.CardStorageDo">
+
+	<select id="selectList"
+		resultType="com.dili.account.entity.CardStorageDo">
 		SELECT
-			`id`, 
-			`device_id`, 
-			`card_no`, 
-			`type`, 
-			`verify_code`, 
-			`maker_version`, 
-			`state`, 
-			`creator_id`, 
-			`creator`, 
-			`notes`, 
-			`firm_id`, 
-			`firm_name`, 
-			`create_time`, 
-			`modify_time`
+		`id`,
+		`device_id`,
+		`card_no`,
+		`type`,
+		`verify_code`,
+		`maker_version`,
+		`state`,
+		`creator_id`,
+		`creator`,
+		`notes`,
+		`firm_id`,
+		`firm_name`,
+		`create_time`,
+		`modify_time`
 		FROM
-			account_card_storage
+		account_card_storage
 		WHERE
-			1 = 1
-		<if
-			test="cardNo != null"><![CDATA[ AND card_no = #{cardNo}]]></if>
+		1 = 1
+		<if test="cardNo != null"><![CDATA[ AND card_no = #{cardNo}]]></if>
 		ORDER BY
-			id DESC
+		id DESC
 	</select>
-	
+
 	<insert id="save">
 		INSERT INTO account_card_storage (
-			`device_id`, 
-			`card_no`, 
-			`type`, 
-			`verify_code`, 
-			`maker_version`, 
-			`state`, 
-			`creator_id`, 
-			`creator`, 
-			`notes`, 
-			`firm_id`, 
-			`firm_name`, 
-			`create_time`, 
-			`modify_time`
+		`device_id`,
+		`card_no`,
+		`type`,
+		`verify_code`,
+		`maker_version`,
+		`state`,
+		`creator_id`,
+		`creator`,
+		`notes`,
+		`firm_id`,
+		`firm_name`,
+		`create_time`,
+		`modify_time`
 		)
 		VALUES (
-			#{deviceId}, 
-			#{cardNo}, 
-			#{type}, 
-			#{verifyCode}, 
-			#{makerVersion}, 
-			#{state}, 
-			#{creatorId}, 
-			#{creator}, 
-			#{notes}, 
-			#{firmId}, 
-			#{firmName}, 
-			#{createTime}, 
-			#{modifyTime}
+		#{deviceId},
+		#{cardNo},
+		#{type},
+		#{verifyCode},
+		#{makerVersion},
+		#{state},
+		#{creatorId},
+		#{creator},
+		#{notes},
+		#{firmId},
+		#{firmName},
+		#{createTime},
+		#{modifyTime}
 		)
 	</insert>
-	
-	<select id="getByCardNo" resultType="com.dili.account.entity.CardStorageDo">
+
+	<select id="getByCardNo"
+		resultType="com.dili.account.entity.CardStorageDo">
 		SELECT
-			`id`, 
-			`device_id`, 
-			`card_no`, 
-			`type`, 
-			`verify_code`, 
-			`maker_version`, 
-			`state`, 
-			`creator_id`, 
-			`creator`, 
-			`notes`, 
-			`firm_id`, 
-			`firm_name`, 
-			`create_time`, 
-			`modify_time`
+		`id`,
+		`device_id`,
+		`card_no`,
+		`type`,
+		`verify_code`,
+		`maker_version`,
+		`state`,
+		`creator_id`,
+		`creator`,
+		`notes`,
+		`firm_id`,
+		`firm_name`,
+		`create_time`,
+		`modify_time`
 		FROM
-			account_card_storage
+		account_card_storage
 		WHERE
-			card_no = #{cardNo}
+		card_no = #{cardNo}
 	</select>
-	
+
 	<update id="updateByCardNo">
 		UPDATE account_card_storage
-	 	<set>
+		<set>
 			<if test="deviceId != null">`device_id` = #{deviceId}, </if>
 			<if test="cardNo != null">`card_no` = #{cardNo}, </if>
 			<if test="type != null">`type` = #{type}, </if>
@@ -102,7 +103,42 @@
 			<if test="modifyTime != null">`modify_time` = #{modifyTime}</if>
 		</set>
 		WHERE
-			card_no = #{cardNo}
+		card_no = #{cardNo}
 	</update>
 
+	<insert id="batchSave">
+		INSERT INTO account_card_storage (
+		`device_id`,
+		`card_no`,
+		`type`,
+		`verify_code`,
+		`maker_version`,
+		`state`,
+		`creator_id`,
+		`creator`,
+		`notes`,
+		`firm_id`,
+		`firm_name`,
+		`create_time`,
+		`modify_time`
+		)
+		VALUES 
+		<foreach item="item" collection="array" separator=",">
+			(
+				#{item.deviceId},
+				#{item.cardNo},
+				#{item.type},
+				#{item.verifyCode},
+				#{item.makerVersion},
+				#{item.state},
+				#{item.creatorId},
+				#{item.creator},
+				#{item.notes},
+				#{item.firmId},
+				#{item.firmName},
+				#{item.createTime},
+				#{item.modifyTime}
+			)
+		</foreach>
+	</insert>
 </mapper>

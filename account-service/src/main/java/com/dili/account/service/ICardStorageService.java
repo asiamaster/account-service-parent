@@ -1,6 +1,6 @@
 package com.dili.account.service;
 
-import com.dili.account.dto.CardAddStarogeDto;
+import com.dili.account.dto.CardAddStorageDto;
 import com.dili.account.dto.CardRepoQueryParam;
 import com.dili.account.entity.CardStorageDo;
 import com.dili.ss.domain.PageOutput;
@@ -23,7 +23,12 @@ public interface ICardStorageService {
     /**
      * 卡片首次入库激活
      */
-    void addCard(CardAddStarogeDto cardAddInfo);
+    void addCard(CardAddStorageDto cardAddInfo);
+    
+    /**
+     * 批量，卡片首次入库激活
+     */
+    void batchAddCard(List<CardAddStorageDto> cardAddInfoList);
 
     /**
      * 使用过后更新为激活,表示可以被开卡
