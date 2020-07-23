@@ -46,7 +46,7 @@ public class CardManageServiceImpl implements ICardManageService {
     private PayRpcResolver payRpcResolver;
 
     @Override
-    @Transactional
+    @Transactional(rollbackFor = Exception.class)
     public void returnCard(CardRequestDto cardRequest) {
         UserCardDo userCardDo = userCardDao.findCardByAccountId(cardRequest.getAccountId());
         if (userCardDo == null) {
