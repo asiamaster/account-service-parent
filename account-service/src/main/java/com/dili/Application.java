@@ -1,17 +1,19 @@
 package com.dili;
 
-import com.dili.ss.dto.DTOScan;
-import tk.mybatis.spring.annotation.MapperScan;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import com.dili.ss.retrofitful.annotation.RestfulScan;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.cloud.openfeign.EnableFeignClients;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.web.client.RestTemplate;
+
+import com.dili.ss.dto.DTOScan;
+import com.dili.ss.retrofitful.annotation.RestfulScan;
+
+import tk.mybatis.spring.annotation.MapperScan;
 
 /**
  * 由MyBatis Generator工具自动生成
