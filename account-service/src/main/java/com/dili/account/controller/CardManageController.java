@@ -2,14 +2,17 @@ package com.dili.account.controller;
 
 import javax.annotation.Resource;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.dili.account.dto.CardRequestDto;
 import com.dili.account.service.ICardManageService;
+import com.dili.account.service.IPasswordService;
 import com.dili.account.validator.CardValidator;
 import com.dili.ss.domain.BaseOutput;
 
@@ -26,6 +29,9 @@ public class CardManageController {
 
     @Resource
     private ICardManageService cardManageService;
+
+    @Autowired
+    private IPasswordService passwordService;
 
     /**
      * 退卡
@@ -73,6 +79,15 @@ public class CardManageController {
                                     @Validated({CardValidator.Generic.class, CardValidator.ChangeCard.class})
                                             CardRequestDto cardParam) {
         cardManageService.changeCard(cardParam);
+        return BaseOutput.success();
+    }
+
+    /**
+     * 重置登陆密码
+     */
+    @RequestMapping(value = "/resetLoginPwd", method = RequestMethod.POST)
+    public BaseOutput<Boolean> resetLoginPassword(@RequestBody @Validated(value = {CardValidator.Generic.class, CardValidator.ResetPassword.class}) CardRequestDto cardRequest) throws Exception {
+        passwordService.resetLoginPwd(cardRequest);
         return BaseOutput.success();
     }
 
