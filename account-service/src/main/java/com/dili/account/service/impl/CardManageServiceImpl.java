@@ -48,12 +48,9 @@ public class CardManageServiceImpl implements ICardManageService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void returnCard(CardRequestDto cardRequest) {
-        UserCardDo userCardDo = userCardDao.findCardByAccountId(cardRequest.getAccountId());
+        UserCardDo userCardDo = userCardDao.getByAccountId(cardRequest.getAccountId());
         if (userCardDo == null) {
             throw new AccountBizException(ResultCode.DATA_ERROR, "卡信息不存在");
-        }
-        if (CardStatus.RETURNED.getCode() == userCardDo.getState()) {
-            throw new AccountBizException(ResultCode.DATA_ERROR, "该卡已退");
         }
         if (CardStatus.NORMAL.getCode() == userCardDo.getState()) {
             throw new AccountBizException(ResultCode.DATA_ERROR, "卡非正常状态,不能退卡");
