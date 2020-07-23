@@ -30,9 +30,6 @@ public class CardManageController {
     @Resource
     private ICardManageService cardManageService;
 
-    @Autowired
-    private IPasswordService passwordService;
-
     /**
      * 退卡
      */
@@ -79,15 +76,6 @@ public class CardManageController {
                                     @Validated({CardValidator.Generic.class, CardValidator.ChangeCard.class})
                                             CardRequestDto cardParam) {
         cardManageService.changeCard(cardParam);
-        return BaseOutput.success();
-    }
-
-    /**
-     * 重置登陆密码
-     */
-    @RequestMapping(value = "/resetLoginPwd", method = RequestMethod.POST)
-    public BaseOutput<Boolean> resetLoginPassword(@RequestBody @Validated(value = {CardValidator.Generic.class, CardValidator.ResetPassword.class}) CardRequestDto cardRequest) throws Exception {
-        passwordService.resetLoginPwd(cardRequest);
         return BaseOutput.success();
     }
 
