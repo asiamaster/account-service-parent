@@ -1,6 +1,7 @@
 package com.dili.account.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -8,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.dili.account.dto.CardRequestDto;
 import com.dili.account.service.IAccountManageService;
+import com.dili.account.validator.AccountValidator;
 import com.dili.ss.domain.BaseOutput;
 
 /**
@@ -26,7 +28,7 @@ public class AccountManagementController {
 	 * 冻结账户
 	 */
 	@GetMapping("/frozen.action")
-	public BaseOutput<Boolean> frozen(@RequestBody CardRequestDto cardRequestDto) {
+	public BaseOutput<Boolean> frozen(@RequestBody @Validated(value = {AccountValidator.DisabledState.class}) CardRequestDto cardRequestDto) {
 		accountManageService.frozen(cardRequestDto);
         return BaseOutput.success();
 	}
@@ -35,7 +37,7 @@ public class AccountManagementController {
 	 * 解冻账户
 	 */
 	@GetMapping("/unfrozen.action")
-	public BaseOutput<Boolean> unfroze(@RequestBody CardRequestDto cardRequestDto) {
+	public BaseOutput<Boolean> unfroze(@RequestBody @Validated(value = {AccountValidator.DisabledState.class}) CardRequestDto cardRequestDto) {
 		accountManageService.unfrozen(cardRequestDto);
         return BaseOutput.success();
 	}
