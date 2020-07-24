@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.dili.account.dto.CardAddStarogeDto;
+import com.dili.account.dto.CardAddStorageDto;
 import com.dili.account.dto.CardRepoQueryParam;
 import com.dili.account.entity.CardStorageDo;
 import com.dili.account.service.ICardStorageService;
@@ -42,7 +42,20 @@ public class CardStorageController {
 	 * 卡片入库
 	 */
 	@PostMapping("add")
-	public BaseOutput<?> addCard(@RequestBody CardAddStarogeDto addCardInfo) {
+	public BaseOutput<?> addCard(@RequestBody CardAddStorageDto addCardInfo) {
+		AssertUtils.notEmpty(addCardInfo.getCardNo(), "卡号不能为空!");
+		AssertUtils.notEmpty(addCardInfo.getCreator(), "入库操作人员不能为空!");
+		AssertUtils.notNull(addCardInfo.getFirmId(), "卡片所属市场不能为空!");
+		AssertUtils.notNull(addCardInfo.getType(), "卡片类型不能为空!");
+		cardStorageService.addCard(addCardInfo);
+		return BaseOutput.success();
+	}
+	
+	/**
+	 * 卡片入库
+	 */
+	@PostMapping("batchAdd")
+	public BaseOutput<?> barchAddCard(@RequestBody CardAddStorageDto addCardInfo) {
 		AssertUtils.notEmpty(addCardInfo.getCardNo(), "卡号不能为空!");
 		AssertUtils.notEmpty(addCardInfo.getCreator(), "入库操作人员不能为空!");
 		AssertUtils.notNull(addCardInfo.getFirmId(), "卡片所属市场不能为空!");
@@ -55,7 +68,7 @@ public class CardStorageController {
 	 * 卡片作废
 	 */
 	@PostMapping("void")
-	public BaseOutput<?> voidCard(@RequestBody CardAddStarogeDto voidCardInfo) {
+	public BaseOutput<?> voidCard(@RequestBody CardAddStorageDto voidCardInfo) {
 		AssertUtils.notEmpty(voidCardInfo.getCardNo(), "卡号不能为空!");
 		cardStorageService.voidCard(voidCardInfo.getCardNo(), voidCardInfo.getNotes());
 		return BaseOutput.success();

@@ -1,7 +1,7 @@
 package com.dili.account.service.impl;
 
 import com.dili.account.dao.ICardStorageDao;
-import com.dili.account.dto.CardAddStarogeDto;
+import com.dili.account.dto.CardAddStorageDto;
 import com.dili.account.dto.CardRepoQueryParam;
 import com.dili.account.entity.CardStorageDo;
 import com.dili.account.exception.BizExceptionProxy;
@@ -43,7 +43,7 @@ public class CardStorageServiceImpl implements ICardStorageService {
     }
 
     @Override
-    public void addCard(CardAddStarogeDto addInfo) {
+    public void addCard(CardAddStorageDto addInfo) {
         CardStorageDo repository = cardStorageDao.getByCardNo(addInfo.getCardNo());
         if (repository != null) {
             LOG.error(DUPLICATION_ERRMSG, addInfo.getCardNo());
@@ -161,4 +161,10 @@ public class CardStorageServiceImpl implements ICardStorageService {
     private static final String NOT_IN_USE_ERRMSG = "该卡{}未被使用，操作失败!";
     private static final String VOID_ERRMSG = "该卡{}已作废，操作失败!";
     private static final String DUPLICATION_ERRMSG = "卡号{}重复,入库失败!";
+
+	@Override
+	public void batchAddCard(List<CardAddStorageDto> cardAddInfoList) {
+//		for()
+//		addCard(addInfo);
+	}
 }
