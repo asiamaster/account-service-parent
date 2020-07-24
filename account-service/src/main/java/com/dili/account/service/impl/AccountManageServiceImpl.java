@@ -33,6 +33,9 @@ public class AccountManageServiceImpl implements IAccountManageService {
 		this.updateDisabledState(cardRequestDto, DisableState.ENABLED);
 	}
 
+	/**
+	 * 卡账户禁用启用
+	 */
 	private void updateDisabledState(CardRequestDto cardRequestDto, DisableState disableState) {
 		// 校验账户信息
 		UserAccountDo userAccount = userAccountDao.getByAccountId(cardRequestDto.getAccountId());
