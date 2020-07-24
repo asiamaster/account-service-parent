@@ -18,7 +18,7 @@ import com.dili.ss.domain.BaseOutput;
  * @Date: 2020/6/29 14:39
  */
 @RestController
-@RequestMapping("/sapi/account")
+@RequestMapping("/api/account")
 public class AccountManagementController {
 
 	@Autowired
