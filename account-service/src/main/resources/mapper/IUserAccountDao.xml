@@ -173,4 +173,32 @@
 			parent_account_id = #{parentAccountId}
 		AND state != 4
 	</select>
+	
+	<!-- 单个更新卡账户是否禁用状态 -->
+	<update id="updateDisabledState">
+		UPDATE 
+			account_user_account 
+		SET 
+			disabled_state = #{disabledState},
+		    version = version + 1,
+		    modify_time = NOW()
+		WHERE 
+			account_id = #{accountId}
+		AND 
+			version=#{version}
+	</update>
+	
+	<!-- 单个更新卡账户使用状态 -->
+	<update id="updateState">
+		UPDATE 
+			account_user_account 
+		SET 
+			state = #{state},
+		    version = version + 1,
+		    modify_time = NOW()
+		WHERE 
+			account_id = #{accountId}
+		AND 
+			version=#{version}
+	</update>
 </mapper>
