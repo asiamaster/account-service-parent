@@ -5,6 +5,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.dili.account.validator.AccountValidator;
 import com.dili.account.validator.CardValidator;
 
 /**
@@ -20,8 +21,8 @@ public class CardRequestDto extends BaseDto{
 	@NotBlank(message = "新卡卡号不能为空",groups = CardValidator.ChangeCard.class)
 	private String newCardNo;
 	/** 账户ID */
-	@NotNull(message = "账号id不能为空",groups = CardValidator.Generic.class)
-	@Min(value = 1,message = "id最小为1",groups = CardValidator.Generic.class)
+	@NotNull(message = "账号id不能为空",groups = {CardValidator.Generic.class, AccountValidator.DisabledState.class})
+	@Min(value = 1,message = "id最小为1",groups = {CardValidator.Generic.class, AccountValidator.DisabledState.class})
 	private Long accountId;
 	/** 原来登录密码 */
 	private String oldLoginPwd;
