@@ -27,7 +27,7 @@ public class AccountManagementController {
 	/**
 	 * 冻结账户
 	 */
-	@GetMapping("/frozen.action")
+	@GetMapping("/frozen")
 	public BaseOutput<Boolean> frozen(@RequestBody @Validated(value = {AccountValidator.DisabledState.class}) CardRequestDto cardRequestDto) {
 		accountManageService.frozen(cardRequestDto);
         return BaseOutput.success();
@@ -36,7 +36,7 @@ public class AccountManagementController {
 	/**
 	 * 解冻账户
 	 */
-	@GetMapping("/unfrozen.action")
+	@GetMapping("/unfrozen")
 	public BaseOutput<Boolean> unfroze(@RequestBody @Validated(value = {AccountValidator.DisabledState.class}) CardRequestDto cardRequestDto) {
 		accountManageService.unfrozen(cardRequestDto);
         return BaseOutput.success();
