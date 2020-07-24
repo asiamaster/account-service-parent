@@ -16,12 +16,10 @@ import com.dili.account.exception.AccountBizException;
 import com.dili.account.rpc.resolver.PayRpcResolver;
 import com.dili.account.service.IAccountQueryService;
 import com.dili.account.type.AccountUsageType;
-import com.dili.account.type.CardStatus;
 import com.dili.account.type.CardType;
 import com.dili.account.type.DisableState;
 import com.dili.account.type.UsePermissionType;
 import com.dili.account.util.PageUtils;
-import com.dili.customer.sdk.rpc.CustomerRpc;
 import com.dili.ss.constant.ResultCode;
 import com.dili.ss.domain.PageOutput;
 import com.github.pagehelper.Page;
@@ -50,8 +48,6 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
     private IUserAccountCardDao userAccountCardDao;
     @Autowired
     private PayRpcResolver payRpcResolver;
-    @Autowired
-    private CustomerRpc customerRpc;
 
 
     @Override
@@ -126,9 +122,9 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
             throw new AccountBizException(ResultCode.DATA_ERROR, ExceptionMsg.ACCOUNT_DISABLED.getName());
         }
         //如果是副卡，查询主卡状态
-        if (CardType.isSlave(userCard.getType())){
+        if (CardType.isSlave(userCard.getType())) {
             return this.getByAccountIdForCardOp(userAccount.getParentAccountId());
-        }else {
+        } else {
             return wrapper;
         }
     }
