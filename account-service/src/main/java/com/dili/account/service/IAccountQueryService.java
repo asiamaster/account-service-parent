@@ -77,8 +77,6 @@ public interface IAccountQueryService {
 
     /**
     * 卡操作的时候查询卡账户信息(不包含退卡状态)
-    * @param
-    * @return
     * @author miaoguoxin
     * @date 2020/7/24
     */

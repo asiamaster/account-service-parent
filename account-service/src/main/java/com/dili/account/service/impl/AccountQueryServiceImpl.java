@@ -127,7 +127,7 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
         }
         //如果是副卡，查询主卡状态
         if (CardType.isSlave(userCard.getType())){
-            return this.getByAccountIdForCardOp(accountId);
+            return this.getByAccountIdForCardOp(userAccount.getParentAccountId());
         }else {
             return wrapper;
         }
