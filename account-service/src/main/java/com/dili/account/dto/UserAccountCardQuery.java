@@ -30,7 +30,7 @@ public class UserAccountCardQuery extends BaseDto {
     private Integer cardState;
     /**是否排除退还状态*/
     private Integer excludeReturn;
-    /**是否排除禁用状态*/
+    /**是否排除账户禁用状态*/
     private Integer excludeDisabled;
     /**关键词，用于模糊查询等*/
     private String keyword;
@@ -136,6 +136,7 @@ public class UserAccountCardQuery extends BaseDto {
         }
         return this;
     }
+
 
     @Override
     public String toString() {

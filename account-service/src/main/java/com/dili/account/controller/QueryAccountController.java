@@ -56,9 +56,7 @@ public class QueryAccountController {
      */
     @GetMapping("getOneAccountCard/{cardNo}")
     public BaseOutput<UserAccountCardResponseDto> getOneAccountCard(@PathVariable String cardNo) {
-        if (StringUtils.isBlank(cardNo)) {
-            throw new AccountBizException(ResultCode.PARAMS_ERROR, "卡号不能为空");
-        }
+        AssertUtils.notEmpty(cardNo,"卡号不能为空");
         return BaseOutput.successData(accountQueryService.getByCardNoForRest(cardNo));
     }
 
@@ -69,9 +67,7 @@ public class QueryAccountController {
      */
     @GetMapping("getAssociation/{cardNo}")
     public BaseOutput<AccountWithAssociationResponseDto> getAssociationAccountCard(@PathVariable String cardNo) {
-        if (StringUtils.isBlank(cardNo)) {
-            throw new AccountBizException(ResultCode.PARAMS_ERROR, "卡号不能为空");
-        }
+        AssertUtils.notEmpty(cardNo,"卡号不能为空");
         return BaseOutput.successData(accountQueryService.getByCardNoWithAssociationForRest(cardNo, 1));
     }
 
@@ -90,8 +86,6 @@ public class QueryAccountController {
 
     /**
      * 分页条件查询（有total）
-     * @param
-     * @return
      * @author miaoguoxin
      * @date 2020/6/19
      */
@@ -104,8 +98,6 @@ public class QueryAccountController {
 
     /**
      * 条件查询（没有total）
-     * @param
-     * @return
      * @author miaoguoxin
      * @date 2020/6/19
      */

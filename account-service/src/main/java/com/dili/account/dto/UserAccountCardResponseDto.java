@@ -30,8 +30,10 @@ public class UserAccountCardResponseDto implements Serializable {
     private String customerName;
     /**客户编号*/
     private String customerCode;
-    /**客户身份类型*/
+    /**客户证件类型*/
     private String customerCertificateType;
+    /**客户类型（从customer-service获取）*/
+    private String customerType;
     /**客户身份号*/
     private String customerCertificateNumber;
     /**客户电话*/

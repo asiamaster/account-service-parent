@@ -16,10 +16,12 @@ import com.dili.account.exception.AccountBizException;
 import com.dili.account.rpc.resolver.PayRpcResolver;
 import com.dili.account.service.IAccountQueryService;
 import com.dili.account.type.AccountUsageType;
+import com.dili.account.type.CardStatus;
 import com.dili.account.type.CardType;
 import com.dili.account.type.DisableState;
 import com.dili.account.type.UsePermissionType;
 import com.dili.account.util.PageUtils;
+import com.dili.customer.sdk.rpc.CustomerRpc;
 import com.dili.ss.constant.ResultCode;
 import com.dili.ss.domain.PageOutput;
 import com.github.pagehelper.Page;
@@ -48,6 +50,8 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
     private IUserAccountCardDao userAccountCardDao;
     @Autowired
     private PayRpcResolver payRpcResolver;
+    @Autowired
+    private CustomerRpc customerRpc;
 
 
     @Override
@@ -111,6 +115,22 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
         Optional.ofNullable(userAccount)
                 .orElseThrow(() -> new AccountBizException(ResultCode.DATA_ERROR, ExceptionMsg.ACCOUNT_NOT_EXIST.getName()));
         return this.combine(card, userAccount);
+    }
+
+    @Override
+    public CardAggregationWrapper getByAccountIdForCardOp(Long accountId) {
+        CardAggregationWrapper wrapper = this.getByAccountIdWithNotNull(accountId);
+        UserAccountDo userAccount = wrapper.getUserAccount();
+        UserCardDo userCard = wrapper.getUserCard();
+        if (DisableState.DISABLED.getCode().equals(userAccount.getDisabledState())) {
+            throw new AccountBizException(ResultCode.DATA_ERROR, ExceptionMsg.ACCOUNT_DISABLED.getName());
+        }
+        //如果是副卡，查询主卡状态
+        if (CardType.isSlave(userCard.getType())){
+            return this.getByAccountIdForCardOp(accountId);
+        }else {
+            return wrapper;
+        }
     }
 
     @Override
