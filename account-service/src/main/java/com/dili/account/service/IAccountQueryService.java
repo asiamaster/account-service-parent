@@ -76,6 +76,13 @@ public interface IAccountQueryService {
     CardAggregationWrapper getByAccountIdWithNotNull(Long accountId);
 
     /**
+    * 卡操作的时候查询卡账户信息(不包含退卡状态)
+    * @author miaoguoxin
+    * @date 2020/7/24
+    */
+    CardAggregationWrapper getByAccountIdForCardOp(Long accountId);
+
+    /**
      *  查询卡账户、卡的聚合信息(不包含退卡状态),允许为null
      * @author miaoguoxin
      * @date 2020/6/29
@@ -87,6 +94,5 @@ public interface IAccountQueryService {
      * @author miaoguoxin
      * @date 2020/7/7
      */
-    @Deprecated
     AccountSimpleResponseDto getByCardNoWithBalance(String cardNo);
 }
