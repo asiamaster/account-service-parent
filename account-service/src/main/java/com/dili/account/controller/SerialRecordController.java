@@ -1,7 +1,6 @@
 package com.dili.account.controller;
 
 import cn.hutool.core.collection.CollUtil;
-import com.dili.account.dto.SerialDto;
 import com.dili.account.dto.SerialQueryDto;
 import com.dili.account.entity.SerialRecordDo;
 import com.dili.account.service.ISerialRecordService;
@@ -29,15 +28,15 @@ public class SerialRecordController {
     private ISerialRecordService serialRecordService;
     /**
      * 批量存储流水记录
-     * @param serialDto
+     * @param serialRecordDoList
      * @return
      */
     @RequestMapping(value = "/batchSave")
-    public BaseOutput<?> save(@RequestBody SerialDto serialDto) {
-        if (CollUtil.isEmpty(serialDto.getSerialRecordList())) {
+    public BaseOutput<?> save(@RequestBody List<SerialRecordDo> serialRecordDoList) {
+        if (CollUtil.isEmpty(serialRecordDoList)) {
             return BaseOutput.failure("操作流水记录列表为空");
         }
-        serialRecordService.batchSave(serialDto.getSerialRecordList());
+        serialRecordService.batchSave(serialRecordDoList);
         return BaseOutput.success();
     }
 
