@@ -1,5 +1,6 @@
 package com.dili.account.service;
 
+import com.dili.account.dto.BatchCardAddStorageDto;
 import com.dili.account.dto.CardAddStorageDto;
 import com.dili.account.dto.CardRepoQueryParam;
 import com.dili.account.entity.CardStorageDo;
@@ -26,9 +27,15 @@ public interface ICardStorageService {
     void addCard(CardAddStorageDto cardAddInfo);
     
     /**
-     * 批量，卡片首次入库激活
+     * 根据号段批量添加数据,卡号重复时将会抛出唯一索引的异常
      */
-    void batchAddCard(List<CardAddStorageDto> cardAddInfoList);
+    void batchAddCard(BatchCardAddStorageDto batchCardDto);
+    
+    
+    /**
+     * 批量激活
+     */
+    void batchActivate(List<String> cardNos);
 
     /**
      * 使用过后更新为激活,表示可以被开卡

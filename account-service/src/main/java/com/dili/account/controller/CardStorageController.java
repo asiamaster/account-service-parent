@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.dili.account.dto.BatchActivateCardDto;
+import com.dili.account.dto.BatchCardAddStorageDto;
 import com.dili.account.dto.CardAddStorageDto;
 import com.dili.account.dto.CardRepoQueryParam;
 import com.dili.account.entity.CardStorageDo;
@@ -18,8 +20,8 @@ import com.dili.ss.domain.BaseOutput;
 import com.dili.ss.domain.PageOutput;
 
 /**
- * @description： 
- *          卡片仓库服务，入库、报废
+ * @description： 卡片仓库服务，入库、报废
+ * 
  * @author ：WangBo
  * @time ：2020年6月19日下午5:36:46
  */
@@ -37,7 +39,16 @@ public class CardStorageController {
 	public PageOutput<List<CardStorageDo>> pageList(@RequestBody CardRepoQueryParam param) {
 		return cardStorageService.listPage(param);
 	}
-	
+
+	/**
+	 * 根据卡号查询卡片在仓库中的状态
+	 */
+	@PostMapping("getCardStorageByCardNo")
+	public BaseOutput<CardStorageDo> getCardStorageByCardNo(@RequestBody CardRepoQueryParam param) {
+		AssertUtils.notEmpty(param.getCardNo(), "卡号不能为空!");
+		return BaseOutput.successData(cardStorageService.getByCardNo(param.getCardNo()));
+	}
+
 	/**
 	 * 卡片入库
 	 */
@@ -50,17 +61,27 @@ public class CardStorageController {
 		cardStorageService.addCard(addCardInfo);
 		return BaseOutput.success();
 	}
-	
+
 	/**
-	 * 卡片入库
+	 * 卡片批量激活，只需要cardNos
+	 */
+	@PostMapping("batchActivate")
+	public BaseOutput<?> batchActivate(@RequestBody BatchActivateCardDto dto) {
+		AssertUtils.notNull(dto.getCardNos(), "参数校验失败：卡号缺失!");
+		cardStorageService.batchActivate(dto.getCardNos());
+		return BaseOutput.success();
+	}
+
+	/**
+	 * 卡片批量入库
 	 */
 	@PostMapping("batchAdd")
-	public BaseOutput<?> barchAddCard(@RequestBody CardAddStorageDto addCardInfo) {
-		AssertUtils.notEmpty(addCardInfo.getCardNo(), "卡号不能为空!");
-		AssertUtils.notEmpty(addCardInfo.getCreator(), "入库操作人员不能为空!");
-		AssertUtils.notNull(addCardInfo.getFirmId(), "卡片所属市场不能为空!");
-		AssertUtils.notNull(addCardInfo.getType(), "卡片类型不能为空!");
-		cardStorageService.addCard(addCardInfo);
+	public BaseOutput<?> barchAddCard(@RequestBody BatchCardAddStorageDto batchInfo) {
+		AssertUtils.notEmpty(batchInfo.getCreator(), "入库操作人员不能为空!");
+		AssertUtils.notNull(batchInfo.getFirmId(), "卡片所属市场不能为空!");
+		AssertUtils.notNull(batchInfo.getCardNoStart(), "起始卡号不能为空!");
+		AssertUtils.notNull(batchInfo.getCardNoEnd(), "截止卡号不能为空!");
+		cardStorageService.batchAddCard(batchInfo);
 		return BaseOutput.success();
 	}
 
