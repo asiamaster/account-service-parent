@@ -79,8 +79,8 @@ public class CardStorageController {
 	public BaseOutput<?> barchAddCard(@RequestBody BatchCardAddStorageDto batchInfo) {
 		AssertUtils.notEmpty(batchInfo.getCreator(), "入库操作人员不能为空!");
 		AssertUtils.notNull(batchInfo.getFirmId(), "卡片所属市场不能为空!");
-		AssertUtils.notNull(batchInfo.getCardNoStart(), "起始卡号不能为空!");
-		AssertUtils.notNull(batchInfo.getCardNoEnd(), "截止卡号不能为空!");
+		AssertUtils.notNull(batchInfo.getStartCardNo(), "起始卡号不能为空!");
+		AssertUtils.notNull(batchInfo.getEndCardNo(), "截止卡号不能为空!");
 		cardStorageService.batchAddCard(batchInfo);
 		return BaseOutput.success();
 	}

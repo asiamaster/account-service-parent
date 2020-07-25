@@ -20,9 +20,9 @@ public class BatchCardAddStorageDto {
 	/** 卡类型 */
 	private Integer cardType;
 	/** 卡片起始号 */
-	private Long cardNoStart;
+	private Long startCardNo;
 	/** 卡片结束号 */
-	private Long cardNoEnd;
+	private Long endCardNo;
 
 	public Long getFirmId() {
 		return firmId;
@@ -72,20 +72,20 @@ public class BatchCardAddStorageDto {
 		this.cardType = cardType;
 	}
 
-	public Long getCardNoStart() {
-		return cardNoStart;
+	public Long getStartCardNo() {
+		return startCardNo;
 	}
 
-	public void setCardNoStart(Long cardNoStart) {
-		this.cardNoStart = cardNoStart;
+	public void setStartCardNo(Long startCardNo) {
+		this.startCardNo = startCardNo;
 	}
 
-	public Long getCardNoEnd() {
-		return cardNoEnd;
+	public Long getEndCardNo() {
+		return endCardNo;
 	}
 
-	public void setCardNoEnd(Long cardNoEnd) {
-		this.cardNoEnd = cardNoEnd;
+	public void setEndCardNo(Long endCardNo) {
+		this.endCardNo = endCardNo;
 	}
 
 }

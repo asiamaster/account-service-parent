@@ -163,7 +163,7 @@ public class CardStorageServiceImpl implements ICardStorageService {
 	@Override
 	public void batchAddCard(BatchCardAddStorageDto batchCardDto) {
 		List<CardStorageDo> cardList = new ArrayList<CardStorageDo>();
-		for (long i = batchCardDto.getCardNoStart(); i <= batchCardDto.getCardNoEnd(); i++) {
+		for (long i = batchCardDto.getStartCardNo(); i <= batchCardDto.getEndCardNo(); i++) {
 			CardStorageDo saveInfo = new CardStorageDo();
 			saveInfo.setCardNo(i + "");
 			saveInfo.setCreateTime(LocalDateTime.now());
