@@ -15,7 +15,7 @@ public class UserAccountCardQuery extends BaseDto {
     /**客户id*/
     private List<Long> customerIds;
     /**客户名称*/
-    private List<String> customerNames;
+    private String customerName;
     /** 多个账户ID */
     private List<Long> accountIds;
     /** 多个卡号 */
@@ -37,12 +37,12 @@ public class UserAccountCardQuery extends BaseDto {
     /**关键词，用于模糊查询等*/
     private String keyword;
 
-    public List<String> getCustomerNames() {
-        return customerNames;
+    public String getCustomerName() {
+        return customerName;
     }
 
-    public void setCustomerNames(List<String> customerNames) {
-        this.customerNames = customerNames;
+    public void setCustomerName(String customerName) {
+        this.customerName = customerName;
     }
 
     public String getKeyword() {
