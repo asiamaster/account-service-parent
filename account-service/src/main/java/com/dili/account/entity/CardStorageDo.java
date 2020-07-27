@@ -3,6 +3,11 @@ package com.dili.account.entity;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.alibaba.fastjson.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 /**
  * 卡片仓库，所有新开卡必须来至该表
  * @author bob
@@ -36,8 +41,14 @@ public class CardStorageDo implements Serializable {
 	/** 商户名称 */
 	private String firmName; 
 	/** 创建时间 */
+	@JSONField(format = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime createTime; 
 	/** 修改时间 */
+	@JSONField(format = "yyyy-MM-dd HH:mm:ss")
+	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime modifyTime; 
     /**
      * CardStorageEntity constructor
