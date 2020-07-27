@@ -58,13 +58,21 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
     @Override
     public UserAccountCardResponseDto getByCardNoForRest(String cardNo) {
         UserCardDo card = userCardDao.getByCardNo(cardNo, 0);
-        return this.validateAndBuildAccountCard(card);
+        UserAccountCardResponseDto responseDto = this.validateAndBuildAccountCard(card);
+        if (DisableState.DISABLED.getCode().equals(responseDto.getDisabledState())) {
+            throw new AccountBizException(ResultCode.DATA_ERROR, ExceptionMsg.ACCOUNT_DISABLED.getName());
+        }
+        return responseDto;
     }
 
     @Override
     public UserAccountCardResponseDto getByAccountIdForRest(Long accountId) {
         UserCardDo card = userCardDao.getByAccountId(accountId);
-        return this.validateAndBuildAccountCard(card);
+        UserAccountCardResponseDto responseDto = this.validateAndBuildAccountCard(card);
+        if (DisableState.DISABLED.getCode().equals(responseDto.getDisabledState())) {
+            throw new AccountBizException(ResultCode.DATA_ERROR, ExceptionMsg.ACCOUNT_DISABLED.getName());
+        }
+        return responseDto;
     }
 
     @Override
@@ -159,10 +167,6 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
         UserAccountDo userAccount = userAccountDao.getByAccountId(card.getAccountId());
         Optional.ofNullable(userAccount)
                 .orElseThrow(() -> new AccountBizException(ResultCode.DATA_ERROR, ExceptionMsg.ACCOUNT_NOT_EXIST.getName()));
-
-        if (DisableState.DISABLED.getCode().equals(userAccount.getDisabledState())) {
-            throw new AccountBizException(ResultCode.DATA_ERROR, ExceptionMsg.ACCOUNT_DISABLED.getName());
-        }
         return this.convertFromAccountUnionCard(card, userAccount);
     }
 
@@ -184,6 +188,8 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
         } else if (CardType.isSlave(primaryCard.getCardType())) {
             param.setAccountIds(Lists.newArrayList(primaryCard.getParentAccountId()));
         }
+        param.setExcludeReturn(0);
+        param.setExcludeDisabled(0);
         List<UserAccountCardResponseDto> associationCards = this.getListByConditionForRest(param);
         result.setPrimary(primaryCard);
         result.setAssociation(associationCards);

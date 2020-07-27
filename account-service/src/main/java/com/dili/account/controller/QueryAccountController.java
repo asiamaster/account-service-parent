@@ -41,8 +41,6 @@ public class QueryAccountController {
 
     /**
      * 判断卡号是否存在
-     * @param
-     * @return
      * @author miaoguoxin
      * @date 2020/6/24
      */
