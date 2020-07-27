@@ -31,6 +31,10 @@
 				#{cardNo}
 			</foreach>
 		</if>
+		<if test="type != null"><![CDATA[ AND type = #{type}]]></if>
+		<if test="state != null"><![CDATA[ AND state = #{state}]]></if>
+		<if test="startDate != null"><![CDATA[ AND DATE(create_time) >= #{startDate}]]></if>
+		<if test="endDate != null"><![CDATA[ AND DATE(create_time) <= #{endDate}]]></if>
 		ORDER BY
 		id DESC
 	</select>
