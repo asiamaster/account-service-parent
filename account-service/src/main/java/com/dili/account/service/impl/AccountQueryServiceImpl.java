@@ -123,10 +123,12 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
         }
         //如果是副卡，查询主卡状态
         if (CardType.isSlave(userCard.getType())) {
-            return this.getByAccountIdForCardOp(userAccount.getParentAccountId());
-        } else {
-            return wrapper;
+            CardAggregationWrapper parentAccount = this.getByAccountIdWithNotNull(userAccount.getParentAccountId());
+            if (DisableState.DISABLED.getCode().equals(parentAccount.getUserAccount().getDisabledState())) {
+                throw new AccountBizException(ResultCode.DATA_ERROR, ExceptionMsg.ACCOUNT_DISABLED.getName());
+            }
         }
+        return wrapper;
     }
 
     @Override
