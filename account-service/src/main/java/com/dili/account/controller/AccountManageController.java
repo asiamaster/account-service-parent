@@ -19,7 +19,7 @@ import com.dili.ss.domain.BaseOutput;
  */
 @RestController
 @RequestMapping("/api/account")
-public class AccountManagementController {
+public class AccountManageController {
 
 	@Autowired
 	private IAccountManageService accountManageService;

@@ -41,7 +41,7 @@ public class AccountManageServiceImpl implements IAccountManageService {
 		UserAccountDo userAccount = userAccountDao.getByAccountId(cardRequestDto.getAccountId());
 		Optional.ofNullable(userAccount).orElseThrow(
 				() -> new AccountBizException(ResultCode.DATA_ERROR, ExceptionMsg.ACCOUNT_NOT_EXIST.getName()));
-		if (userAccount.getState() == disableState.getCode()) {
+		if (userAccount.getDisabledState() == disableState.getCode()) {
 			throw new AccountBizException(ResultCode.DATA_ERROR, "卡片已"+ disableState.getName() +"，不能重复操作");
 		}
 		if (!userAccountDao.updateDisabledState(userAccount.getAccountId(), disableState.getCode(),
