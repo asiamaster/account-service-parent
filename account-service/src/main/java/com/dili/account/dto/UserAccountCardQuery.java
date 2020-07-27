@@ -14,6 +14,8 @@ import java.util.List;
 public class UserAccountCardQuery extends BaseDto {
     /**客户id*/
     private List<Long> customerIds;
+    /**客户名称*/
+    private List<String> customerNames;
     /** 多个账户ID */
     private List<Long> accountIds;
     /** 多个卡号 */
@@ -34,6 +36,14 @@ public class UserAccountCardQuery extends BaseDto {
     private Integer excludeDisabled;
     /**关键词，用于模糊查询等*/
     private String keyword;
+
+    public List<String> getCustomerNames() {
+        return customerNames;
+    }
+
+    public void setCustomerNames(List<String> customerNames) {
+        this.customerNames = customerNames;
+    }
 
     public String getKeyword() {
         return keyword;

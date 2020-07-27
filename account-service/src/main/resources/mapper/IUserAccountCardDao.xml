@@ -110,6 +110,12 @@
                     #{item}
                 </foreach>
             </if>
+            <if test="customerNames!=null and customerNames.size>0">
+                AND aua.customer_id IN
+                <foreach item="item" collection="customerNames" separator="," open="(" close=")" index="">
+                    #{item}
+                </foreach>
+            </if>
             <if test="accountIds!=null and accountIds.size>0">
                 AND aua.account_id IN
                 <foreach item="item" collection="accountIds" separator="," open="(" close=")" index="">
