@@ -1,7 +1,5 @@
 package com.dili.account.dto;
 
-import com.dili.account.type.CardType;
-
 /**
  * @description： 卡片入库信息
  * 

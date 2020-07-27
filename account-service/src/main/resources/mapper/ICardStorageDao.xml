@@ -25,6 +25,12 @@
 		WHERE
 		1 = 1
 		<if test="cardNo != null"><![CDATA[ AND card_no = #{cardNo}]]></if>
+		<if test="cardNos != null">
+			AND card_no in
+			<foreach collection="cardNos" item="cardNo" separator="," open="(" close=")">
+				#{cardNo}
+			</foreach>
+		</if>
 		ORDER BY
 		id DESC
 	</select>
@@ -106,7 +112,20 @@
 		card_no = #{cardNo}
 	</update>
 
-	<insert id="batchSave">
+	<!-- 批量激活 -->
+	<update id="batchActivate">
+		UPDATE account_card_storage
+		<set>
+			`state` = #{state},
+			`modify_time` = #{modifyTime}
+		</set>
+		WHERE state = 4 and card_no in
+		<foreach collection="cardNos" item="cardNo" open="(" close=")" separator=",">
+			#{cardNo}
+		</foreach> 
+	</update>
+
+	<insert id="batchSave" parameterType="java.util.List">
 		INSERT INTO account_card_storage (
 		`device_id`,
 		`card_no`,
@@ -123,7 +142,7 @@
 		`modify_time`
 		)
 		VALUES 
-		<foreach item="item" collection="array" separator=",">
+		<foreach item="item" collection="list" separator=",">
 			(
 				#{item.deviceId},
 				#{item.cardNo},

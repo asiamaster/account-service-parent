@@ -1,5 +1,7 @@
 package com.dili.account.dto;
 
+import java.util.List;
+
 import com.dili.ss.domain.BaseDomain;
 
 /**
@@ -14,7 +16,11 @@ public class CardRepoQueryParam extends BaseDomain {
 	private static final long serialVersionUID = 1L;
 	/** 卡号 */
 	private String cardNo;
-	
+	/** 商户ID */
+	private Long firmId;
+	/** 操作员ID */
+	private Long creatorId;
+	private List<String> cardNos;
 
 	public String getCardNo() {
 		return cardNo;
@@ -23,4 +29,29 @@ public class CardRepoQueryParam extends BaseDomain {
 	public void setCardNo(String cardNo) {
 		this.cardNo = cardNo;
 	}
+
+	public List<String> getCardNos() {
+		return cardNos;
+	}
+
+	public void setCardNos(List<String> cardNos) {
+		this.cardNos = cardNos;
+	}
+
+	public Long getFirmId() {
+		return firmId;
+	}
+
+	public void setFirmId(Long firmId) {
+		this.firmId = firmId;
+	}
+
+	public Long getCreatorId() {
+		return creatorId;
+	}
+
+	public void setCreatorId(Long creatorId) {
+		this.creatorId = creatorId;
+	}
+
 }

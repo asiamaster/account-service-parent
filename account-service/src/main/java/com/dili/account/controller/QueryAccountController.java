@@ -61,6 +61,17 @@ public class QueryAccountController {
     }
 
     /**
+    * 根据accountId查卡账户信息
+    * @author miaoguoxin
+    * @date 2020/7/27
+    */
+    @GetMapping("getOneByAccountId/{accountId}")
+    public BaseOutput<UserAccountCardResponseDto> getOneByAccountId(@PathVariable Long accountId){
+        AssertUtils.notNull(accountId,"账户id不能为空");
+        return BaseOutput.successData(accountQueryService.getByAccountIdForRest(accountId));
+    }
+
+    /**
      *  根据卡号查询包含关联卡的信息
      * @author miaoguoxin
      * @date 2020/6/28
