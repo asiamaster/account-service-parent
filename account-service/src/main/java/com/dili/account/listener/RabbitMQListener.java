@@ -40,7 +40,7 @@ public class RabbitMQListener {
     @RabbitListener(bindings = @QueueBinding(
             value = @Queue(value = QUEUE_ACCOUNT_SERIAL, autoDelete = "false"),
             exchange = @Exchange(value = EXCHANGE_ACCOUNT_SERIAL, type = ExchangeTypes.DIRECT)
-    ))
+    ), ackMode = "MANUAL")
     public void processAccountSerial(Channel channel, Message message) {
         try {
             String data = new String(message.getBody(), "UTF-8");
