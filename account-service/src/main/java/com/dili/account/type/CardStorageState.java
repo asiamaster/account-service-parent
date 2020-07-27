@@ -9,8 +9,9 @@ package com.dili.account.type;
 public enum CardStorageState
 {
 	USED("在用",1),
-	ACTIVE("激活",2),
-	VOID("作废",3);
+	ACTIVATE("激活",2),
+	VOID("作废",3),
+	UNACTIVATE("未激活",4),;
 
 	private String name;
     private int code;

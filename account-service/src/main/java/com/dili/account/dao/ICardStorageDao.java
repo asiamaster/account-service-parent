@@ -3,6 +3,7 @@ package com.dili.account.dao;
 import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
 
+import com.dili.account.dto.BatchActivateCardDto;
 import com.dili.account.dto.CardRepoQueryParam;
 import com.dili.account.entity.CardStorageDo;
 import com.dili.account.entity.UserCardDo;
@@ -45,6 +46,13 @@ public interface ICardStorageDao {
 	 */
 	int batchSave(List<CardStorageDo> list);
 
+	/**
+	 * 批量激活
+	 * @param updateDto
+	 * @return
+	 */
+	int batchActivate(BatchActivateCardDto updateDto);
+	
     /**
      * 根据id查询
      * @param id
