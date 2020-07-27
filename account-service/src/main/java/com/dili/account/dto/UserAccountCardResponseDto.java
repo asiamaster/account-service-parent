@@ -32,8 +32,6 @@ public class UserAccountCardResponseDto implements Serializable {
     private String customerCode;
     /**客户证件类型*/
     private String customerCertificateType;
-    /**客户类型（从customer-service获取）*/
-    private String customerType;
     /**客户身份号*/
     private String customerCertificateNumber;
     /**客户电话*/
@@ -52,6 +50,8 @@ public class UserAccountCardResponseDto implements Serializable {
     private Integer cardState;
     /**账户状态 {@link com.dili.account.type.AccountStatus}*/
     private Integer accountState;
+    /**账户是否禁用 {@link com.dili.account.type.DisableState}*/
+    private Integer disabledState;
     /**开卡时间*/
     @JSONField(format = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
@@ -228,5 +228,13 @@ public class UserAccountCardResponseDto implements Serializable {
 
     public void setCustomerCellphone(String customerCellphone) {
         this.customerCellphone = customerCellphone;
+    }
+
+    public Integer getDisabledState() {
+        return disabledState;
+    }
+
+    public void setDisabledState(Integer disabledState) {
+        this.disabledState = disabledState;
     }
 }

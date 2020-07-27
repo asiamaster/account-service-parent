@@ -208,6 +208,7 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
         responseDto.setParentAccountId(account.getParentAccountId());
         responseDto.setAccountType(account.getType());
         responseDto.setAccountState(account.getState());
+        responseDto.setDisabledState(account.getDisabledState());
 
         responseDto.setCustomerId(account.getCustomerId());
         responseDto.setCustomerName(account.getName());
