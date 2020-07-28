@@ -244,7 +244,7 @@
 		</if>
 		<if test="serialNo != null and serialNo != ''">
 			and `serial_no` = #{serialNo}
-		</if>cycleNo
+		</if>
 		<if test="cycleNo != null and cycleNo != ''">
 			and `cycle_no` = #{cycleNo}
 		</if>
