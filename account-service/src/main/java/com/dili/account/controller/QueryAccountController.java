@@ -11,6 +11,7 @@ import com.dili.account.validator.ConstantValidator;
 import com.dili.ss.constant.ResultCode;
 import com.dili.ss.domain.BaseOutput;
 import com.dili.ss.domain.PageOutput;
+import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -21,7 +22,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -39,34 +39,29 @@ public class QueryAccountController {
     @Autowired
     private IAccountQueryService accountQueryService;
 
-    /**
-     * 判断卡号是否存在
-     * @author miaoguoxin
-     * @date 2020/6/24
-     */
-    @GetMapping("existCard/{cardNo}")
-    public BaseOutput<Boolean> existCard(@PathVariable String cardNo) {
-        return BaseOutput.successData(accountQueryService.cardExist(cardNo));
-    }
 
     /**
      * 根据卡号查卡账户信息
      */
-    @GetMapping("getOneAccountCard/{cardNo}")
+    @GetMapping("/getOneAccountCard/{cardNo}")
     public BaseOutput<UserAccountCardResponseDto> getOneAccountCard(@PathVariable String cardNo) {
-        AssertUtils.notEmpty(cardNo,"卡号不能为空");
-        return BaseOutput.successData(accountQueryService.getByCardNoForRest(cardNo));
+        AssertUtils.notEmpty(cardNo, "卡号不能为空");
+        UserAccountCardQuery queryParam = new UserAccountCardQuery();
+        queryParam.setCardNos(Lists.newArrayList(cardNo));
+        return BaseOutput.successData(accountQueryService.getSingleForRest(queryParam));
     }
 
     /**
-    * 根据accountId查卡账户信息
-    * @author miaoguoxin
-    * @date 2020/7/27
-    */
-    @GetMapping("getOneByAccountId/{accountId}")
-    public BaseOutput<UserAccountCardResponseDto> getOneByAccountId(@PathVariable Long accountId){
-        AssertUtils.notNull(accountId,"账户id不能为空");
-        return BaseOutput.successData(accountQueryService.getByAccountIdForRest(accountId));
+     * 根据accountId查卡账户信息
+     * @author miaoguoxin
+     * @date 2020/7/27
+     */
+    @GetMapping("/getOneByAccountId/{accountId}")
+    public BaseOutput<UserAccountCardResponseDto> getOneByAccountId(@PathVariable Long accountId) {
+        AssertUtils.notNull(accountId, "账户id不能为空");
+        UserAccountCardQuery queryParam = new UserAccountCardQuery();
+        queryParam.setAccountIds(Lists.newArrayList(accountId));
+        return BaseOutput.successData(accountQueryService.getSingleForRest(queryParam));
     }
 
     /**
@@ -74,10 +69,12 @@ public class QueryAccountController {
      * @author miaoguoxin
      * @date 2020/6/28
      */
-    @GetMapping("getAssociation/{cardNo}")
+    @GetMapping("/getAssociation/{cardNo}")
     public BaseOutput<AccountWithAssociationResponseDto> getAssociationAccountCard(@PathVariable String cardNo) {
-        AssertUtils.notEmpty(cardNo,"卡号不能为空");
-        return BaseOutput.successData(accountQueryService.getByCardNoWithAssociationForRest(cardNo, 1));
+        AssertUtils.notEmpty(cardNo, "卡号不能为空");
+        UserAccountCardQuery queryParam = new UserAccountCardQuery();
+        queryParam.setCardNos(Lists.newArrayList(cardNo));
+        return BaseOutput.successData(accountQueryService.getSingleWithAssociationForRest(queryParam));
     }
 
     /**
@@ -85,12 +82,12 @@ public class QueryAccountController {
      * @author miaoguoxin
      * @date 2020/6/28
      */
-    @GetMapping("getAssociationByAccountId/{accountId}")
+    @GetMapping("/getAssociationByAccountId/{accountId}")
     public BaseOutput<AccountWithAssociationResponseDto> getAssociationAccountCard(@PathVariable Long accountId) {
-        if (accountId == null || accountId <= 0) {
-            throw new AccountBizException(ResultCode.PARAMS_ERROR, "账户id不能为空");
-        }
-        return BaseOutput.successData(accountQueryService.getByAccountIdWithAssociationForRest(accountId));
+        AssertUtils.notNull(accountId, "账户id不能为空");
+        UserAccountCardQuery queryParam = new UserAccountCardQuery();
+        queryParam.setAccountIds(Lists.newArrayList(accountId));
+        return BaseOutput.successData(accountQueryService.getSingleWithAssociationForRest(queryParam));
     }
 
     /**
@@ -101,7 +98,7 @@ public class QueryAccountController {
     @PostMapping("/getPage")
     public PageOutput<List<UserAccountCardResponseDto>> getPage(@RequestBody @Validated(ConstantValidator.Page.class)
                                                                         UserAccountCardQuery param) {
-        AssertUtils.notNull(param.getFirmId(),"市场id不能为空");
+        AssertUtils.notNull(param.getFirmId(), "市场id不能为空");
         return accountQueryService.getPageByConditionForRest(param);
     }
 
@@ -112,7 +109,7 @@ public class QueryAccountController {
      */
     @PostMapping("/getList")
     public BaseOutput<List<UserAccountCardResponseDto>> getList(@RequestBody UserAccountCardQuery param) {
-        AssertUtils.notNull(param.getFirmId(),"市场id不能为空");
+        AssertUtils.notNull(param.getFirmId(), "市场id不能为空");
         return BaseOutput.successData(accountQueryService.getListByConditionForRest(param));
     }
 

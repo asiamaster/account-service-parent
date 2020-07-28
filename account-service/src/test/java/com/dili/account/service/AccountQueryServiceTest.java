@@ -6,6 +6,7 @@ import com.dili.account.dto.AccountWithAssociationResponseDto;
 import com.dili.account.dto.UserAccountCardQuery;
 import com.dili.account.dto.UserAccountCardResponseDto;
 import com.dili.account.type.CardType;
+import com.dili.account.validator.AccountValidator;
 import com.dili.ss.domain.PageOutput;
 import org.assertj.core.util.Lists;
 import org.junit.jupiter.api.Test;
@@ -35,7 +36,9 @@ class AccountQueryServiceTest extends BaseTest {
     @Test
     void testGetByCardNoForRest() throws IllegalAccessException {
         String cardNo = "2494445928";
-        UserAccountCardResponseDto responseDto = accountQueryService.getByCardNoForRest(cardNo);
+        UserAccountCardQuery query = new UserAccountCardQuery();
+        query.setCardNos(Lists.newArrayList(cardNo));
+        UserAccountCardResponseDto responseDto = accountQueryService.getSingleForRest(query);
         assertNotNull(responseDto);
         LOGGER.info("得到的实体:{}", JSON.toJSONString(responseDto));
         Field[] declaredFields = responseDto.getClass().getDeclaredFields();
@@ -46,7 +49,12 @@ class AccountQueryServiceTest extends BaseTest {
     }
 
     @Test
-    void cardExist() {
+    void testGetSingleForRest() {
+        UserAccountCardQuery query = new UserAccountCardQuery();
+        query.setAccountIds(Lists.newArrayList(174L));
+        UserAccountCardResponseDto responseDto = accountQueryService.getSingleForRest(query, AccountValidator.NONE);
+        assertNotNull(responseDto);
+        LOGGER.info("得到的实体:{}", JSON.toJSONString(responseDto));
     }
 
     @Test
@@ -78,11 +86,13 @@ class AccountQueryServiceTest extends BaseTest {
 
     @Test
     void testGetByCardNoWithAssociationForRest() {
-        AccountWithAssociationResponseDto rest1 = accountQueryService.getByCardNoWithAssociationForRest("888800034670",1);
+        UserAccountCardQuery query = new UserAccountCardQuery();
+        query.setCardNos(Lists.newArrayList("888800034670"));
+        AccountWithAssociationResponseDto rest1 = accountQueryService.getSingleWithAssociationForRest(query);
         UserAccountCardResponseDto primary = rest1.getPrimary();
         assertTrue(CardType.isMaster(primary.getCardType()));
         LOGGER.info("获取到结果1:{}",JSON.toJSONString(rest1));
-        AccountWithAssociationResponseDto rest2 = accountQueryService.getByCardNoWithAssociationForRest("888800034671",1);
+        AccountWithAssociationResponseDto rest2 = accountQueryService.getSingleWithAssociationForRest(query);
         assertTrue(CardType.isSlave(rest2.getPrimary().getCardType()));
         LOGGER.info("获取到结果2:{}",JSON.toJSONString(rest2));
     }
