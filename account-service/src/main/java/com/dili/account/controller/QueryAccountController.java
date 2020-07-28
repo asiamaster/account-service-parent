@@ -7,6 +7,7 @@ import com.dili.account.dto.UserAccountCardResponseDto;
 import com.dili.account.exception.AccountBizException;
 import com.dili.account.service.IAccountQueryService;
 import com.dili.account.util.AssertUtils;
+import com.dili.account.validator.AccountValidator;
 import com.dili.account.validator.ConstantValidator;
 import com.dili.ss.constant.ResultCode;
 import com.dili.ss.domain.BaseOutput;
@@ -65,7 +66,20 @@ public class QueryAccountController {
     }
 
     /**
-     *  根据卡号查询包含关联卡的信息
+     * 查询单个
+     * @author miaoguoxin
+     * @date 2020/7/28
+     */
+    @PostMapping("/getSingle")
+    public BaseOutput<UserAccountCardResponseDto> getSingle(@RequestBody UserAccountCardQuery param) {
+        if (param.getValidateLevel() == null) {
+            param.setValidateLevel(AccountValidator.ALL);
+        }
+        return BaseOutput.successData(accountQueryService.getSingleForRest(param, param.getValidateLevel()));
+    }
+
+    /**
+     *  根据卡号查询包含关联卡的信息(包含退卡和禁用)
      * @author miaoguoxin
      * @date 2020/6/28
      */
@@ -78,7 +92,7 @@ public class QueryAccountController {
     }
 
     /**
-     *  根据accountId查询包含关联卡的信息
+     *  根据accountId查询包含关联卡的信息(包含退卡和禁用)
      * @author miaoguoxin
      * @date 2020/6/28
      */

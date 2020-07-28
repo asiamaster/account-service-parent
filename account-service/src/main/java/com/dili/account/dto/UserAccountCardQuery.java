@@ -37,6 +37,9 @@ public class UserAccountCardQuery extends BaseDto {
     /**关键词，用于模糊查询等*/
     private String keyword;
 
+    /**账户校验等级 {@link com.dili.account.validator.AccountValidator}*/
+    private Integer validateLevel;
+
     public String getCustomerName() {
         return customerName;
     }
@@ -131,6 +134,14 @@ public class UserAccountCardQuery extends BaseDto {
 
     public void setExcludeDisabled(Integer excludeDisabled) {
         this.excludeDisabled = excludeDisabled;
+    }
+
+    public Integer getValidateLevel() {
+        return validateLevel;
+    }
+
+    public void setValidateLevel(Integer validateLevel) {
+        this.validateLevel = validateLevel;
     }
 
     public UserAccountCardQuery setDefExcludeReturn(Integer defExcludeReturn) {
