@@ -63,7 +63,7 @@ public class OpenCardController {
 	 */
 	private void checkMasterParam(OpenCardDto openCardInfo) {
 		AssertUtils.notEmpty(openCardInfo.getName(), "开卡用户名不能为空!");
-		AssertUtils.notEmpty(openCardInfo.getCredentialNo(), "开卡用户名证件号不能为空!");
+		AssertUtils.notEmpty(openCardInfo.getCertificateNumber(), "开卡用户名证件号不能为空!");
 		AssertUtils.notEmpty(openCardInfo.getMobile(), "开卡手机号不能为空!");
 		AssertUtils.notNull(openCardInfo.getFirmId(), "开卡市场编码不能为空!");
 		AssertUtils.notEmpty(openCardInfo.getLoginPwd(), "账户密码不能为空!");

@@ -22,6 +22,8 @@ public class OpenCardDto {
 	private Long customerId;
 	/** 客户类型买卖 {@link AccountType} */
 	private String custormerType;
+	/** 客户编号 */
+	private String customerCode;
 	/** 个人、对公 */
 	private String organizationType;
 	/** 性别 */
@@ -29,7 +31,7 @@ public class OpenCardDto {
 	/** 证件类型 */
 	private String credentialType;
 	/** 证件号 */
-	private String credentialNo;
+	private String certificateNumber;
 	/** 证件有效期 */
 	private LocalDateTime validityDate;
 	/** 认证状态（1已认证2未认证） */
@@ -122,10 +124,6 @@ public class OpenCardDto {
 		this.credentialType = credentialType;
 	}
 
-	public String getCredentialNo() {
-		return credentialNo;
-	}
-
 	public String getAddress() {
 		return address;
 	}
@@ -134,8 +132,12 @@ public class OpenCardDto {
 		this.address = address;
 	}
 
-	public void setCredentialNo(String credentialNo) {
-		this.credentialNo = credentialNo;
+	public String getCertificateNumber() {
+		return certificateNumber;
+	}
+
+	public void setCertificateNumber(String certificateNumber) {
+		this.certificateNumber = certificateNumber;
 	}
 
 	public LocalDateTime getValidityDate() {
@@ -340,6 +342,14 @@ public class OpenCardDto {
 
 	public void setOrganizationType(String organizationType) {
 		this.organizationType = organizationType;
+	}
+
+	public String getCustomerCode() {
+		return customerCode;
+	}
+
+	public void setCustomerCode(String customerCode) {
+		this.customerCode = customerCode;
 	}
 
 }

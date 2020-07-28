@@ -47,7 +47,7 @@ public class PayRpcResolver {
 		if (baseOutput.isSuccess()) {
 			return baseOutput.getData().getAccountId();
 		}
-		throw new AccountBizException(ResultCode.DATA_ERROR, "支付服务创建资金账户失败");
+		throw new AccountBizException(ResultCode.DATA_ERROR, baseOutput.getMessage());
 	}
 	/**
 	 *  查询余额
