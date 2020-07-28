@@ -108,6 +108,8 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
 
     @Override
     public List<UserAccountCardResponseDto> getListByConditionForRest(UserAccountCardQuery queryParam) {
+        //最多查询50条数据，防止爆库
+        PageHelper.startPage(1, 50, false);
         List<CardAggregationWrapper> list = this.getWrapperList(queryParam);
         return list.stream().map(wrapper -> this.convertFromAccountUnionCard(
                 wrapper.getUserCard(),
@@ -119,7 +121,11 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
     @Override
     public PageOutput<List<UserAccountCardResponseDto>> getPageByConditionForRest(UserAccountCardQuery param) {
         Page<?> page = PageHelper.startPage(param.getPage(), param.getRows());
-        List<UserAccountCardResponseDto> result = this.getListByConditionForRest(param);
+        List<CardAggregationWrapper> wrapperList = this.getWrapperList(param);
+        List<UserAccountCardResponseDto> result = wrapperList.stream().map(wrapper -> this.convertFromAccountUnionCard(
+                wrapper.getUserCard(),
+                wrapper.getUserAccount()))
+                .collect(Collectors.toList());
         return PageUtils.convert2PageOutput(page, result);
     }
 
