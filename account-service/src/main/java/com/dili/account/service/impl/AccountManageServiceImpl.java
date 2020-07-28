@@ -42,7 +42,7 @@ public class AccountManageServiceImpl implements IAccountManageService {
 		Optional.ofNullable(userAccount).orElseThrow(
 				() -> new AccountBizException(ResultCode.DATA_ERROR, ExceptionMsg.ACCOUNT_NOT_EXIST.getName()));
 		if (userAccount.getDisabledState() == disableState.getCode()) {
-			throw new AccountBizException(ResultCode.DATA_ERROR, "卡片已"+ disableState.getName() +"，不能重复操作");
+			throw new AccountBizException(ResultCode.DATA_ERROR, "卡片账户已"+ (disableState.getCode() == 1 ? "解冻" : "冻结") +"，不能重复操作");
 		}
 		if (!userAccountDao.updateDisabledState(userAccount.getAccountId(), disableState.getCode(),
 				userAccount.getVersion())) {
