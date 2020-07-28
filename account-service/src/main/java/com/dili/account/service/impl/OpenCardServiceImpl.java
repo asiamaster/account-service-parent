@@ -166,8 +166,10 @@ public class OpenCardServiceImpl implements IOpenCardService {
 		userAccount.setParentAccountId(openCardInfo.getParentAccountId());
 		userAccount.setCustomerId(openCardInfo.getCustomerId());
 		userAccount.setCertificateNumber(openCardInfo.getCertificateNumber());
+		userAccount.setCertificateType(openCardInfo.getCredentialType());
 		userAccount.setName(openCardInfo.getName());
 		userAccount.setCode(openCardInfo.getCustomerCode());
+		userAccount.setCellphone(openCardInfo.getMobile());
 		userAccount.setFundAccountId(fundAccountId);
 		userAccount.setCardExist(YesNoType.YES.getCode());
 		userAccount.setSecretKey(PasswordUtils.generateSecretKey());
