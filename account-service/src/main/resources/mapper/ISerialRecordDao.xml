@@ -245,9 +245,6 @@
 		<if test="serialNo != null and serialNo != ''">
 			and `serial_no` = #{serialNo}
 		</if>
-		<if test="cycleNo != null and cycleNo != ''">
-			and `cycle_no` = #{cycleNo}
-		</if>
 		<if test="type != null">
 			and `type` = #{type}
 		</if>
