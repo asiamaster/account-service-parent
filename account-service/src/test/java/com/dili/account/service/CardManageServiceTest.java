@@ -48,7 +48,7 @@ class CardManageServiceTest extends BaseTest {
         cardParam.setLoginPwd("12345678");
         UserCardDo userCard = wrapper.getUserCard();
 
-        when(accountQueryService.getByAccountIdWithNotNull(cardParam.getAccountId()))
+        when(accountQueryService.getByAccountIdForCardOp(cardParam.getAccountId()))
                 .thenReturn(wrapper);
         when(userCardDao.update(userCard)).thenReturn(1);
         when(userAccountDao.getByAccountId(userCard.getAccountId()))
@@ -69,7 +69,7 @@ class CardManageServiceTest extends BaseTest {
         cardParam.setLoginPwd("12345678");
         UserCardDo userCard = wrapper.getUserCard();
 
-        when(accountQueryService.getByAccountIdWithNotNull(cardParam.getAccountId()))
+        when(accountQueryService.getByAccountIdForCardOp(cardParam.getAccountId()))
                 .thenReturn(wrapper);
         when(userCardDao.update(userCard)).thenReturn(1);
         when(userAccountDao.getByAccountId(userCard.getAccountId()))

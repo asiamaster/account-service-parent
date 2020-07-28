@@ -20,6 +20,7 @@ import com.dili.account.type.CardType;
 import com.dili.account.type.DisableState;
 import com.dili.account.type.UsePermissionType;
 import com.dili.account.util.PageUtils;
+import com.dili.account.validator.AccountValidator;
 import com.dili.ss.constant.ResultCode;
 import com.dili.ss.domain.PageOutput;
 import com.github.pagehelper.Page;
@@ -27,10 +28,14 @@ import com.github.pagehelper.PageHelper;
 import com.google.common.collect.Lists;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+
+import static com.dili.account.validator.AccountValidator.ALL;
+import static com.dili.account.validator.AccountValidator.NONE;
 
 /**
  * @description： 用户账户信息查询service实现
@@ -40,8 +45,6 @@ import java.util.stream.Collectors;
  */
 @Service("accountQueryService")
 public class AccountQueryServiceImpl implements IAccountQueryService {
-    @Autowired
-    private IUserAccountDao userAccountDao;
     @Autowired
     private IUserCardDao userCardDao;
     @Autowired
@@ -56,130 +59,36 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
     }
 
     @Override
-    public UserAccountCardResponseDto getByCardNoForRest(String cardNo) {
-        UserCardDo card = userCardDao.getByCardNo(cardNo, 0);
-        UserAccountCardResponseDto responseDto = this.validateAndBuildAccountCard(card);
-        if (DisableState.DISABLED.getCode().equals(responseDto.getDisabledState())) {
-            throw new AccountBizException(ResultCode.DATA_ERROR, ExceptionMsg.ACCOUNT_DISABLED.getName());
-        }
-        return responseDto;
-    }
-
-    @Override
-    public UserAccountCardResponseDto getByAccountIdForRest(Long accountId) {
-        UserCardDo card = userCardDao.getByAccountId(accountId);
-        UserAccountCardResponseDto responseDto = this.validateAndBuildAccountCard(card);
-        if (DisableState.DISABLED.getCode().equals(responseDto.getDisabledState())) {
-            throw new AccountBizException(ResultCode.DATA_ERROR, ExceptionMsg.ACCOUNT_DISABLED.getName());
-        }
-        return responseDto;
-    }
-
-    @Override
-    public AccountWithAssociationResponseDto getByCardNoWithAssociationForRest(String cardNo, Integer needReturn) {
-        UserCardDo card = userCardDao.getByCardNo(cardNo, needReturn);
-        UserAccountCardResponseDto primaryCard = this.validateAndBuildAccountCard(card);
-        return this.getAndBuildAssociationAccountCard(primaryCard);
-    }
-
-    @Override
-    public AccountWithAssociationResponseDto getByAccountIdWithAssociationForRest(Long accountId) {
-        UserAccountCardResponseDto primaryCard = this.getByAccountIdForRest(accountId);
-        return this.getAndBuildAssociationAccountCard(primaryCard);
-    }
-
-    @Override
-    public List<UserAccountCardResponseDto> getListByConditionForRest(UserAccountCardQuery queryParam) {
-        //设置默认排序字段，避免xml写太多判断
-        //默认排除退还状态和禁用状态
-        queryParam.setDefSort("card_create_time")
-                .setDefOrder("DESC");
-        queryParam.setDefExcludeReturn(1)
-                .setDefExcludeDisabled(1);
-        List<CardAggregationWrapper> list = userAccountCardDao.getListByCondition(queryParam);
-        return list.stream().map(wrapper -> this.convertFromAccountUnionCard(
-                wrapper.getUserCard(),
-                wrapper.getUserAccount()))
-                .collect(Collectors.toList());
-    }
-
-    @Override
-    public PageOutput<List<UserAccountCardResponseDto>> getPageByConditionForRest(UserAccountCardQuery param) {
-        Page<?> page = PageHelper.startPage(param.getPage(), param.getRows());
-        List<UserAccountCardResponseDto> result = this.getListByConditionForRest(param);
-        return PageUtils.convert2PageOutput(page, result);
-    }
-
-    @Override
-    public CardAggregationWrapper getByAccountIdWithNotNull(Long accountId) {
-        UserCardDo card = userCardDao.getByAccountId(accountId);
-        Optional.ofNullable(card)
-                .orElseThrow(() -> new AccountBizException(ResultCode.DATA_ERROR, ExceptionMsg.CARD_NOT_EXIST.getName()));
-        UserAccountDo userAccount = userAccountDao.getByAccountId(card.getAccountId());
-        Optional.ofNullable(userAccount)
-                .orElseThrow(() -> new AccountBizException(ResultCode.DATA_ERROR, ExceptionMsg.ACCOUNT_NOT_EXIST.getName()));
-        return this.combine(card, userAccount);
-    }
-
-    @Override
-    public CardAggregationWrapper getByAccountIdForCardOp(Long accountId) {
-        CardAggregationWrapper wrapper = this.getByAccountIdWithNotNull(accountId);
-        UserAccountDo userAccount = wrapper.getUserAccount();
-        UserCardDo userCard = wrapper.getUserCard();
-        if (DisableState.DISABLED.getCode().equals(userAccount.getDisabledState())) {
-            throw new AccountBizException(ResultCode.DATA_ERROR, ExceptionMsg.ACCOUNT_DISABLED.getName());
-        }
-        //如果是副卡，查询主卡状态
-        if (CardType.isSlave(userCard.getType())) {
-            CardAggregationWrapper parentAccount = this.getByAccountIdWithNotNull(userAccount.getParentAccountId());
-            if (DisableState.DISABLED.getCode().equals(parentAccount.getUserAccount().getDisabledState())) {
-                throw new AccountBizException(ResultCode.DATA_ERROR, ExceptionMsg.ACCOUNT_DISABLED.getName());
-            }
-        }
-        return wrapper;
-    }
-
-    @Override
-    public Optional<CardAggregationWrapper> getByAccountId(Long accountId) {
-        UserCardDo card = userCardDao.getByAccountId(accountId);
-        if (card == null) {
-            return Optional.empty();
-        }
-        UserAccountDo userAccount = userAccountDao.getByAccountId(card.getAccountId());
-        return Optional.of(this.combine(card, userAccount));
-    }
-
-    @Override
     public AccountSimpleResponseDto getByCardNoWithBalance(String cardNo) {
-        UserAccountCardResponseDto userAccount = this.getByCardNoForRest(cardNo);
+        UserAccountCardQuery query = new UserAccountCardQuery();
+        query.setCardNos(Lists.newArrayList(cardNo));
+        UserAccountCardResponseDto userAccount = this.getSingleForRest(query);
         BalanceResponseDto fund = payRpcResolver.findBalanceByFundAccountId(userAccount.getFundAccountId());
         return new AccountSimpleResponseDto(fund, userAccount);
     }
 
-    /**
-     *  查询并校验卡账户（不能为禁用状态）
-     * @author miaoguoxin
-     * @date 2020/6/30
-     */
-    private UserAccountCardResponseDto validateAndBuildAccountCard(UserCardDo card) {
-        Optional.ofNullable(card)
-                .orElseThrow(() -> new AccountBizException(ResultCode.DATA_ERROR, ExceptionMsg.CARD_NOT_EXIST.getName()));
-        UserAccountDo userAccount = userAccountDao.getByAccountId(card.getAccountId());
-        Optional.ofNullable(userAccount)
-                .orElseThrow(() -> new AccountBizException(ResultCode.DATA_ERROR, ExceptionMsg.ACCOUNT_NOT_EXIST.getName()));
-        return this.convertFromAccountUnionCard(card, userAccount);
+    @Override
+    public UserAccountCardResponseDto getSingleForRest(UserAccountCardQuery queryParam) {
+        return this.getSingleForRest(queryParam, ALL);
     }
 
-    private CardAggregationWrapper combine(UserCardDo card, UserAccountDo account) {
-        CardAggregationWrapper wrapper = new CardAggregationWrapper();
-        wrapper.setAccountId(account.getAccountId());
-        wrapper.setFirmId(account.getFirmId());
-        wrapper.setUserAccount(account);
-        wrapper.setUserCard(card);
-        return wrapper;
+    @Override
+    public UserAccountCardResponseDto getSingleForRest(UserAccountCardQuery queryParam, int validateFlag) {
+        queryParam.setExcludeDisabled(0);
+        queryParam.setExcludeReturn(0);
+        PageHelper.startPage(1, 1, false);
+        List<UserAccountCardResponseDto> list = this.getListByConditionForRest(queryParam);
+        if (CollectionUtils.isEmpty(list)) {
+            throw new AccountBizException(ResultCode.DATA_ERROR, ExceptionMsg.ACCOUNT_NOT_EXIST.getName());
+        }
+        UserAccountCardResponseDto responseDto = list.get(0);
+        AccountValidator.validateAccount(responseDto, validateFlag);
+        return responseDto;
     }
 
-    private AccountWithAssociationResponseDto getAndBuildAssociationAccountCard(UserAccountCardResponseDto primaryCard) {
+    @Override
+    public AccountWithAssociationResponseDto getSingleWithAssociationForRest(UserAccountCardQuery queryParam) {
+        UserAccountCardResponseDto primaryCard = this.getSingleForRest(queryParam, NONE);
         AccountWithAssociationResponseDto result = new AccountWithAssociationResponseDto();
         //查询关联卡，primaryCard为主卡就查副卡，副卡就查主卡
         UserAccountCardQuery param = new UserAccountCardQuery();
@@ -194,6 +103,80 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
         result.setPrimary(primaryCard);
         result.setAssociation(associationCards);
         return result;
+    }
+
+
+    @Override
+    public List<UserAccountCardResponseDto> getListByConditionForRest(UserAccountCardQuery queryParam) {
+        List<CardAggregationWrapper> list = this.getWrapperList(queryParam);
+        return list.stream().map(wrapper -> this.convertFromAccountUnionCard(
+                wrapper.getUserCard(),
+                wrapper.getUserAccount()))
+                .collect(Collectors.toList());
+    }
+
+
+    @Override
+    public PageOutput<List<UserAccountCardResponseDto>> getPageByConditionForRest(UserAccountCardQuery param) {
+        Page<?> page = PageHelper.startPage(param.getPage(), param.getRows());
+        List<UserAccountCardResponseDto> result = this.getListByConditionForRest(param);
+        return PageUtils.convert2PageOutput(page, result);
+    }
+
+    @Override
+    public CardAggregationWrapper getSingle(UserAccountCardQuery queryParam) {
+        queryParam.setExcludeDisabled(0);
+        queryParam.setExcludeReturn(0);
+        List<CardAggregationWrapper> list = this.getWrapperList(queryParam);
+        if (CollectionUtils.isEmpty(list)) {
+            throw new AccountBizException(ResultCode.DATA_ERROR, ExceptionMsg.ACCOUNT_NOT_EXIST.getName());
+        }
+        return list.get(0);
+    }
+
+    @Override
+    public CardAggregationWrapper getByAccountIdForCardOp(Long accountId) {
+        UserAccountCardQuery query = new UserAccountCardQuery();
+        query.setAccountIds(Lists.newArrayList(accountId));
+        CardAggregationWrapper wrapper = this.getSingle(query);
+        UserAccountDo userAccount = wrapper.getUserAccount();
+        UserCardDo userCard = wrapper.getUserCard();
+        if (DisableState.DISABLED.getCode().equals(userAccount.getDisabledState())) {
+            throw new AccountBizException(ResultCode.DATA_ERROR, ExceptionMsg.ACCOUNT_DISABLED.getName());
+        }
+        //如果是副卡，查询主卡状态
+        if (CardType.isSlave(userCard.getType())) {
+            query.setAccountIds(Lists.newArrayList(userAccount.getParentAccountId()));
+            CardAggregationWrapper parentAccount = this.getSingle(query);
+            if (DisableState.DISABLED.getCode().equals(parentAccount.getUserAccount().getDisabledState())) {
+                throw new AccountBizException(ResultCode.DATA_ERROR, ExceptionMsg.ACCOUNT_DISABLED.getName());
+            }
+        }
+        return wrapper;
+    }
+
+    @Override
+    public Optional<CardAggregationWrapper> getByAccountId(Long accountId) {
+        UserAccountCardQuery query = new UserAccountCardQuery();
+        query.setAccountIds(Lists.newArrayList(accountId));
+        query.setExcludeReturn(0);
+        query.setExcludeDisabled(0);
+        List<CardAggregationWrapper> wrapperList = this.getWrapperList(query);
+        if (wrapperList.isEmpty()) {
+            return Optional.empty();
+        }
+        return Optional.of(wrapperList.get(0));
+    }
+
+
+    private List<CardAggregationWrapper> getWrapperList(UserAccountCardQuery queryParam) {
+        //设置默认排序字段，避免xml写太多判断
+        //默认排除退还状态和禁用状态
+        queryParam.setDefSort("card_create_time")
+                .setDefOrder("DESC");
+        queryParam.setDefExcludeReturn(1)
+                .setDefExcludeDisabled(1);
+        return userAccountCardDao.getListByCondition(queryParam);
     }
 
 
@@ -224,4 +207,6 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
         responseDto.setCustomerCertificateType(account.getCertificateType());
         return responseDto;
     }
+
+
 }
