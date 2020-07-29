@@ -20,7 +20,7 @@ public class OpenCardDto {
 	/** CRM系统客户ID */
 	private Long customerId;
 	/** 客户类型 */
-	private String custormerMarketType;
+	private String custormerType;
 	/** 客户编号 */
 	private String customerCode;
 	/** 个人、对公 */
@@ -101,12 +101,12 @@ public class OpenCardDto {
 		this.customerId = customerId;
 	}
 
-	public String getCustormerMarketType() {
-		return custormerMarketType;
+	public String getCustormerType() {
+		return custormerType;
 	}
 
-	public void setCustormerMarketType(String custormerMarketType) {
-		this.custormerMarketType = custormerMarketType;
+	public void setCustormerType(String custormerType) {
+		this.custormerType = custormerType;
 	}
 
 	public Integer getGender() {
