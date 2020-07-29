@@ -16,6 +16,8 @@ public class UserAccountCardQuery extends BaseDto {
     private List<Long> customerIds;
     /**客户名称*/
     private String customerName;
+    /**客户证件号*/
+    private String customerCertificateNumber;
     /** 多个账户ID */
     private List<Long> accountIds;
     /** 多个卡号 */
@@ -39,6 +41,14 @@ public class UserAccountCardQuery extends BaseDto {
 
     /**账户校验等级 {@link com.dili.account.validator.AccountValidator}*/
     private Integer validateLevel;
+
+    public String getCustomerCertificateNumber() {
+        return customerCertificateNumber;
+    }
+
+    public void setCustomerCertificateNumber(String customerCertificateNumber) {
+        this.customerCertificateNumber = customerCertificateNumber;
+    }
 
     public String getCustomerName() {
         return customerName;
