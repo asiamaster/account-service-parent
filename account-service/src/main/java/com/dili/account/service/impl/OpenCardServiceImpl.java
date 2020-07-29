@@ -165,11 +165,12 @@ public class OpenCardServiceImpl implements IOpenCardService {
 		userAccount.setAccountId(accountId);
 		userAccount.setParentAccountId(openCardInfo.getParentAccountId());
 		userAccount.setCustomerId(openCardInfo.getCustomerId());
-		userAccount.setCertificateNumber(openCardInfo.getCertificateNumber());
-		userAccount.setCertificateType(openCardInfo.getCredentialType());
-		userAccount.setName(openCardInfo.getName());
-		userAccount.setCode(openCardInfo.getCustomerCode());
-		userAccount.setCellphone(openCardInfo.getMobile());
+		userAccount.setCustomerCertificateNumber(openCardInfo.getCertificateNumber());
+		userAccount.setCustomerCertificateType(openCardInfo.getCredentialType());
+		userAccount.setCustomerName(openCardInfo.getName());
+		userAccount.setCustomerCode(openCardInfo.getCustomerCode());
+		userAccount.setCustomerMarketType(openCardInfo.getCustormerMarketType());
+		userAccount.setCustomerCellphone(openCardInfo.getMobile());
 		userAccount.setFundAccountId(fundAccountId);
 		userAccount.setCardExist(YesNoType.YES.getCode());
 		userAccount.setSecretKey(PasswordUtils.generateSecretKey());
@@ -186,7 +187,7 @@ public class OpenCardServiceImpl implements IOpenCardService {
 		userAccount.setModifyTime(now);
 		userAccount.setCreatorId(openCardInfo.getCreatorId());
 		userAccount.setCreator(openCardInfo.getCreator());
-		setAccountPermissions(userAccount, openCardInfo.getCustormerType());
+		setAccountPermissions(userAccount, openCardInfo.getCustormerMarketType());
 		return userAccount;
 	}
 

@@ -1,13 +1,12 @@
 package com.dili.account.dto;
 
-import com.dili.account.type.AccountType;
+import java.time.LocalDateTime;
+
 import com.dili.account.type.CardCategory;
 import com.dili.account.type.CardType;
 import com.dili.account.type.CreateSource;
 import com.dili.account.type.CustomerAreaType;
 import com.dili.account.type.UsePermissionType;
-
-import java.time.LocalDateTime;
 
 /**
  * @description： 开卡所需要的用户信息
@@ -20,8 +19,8 @@ public class OpenCardDto {
 	private String name;
 	/** CRM系统客户ID */
 	private Long customerId;
-	/** 客户类型买卖 {@link AccountType} */
-	private String custormerType;
+	/** 客户类型 */
+	private String custormerMarketType;
 	/** 客户编号 */
 	private String customerCode;
 	/** 个人、对公 */
@@ -56,6 +55,8 @@ public class OpenCardDto {
 	private Long fundAccountId;
 	/** 账户类型(主、子/副) */
 	private Integer accountType;
+	/** 账户类型 */
+	private Integer type;
 	/** 登录密码 */
 	private String loginPwd;
 	/** 交易密码 */
@@ -100,12 +101,12 @@ public class OpenCardDto {
 		this.customerId = customerId;
 	}
 
-	public String getCustormerType() {
-		return custormerType;
+	public String getCustormerMarketType() {
+		return custormerMarketType;
 	}
 
-	public void setCustomerType(String custormerType) {
-		this.custormerType = custormerType;
+	public void setCustormerMarketType(String custormerMarketType) {
+		this.custormerMarketType = custormerMarketType;
 	}
 
 	public Integer getGender() {
@@ -316,10 +317,6 @@ public class OpenCardDto {
 		this.firmName = firmName;
 	}
 
-	public void setCustormerType(String custormerType) {
-		this.custormerType = custormerType;
-	}
-
 	public Long getCreatorId() {
 		return creatorId;
 	}
@@ -350,6 +347,14 @@ public class OpenCardDto {
 
 	public void setCustomerCode(String customerCode) {
 		this.customerCode = customerCode;
+	}
+
+	public Integer getType() {
+		return type;
+	}
+
+	public void setType(Integer type) {
+		this.type = type;
 	}
 
 }

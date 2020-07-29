@@ -21,15 +21,17 @@ public class UserAccountDo implements Serializable {
 	/** 客户ID */
 	private Long customerId;
 	/** 客户姓名（冗余customer） */
-	private String name;
+	private String customerName;
 	/** 客户编号（冗余customer） */
-	private String code;
+	private String customerCode;
+	/** 客户市场类型(冗余customer_market) */
+	private String customerMarketType;
 	/** 证件类型（冗余customer） */
-	private String certificateType;
+	private String customerCertificateType;
 	/** 证件号（冗余customer） */
-	private String certificateNumber;
-	/** 证件号（冗余customer） */
-	private String cellphone;
+	private String customerCertificateNumber;
+	/** 电话号码（冗余customer） */
+	private String customerCellphone;
 	/** 资金账号 */
 	private Long fundAccountId;
 	/** 实体卡是否存在 */
@@ -266,44 +268,52 @@ public class UserAccountDo implements Serializable {
 		this.disabledState = disabledState;
 	}
 
-	public String getName() {
-		return name;
+	public String getCustomerName() {
+		return customerName;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
 	}
 
-	public String getCode() {
-		return code;
+	public String getCustomerCode() {
+		return customerCode;
 	}
 
-	public void setCode(String code) {
-		this.code = code;
+	public void setCustomerCode(String customerCode) {
+		this.customerCode = customerCode;
 	}
 
-	public String getCertificateType() {
-		return certificateType;
+	public String getCustomerMarketType() {
+		return customerMarketType;
 	}
 
-	public void setCertificateType(String certificateType) {
-		this.certificateType = certificateType;
+	public void setCustomerMarketType(String customerMarketType) {
+		this.customerMarketType = customerMarketType;
 	}
 
-	public String getCertificateNumber() {
-		return certificateNumber;
+	public String getCustomerCertificateType() {
+		return customerCertificateType;
 	}
 
-	public void setCertificateNumber(String certificateNumber) {
-		this.certificateNumber = certificateNumber;
+	public void setCustomerCertificateType(String customerCertificateType) {
+		this.customerCertificateType = customerCertificateType;
 	}
 
-	public String getCellphone() {
-		return cellphone;
+	public String getCustomerCertificateNumber() {
+		return customerCertificateNumber;
 	}
 
-	public void setCellphone(String cellphone) {
-		this.cellphone = cellphone;
+	public void setCustomerCertificateNumber(String customerCertificateNumber) {
+		this.customerCertificateNumber = customerCertificateNumber;
+	}
+
+	public String getCustomerCellphone() {
+		return customerCellphone;
+	}
+
+	public void setCustomerCellphone(String customerCellphone) {
+		this.customerCellphone = customerCellphone;
 	}
 
 }

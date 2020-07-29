@@ -8,11 +8,13 @@
 			`account_id`,
 			`parent_account_id`,
 			`customer_id`,
-			`name`, 
-			`code`, 
-			`certificate_type`, 
-			`certificate_number`, 
-			`cellphone`, 
+			`customer_id`, 
+			`customer_name`, 
+			`customer_code`, 
+			`customer_market_type`, 
+			`customer_certificate_type`, 
+			`customer_certificate_number`, 
+			`customer_cellphone`,  
 			`fund_account_id`,
 			`card_exist`,
 			`type`,
@@ -45,12 +47,13 @@
 		INSERT INTO account_user_account (
 			`account_id`,
 			`parent_account_id`,
-			`customer_id`,
-			`name`, 
-			`code`, 
-			`certificate_type`, 
-			`certificate_number`, 
-			`cellphone`, 
+			`customer_id`, 
+			`customer_name`, 
+			`customer_code`, 
+			`customer_market_type`, 
+			`customer_certificate_type`, 
+			`customer_certificate_number`, 
+			`customer_cellphone`, 
 			`fund_account_id`,
 			`card_exist`,
 			`type`,
@@ -74,12 +77,13 @@
 		VALUES (
 			#{accountId},
 			#{parentAccountId},
-			#{customerId},
-			#{name}, 
-			#{code}, 
-			#{certificateType}, 
-			#{certificateNumber}, 
-			#{cellphone},
+			#{customerId}, 
+			#{customerName}, 
+			#{customerCode}, 
+			#{customerMarketType}, 
+			#{customerCertificateType}, 
+			#{customerCertificateNumber}, 
+			#{customerCellphone},
 			#{fundAccountId},
 			#{cardExist},
 			#{type},
@@ -117,11 +121,12 @@
 			<if test="accountId != null">`account_id` = #{accountId}, </if>
 			<if test="parentAccountId != null">`parent_account_id` = #{parentAccountId}, </if>
 			<if test="customerId != null">`customer_id` = #{customerId}, </if>
-			<if test="name != null">`name` = #{name}, </if>
-			<if test="code != null">`code` = #{code}, </if>
-			<if test="certificateType != null">`certificate_type` = #{certificateType}, </if>
-			<if test="certificateNumber != null">`certificate_number` = #{certificateNumber}, </if>
-			<if test="cellphone != null">`cellphone` = #{cellphone}, </if>
+			<if test="customerName != null">`customer_name` = #{customerName}, </if>
+			<if test="customerCode != null">`customer_code` = #{customerCode}, </if>
+			<if test="customerMarketType != null">`customer_market_type` = #{customerMarketType}, </if>
+			<if test="customerCertificateType != null">`customer_certificate_type` = #{customerCertificateType}, </if>
+			<if test="customerCertificateNumber != null">`customer_certificate_number` = #{customerCertificateNumber}, </if>
+			<if test="customerCellphone != null">`customer_cellphone` = #{customerCellphone}, </if>
 			<if test="fundAccountId != null">`fund_account_id` = #{fundAccountId}, </if>
 			<if test="cardExist != null">`card_exist` = #{cardExist}, </if>
 			<if test="type != null">`type` = #{type}, </if>
