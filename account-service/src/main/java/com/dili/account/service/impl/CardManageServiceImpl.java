@@ -92,6 +92,8 @@ public class CardManageServiceImpl implements ICardManageService {
         UserCardDo newCard = this.cloneWhenChangeCard(oldCard, cardParam);
         //退还旧卡
         this.changeState(oldCard, CardStatus.RETURNED.getCode());
+        //赋值为旧卡状态
+        oldCard.setLast(0);
 
         userCardDao.update(oldCard);
         userCardDao.save(newCard);
@@ -151,6 +153,7 @@ public class CardManageServiceImpl implements ICardManageService {
     private void changeState(UserCardDo userCard, Integer targetState) {
         userCard.setState(targetState);
         userCard.setModifyTime(LocalDateTime.now());
+
     }
 
     private UserCardDo cloneWhenChangeCard(UserCardDo old, CardRequestDto param) {

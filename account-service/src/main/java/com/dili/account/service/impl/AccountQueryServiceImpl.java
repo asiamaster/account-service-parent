@@ -129,8 +129,8 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
 
     @Override
     public CardAggregationWrapper getSingle(UserAccountCardQuery queryParam) {
-        queryParam.setExcludeDisabled(0);
-        queryParam.setExcludeReturn(0);
+        queryParam.setDefExcludeDisabled(0).setDefExcludeReturn(0);
+        PageHelper.startPage(1, 1, false);
         List<CardAggregationWrapper> list = this.getWrapperList(queryParam);
         if (CollectionUtils.isEmpty(list)) {
             throw new AccountBizException(ResultCode.DATA_ERROR, ExceptionMsg.ACCOUNT_NOT_EXIST.getName());
@@ -142,6 +142,7 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
     public CardAggregationWrapper getByAccountIdForCardOp(Long accountId) {
         UserAccountCardQuery query = new UserAccountCardQuery();
         query.setAccountIds(Lists.newArrayList(accountId));
+        query.setExcludeReturn(1);
         CardAggregationWrapper wrapper = this.getSingle(query);
         UserAccountDo userAccount = wrapper.getUserAccount();
         UserCardDo userCard = wrapper.getUserCard();
@@ -194,6 +195,7 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
         responseDto.setCardCreateTime(card.getCreateTime());
         responseDto.setCreator(card.getCreator());
         responseDto.setCreatorId(card.getCreatorId());
+
         responseDto.setFirmId(account.getFirmId());
         responseDto.setAccountId(account.getAccountId());
         responseDto.setFundAccountId(account.getFundAccountId());
