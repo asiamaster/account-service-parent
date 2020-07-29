@@ -79,7 +79,7 @@ public class QueryAccountController {
     }
 
     /**
-     *  根据卡号查询包含关联卡的信息(包含退卡和禁用)
+     *  根据卡号查询包含关联卡的信息
      * @author miaoguoxin
      * @date 2020/6/28
      */

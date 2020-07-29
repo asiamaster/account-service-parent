@@ -139,8 +139,8 @@ public class CardManageServiceImpl implements ICardManageService {
     }
 
     private void validateCanChangeCard(CardAggregationWrapper wrapper, CardRequestDto cardParam) {
-        if (wrapper.getUserCard().getState() == CardStatus.RETURNED.getCode()) {
-            throw new AccountBizException(ResultCode.DATA_ERROR, "该卡为退还状态，不能进行此操作");
+        if (wrapper.getUserCard().getState() != CardStatus.NORMAL.getCode()) {
+            throw new AccountBizException(ResultCode.DATA_ERROR, "该卡为非正常状态，不能进行此操作");
         }
         if (wrapper.getUserCard().getCardNo().equalsIgnoreCase(cardParam.getNewCardNo())){
             throw new AccountBizException(ResultCode.DATA_ERROR, "新老卡片的卡号不能相同");

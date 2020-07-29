@@ -51,7 +51,7 @@ public interface IAccountQueryService {
     UserAccountCardResponseDto getSingleForRest(UserAccountCardQuery queryParam, int validateFlag);
 
     /**
-     *  根据卡号查询关联的所有卡(包含禁用和退还)
+     *  根据卡号查询关联的所有卡
      * @author miaoguoxin
      * @date 2020/6/28
      */

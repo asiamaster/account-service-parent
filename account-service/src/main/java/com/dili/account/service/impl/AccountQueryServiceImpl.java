@@ -88,7 +88,7 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
 
     @Override
     public AccountWithAssociationResponseDto getSingleWithAssociationForRest(UserAccountCardQuery queryParam) {
-        UserAccountCardResponseDto primaryCard = this.getSingleForRest(queryParam, NONE);
+        UserAccountCardResponseDto primaryCard = this.getSingleForRest(queryParam);
         AccountWithAssociationResponseDto result = new AccountWithAssociationResponseDto();
         //查询关联卡，primaryCard为主卡就查副卡，副卡就查主卡
         UserAccountCardQuery param = new UserAccountCardQuery();
@@ -97,8 +97,6 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
         } else if (CardType.isSlave(primaryCard.getCardType())) {
             param.setAccountIds(Lists.newArrayList(primaryCard.getParentAccountId()));
         }
-        param.setExcludeReturn(0);
-        param.setExcludeDisabled(0);
         List<UserAccountCardResponseDto> associationCards = this.getListByConditionForRest(param);
         result.setPrimary(primaryCard);
         result.setAssociation(associationCards);
