@@ -169,7 +169,7 @@ public class OpenCardServiceImpl implements IOpenCardService {
 		userAccount.setCustomerCertificateType(openCardInfo.getCredentialType());
 		userAccount.setCustomerName(openCardInfo.getName());
 		userAccount.setCustomerCode(openCardInfo.getCustomerCode());
-		userAccount.setCustomerMarketType(openCardInfo.getCustormerMarketType());
+		userAccount.setCustomerMarketType(openCardInfo.getCustormerType());
 		userAccount.setCustomerCellphone(openCardInfo.getMobile());
 		userAccount.setFundAccountId(fundAccountId);
 		userAccount.setCardExist(YesNoType.YES.getCode());
@@ -187,7 +187,7 @@ public class OpenCardServiceImpl implements IOpenCardService {
 		userAccount.setModifyTime(now);
 		userAccount.setCreatorId(openCardInfo.getCreatorId());
 		userAccount.setCreator(openCardInfo.getCreator());
-		setAccountPermissions(userAccount, openCardInfo.getCustormerMarketType());
+		setAccountPermissions(userAccount, openCardInfo.getCustormerType());
 		return userAccount;
 	}
 
