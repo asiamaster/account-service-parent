@@ -1,13 +1,11 @@
 package com.dili.account.controller;
 
 import com.dili.account.dto.AccountSimpleResponseDto;
-import com.dili.account.dto.AccountWithAssociationResponseDto;
 import com.dili.account.dto.UserAccountCardQuery;
 import com.dili.account.dto.UserAccountCardResponseDto;
 import com.dili.account.exception.AccountBizException;
 import com.dili.account.service.IAccountQueryService;
 import com.dili.account.util.AssertUtils;
-import com.dili.account.validator.AccountValidator;
 import com.dili.account.validator.ConstantValidator;
 import com.dili.ss.constant.ResultCode;
 import com.dili.ss.domain.BaseOutput;
@@ -49,7 +47,7 @@ public class QueryAccountController {
         AssertUtils.notEmpty(cardNo, "卡号不能为空");
         UserAccountCardQuery queryParam = new UserAccountCardQuery();
         queryParam.setCardNos(Lists.newArrayList(cardNo));
-        return BaseOutput.successData(accountQueryService.getSingleForRest(queryParam));
+        return BaseOutput.successData(accountQueryService.getSingleForRest(queryParam, true));
     }
 
     /**
@@ -62,7 +60,7 @@ public class QueryAccountController {
         AssertUtils.notNull(accountId, "账户id不能为空");
         UserAccountCardQuery queryParam = new UserAccountCardQuery();
         queryParam.setAccountIds(Lists.newArrayList(accountId));
-        return BaseOutput.successData(accountQueryService.getSingleForRest(queryParam));
+        return BaseOutput.successData(accountQueryService.getSingleForRest(queryParam, true));
     }
 
     /**
@@ -72,36 +70,17 @@ public class QueryAccountController {
      */
     @PostMapping("/getSingle")
     public BaseOutput<UserAccountCardResponseDto> getSingle(@RequestBody UserAccountCardQuery param) {
-        if (param.getValidateLevel() == null) {
-            param.setValidateLevel(AccountValidator.ALL);
-        }
-        return BaseOutput.successData(accountQueryService.getSingleForRest(param, param.getValidateLevel()));
+        return BaseOutput.successData(accountQueryService.getSingleForRest(param, true));
     }
 
     /**
-     *  根据卡号查询包含关联卡的信息
+     * 查询单个（不校验非正常状态：卡退还、账户禁用）
      * @author miaoguoxin
-     * @date 2020/6/28
+     * @date 2020/7/30
      */
-    @GetMapping("/getAssociation/{cardNo}")
-    public BaseOutput<AccountWithAssociationResponseDto> getAssociationAccountCard(@PathVariable String cardNo) {
-        AssertUtils.notEmpty(cardNo, "卡号不能为空");
-        UserAccountCardQuery queryParam = new UserAccountCardQuery();
-        queryParam.setCardNos(Lists.newArrayList(cardNo));
-        return BaseOutput.successData(accountQueryService.getSingleWithAssociationForRest(queryParam));
-    }
-
-    /**
-     *  根据accountId查询包含关联卡的信息(包含退卡和禁用)
-     * @author miaoguoxin
-     * @date 2020/6/28
-     */
-    @GetMapping("/getAssociationByAccountId/{accountId}")
-    public BaseOutput<AccountWithAssociationResponseDto> getAssociationAccountCard(@PathVariable Long accountId) {
-        AssertUtils.notNull(accountId, "账户id不能为空");
-        UserAccountCardQuery queryParam = new UserAccountCardQuery();
-        queryParam.setAccountIds(Lists.newArrayList(accountId));
-        return BaseOutput.successData(accountQueryService.getSingleWithAssociationForRest(queryParam));
+    @PostMapping("/getSingleWithoutValidate")
+    public BaseOutput<UserAccountCardResponseDto> getSingleWithoutValidate(@RequestBody UserAccountCardQuery param) {
+        return BaseOutput.successData(accountQueryService.getSingleForRest(param, false));
     }
 
     /**

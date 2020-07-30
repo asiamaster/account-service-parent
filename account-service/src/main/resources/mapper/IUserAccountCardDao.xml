@@ -63,7 +63,7 @@
             aua.`customer_id`,
             aua.`customer_name`,
             aua.`customer_code`,
-            aua.`customer_market_type`, 
+            aua.`customer_market_type`,
             aua.`customer_certificate_type`,
             aua.`customer_certificate_number`,
             aua.`customer_cellphone`,
@@ -139,17 +139,17 @@
             <if test="cardState!=null">
                 AND auc.state = #{cardState}
             </if>
+            <if test="last!=null">
+                AND auc.last =#{last}
+            </if>
             <if test="startDate !=null">
                 AND auc.create_time &gt;= #{startDate}
             </if>
             <if test="endDate !=null">
                 AND auc.create_time &lt;= #{endDate}
             </if>
-            <if test="excludeReturn !=null and excludeReturn==1">
-                AND auc.state !=4
-            </if>
-            <if test="excludeDisabled !=null and excludeDisabled==1">
-                AND aua.disabled_state = 1
+            <if test="excludeUnusualState !=null and excludeUnusualState == 1">
+                AND auc.state !=4  AND aua.disabled_state = 1
             </if>
             <if test="keyword !=null and keyword !=''">
                 AND auc.card_no LIKE concat('%',#{keyword},'%')

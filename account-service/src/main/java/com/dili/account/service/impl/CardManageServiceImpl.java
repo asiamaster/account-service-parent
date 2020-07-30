@@ -73,7 +73,7 @@ public class CardManageServiceImpl implements ICardManageService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public void reportLoss(CardRequestDto cardParam) {
-        CardAggregationWrapper wrapper = accountQueryService.getByAccountIdForCardOp(cardParam.getAccountId());
+        CardAggregationWrapper wrapper = accountQueryService.getByAccountIdForGenericOp(cardParam.getAccountId());
         UserCardDo userCard = wrapper.getUserCard();
 
         this.validateCanReportLoss(userCard, cardParam);
@@ -85,7 +85,7 @@ public class CardManageServiceImpl implements ICardManageService {
     @Override
     @Transactional(rollbackFor = Exception.class)
     public UserCardDo changeCard(CardRequestDto cardParam) {
-        CardAggregationWrapper wrapper = accountQueryService.getByAccountIdForCardOp(cardParam.getAccountId());
+        CardAggregationWrapper wrapper = accountQueryService.getByAccountIdForGenericOp(cardParam.getAccountId());
 
         this.validateCanChangeCard(wrapper, cardParam);
         UserCardDo oldCard = wrapper.getUserCard();
@@ -107,7 +107,7 @@ public class CardManageServiceImpl implements ICardManageService {
     @Transactional(rollbackFor = Exception.class)
     @Override
     public void unLostCard(CardRequestDto cardParam) {
-        CardAggregationWrapper wrapper = accountQueryService.getByAccountIdForCardOp(cardParam.getAccountId());
+        CardAggregationWrapper wrapper = accountQueryService.getByAccountIdForUnLostCard(cardParam.getAccountId());
         UserCardDo userCard = wrapper.getUserCard();
         if (CardStatus.LOSS.getCode() != userCard.getState()) {//非挂失状态卡片，不允许解挂
             throw new AccountBizException(ResultCode.DATA_ERROR, "该卡为非挂失状态,不能进行此操作");
@@ -121,7 +121,7 @@ public class CardManageServiceImpl implements ICardManageService {
 
     @Override
     public void unLockCard(CardRequestDto cardParam) {
-        CardAggregationWrapper wrapper = accountQueryService.getByAccountIdForCardOp(cardParam.getAccountId());
+        CardAggregationWrapper wrapper = accountQueryService.getByAccountIdForGenericOp(cardParam.getAccountId());
         UserCardDo userCard = wrapper.getUserCard();
         if (CardStatus.LOCKED.getCode() != userCard.getState()) {//非锁定状态卡片，不允许解锁
             throw new AccountBizException(ResultCode.DATA_ERROR, "该卡为非锁定状态,不能进行此操作");

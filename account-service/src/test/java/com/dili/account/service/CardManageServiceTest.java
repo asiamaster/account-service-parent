@@ -6,7 +6,6 @@ import com.dili.account.BaseTest;
 import com.dili.account.dao.IUserAccountDao;
 import com.dili.account.dao.IUserCardDao;
 import com.dili.account.dto.CardRequestDto;
-import com.dili.account.dto.OperatorRequestDto;
 import com.dili.account.entity.CardAggregationWrapper;
 import com.dili.account.entity.UserAccountDo;
 import com.dili.account.entity.UserCardDo;
@@ -48,7 +47,7 @@ class CardManageServiceTest extends BaseTest {
         cardParam.setLoginPwd("12345678");
         UserCardDo userCard = wrapper.getUserCard();
 
-        when(accountQueryService.getByAccountIdForCardOp(cardParam.getAccountId()))
+        when(accountQueryService.getByAccountIdForUnLostCard(cardParam.getAccountId()))
                 .thenReturn(wrapper);
         when(userCardDao.update(userCard)).thenReturn(1);
         when(userAccountDao.getByAccountId(userCard.getAccountId()))
@@ -69,7 +68,7 @@ class CardManageServiceTest extends BaseTest {
         cardParam.setLoginPwd("12345678");
         UserCardDo userCard = wrapper.getUserCard();
 
-        when(accountQueryService.getByAccountIdForCardOp(cardParam.getAccountId()))
+        when(accountQueryService.getByAccountIdForUnLostCard(cardParam.getAccountId()))
                 .thenReturn(wrapper);
         when(userCardDao.update(userCard)).thenReturn(1);
         when(userAccountDao.getByAccountId(userCard.getAccountId()))

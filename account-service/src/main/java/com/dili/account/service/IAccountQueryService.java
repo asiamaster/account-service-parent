@@ -1,11 +1,9 @@
 package com.dili.account.service;
 
 import com.dili.account.dto.AccountSimpleResponseDto;
-import com.dili.account.dto.AccountWithAssociationResponseDto;
 import com.dili.account.dto.UserAccountCardQuery;
 import com.dili.account.dto.UserAccountCardResponseDto;
 import com.dili.account.entity.CardAggregationWrapper;
-import com.dili.account.validator.AccountValidator;
 import com.dili.ss.domain.PageOutput;
 
 import java.util.List;
@@ -40,22 +38,8 @@ public interface IAccountQueryService {
      * @author miaoguoxin
      * @date 2020/7/28
      */
-    UserAccountCardResponseDto getSingleForRest(UserAccountCardQuery queryParam);
+    UserAccountCardResponseDto getSingleForRest(UserAccountCardQuery queryParam, boolean needValidate);
 
-    /**
-     * 单个查询（对外）
-     * @author miaoguoxin
-     * @param validateFlag 标记校验规则 {@link AccountValidator#validateAccount(UserAccountCardResponseDto, int)}
-     * @date 2020/7/28
-     */
-    UserAccountCardResponseDto getSingleForRest(UserAccountCardQuery queryParam, int validateFlag);
-
-    /**
-     *  根据卡号查询关联的所有卡
-     * @author miaoguoxin
-     * @date 2020/6/28
-     */
-    AccountWithAssociationResponseDto getSingleWithAssociationForRest(UserAccountCardQuery queryParam);
 
     /**
      * 卡列表条件查询
@@ -79,11 +63,19 @@ public interface IAccountQueryService {
     CardAggregationWrapper getSingle(UserAccountCardQuery queryParam);
 
     /**
-     * 卡操作的时候查询卡账户信息
+     * 解挂卡的时候查询卡账户信息
      * @author miaoguoxin
      * @date 2020/7/24
      */
-    CardAggregationWrapper getByAccountIdForCardOp(Long accountId);
+    CardAggregationWrapper getByAccountIdForUnLostCard(Long accountId);
+
+    /**
+    * 用于业务操作的时候查询卡账户信息，
+    * 会校验卡账户的状态信息
+    * @author miaoguoxin
+    * @date 2020/7/30
+    */
+    CardAggregationWrapper getByAccountIdForGenericOp(Long accountId);
 
     /**
      *  查询卡账户信息

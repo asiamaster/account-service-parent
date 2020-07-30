@@ -1,7 +1,5 @@
 package com.dili.account.dto;
 
-import org.apache.commons.lang3.StringUtils;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -32,15 +30,12 @@ public class UserAccountCardQuery extends BaseDto {
     private Integer cardType;
     /**卡状态 {@link com.dili.account.type.CardStatus}*/
     private Integer cardState;
-    /**是否排除退还状态*/
-    private Integer excludeReturn;
-    /**是否排除账户禁用状态*/
-    private Integer excludeDisabled;
+    /**是否最新的（换卡后一个账户下有多张卡）*/
+    private Integer last;
     /**关键词，用于模糊查询等*/
     private String keyword;
-
-    /**账户校验等级 {@link com.dili.account.validator.AccountValidator}*/
-    private Integer validateLevel;
+    /**是否要排除异常状态的账户 ex：卡退还、账户被禁用*/
+    private Integer excludeUnusualState;
 
     public String getCustomerCertificateNumber() {
         return customerCertificateNumber;
@@ -130,49 +125,35 @@ public class UserAccountCardQuery extends BaseDto {
         this.cardNos = cardNos;
     }
 
-    public Integer getExcludeReturn() {
-        return excludeReturn;
+    public Integer getExcludeUnusualState() {
+        return excludeUnusualState;
     }
 
-    public void setExcludeReturn(Integer excludeReturn) {
-        this.excludeReturn = excludeReturn;
+    public void setExcludeUnusualState(Integer excludeUnusualState) {
+        this.excludeUnusualState = excludeUnusualState;
     }
 
-    public Integer getExcludeDisabled() {
-        return excludeDisabled;
+    public Integer getLast() {
+        return last;
     }
 
-    public void setExcludeDisabled(Integer excludeDisabled) {
-        this.excludeDisabled = excludeDisabled;
+    public void setLast(Integer last) {
+        this.last = last;
     }
 
-    public Integer getValidateLevel() {
-        return validateLevel;
-    }
-
-    public void setValidateLevel(Integer validateLevel) {
-        this.validateLevel = validateLevel;
-    }
-
-    public UserAccountCardQuery setDefExcludeReturn(Integer defExcludeReturn) {
-        if (this.getExcludeReturn() == null) {
-            this.setExcludeReturn(defExcludeReturn);
+    public UserAccountCardQuery setDefExcludeUnusualState(Integer flag){
+        if(this.getExcludeUnusualState() == null){
+            this.setExcludeUnusualState(flag);
         }
         return this;
     }
-
-    public UserAccountCardQuery setDefExcludeDisabled(Integer defExcludeDisabled) {
-        if (this.getExcludeDisabled() == null) {
-            this.setExcludeDisabled(defExcludeDisabled);
-        }
-        return this;
-    }
-
 
     @Override
     public String toString() {
         return "UserAccountCardQuery{" +
                 "customerIds=" + customerIds +
+                ", customerName='" + customerName + '\'' +
+                ", customerCertificateNumber='" + customerCertificateNumber + '\'' +
                 ", accountIds=" + accountIds +
                 ", cardNos=" + cardNos +
                 ", parentAccountId=" + parentAccountId +
@@ -180,8 +161,8 @@ public class UserAccountCardQuery extends BaseDto {
                 ", endDate=" + endDate +
                 ", cardType=" + cardType +
                 ", cardState=" + cardState +
-                ", excludeReturn=" + excludeReturn +
-                ", excludeDisabled=" + excludeDisabled +
+                ", keyword='" + keyword + '\'' +
+                ", excludeUnusualState=" + excludeUnusualState +
                 '}';
     }
 }

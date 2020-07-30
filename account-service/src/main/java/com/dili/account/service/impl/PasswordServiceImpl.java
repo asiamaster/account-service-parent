@@ -2,10 +2,13 @@ package com.dili.account.service.impl;
 
 import javax.annotation.Resource;
 
+import com.dili.account.entity.CardAggregationWrapper;
 import com.dili.account.exception.AccountBizException;
+import com.dili.account.service.IAccountQueryService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.dili.account.dao.IUserAccountDao;
@@ -27,6 +30,8 @@ public class PasswordServiceImpl implements IPasswordService{
 
 	@Resource
 	private IUserAccountDao userAccountDao;
+	@Autowired
+	private IAccountQueryService accountQueryService;
 
 	@Override
 	public void modifyLoginPwd(CardRequestDto cardRequestDto) throws Exception {
@@ -35,16 +40,13 @@ public class PasswordServiceImpl implements IPasswordService{
 
 	@Override
 	public void resetLoginPwd(CardRequestDto cardRequestDto) throws Exception {
-		UserAccountDo userAccountDo = userAccountDao.getByAccountId(cardRequestDto.getAccountId());
-		if (userAccountDo == null) {
-			throw new AccountBizException(ResultCode.DATA_ERROR,"卡信息不存在");
-		}
+		CardAggregationWrapper account = accountQueryService.getByAccountIdForGenericOp(cardRequestDto.getAccountId());
 		if (!cardRequestDto.getLoginPwd().equals(cardRequestDto.getSecondLoginPwd())) {
 			throw new AccountBizException(ResultCode.DATA_ERROR,"两次输入密码不匹配");
 		}
 		UserAccountDo userAccount = new UserAccountDo();
 		userAccount.setAccountId(cardRequestDto.getAccountId());
-		userAccount.setLoginPwd(PasswordUtils.encrypt(cardRequestDto.getLoginPwd(), userAccountDo.getSecretKey()));
+		userAccount.setLoginPwd(PasswordUtils.encrypt(cardRequestDto.getLoginPwd(), account.getUserAccount().getSecretKey()));
 		userAccountDao.update(userAccount);
 	}
 
