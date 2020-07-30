@@ -100,7 +100,7 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
         UserAccountCardQuery query = new UserAccountCardQuery();
         query.setAccountIds(Lists.newArrayList(accountId));
         query.setDefExcludeUnusualState(0);
-
+        query.setLast(1);
         CardAggregationWrapper wrapper = this.getSingle(query, false);
         UserAccountDo userAccount = wrapper.getUserAccount();
         UserCardDo userCard = wrapper.getUserCard();
@@ -118,6 +118,7 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
         UserAccountCardQuery query = new UserAccountCardQuery();
         query.setAccountIds(Lists.newArrayList(accountId));
         query.setDefExcludeUnusualState(0);
+        query.setLast(1);
         return this.getSingle(query, true);
     }
 
@@ -136,7 +137,6 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
     @Override
     public CardAggregationWrapper getSingle(UserAccountCardQuery queryParam, boolean needValidate) {
         queryParam.setDefExcludeUnusualState(0);
-        queryParam.setLast(1);
         PageHelper.startPage(1, 1, false);
         List<CardAggregationWrapper> list = this.getWrapperList(queryParam);
         if (CollectionUtils.isEmpty(list)) {
