@@ -152,7 +152,7 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
             }
             AccountValidator.validateAccount(parentAccount, AccountValidator.ALL);
         }
-        return null;
+        return wrapper;
     }
 
     @Override

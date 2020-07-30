@@ -38,7 +38,7 @@ class AccountQueryServiceTest extends BaseTest {
         String cardNo = "2494445928";
         UserAccountCardQuery query = new UserAccountCardQuery();
         query.setCardNos(Lists.newArrayList(cardNo));
-        UserAccountCardResponseDto responseDto = accountQueryService.getSingleForRest(query);
+        UserAccountCardResponseDto responseDto = accountQueryService.getSingleForRest(query,false);
         assertNotNull(responseDto);
         LOGGER.info("得到的实体:{}", JSON.toJSONString(responseDto));
         Field[] declaredFields = responseDto.getClass().getDeclaredFields();
@@ -52,7 +52,7 @@ class AccountQueryServiceTest extends BaseTest {
     void testGetSingleForRest() {
         UserAccountCardQuery query = new UserAccountCardQuery();
         query.setAccountIds(Lists.newArrayList(174L));
-        UserAccountCardResponseDto responseDto = accountQueryService.getSingleForRest(query, AccountValidator.NONE);
+        UserAccountCardResponseDto responseDto = accountQueryService.getSingleForRest(query, true);
         assertNotNull(responseDto);
         LOGGER.info("得到的实体:{}", JSON.toJSONString(responseDto));
     }
@@ -83,19 +83,5 @@ class AccountQueryServiceTest extends BaseTest {
     @Test
     void getByAccountIdWithNotNull() {
     }
-
-    @Test
-    void testGetByCardNoWithAssociationForRest() {
-        UserAccountCardQuery query = new UserAccountCardQuery();
-        query.setCardNos(Lists.newArrayList("888800034670"));
-        AccountWithAssociationResponseDto rest1 = accountQueryService.getSingleWithAssociationForRest(query);
-        UserAccountCardResponseDto primary = rest1.getPrimary();
-        assertTrue(CardType.isMaster(primary.getCardType()));
-        LOGGER.info("获取到结果1:{}",JSON.toJSONString(rest1));
-        AccountWithAssociationResponseDto rest2 = accountQueryService.getSingleWithAssociationForRest(query);
-        assertTrue(CardType.isSlave(rest2.getPrimary().getCardType()));
-        LOGGER.info("获取到结果2:{}",JSON.toJSONString(rest2));
-    }
-
 
 }

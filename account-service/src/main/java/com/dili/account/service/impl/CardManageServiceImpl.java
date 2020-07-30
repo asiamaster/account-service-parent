@@ -153,7 +153,6 @@ public class CardManageServiceImpl implements ICardManageService {
     private void changeState(UserCardDo userCard, Integer targetState) {
         userCard.setState(targetState);
         userCard.setModifyTime(LocalDateTime.now());
-
     }
 
     private UserCardDo cloneWhenChangeCard(UserCardDo old, CardRequestDto param) {
