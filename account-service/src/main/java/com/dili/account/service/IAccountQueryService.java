@@ -12,8 +12,7 @@ import java.util.Optional;
 
 /**
  * @description： 账户查询服务
- * 提供给对外的接口中，查询单个账户默认都排除账户禁用状态和卡退还状态
- * 对内的方法（{@link CardAggregationWrapper}）默认包含账户禁用状态和卡退还状态
+ * 查询单个账户默认都校验非正常状态
  * @author ：WangBo
  * @time ：2020年4月22日下午5:48:22
  */
@@ -60,7 +59,7 @@ public interface IAccountQueryService {
      * @author miaoguoxin
      * @date 2020/6/17
      */
-    CardAggregationWrapper getSingle(UserAccountCardQuery queryParam,boolean needValidate);
+    CardAggregationWrapper getSingle(UserAccountCardQuery queryParam, boolean needValidate);
 
     /**
      * 解挂卡的时候查询卡账户信息
@@ -70,11 +69,11 @@ public interface IAccountQueryService {
     CardAggregationWrapper getByAccountIdForUnLostCard(Long accountId);
 
     /**
-    * 用于业务操作的时候查询卡账户信息，
-    * 会校验卡账户的状态信息
-    * @author miaoguoxin
-    * @date 2020/7/30
-    */
+     * 用于业务操作的时候查询卡账户信息，
+     * 会校验卡账户的状态信息
+     * @author miaoguoxin
+     * @date 2020/7/30
+     */
     CardAggregationWrapper getByAccountIdForGenericOp(Long accountId);
 
     /**

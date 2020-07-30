@@ -2,6 +2,8 @@ package com.dili.account.service.impl;
 
 import java.util.Optional;
 
+import com.dili.account.entity.CardAggregationWrapper;
+import com.dili.account.service.IAccountQueryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,11 +22,18 @@ public class AccountManageServiceImpl implements IAccountManageService {
 
 	@Autowired
 	private IUserAccountDao userAccountDao;
+	@Autowired
+	private IAccountQueryService accountQueryService;
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public void frozen(CardRequestDto cardRequestDto) {
-		this.updateDisabledState(cardRequestDto, DisableState.DISABLED);
+		CardAggregationWrapper accountWrapper = accountQueryService.getByAccountIdForGenericOp(cardRequestDto.getAccountId());
+		UserAccountDo userAccount = accountWrapper.getUserAccount();
+		if (!userAccountDao.updateDisabledState(userAccount.getAccountId(), DisableState.DISABLED.getCode(),
+				userAccount.getVersion())) {
+			throw new AccountBizException(ResultCode.DATA_ERROR, "数据更新错误,冻结失败,请重试");
+		}
 	}
 
 	@Override

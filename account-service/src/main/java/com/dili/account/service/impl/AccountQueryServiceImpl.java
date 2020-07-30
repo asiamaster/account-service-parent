@@ -99,7 +99,6 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
     public CardAggregationWrapper getByAccountIdForUnLostCard(Long accountId) {
         UserAccountCardQuery query = new UserAccountCardQuery();
         query.setAccountIds(Lists.newArrayList(accountId));
-        query.setLast(1);
         query.setDefExcludeUnusualState(0);
 
         CardAggregationWrapper wrapper = this.getSingle(query, false);
@@ -118,7 +117,6 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
     public CardAggregationWrapper getByAccountIdForGenericOp(Long accountId) {
         UserAccountCardQuery query = new UserAccountCardQuery();
         query.setAccountIds(Lists.newArrayList(accountId));
-        query.setLast(1);
         query.setDefExcludeUnusualState(0);
         return this.getSingle(query, true);
     }
@@ -138,6 +136,7 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
     @Override
     public CardAggregationWrapper getSingle(UserAccountCardQuery queryParam, boolean needValidate) {
         queryParam.setDefExcludeUnusualState(0);
+        queryParam.setLast(1);
         PageHelper.startPage(1, 1, false);
         List<CardAggregationWrapper> list = this.getWrapperList(queryParam);
         if (CollectionUtils.isEmpty(list)) {
