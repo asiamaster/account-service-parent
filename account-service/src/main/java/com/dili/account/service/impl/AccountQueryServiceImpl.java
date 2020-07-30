@@ -16,9 +16,9 @@ import com.dili.account.service.IAccountQueryService;
 import com.dili.account.type.AccountUsageType;
 import com.dili.account.type.CardStatus;
 import com.dili.account.type.CardType;
+import com.dili.account.type.DisableState;
 import com.dili.account.type.UsePermissionType;
 import com.dili.account.util.PageUtils;
-import com.dili.account.validator.AccountValidator;
 import com.dili.ss.constant.ResultCode;
 import com.dili.ss.domain.PageOutput;
 import com.github.pagehelper.Page;
@@ -66,10 +66,7 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
     @Override
     public UserAccountCardResponseDto getSingleForRest(UserAccountCardQuery queryParam, boolean needValidate) {
         queryParam.setDefExcludeUnusualState(0);
-        CardAggregationWrapper wrapper = this.getSingle(queryParam);
-        if (needValidate) {
-            AccountValidator.validateAccount(wrapper, AccountValidator.ALL);
-        }
+        CardAggregationWrapper wrapper = this.getSingle(queryParam, needValidate);
         return this.convertFromAccountUnionCard(wrapper.getUserCard(), wrapper.getUserAccount());
     }
 
@@ -97,16 +94,6 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
         return PageUtils.convert2PageOutput(page, result);
     }
 
-    @Override
-    public CardAggregationWrapper getSingle(UserAccountCardQuery queryParam) {
-        queryParam.setDefExcludeUnusualState(0);
-        PageHelper.startPage(1, 1, false);
-        List<CardAggregationWrapper> list = this.getWrapperList(queryParam);
-        if (CollectionUtils.isEmpty(list)) {
-            throw new AccountBizException(ResultCode.DATA_ERROR, ExceptionMsg.ACCOUNT_NOT_EXIST.getName());
-        }
-        return list.get(0);
-    }
 
     @Override
     public CardAggregationWrapper getByAccountIdForUnLostCard(Long accountId) {
@@ -115,16 +102,14 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
         query.setLast(1);
         query.setDefExcludeUnusualState(0);
 
-        CardAggregationWrapper wrapper = this.getSingle(query);
+        CardAggregationWrapper wrapper = this.getSingle(query, false);
         UserAccountDo userAccount = wrapper.getUserAccount();
         UserCardDo userCard = wrapper.getUserCard();
-        AccountValidator.validateAccount(wrapper, AccountValidator.ALL);
-
-        //如果是副卡，查询主卡状态
-        if (CardType.isSlave(userCard.getType())) {
-            query.setAccountIds(Lists.newArrayList(userAccount.getParentAccountId()));
-            CardAggregationWrapper parentAccount = this.getSingle(query);
-            AccountValidator.validateAccount(parentAccount, AccountValidator.ONLY_DISABLED);
+        if (CardStatus.RETURNED.getCode() == userCard.getState()) {
+            throw new AccountBizException(ResultCode.DATA_ERROR, "该卡为退还状态，不能进行此操作");
+        }
+        if (DisableState.DISABLED.getCode().equals(userAccount.getDisabledState())) {
+            throw new AccountBizException(ResultCode.DATA_ERROR, "该卡账户为禁用状态，不能进行此操作");
         }
         return wrapper;
     }
@@ -135,24 +120,7 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
         query.setAccountIds(Lists.newArrayList(accountId));
         query.setLast(1);
         query.setDefExcludeUnusualState(0);
-
-        CardAggregationWrapper wrapper = this.getSingle(query);
-        UserCardDo userCard = wrapper.getUserCard();
-        if (userCard.getState() == CardStatus.LOSS.getCode()){
-            throw new AccountBizException(ResultCode.DATA_ERROR, "该卡为挂失状态，不能进行此操作");
-        }
-        AccountValidator.validateAccount(wrapper, AccountValidator.ALL);
-
-        //如果是副卡，查询主卡状态
-        if (CardType.isSlave(userCard.getType())) {
-            query.setAccountIds(Lists.newArrayList(wrapper.getUserAccount().getParentAccountId()));
-            CardAggregationWrapper parentAccount = this.getSingle(query);
-            if (parentAccount.getUserCard().getState() == CardStatus.LOSS.getCode()){
-                throw new AccountBizException(ResultCode.DATA_ERROR, "该卡的主卡为挂失状态，不能进行此操作");
-            }
-            AccountValidator.validateAccount(parentAccount, AccountValidator.ALL);
-        }
-        return wrapper;
+        return this.getSingle(query, true);
     }
 
     @Override
@@ -165,6 +133,49 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
             return Optional.empty();
         }
         return Optional.of(wrapperList.get(0));
+    }
+
+    @Override
+    public CardAggregationWrapper getSingle(UserAccountCardQuery queryParam, boolean needValidate) {
+        queryParam.setDefExcludeUnusualState(0);
+        PageHelper.startPage(1, 1, false);
+        List<CardAggregationWrapper> list = this.getWrapperList(queryParam);
+        if (CollectionUtils.isEmpty(list)) {
+            throw new AccountBizException(ResultCode.DATA_ERROR, ExceptionMsg.ACCOUNT_NOT_EXIST.getName());
+        }
+        CardAggregationWrapper wrapper = list.get(0);
+        if (needValidate) {
+            UserCardDo userCard = wrapper.getUserCard();
+            UserAccountDo userAccount = wrapper.getUserAccount();
+            if (CardStatus.RETURNED.getCode() == userCard.getState()) {
+                throw new AccountBizException(ResultCode.DATA_ERROR, "该卡为退还状态，不能进行此操作");
+            }
+            if (DisableState.DISABLED.getCode().equals(userAccount.getDisabledState())) {
+                throw new AccountBizException(ResultCode.DATA_ERROR, "该卡账户为禁用状态，不能进行此操作");
+            }
+            if (CardStatus.LOSS.getCode() == userCard.getState()) {
+                throw new AccountBizException(ResultCode.DATA_ERROR, "该卡为挂失状态，不能进行此操作");
+            }
+            //如果是副卡，查询主卡状态
+            this.validateMaster(queryParam, userCard, userAccount);
+        }
+        return wrapper;
+    }
+
+    private void validateMaster(UserAccountCardQuery queryParam, UserCardDo userCard, UserAccountDo userAccount) {
+        if (CardType.isSlave(userCard.getType())) {
+            List<CardAggregationWrapper> parentList = this.getWrapperList(queryParam);
+            if (CollectionUtils.isEmpty(parentList)) {
+                throw new AccountBizException(ResultCode.DATA_ERROR, "主卡不存在");
+            }
+            CardAggregationWrapper masterWrapper = parentList.get(0);
+            if (CardStatus.LOSS.getCode() == masterWrapper.getUserCard().getState()) {
+                throw new AccountBizException(ResultCode.DATA_ERROR, "该卡的主卡为挂失状态，不能进行此操作");
+            }
+            if (DisableState.DISABLED.getCode().equals(userAccount.getDisabledState())) {
+                throw new AccountBizException(ResultCode.DATA_ERROR, "该卡的主卡账户为禁用状态，不能进行此操作");
+            }
+        }
     }
 
 

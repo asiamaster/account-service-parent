@@ -60,7 +60,7 @@ public interface IAccountQueryService {
      * @author miaoguoxin
      * @date 2020/6/17
      */
-    CardAggregationWrapper getSingle(UserAccountCardQuery queryParam);
+    CardAggregationWrapper getSingle(UserAccountCardQuery queryParam,boolean needValidate);
 
     /**
      * 解挂卡的时候查询卡账户信息
