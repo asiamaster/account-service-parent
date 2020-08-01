@@ -102,6 +102,7 @@ public class OpenCardServiceImpl implements IOpenCardService {
 		// 返回数据
 		OpenCardResponseDto response = new OpenCardResponseDto();
 		response.setAccountId(userAccount.getAccountId());
+		response.setFundAccountId(fundAccountId);
 		return response;
 	}
 
@@ -149,6 +150,7 @@ public class OpenCardServiceImpl implements IOpenCardService {
 		// 返回数据
 		OpenCardResponseDto response = new OpenCardResponseDto();
 		response.setAccountId(userAccount.getAccountId());
+		response.setFundAccountId(fundAccountId);
 		return response;
 	}
 
