@@ -4,6 +4,7 @@ import javax.annotation.Resource;
 
 import com.dili.account.entity.CardAggregationWrapper;
 import com.dili.account.exception.AccountBizException;
+import com.dili.account.exception.ErrorCode;
 import com.dili.account.service.IAccountQueryService;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -61,7 +62,7 @@ public class PasswordServiceImpl implements IPasswordService{
 		}
 		String encryptPwd = PasswordUtils.encrypt(password, userAccountDo.getSecretKey());
 		if (!userAccountDo.getLoginPwd().equals(encryptPwd)) {
-			throw new AccountBizException(ResultCode.DATA_ERROR,"密码错误");
+			throw new AccountBizException(ErrorCode.PASSWORD_ERROR,"密码错误");
 		}
 	}
 }
