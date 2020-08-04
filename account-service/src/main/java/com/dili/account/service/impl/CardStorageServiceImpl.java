@@ -157,6 +157,11 @@ public class CardStorageServiceImpl implements ICardStorageService {
 		if (StringUtils.isBlank(cardNo)) {
 			return null;
 		}
+		CardStorageDo cardStorage = cardStorageDao.getByCardNo(cardNo);
+		if (cardStorage == null) {
+			LOG.error(NONEXISTENT_ERRMSG, cardNo);
+			throw BizExceptionProxy.exception(NONEXISTENT_ERRMSG);
+		}
 		return cardStorageDao.getByCardNo(cardNo);
 	}
 

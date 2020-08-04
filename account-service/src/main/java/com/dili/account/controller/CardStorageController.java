@@ -94,4 +94,14 @@ public class CardStorageController {
 		cardStorageService.voidCard(voidCardInfo.getCardNo(), voidCardInfo.getNotes());
 		return BaseOutput.success();
 	}
+	
+	/**
+	 * 卡片作废
+	 */
+	@PostMapping("activateCardByInUse")
+	public BaseOutput<?> activateCardByInUse(@RequestBody CardAddStorageDto cardInfo) {
+		AssertUtils.notEmpty(cardInfo.getCardNo(), "卡号不能为空!");
+		cardStorageService.activateCard(cardInfo.getCardNo());
+		return BaseOutput.success();
+	}
 }
