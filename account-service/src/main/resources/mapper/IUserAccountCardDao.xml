@@ -149,7 +149,7 @@
                 AND auc.create_time &lt;= #{endDate}
             </if>
             <if test="excludeUnusualState !=null and excludeUnusualState == 1">
-                AND auc.state !=4  AND aua.disabled_state = 1
+                AND auc.state not in (3,4)  AND aua.disabled_state = 1
             </if>
             <if test="keyword !=null and keyword !=''">
                 AND auc.card_no LIKE concat('%',#{keyword},'%')

@@ -5,6 +5,8 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import com.dili.account.entity.CardStorageDo;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -141,13 +143,21 @@ public class CardManageServiceImpl implements ICardManageService {
     }
 
     private void validateCanChangeCard(CardAggregationWrapper wrapper, CardRequestDto cardParam) {
-        if (wrapper.getUserCard().getState() != CardStatus.NORMAL.getCode()) {
+        UserCardDo userCard = wrapper.getUserCard();
+        if (userCard.getState() != CardStatus.NORMAL.getCode()) {
             throw new AccountBizException(ResultCode.DATA_ERROR, "该卡为非正常状态，不能进行此操作");
         }
-        if (wrapper.getUserCard().getCardNo().equalsIgnoreCase(cardParam.getNewCardNo())){
+        if (userCard.getCardNo().equalsIgnoreCase(cardParam.getNewCardNo())){
             throw new AccountBizException(ResultCode.DATA_ERROR, "新老卡片的卡号不能相同");
         }
-        passwordService.checkPassword(cardParam.getAccountId(), cardParam.getLoginPwd());
+        if (StringUtils.isNoneBlank(cardParam.getLoginPwd())){
+            passwordService.checkPassword(cardParam.getAccountId(), cardParam.getLoginPwd());
+        }
+        //主卡换主卡，副卡换副卡
+        CardStorageDo cardStorageDo = cardStorageService.getByCardNo(userCard.getCardNo());
+        if (!cardStorageDo.getType().equals(userCard.getType())) {
+            throw new AccountBizException(ResultCode.DATA_ERROR, "新老卡片类型不一致");
+        }
     }
 
     private void changeState(UserCardDo userCard, Integer targetState) {

@@ -177,6 +177,9 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
         }
         CardAggregationWrapper masterWrapper = parentList.get(0);
         String cardNo = masterWrapper.getUserCard().getCardNo();
+        if (CardStatus.RETURNED.getCode() == userCard.getState()) {
+            throw new AccountBizException(ResultCode.DATA_ERROR, "该卡的主卡【%s】为退还状态，不能进行此操作");
+        }
         if (CardStatus.LOSS.getCode() == masterWrapper.getUserCard().getState()) {
             throw new AccountBizException(ResultCode.DATA_ERROR, String.format("该卡的主卡【%s】为挂失状态，不能进行此操作", cardNo));
         }
