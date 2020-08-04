@@ -102,6 +102,7 @@ public class OpenCardServiceImpl implements IOpenCardService {
 		// 返回数据
 		OpenCardResponseDto response = new OpenCardResponseDto();
 		response.setAccountId(userAccount.getAccountId());
+		response.setFundAccountId(fundAccountId);
 		return response;
 	}
 
@@ -149,6 +150,7 @@ public class OpenCardServiceImpl implements IOpenCardService {
 		// 返回数据
 		OpenCardResponseDto response = new OpenCardResponseDto();
 		response.setAccountId(userAccount.getAccountId());
+		response.setFundAccountId(fundAccountId);
 		return response;
 	}
 
@@ -170,7 +172,7 @@ public class OpenCardServiceImpl implements IOpenCardService {
 		userAccount.setCustomerName(openCardInfo.getName());
 		userAccount.setCustomerCode(openCardInfo.getCustomerCode());
 		userAccount.setCustomerMarketType(openCardInfo.getCustormerType());
-		userAccount.setCustomerCellphone(openCardInfo.getMobile());
+		userAccount.setCustomerContactsPhone(openCardInfo.getMobile());
 		userAccount.setFundAccountId(fundAccountId);
 		userAccount.setCardExist(YesNoType.YES.getCode());
 		userAccount.setSecretKey(PasswordUtils.generateSecretKey());
@@ -192,7 +194,7 @@ public class OpenCardServiceImpl implements IOpenCardService {
 	}
 
 	/**
-	 * 构建卡账户数据
+	 * 构建资金账户数据
 	 * 
 	 * @param openCardInfo
 	 * @param accountId     业务主键

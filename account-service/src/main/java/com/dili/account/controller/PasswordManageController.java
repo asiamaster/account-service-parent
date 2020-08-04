@@ -30,5 +30,14 @@ public class PasswordManageController {
         passwordService.resetLoginPwd(cardRequest);
         return BaseOutput.success();
     }
+    
+    /**
+     * 校验密码
+     */
+    @RequestMapping(value = "/checkPassword", method = RequestMethod.POST)
+    public BaseOutput<Boolean> checkPassword(@RequestBody @Validated(value = {CardValidator.Generic.class}) CardRequestDto cardRequest) throws Exception {
+        passwordService.checkPassword(cardRequest.getAccountId(), cardRequest.getLoginPwd());
+        return BaseOutput.success();
+    }
 
 }

@@ -16,7 +16,7 @@
             <result column="customer_market_type" property="customerMarketType"/>
             <result column="customer_certificate_type" property="customerCertificateType"/>
             <result column="customer_certificate_number" property="customerCertificateNumber"/>
-            <result column="customer_cellphone" property="customerCellphone"/>
+            <result column="customer_contacts_phone" property="customerContactsPhone"/>
             <result column="fund_account_id" property="fundAccountId"/>
             <result column="type" property="type"/>
             <result column="usage_type" property="usageType"/>
@@ -66,7 +66,7 @@
             aua.`customer_market_type`,
             aua.`customer_certificate_type`,
             aua.`customer_certificate_number`,
-            aua.`customer_cellphone`,
+            aua.`customer_contacts_phone`,
             aua.`fund_account_id`,
             aua.`type`,
             aua.`usage_type`,
