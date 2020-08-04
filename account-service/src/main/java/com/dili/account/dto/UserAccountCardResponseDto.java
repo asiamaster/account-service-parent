@@ -1,12 +1,13 @@
 package com.dili.account.dto;
 
-import com.alibaba.fastjson.annotation.JSONField;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import org.springframework.format.annotation.DateTimeFormat;
-
 import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.util.List;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.alibaba.fastjson.annotation.JSONField;
+import com.fasterxml.jackson.annotation.JsonFormat;
 
 /**
  * @Auther: miaoguoxin
@@ -14,6 +15,8 @@ import java.util.List;
  * @Description: 卡账户响应Dto
  */
 public class UserAccountCardResponseDto implements Serializable {
+	/** */
+	private static final long serialVersionUID = 9154422843880027453L;
 	/** 市场id */
 	private Long firmId;
 	/** 账号id */
@@ -37,7 +40,7 @@ public class UserAccountCardResponseDto implements Serializable {
 	/** 客户身份号 */
 	private String customerCertificateNumber;
 	/** 客户电话 */
-	private String customerCellphone;
+	private String customerContactsPhone;
 	/** 使用权限(充值、提现、交费等) {@link com.dili.account.type.UsePermissionType} */
 	private List<String> permissionList;
 	/** 卡ID */
@@ -224,12 +227,12 @@ public class UserAccountCardResponseDto implements Serializable {
 		this.customerCertificateNumber = customerCertificateNumber;
 	}
 
-	public String getCustomerCellphone() {
-		return customerCellphone;
+	public String getCustomerContactsPhone() {
+		return customerContactsPhone;
 	}
 
-	public void setCustomerCellphone(String customerCellphone) {
-		this.customerCellphone = customerCellphone;
+	public void setCustomerContactsPhone(String customerContactsPhone) {
+		this.customerContactsPhone = customerContactsPhone;
 	}
 
 	public Integer getDisabledState() {

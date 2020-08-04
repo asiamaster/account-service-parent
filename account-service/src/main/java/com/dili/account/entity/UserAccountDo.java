@@ -31,7 +31,7 @@ public class UserAccountDo implements Serializable {
 	/** 证件号（冗余customer） */
 	private String customerCertificateNumber;
 	/** 电话号码（冗余customer） */
-	private String customerCellphone;
+	private String customerContactsPhone;
 	/** 资金账号 */
 	private Long fundAccountId;
 	/** 实体卡是否存在 */
@@ -308,12 +308,12 @@ public class UserAccountDo implements Serializable {
 		this.customerCertificateNumber = customerCertificateNumber;
 	}
 
-	public String getCustomerCellphone() {
-		return customerCellphone;
+	public String getCustomerContactsPhone() {
+		return customerContactsPhone;
 	}
 
-	public void setCustomerCellphone(String customerCellphone) {
-		this.customerCellphone = customerCellphone;
+	public void setCustomerContactsPhone(String customerContactsPhone) {
+		this.customerContactsPhone = customerContactsPhone;
 	}
 
 }

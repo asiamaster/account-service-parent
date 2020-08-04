@@ -14,7 +14,7 @@
 			`customer_market_type`, 
 			`customer_certificate_type`, 
 			`customer_certificate_number`, 
-			`customer_cellphone`,  
+			`customer_contacts_phone`,  
 			`fund_account_id`,
 			`card_exist`,
 			`type`,
@@ -53,7 +53,7 @@
 			`customer_market_type`, 
 			`customer_certificate_type`, 
 			`customer_certificate_number`, 
-			`customer_cellphone`, 
+			`customer_contacts_phone`, 
 			`fund_account_id`,
 			`card_exist`,
 			`type`,
@@ -83,7 +83,7 @@
 			#{customerMarketType}, 
 			#{customerCertificateType}, 
 			#{customerCertificateNumber}, 
-			#{customerCellphone},
+			#{customerContactsPhone},
 			#{fundAccountId},
 			#{cardExist},
 			#{type},
@@ -126,7 +126,7 @@
 			<if test="customerMarketType != null">`customer_market_type` = #{customerMarketType}, </if>
 			<if test="customerCertificateType != null">`customer_certificate_type` = #{customerCertificateType}, </if>
 			<if test="customerCertificateNumber != null">`customer_certificate_number` = #{customerCertificateNumber}, </if>
-			<if test="customerCellphone != null">`customer_cellphone` = #{customerCellphone}, </if>
+			<if test="customerContactsPhone != null">`customer_contacts_phone` = #{customerContactsPhone}, </if>
 			<if test="fundAccountId != null">`fund_account_id` = #{fundAccountId}, </if>
 			<if test="cardExist != null">`card_exist` = #{cardExist}, </if>
 			<if test="type != null">`type` = #{type}, </if>
