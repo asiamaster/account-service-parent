@@ -194,7 +194,7 @@ public class OpenCardServiceImpl implements IOpenCardService {
 	}
 
 	/**
-	 * 构建卡账户数据
+	 * 构建资金账户数据
 	 * 
 	 * @param openCardInfo
 	 * @param accountId     业务主键
