@@ -96,7 +96,7 @@ public class CardStorageController {
 	}
 	
 	/**
-	 * 卡片作废
+	 * 卡片由使用中转为激活状态
 	 */
 	@PostMapping("activateCardByInUse")
 	public BaseOutput<?> activateCardByInUse(@RequestBody CardAddStorageDto cardInfo) {

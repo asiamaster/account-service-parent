@@ -35,6 +35,9 @@
 		<if test="state != null"><![CDATA[ AND state = #{state}]]></if>
 		<if test="startDate != null"><![CDATA[ AND DATE(create_time) >= #{startDate}]]></if>
 		<if test="endDate != null"><![CDATA[ AND DATE(create_time) <= #{endDate}]]></if>
+		<if test="startCardNo != null"><![CDATA[ AND card_no >= #{startCardNo}]]></if>
+		<if test="endCardNo != null"><![CDATA[ AND card_no <= #{endCardNo}]]></if>
+		<if test="firmId != null"><![CDATA[ AND firm_id = #{firmId}]]></if>
 		ORDER BY
 		id DESC
 	</select>

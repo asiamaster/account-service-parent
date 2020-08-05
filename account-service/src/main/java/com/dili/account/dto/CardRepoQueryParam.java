@@ -1,7 +1,6 @@
 package com.dili.account.dto;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 import com.dili.ss.domain.BaseDomain;
@@ -31,6 +30,10 @@ public class CardRepoQueryParam extends BaseDomain {
 	/** 卡片在仓库状态 */
 	private Integer state;
 	private List<String> cardNos;
+	/** 卡片起始号 */
+	private Long startCardNo;
+	/** 卡片结束号 */
+	private Long endCardNo;
 
 	public String getCardNo() {
 		return cardNo;
@@ -94,6 +97,22 @@ public class CardRepoQueryParam extends BaseDomain {
 
 	public void setState(Integer state) {
 		this.state = state;
+	}
+
+	public Long getStartCardNo() {
+		return startCardNo;
+	}
+
+	public void setStartCardNo(Long startCardNo) {
+		this.startCardNo = startCardNo;
+	}
+
+	public Long getEndCardNo() {
+		return endCardNo;
+	}
+
+	public void setEndCardNo(Long endCardNo) {
+		this.endCardNo = endCardNo;
 	}
 
 }
