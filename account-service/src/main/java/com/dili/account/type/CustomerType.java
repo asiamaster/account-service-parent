@@ -8,11 +8,14 @@ package com.dili.account.type;
  * @time ：2020年6月23日下午3:32:47
  */
 public enum CustomerType {
-	/** 买家卡 */
-	PURCHASE("园内买家", "inside_buyer"),
-
+	/** 买家 */
+	BUYER("买家", "buyer"),
+	/** 园外买家 */
+	OUTSIDE_BUYER("园外买家", "outside_buyer"),
+	/** 园内买家 */
+	INSIDE_BUYER("园内买家", "inside_buyer"),
 	/** 卖家卡 */
-	SALE("园内卖家", "inside_seller"),
+	SELLER("卖家", "seller"),
 
 	/** 司机 */
 	DRIVER("司机", "driver");
@@ -24,8 +27,7 @@ public enum CustomerType {
 		this.name = name;
 		this.code = code;
 	}
-	
-	
+
 	public static String getTypeName(String customerCode) {
 		for (CustomerType type : CustomerType.values()) {
 			if (type.getCode().equals(customerCode)) {
