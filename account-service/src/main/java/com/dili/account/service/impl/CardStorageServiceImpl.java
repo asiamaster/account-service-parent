@@ -2,7 +2,6 @@ package com.dili.account.service.impl;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -169,7 +168,7 @@ public class CardStorageServiceImpl implements ICardStorageService {
 
 	@Override
 	public void batchAddCard(BatchCardAddStorageDto batchCardDto) {
-		//检查重复卡号
+		// 检查重复卡号
 		CardRepoQueryParam queryParam = new CardRepoQueryParam();
 		queryParam.setStartCardNo(batchCardDto.getStartCardNo());
 		queryParam.setEndCardNo(batchCardDto.getEndCardNo());
@@ -177,11 +176,11 @@ public class CardStorageServiceImpl implements ICardStorageService {
 		List<CardStorageDo> selectList = cardStorageDao.selectList(queryParam);
 		if (!CollectionUtils.isEmpty(selectList)) {
 			if (selectList.size() == 1) {
-				throw BizExceptionProxy.exception("入库失败，包含重复卡号{}", selectList.get(0).getCardNo());
+				throw BizExceptionProxy.exception("入库失败，包含重复卡号" + selectList.get(0).getCardNo());
 			}
 			String existsCardNo1 = selectList.get(0).getCardNo();
 			String existsCardNo2 = selectList.get(selectList.size() - 1).getCardNo();
-			throw BizExceptionProxy.exception("入库失败，包含重复卡号{}~{}", existsCardNo1,existsCardNo2);
+			throw BizExceptionProxy.exception("入库失败，包含重复卡号" + existsCardNo1 + "~" + existsCardNo2);
 		}
 
 		List<CardStorageDo> cardList = new ArrayList<CardStorageDo>();
