@@ -1,5 +1,8 @@
 package com.dili.account.dto;
 
+import com.dili.account.common.annotation.AtLeastOneNotNull;
+import com.dili.account.validator.AccountValidator;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -9,6 +12,11 @@ import java.util.List;
  * @author ：WangBo
  * @time ：2020年4月26日下午4:30:03
  */
+@AtLeastOneNotNull(includeFieldNames = {
+        "customerIds", "customerName", "customerCertificateNumber",
+        "accountIds", "cardNos", "parentAccountId",
+        "cardType", "cardState", "keyword"
+}, groups = AccountValidator.SingleQuery.class, message = "至少需要一个查询条件")
 public class UserAccountCardQuery extends BaseDto {
     /**客户id*/
     private List<Long> customerIds;
@@ -30,8 +38,6 @@ public class UserAccountCardQuery extends BaseDto {
     private Integer cardType;
     /**卡状态 {@link com.dili.account.type.CardStatus}*/
     private Integer cardState;
-    /**是否最新的（换卡后一个账户下有多张卡）*/
-    private Integer last;
     /**关键词，用于模糊查询等*/
     private String keyword;
     /**是否要排除异常状态的账户 ex：卡退还、账户被禁用*/
@@ -133,16 +139,9 @@ public class UserAccountCardQuery extends BaseDto {
         this.excludeUnusualState = excludeUnusualState;
     }
 
-    public Integer getLast() {
-        return last;
-    }
 
-    public void setLast(Integer last) {
-        this.last = last;
-    }
-
-    public UserAccountCardQuery setDefExcludeUnusualState(Integer flag){
-        if(this.getExcludeUnusualState() == null){
+    public UserAccountCardQuery setDefExcludeUnusualState(Integer flag) {
+        if (this.getExcludeUnusualState() == null) {
             this.setExcludeUnusualState(flag);
         }
         return this;

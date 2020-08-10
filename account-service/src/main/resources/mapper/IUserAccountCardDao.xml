@@ -139,9 +139,6 @@
             <if test="cardState!=null">
                 AND auc.state = #{cardState}
             </if>
-            <if test="last!=null">
-                AND auc.last =#{last}
-            </if>
             <if test="startDate !=null">
                 AND auc.create_time &gt;= #{startDate}
             </if>

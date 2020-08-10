@@ -84,4 +84,11 @@ class AccountQueryServiceTest extends BaseTest {
     void getByAccountIdWithNotNull() {
     }
 
+    @Test
+    void getSingleForRest() {
+        UserAccountCardQuery query = new UserAccountCardQuery();
+        query.setAccountIds(Lists.newArrayList(13L));
+        UserAccountCardResponseDto singleForRest = accountQueryService.getSingleForRest(query, true);
+    }
+
 }

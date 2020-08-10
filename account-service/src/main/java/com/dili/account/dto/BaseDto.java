@@ -1,9 +1,8 @@
 package com.dili.account.dto;
 
 import com.dili.account.validator.ConstantValidator;
-import com.dili.account.validator.IsOrderBy;
+import com.dili.account.common.annotation.IsOrderBy;
 import org.apache.commons.lang3.StringUtils;
-import org.hibernate.validator.constraints.Range;
 
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;

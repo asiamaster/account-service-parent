@@ -1,4 +1,6 @@
-package com.dili.account.validator;
+package com.dili.account.common.annotation;
+
+import com.dili.account.validator.OrderByValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;

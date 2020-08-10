@@ -150,6 +150,7 @@ public class CardManageServiceImpl implements ICardManageService {
         if (userCard.getCardNo().equalsIgnoreCase(cardParam.getNewCardNo())){
             throw new AccountBizException(ResultCode.DATA_ERROR, "新老卡片的卡号不能相同");
         }
+        //换卡可以不需要密码
         if (StringUtils.isNoneBlank(cardParam.getLoginPwd())){
             passwordService.checkPassword(cardParam.getAccountId(), cardParam.getLoginPwd());
         }

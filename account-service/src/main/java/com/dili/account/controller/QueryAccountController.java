@@ -6,6 +6,7 @@ import com.dili.account.dto.UserAccountCardResponseDto;
 import com.dili.account.exception.AccountBizException;
 import com.dili.account.service.IAccountQueryService;
 import com.dili.account.util.AssertUtils;
+import com.dili.account.validator.AccountValidator;
 import com.dili.account.validator.ConstantValidator;
 import com.dili.ss.constant.ResultCode;
 import com.dili.ss.domain.BaseOutput;
@@ -69,7 +70,14 @@ public class QueryAccountController {
      * @date 2020/7/28
      */
     @PostMapping("/getSingle")
-    public BaseOutput<UserAccountCardResponseDto> getSingle(@RequestBody UserAccountCardQuery param) {
+    public BaseOutput<UserAccountCardResponseDto> getSingle(@RequestBody @Validated(AccountValidator.SingleQuery.class)
+                                                                    UserAccountCardQuery param) {
+        //不需要的参数都设置为空，防止乱传
+        param.setFirmId(null);
+        param.setStartDate(null);
+        param.setEndDate(null);
+        param.setSort(null);
+        param.setOrder(null);
         return BaseOutput.successData(accountQueryService.getSingleForRest(param, true));
     }
 
@@ -79,7 +87,14 @@ public class QueryAccountController {
      * @date 2020/7/30
      */
     @PostMapping("/getSingleWithoutValidate")
-    public BaseOutput<UserAccountCardResponseDto> getSingleWithoutValidate(@RequestBody UserAccountCardQuery param) {
+    public BaseOutput<UserAccountCardResponseDto> getSingleWithoutValidate(@RequestBody @Validated(AccountValidator.SingleQuery.class)
+                                                                                   UserAccountCardQuery param) {
+        //不需要的参数都设置为空，防止乱传
+        param.setFirmId(null);
+        param.setStartDate(null);
+        param.setEndDate(null);
+        param.setSort(null);
+        param.setOrder(null);
         return BaseOutput.successData(accountQueryService.getSingleForRest(param, false));
     }
 
