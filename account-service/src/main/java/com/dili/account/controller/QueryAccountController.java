@@ -3,6 +3,7 @@ package com.dili.account.controller;
 import com.dili.account.dto.AccountSimpleResponseDto;
 import com.dili.account.dto.UserAccountCardQuery;
 import com.dili.account.dto.UserAccountCardResponseDto;
+import com.dili.account.dto.UserAccountSingleQueryDto;
 import com.dili.account.exception.AccountBizException;
 import com.dili.account.service.IAccountQueryService;
 import com.dili.account.util.AssertUtils;
@@ -15,6 +16,7 @@ import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -71,14 +73,10 @@ public class QueryAccountController {
      */
     @PostMapping("/getSingle")
     public BaseOutput<UserAccountCardResponseDto> getSingle(@RequestBody @Validated(AccountValidator.SingleQuery.class)
-                                                                    UserAccountCardQuery param) {
-        //不需要的参数都设置为空，防止乱传
-        param.setFirmId(null);
-        param.setStartDate(null);
-        param.setEndDate(null);
-        param.setSort(null);
-        param.setOrder(null);
-        return BaseOutput.successData(accountQueryService.getSingleForRest(param, true));
+                                                                    UserAccountSingleQueryDto param) {
+        UserAccountCardQuery query = new UserAccountCardQuery();
+        BeanUtils.copyProperties(param, query);
+        return BaseOutput.successData(accountQueryService.getSingleForRest(query, true));
     }
 
     /**
@@ -88,14 +86,10 @@ public class QueryAccountController {
      */
     @PostMapping("/getSingleWithoutValidate")
     public BaseOutput<UserAccountCardResponseDto> getSingleWithoutValidate(@RequestBody @Validated(AccountValidator.SingleQuery.class)
-                                                                                   UserAccountCardQuery param) {
-        //不需要的参数都设置为空，防止乱传
-        param.setFirmId(null);
-        param.setStartDate(null);
-        param.setEndDate(null);
-        param.setSort(null);
-        param.setOrder(null);
-        return BaseOutput.successData(accountQueryService.getSingleForRest(param, false));
+                                                                                   UserAccountSingleQueryDto param) {
+        UserAccountCardQuery query = new UserAccountCardQuery();
+        BeanUtils.copyProperties(param, query);
+        return BaseOutput.successData(accountQueryService.getSingleForRest(query, false));
     }
 
     /**

@@ -1,8 +1,5 @@
 package com.dili.account.dto;
 
-import com.dili.account.common.annotation.AtLeastOneNotNull;
-import com.dili.account.validator.AccountValidator;
-
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -12,11 +9,6 @@ import java.util.List;
  * @author ：WangBo
  * @time ：2020年4月26日下午4:30:03
  */
-@AtLeastOneNotNull(includeFieldNames = {
-        "customerIds", "customerName", "customerCertificateNumber",
-        "accountIds", "cardNos", "parentAccountId",
-        "cardType", "cardState", "keyword"
-}, groups = AccountValidator.SingleQuery.class, message = "至少需要一个查询条件")
 public class UserAccountCardQuery extends BaseDto {
     /**客户id*/
     private List<Long> customerIds;

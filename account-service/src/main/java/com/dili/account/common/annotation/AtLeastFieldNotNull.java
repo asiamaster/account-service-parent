@@ -1,7 +1,6 @@
 package com.dili.account.common.annotation;
 
-import com.dili.account.validator.AtLeastOneNotNullValidator;
-import com.dili.account.validator.OrderByValidator;
+import com.dili.account.validator.AtLeastFieldNotNullValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -10,7 +9,6 @@ import java.lang.annotation.Documented;
 import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
-import static java.lang.annotation.ElementType.FIELD;
 import static java.lang.annotation.ElementType.TYPE;
 import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
@@ -22,8 +20,8 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Target({TYPE})
 @Retention(RUNTIME)
 @Documented
-@Constraint(validatedBy = AtLeastOneNotNullValidator.class)
-public @interface AtLeastOneNotNull {
+@Constraint(validatedBy = AtLeastFieldNotNullValidator.class)
+public @interface AtLeastFieldNotNull {
 
     /**
     * 需要校验不能为空的字段名
@@ -32,7 +30,7 @@ public @interface AtLeastOneNotNull {
     * @author miaoguoxin
     * @date 2020/8/10
     */
-    String[] includeFieldNames();
+    String[] includeFieldNames() default {};
 
     String message() default "";
 
