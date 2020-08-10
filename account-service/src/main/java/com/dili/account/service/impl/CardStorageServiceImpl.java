@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
+import com.alibaba.nacos.client.naming.utils.CollectionUtils;
 import com.dili.account.dao.ICardStorageDao;
 import com.dili.account.dto.BatchActivateCardDto;
 import com.dili.account.dto.BatchCardAddStorageDto;
@@ -157,11 +158,31 @@ public class CardStorageServiceImpl implements ICardStorageService {
 		if (StringUtils.isBlank(cardNo)) {
 			return null;
 		}
+		CardStorageDo cardStorage = cardStorageDao.getByCardNo(cardNo);
+		if (cardStorage == null) {
+			LOG.error(NONEXISTENT_ERRMSG, cardNo);
+			throw BizExceptionProxy.exception(NONEXISTENT_ERRMSG);
+		}
 		return cardStorageDao.getByCardNo(cardNo);
 	}
 
 	@Override
 	public void batchAddCard(BatchCardAddStorageDto batchCardDto) {
+		// 检查重复卡号
+		CardRepoQueryParam queryParam = new CardRepoQueryParam();
+		queryParam.setStartCardNo(batchCardDto.getStartCardNo());
+		queryParam.setEndCardNo(batchCardDto.getEndCardNo());
+		queryParam.setFirmId(batchCardDto.getFirmId());
+		List<CardStorageDo> selectList = cardStorageDao.selectList(queryParam);
+		if (!CollectionUtils.isEmpty(selectList)) {
+			if (selectList.size() == 1) {
+				throw BizExceptionProxy.exception("入库失败，包含重复卡号" + selectList.get(0).getCardNo());
+			}
+			String existsCardNo1 = selectList.get(0).getCardNo();
+			String existsCardNo2 = selectList.get(selectList.size() - 1).getCardNo();
+			throw BizExceptionProxy.exception("入库失败，包含重复卡号" + existsCardNo1 + "~" + existsCardNo2);
+		}
+
 		List<CardStorageDo> cardList = new ArrayList<CardStorageDo>();
 		for (long i = batchCardDto.getStartCardNo(); i <= batchCardDto.getEndCardNo(); i++) {
 			CardStorageDo saveInfo = new CardStorageDo();
@@ -177,7 +198,6 @@ public class CardStorageServiceImpl implements ICardStorageService {
 			saveInfo.setType(batchCardDto.getCardType());
 			cardList.add(saveInfo);
 		}
-		// 卡号重复时将抛出唯一索引异常
 		cardStorageDao.batchSave(cardList);
 	}
 

@@ -33,7 +33,7 @@ public interface ICardStorageService {
     
     
     /**
-     * 批量激活
+     * 批量激活，出库激活，只修改状态为未激活的卡
      */
     void batchActivate(List<String> cardNos);
 

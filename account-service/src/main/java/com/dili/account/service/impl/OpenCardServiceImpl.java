@@ -221,8 +221,10 @@ public class OpenCardServiceImpl implements IOpenCardService {
 	 * @param customerType
 	 */
 	public void setAccountPermissions(UserAccountDo userAccount, String customerType) {
-		if (CustomerType.PURCHASE.getCode().equalsIgnoreCase(customerType)) {
-			// 买家
+		if (CustomerType.INSIDE_BUYER.getCode().equalsIgnoreCase(customerType)
+				|| CustomerType.OUTSIDE_BUYER.getCode().equalsIgnoreCase(customerType)
+				|| CustomerType.BUYER.getCode().equalsIgnoreCase(customerType)) {
+			// 买家 园内买家 园外买家
 			userAccount.setType(AccountType.PURCHASE.getCode());
 
 			// 资金账户。 交易/理财
@@ -235,7 +237,7 @@ public class OpenCardServiceImpl implements IOpenCardService {
 					UsePermissionType.TRANSACTION.getCode(), UsePermissionType.WITHDRAW.getCode(),
 					UsePermissionType.PAY_FEES.getCode() };
 			userAccount.setPermissions(UsePermissionType.getPermissions(codes));
-		} else if (CustomerType.SALE.getCode().equalsIgnoreCase(customerType)) {
+		} else if (CustomerType.SELLER.getCode().equalsIgnoreCase(customerType)) {
 			// 卖家
 			userAccount.setType(AccountType.SALE.getCode());
 
