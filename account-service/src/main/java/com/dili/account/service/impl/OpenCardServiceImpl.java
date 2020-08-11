@@ -76,7 +76,7 @@ public class OpenCardServiceImpl implements IOpenCardService {
 		List<UserAccountCardResponseDto> userAccountList = accountQueryService.getListByConditionForRest(queryParam);
 		if (userAccountList.size() > 0) {
 			// TODO 是否允许两张卡
-			throw BizExceptionProxy.exception("客户{}已办理过交易主卡{}", openCardInfo.getName(),
+			throw BizExceptionProxy.exception("客户{}已办理过交易主卡{}", openCardInfo.getCustomerName(),
 					userAccountList.get(0).getCardNo());
 		}
 		// 判断卡类型，并将卡片改为使用中
@@ -167,12 +167,12 @@ public class OpenCardServiceImpl implements IOpenCardService {
 		userAccount.setAccountId(accountId);
 		userAccount.setParentAccountId(openCardInfo.getParentAccountId());
 		userAccount.setCustomerId(openCardInfo.getCustomerId());
-		userAccount.setCustomerCertificateNumber(openCardInfo.getCertificateNumber());
-		userAccount.setCustomerCertificateType(openCardInfo.getCredentialType());
-		userAccount.setCustomerName(openCardInfo.getName());
+		userAccount.setCustomerCertificateNumber(openCardInfo.getCustomerCertificateNumber());
+		userAccount.setCustomerCertificateType(openCardInfo.getCustomerCredentialType());
+		userAccount.setCustomerName(openCardInfo.getCustomerName());
 		userAccount.setCustomerCode(openCardInfo.getCustomerCode());
-		userAccount.setCustomerMarketType(openCardInfo.getCustormerType());
-		userAccount.setCustomerContactsPhone(openCardInfo.getMobile());
+		userAccount.setCustomerMarketType(openCardInfo.getCustomerType());
+		userAccount.setCustomerContactsPhone(openCardInfo.getCustomerContactsPhone());
 		userAccount.setFundAccountId(fundAccountId);
 		userAccount.setCardExist(YesNoType.YES.getCode());
 		userAccount.setSecretKey(PasswordUtils.generateSecretKey());
@@ -189,7 +189,7 @@ public class OpenCardServiceImpl implements IOpenCardService {
 		userAccount.setModifyTime(now);
 		userAccount.setCreatorId(openCardInfo.getCreatorId());
 		userAccount.setCreator(openCardInfo.getCreator());
-		setAccountPermissions(userAccount, openCardInfo.getCustormerType());
+		setAccountPermissions(userAccount, openCardInfo.getCustomerType());
 		return userAccount;
 	}
 
@@ -204,11 +204,11 @@ public class OpenCardServiceImpl implements IOpenCardService {
 	private FundAccountDto buildFundAccount(OpenCardDto openCardInfo) {
 		FundAccountDto fundAccount = new FundAccountDto();
 		fundAccount.setCustomerId(openCardInfo.getCustomerId());
-		fundAccount.setType(CustomerOrgType.getPayCode(openCardInfo.getOrganizationType()));
+		fundAccount.setType(CustomerOrgType.getPayCode(openCardInfo.getCustomerOrganizationType()));
 		fundAccount.setType(1);
 		fundAccount.setUseFor(1); // TODO 寿光只有一个交易账户，其它市场将允许多账户
-		fundAccount.setName(openCardInfo.getName());
-		fundAccount.setMobile(openCardInfo.getMobile());
+		fundAccount.setName(openCardInfo.getCustomerName());
+		fundAccount.setMobile(openCardInfo.getCustomerContactsPhone());
 		fundAccount.setCode(openCardInfo.getCardNo());
 		fundAccount.setPassword(openCardInfo.getLoginPwd());
 		return fundAccount;

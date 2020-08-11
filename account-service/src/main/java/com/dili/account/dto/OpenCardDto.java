@@ -1,11 +1,8 @@
 package com.dili.account.dto;
 
-import java.time.LocalDateTime;
-
 import com.dili.account.type.CardCategory;
 import com.dili.account.type.CardType;
 import com.dili.account.type.CreateSource;
-import com.dili.account.type.CustomerAreaType;
 import com.dili.account.type.UsePermissionType;
 
 /**
@@ -16,41 +13,21 @@ import com.dili.account.type.UsePermissionType;
  */
 public class OpenCardDto {
 	/** 用户姓名 */
-	private String name;
+	private String customerName;
 	/** CRM系统客户ID */
 	private Long customerId;
 	/** 客户类型 */
-	private String custormerType;
+	private String customerType;
 	/** 客户编号 */
 	private String customerCode;
 	/** 个人、对公 */
-	private String organizationType;
-	/** 性别 */
-	private Integer gender;
+	private String customerOrganizationType;
 	/** 证件类型 */
-	private String credentialType;
+	private String customerCredentialType;
 	/** 证件号 */
-	private String certificateNumber;
-	/** 证件有效期 */
-	private LocalDateTime validityDate;
-	/** 认证状态（1已认证2未认证） */
-	private Integer authStatus;
-	/** 手机号 */
-	private String mobile;
-	/** 固定电话 */
-	private String telphone;
-	/** 地址 */
-	private String address;
-	/** 主营业务 */
-	private String businessCategory;
-	/** 客户区域 {@link CustomerAreaType} */
-	private Integer customerArea;
-	/** 法人 */
-	private String legalName;
-	/** 法人证件类型 */
-	private String legalCredentialType;
-	/** 法人证件号 */
-	private String legalNo;
+	private String customerCertificateNumber;
+	/** 客户联系电话 */
+	private String customerContactsPhone;
 	/** 资金账户ID */
 	private Long fundAccountId;
 	/** 账户类型(主、子/副) */
@@ -85,132 +62,12 @@ public class OpenCardDto {
 	/** 商户名称 */
 	private String firmName;
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
 	public Long getCustomerId() {
 		return customerId;
 	}
 
 	public void setCustomerId(Long customerId) {
 		this.customerId = customerId;
-	}
-
-	public String getCustormerType() {
-		return custormerType;
-	}
-
-	public void setCustormerType(String custormerType) {
-		this.custormerType = custormerType;
-	}
-
-	public Integer getGender() {
-		return gender;
-	}
-
-	public void setGender(Integer gender) {
-		this.gender = gender;
-	}
-
-	public String getCredentialType() {
-		return credentialType;
-	}
-
-	public void setCredentialType(String credentialType) {
-		this.credentialType = credentialType;
-	}
-
-	public String getAddress() {
-		return address;
-	}
-
-	public void setAddress(String address) {
-		this.address = address;
-	}
-
-	public String getCertificateNumber() {
-		return certificateNumber;
-	}
-
-	public void setCertificateNumber(String certificateNumber) {
-		this.certificateNumber = certificateNumber;
-	}
-
-	public LocalDateTime getValidityDate() {
-		return validityDate;
-	}
-
-	public void setValidityDate(LocalDateTime validityDate) {
-		this.validityDate = validityDate;
-	}
-
-	public Integer getAuthStatus() {
-		return authStatus;
-	}
-
-	public void setAuthStatus(Integer authStatus) {
-		this.authStatus = authStatus;
-	}
-
-	public String getMobile() {
-		return mobile;
-	}
-
-	public void setMobile(String mobile) {
-		this.mobile = mobile;
-	}
-
-	public String getTelphone() {
-		return telphone;
-	}
-
-	public void setTelphone(String telphone) {
-		this.telphone = telphone;
-	}
-
-	public String getBusinessCategory() {
-		return businessCategory;
-	}
-
-	public void setBusinessCategory(String businessCategory) {
-		this.businessCategory = businessCategory;
-	}
-
-	public Integer getCustomerArea() {
-		return customerArea;
-	}
-
-	public void setCustomerArea(Integer customerArea) {
-		this.customerArea = customerArea;
-	}
-
-	public String getLegalName() {
-		return legalName;
-	}
-
-	public void setLegalName(String legalName) {
-		this.legalName = legalName;
-	}
-
-	public String getLegalCredentialType() {
-		return legalCredentialType;
-	}
-
-	public void setLegalCredentialType(String legalCredentialType) {
-		this.legalCredentialType = legalCredentialType;
-	}
-
-	public String getLegalNo() {
-		return legalNo;
-	}
-
-	public void setLegalNo(String legalNo) {
-		this.legalNo = legalNo;
 	}
 
 	public Integer getAccountType() {
@@ -333,14 +190,6 @@ public class OpenCardDto {
 		this.creator = creator;
 	}
 
-	public String getOrganizationType() {
-		return organizationType;
-	}
-
-	public void setOrganizationType(String organizationType) {
-		this.organizationType = organizationType;
-	}
-
 	public String getCustomerCode() {
 		return customerCode;
 	}
@@ -355,6 +204,54 @@ public class OpenCardDto {
 
 	public void setType(Integer type) {
 		this.type = type;
+	}
+
+	public String getCustomerName() {
+		return customerName;
+	}
+
+	public void setCustomerName(String customerName) {
+		this.customerName = customerName;
+	}
+
+	public String getCustomerType() {
+		return customerType;
+	}
+
+	public void setCustomerType(String customerType) {
+		this.customerType = customerType;
+	}
+
+	public String getCustomerOrganizationType() {
+		return customerOrganizationType;
+	}
+
+	public void setCustomerOrganizationType(String customerOrganizationType) {
+		this.customerOrganizationType = customerOrganizationType;
+	}
+
+	public String getCustomerCredentialType() {
+		return customerCredentialType;
+	}
+
+	public void setCustomerCredentialType(String customerCredentialType) {
+		this.customerCredentialType = customerCredentialType;
+	}
+
+	public String getCustomerCertificateNumber() {
+		return customerCertificateNumber;
+	}
+
+	public void setCustomerCertificateNumber(String customerCertificateNumber) {
+		this.customerCertificateNumber = customerCertificateNumber;
+	}
+
+	public String getCustomerContactsPhone() {
+		return customerContactsPhone;
+	}
+
+	public void setCustomerContactsPhone(String customerContactsPhone) {
+		this.customerContactsPhone = customerContactsPhone;
 	}
 
 }
