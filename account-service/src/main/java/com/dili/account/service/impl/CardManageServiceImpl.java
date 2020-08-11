@@ -1,21 +1,10 @@
 package com.dili.account.service.impl;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
-import javax.annotation.Resource;
-
-import com.dili.account.entity.CardStorageDo;
-import org.apache.commons.lang3.StringUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.CollectionUtils;
-
 import com.dili.account.dao.IUserAccountDao;
 import com.dili.account.dao.IUserCardDao;
 import com.dili.account.dto.CardRequestDto;
 import com.dili.account.entity.CardAggregationWrapper;
+import com.dili.account.entity.CardStorageDo;
 import com.dili.account.entity.UserAccountDo;
 import com.dili.account.entity.UserCardDo;
 import com.dili.account.exception.AccountBizException;
@@ -26,6 +15,15 @@ import com.dili.account.service.ICardStorageService;
 import com.dili.account.service.IPasswordService;
 import com.dili.account.type.CardStatus;
 import com.dili.ss.constant.ResultCode;
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.CollectionUtils;
+
+import javax.annotation.Resource;
+import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * @description： 卡片退卡换卡等操作service实现
@@ -121,6 +119,7 @@ public class CardManageServiceImpl implements ICardManageService {
         }
     }
 
+    @Transactional(rollbackFor = Exception.class)
     @Override
     public void unLockCard(CardRequestDto cardParam) {
         CardAggregationWrapper wrapper = accountQueryService.getByAccountIdForGenericOp(cardParam.getAccountId());
