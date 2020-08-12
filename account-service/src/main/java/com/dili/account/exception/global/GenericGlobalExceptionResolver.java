@@ -77,7 +77,7 @@ public class GenericGlobalExceptionResolver {
      */
     @ExceptionHandler({BusinessException.class})
     public BaseOutput<?> handlerBusinessException(BusinessException e) {
-        return BaseOutput.create(e.getCode(), e.getMessage());
+        return BaseOutput.create(e.getErrorCode(), e.getMessage());
     }
 
     /**
@@ -87,7 +87,7 @@ public class GenericGlobalExceptionResolver {
     public BaseOutput<?> handlerAppExceptionn(AccountBizException e) {
         return BaseOutput.create(e.getCode(), e.getMessage());
     }
-    
+
     /**
      * 处理未自定义的异常
      */
