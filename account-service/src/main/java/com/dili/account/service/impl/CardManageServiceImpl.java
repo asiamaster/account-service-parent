@@ -153,9 +153,9 @@ public class CardManageServiceImpl implements ICardManageService {
             throw new AccountBizException(ResultCode.DATA_ERROR, "新老卡片的卡号不能相同");
         }
         //换卡可以不需要密码
-//        if (StringUtils.isNoneBlank(cardParam.getLoginPwd())){
-//            passwordService.checkPassword(cardParam.getAccountId(), cardParam.getLoginPwd());
-//        }
+        if (StringUtils.isNoneBlank(cardParam.getLoginPwd())){
+            passwordService.checkPassword(cardParam.getAccountId(), cardParam.getLoginPwd());
+        }
         //主卡换主卡，副卡换副卡
         CardStorageDo cardStorageDo = cardStorageService.getByCardNo(userCard.getCardNo());
         if (!cardStorageDo.getType().equals(userCard.getType())) {

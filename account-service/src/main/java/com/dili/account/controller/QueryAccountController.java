@@ -74,8 +74,7 @@ public class QueryAccountController {
     @PostMapping("/getSingle")
     public BaseOutput<UserAccountCardResponseDto> getSingle(@RequestBody @Validated(AccountValidator.SingleQuery.class)
                                                                     UserAccountSingleQueryDto param) {
-        UserAccountCardQuery query = new UserAccountCardQuery();
-        BeanUtils.copyProperties(param, query);
+        UserAccountCardQuery query = this.convertQueryParams(param);
         return BaseOutput.successData(accountQueryService.getSingleForRest(query, true));
     }
 
@@ -87,8 +86,7 @@ public class QueryAccountController {
     @PostMapping("/getSingleWithoutValidate")
     public BaseOutput<UserAccountCardResponseDto> getSingleWithoutValidate(@RequestBody @Validated(AccountValidator.SingleQuery.class)
                                                                                    UserAccountSingleQueryDto param) {
-        UserAccountCardQuery query = new UserAccountCardQuery();
-        BeanUtils.copyProperties(param, query);
+        UserAccountCardQuery query = this.convertQueryParams(param);
         return BaseOutput.successData(accountQueryService.getSingleForRest(query, false));
     }
 
@@ -127,5 +125,21 @@ public class QueryAccountController {
             throw new AccountBizException(ResultCode.DATA_ERROR, "卡号不能为空");
         }
         return BaseOutput.successData(accountQueryService.getByCardNoWithBalance(cardNo));
+    }
+
+
+    /**
+    * @author miaoguoxin
+    * @date 2020/8/12
+    */
+    private  UserAccountCardQuery convertQueryParams(@Validated(AccountValidator.SingleQuery.class) @RequestBody UserAccountSingleQueryDto param) {
+        UserAccountCardQuery query = new UserAccountCardQuery();
+        if (StringUtils.isNoneBlank(param.getCardNo())){
+            query.setCardNos(Lists.newArrayList(param.getCardNo()));
+        }
+        if (param.getAccountId() != null){
+            query.setAccountIds(Lists.newArrayList(param.getAccountId()));
+        }
+        return query;
     }
 }
