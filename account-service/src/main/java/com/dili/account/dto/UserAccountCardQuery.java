@@ -1,5 +1,8 @@
 package com.dili.account.dto;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.annotation.JSONField;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -16,6 +19,8 @@ public class UserAccountCardQuery extends BaseDto {
     private String customerName;
     /**客户证件号*/
     private String customerCertificateNumber;
+    /**客户市场类型 {@link com.dili.account.type.CustomerType}*/
+    private String customerMarketType;
     /** 多个账户ID */
     private List<Long> accountIds;
     /** 多个卡号 */
@@ -34,6 +39,25 @@ public class UserAccountCardQuery extends BaseDto {
     private String keyword;
     /**是否要排除异常状态的账户 ex：卡退还、账户被禁用*/
     private Integer excludeUnusualState;
+    /**标记是否是最新的卡*/
+    @JSONField(deserialize = false)
+    private Integer last;
+
+    public String getCustomerMarketType() {
+        return customerMarketType;
+    }
+
+    public void setCustomerMarketType(String customerMarketType) {
+        this.customerMarketType = customerMarketType;
+    }
+
+    public Integer getLast() {
+        return last;
+    }
+
+    public void setLast(Integer last) {
+        this.last = last;
+    }
 
     public String getCustomerCertificateNumber() {
         return customerCertificateNumber;
@@ -156,5 +180,6 @@ public class UserAccountCardQuery extends BaseDto {
                 ", excludeUnusualState=" + excludeUnusualState +
                 '}';
     }
+
 }
 

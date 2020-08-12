@@ -118,6 +118,9 @@
             <if test="customerCertificateNumber!=null and customerCertificateNumber !=''">
                 AND aua.`customer_certificate_number` LIKE concat('%',#{customerCertificateNumber},'%')
             </if>
+            <if test="customerMarketType !=null and customerMarketType !=''">
+                AND aua.`customer_market_type` = #{customerMarketType}
+            </if>
             <if test="accountIds!=null and accountIds.size>0">
                 AND aua.account_id IN
                 <foreach item="item" collection="accountIds" separator="," open="(" close=")" index="">
@@ -135,6 +138,9 @@
             </if>
             <if test="cardType!=null">
                 AND auc.type = #{cardType}
+            </if>
+            <if test="last!=null">
+                AND auc.last = #{last}
             </if>
             <if test="cardState!=null">
                 AND auc.state = #{cardState}
