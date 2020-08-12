@@ -77,7 +77,7 @@ public class GenericGlobalExceptionResolver {
      */
     @ExceptionHandler({BusinessException.class})
     public BaseOutput<?> handlerBusinessException(BusinessException e) {
-        return BaseOutput.create(e.getErrorCode(), e.getMessage());
+        return BaseOutput.create(e.getCode(), e.getMessage());
     }
 
     /**
