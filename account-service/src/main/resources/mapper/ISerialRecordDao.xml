@@ -269,8 +269,8 @@
 		<if test="operateTimeEnd != null and operateTimeEnd != ''">
 			and `operate_time` &lt;= #{operateTimeEnd}
 		</if>
-		<if test="sort != null and sort != '' and order != null and order != ''">
-			ORDER BY ${sort} ${order}
+		<if test="serialSort != null and serialSort != ''">
+			ORDER BY ${serialSort}
 		</if>
 	</select>
 </mapper>
