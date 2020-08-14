@@ -1,6 +1,7 @@
 package com.dili.account.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.dili.account.dto.AccountSimpleResponseDto;
 import com.dili.account.dto.UserAccountCardQuery;
 import com.dili.account.dto.UserAccountCardResponseDto;
@@ -123,7 +124,9 @@ public class QueryAccountController {
     public BaseOutput<AccountSimpleResponseDto> getInfoByCardNo(String cardNo) {
         LOGGER.info("simpleInfo请求参数:{}", cardNo);
         AssertUtils.notEmpty(cardNo, "卡号不能为空");
-        return BaseOutput.successData(accountQueryService.getByCardNoWithBalance(cardNo));
+        AccountSimpleResponseDto dto = accountQueryService.getByCardNoWithBalance(cardNo);
+        LOGGER.info("simpleInfo返回:{}", JSONObject.toJSONString(dto));
+        return BaseOutput.successData(dto);
     }
 
 
