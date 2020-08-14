@@ -47,6 +47,11 @@ public interface IUserAccountDao {
      */
 	int update(UserAccountDo userAccount);
 
+	
+	/**
+	 * 根据证件号修改冗余的客户信息
+	 */
+	int updateCustomerInfo(UserAccountDo userAccount);
     /**
      * 删除
      * @param id
