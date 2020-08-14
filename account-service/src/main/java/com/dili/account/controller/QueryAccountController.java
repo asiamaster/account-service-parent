@@ -1,22 +1,20 @@
 package com.dili.account.controller;
 
+import com.alibaba.fastjson.JSON;
 import com.dili.account.dto.AccountSimpleResponseDto;
 import com.dili.account.dto.UserAccountCardQuery;
 import com.dili.account.dto.UserAccountCardResponseDto;
 import com.dili.account.dto.UserAccountSingleQueryDto;
-import com.dili.account.exception.AccountBizException;
 import com.dili.account.service.IAccountQueryService;
 import com.dili.account.util.AssertUtils;
 import com.dili.account.validator.AccountValidator;
 import com.dili.account.validator.ConstantValidator;
-import com.dili.ss.constant.ResultCode;
 import com.dili.ss.domain.BaseOutput;
 import com.dili.ss.domain.PageOutput;
 import com.google.common.collect.Lists;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -47,6 +45,7 @@ public class QueryAccountController {
      */
     @GetMapping("/getOneAccountCard/{cardNo}")
     public BaseOutput<UserAccountCardResponseDto> getOneAccountCard(@PathVariable String cardNo) {
+        LOGGER.info("getOneAccountCard请求参数:{}", cardNo);
         AssertUtils.notEmpty(cardNo, "卡号不能为空");
         UserAccountCardQuery queryParam = new UserAccountCardQuery();
         queryParam.setCardNos(Lists.newArrayList(cardNo));
@@ -109,6 +108,7 @@ public class QueryAccountController {
      */
     @PostMapping("/getList")
     public BaseOutput<List<UserAccountCardResponseDto>> getList(@RequestBody UserAccountCardQuery param) {
+        LOGGER.info("getList请求参数:{}", JSON.toJSONString(param));
         AssertUtils.notNull(param.getFirmId(), "市场id不能为空");
         return BaseOutput.successData(accountQueryService.getListByConditionForRest(param));
     }
@@ -121,23 +121,22 @@ public class QueryAccountController {
      */
     @GetMapping("/simpleInfo")
     public BaseOutput<AccountSimpleResponseDto> getInfoByCardNo(String cardNo) {
-        if (StringUtils.isBlank(cardNo)) {
-            throw new AccountBizException(ResultCode.DATA_ERROR, "卡号不能为空");
-        }
+        LOGGER.info("simpleInfo请求参数:{}", cardNo);
+        AssertUtils.notEmpty(cardNo, "卡号不能为空");
         return BaseOutput.successData(accountQueryService.getByCardNoWithBalance(cardNo));
     }
 
 
     /**
-    * @author miaoguoxin
-    * @date 2020/8/12
-    */
-    private  UserAccountCardQuery convertQueryParams(@Validated(AccountValidator.SingleQuery.class) @RequestBody UserAccountSingleQueryDto param) {
+     * @author miaoguoxin
+     * @date 2020/8/12
+     */
+    private UserAccountCardQuery convertQueryParams(@Validated(AccountValidator.SingleQuery.class) @RequestBody UserAccountSingleQueryDto param) {
         UserAccountCardQuery query = new UserAccountCardQuery();
-        if (StringUtils.isNoneBlank(param.getCardNo())){
+        if (StringUtils.isNoneBlank(param.getCardNo())) {
             query.setCardNos(Lists.newArrayList(param.getCardNo()));
         }
-        if (param.getAccountId() != null){
+        if (param.getAccountId() != null) {
             query.setAccountIds(Lists.newArrayList(param.getAccountId()));
         }
         return query;
