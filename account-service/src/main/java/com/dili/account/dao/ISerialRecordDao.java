@@ -10,7 +10,6 @@ import java.util.List;
  * 业务端账户流水
  * @author bob<>
  */
-@Mapper
 public interface ISerialRecordDao {
 	/**
      * 列表查询

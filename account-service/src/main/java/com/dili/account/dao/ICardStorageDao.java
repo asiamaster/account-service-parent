@@ -12,7 +12,6 @@ import com.dili.account.entity.CardStorageDo;
  * 卡片仓库，所有新开卡必须来至该表
  * @author bob<>
  */
-@Mapper
 public interface ICardStorageDao {
 	
 	/**

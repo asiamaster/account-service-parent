@@ -10,7 +10,6 @@ import java.util.List;
  * 用户卡片信息（包括电子卡）
  * @author bob<>
  */
-@Mapper
 public interface IUserCardDao {
     /**
      * 列表查询

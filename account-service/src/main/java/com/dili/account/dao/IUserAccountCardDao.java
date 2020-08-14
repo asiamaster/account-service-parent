@@ -11,7 +11,6 @@ import java.util.List;
  * @Date: 2020/6/19 12:22
  * @Description: 用于account_user_account和account_user_card连表操作
  */
-@Mapper
 public interface IUserAccountCardDao {
 
     /**

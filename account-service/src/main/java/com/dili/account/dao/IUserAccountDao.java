@@ -10,7 +10,6 @@ import com.dili.account.entity.UserAccountDo;
  * 用户账户信息
  * @author bob<>
  */
-@Mapper
 public interface IUserAccountDao {
 	/**
      * 列表查询
