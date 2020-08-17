@@ -1,11 +1,9 @@
 package com.dili.account.dto;
 
-import com.alibaba.fastjson.annotation.JSONField;
-import org.springframework.format.annotation.DateTimeFormat;
-
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+
+import com.alibaba.fastjson.annotation.JSONField;
 
 /**
  * 客户基础数据

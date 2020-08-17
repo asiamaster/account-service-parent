@@ -1,14 +1,5 @@
 package com.dili.account.listener;
 
-import cn.hutool.core.util.StrUtil;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONObject;
-import com.dili.account.entity.SerialRecordDo;
-import com.dili.account.service.IAccountManageService;
-import com.dili.account.service.ISerialRecordService;
-import com.dili.customer.sdk.constants.MqConstant;
-import com.dili.customer.sdk.domain.Customer;
-import com.rabbitmq.client.Channel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.amqp.core.ExchangeTypes;
@@ -21,9 +12,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.Resource;
-import java.io.IOException;
-import java.util.List;
+import com.alibaba.fastjson.JSONObject;
+import com.dili.account.service.IAccountManageService;
+import com.dili.customer.sdk.constants.MqConstant;
+import com.dili.customer.sdk.domain.Customer;
+import com.rabbitmq.client.Channel;
+
+import cn.hutool.core.util.StrUtil;
 
 /**
  * @description： 

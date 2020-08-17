@@ -1,9 +1,6 @@
 package com.dili.account.util;
 
-import cn.hutool.core.util.RandomUtil;
-
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
 
 /**
  * 密码加密散列工具类

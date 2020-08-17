@@ -1,10 +1,9 @@
 package com.dili.account.dao;
 
+import java.util.List;
+
 import com.dili.account.dto.SerialQueryDto;
 import com.dili.account.entity.SerialRecordDo;
-import org.apache.ibatis.annotations.Mapper;
-
-import java.util.List;
 
 /**
  * 业务端账户流水

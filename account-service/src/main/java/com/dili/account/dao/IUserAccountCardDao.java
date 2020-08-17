@@ -1,10 +1,9 @@
 package com.dili.account.dao;
 
+import java.util.List;
+
 import com.dili.account.dto.UserAccountCardQuery;
 import com.dili.account.entity.CardAggregationWrapper;
-import org.apache.ibatis.annotations.Mapper;
-
-import java.util.List;
 
 /**
  * @Auther: miaoguoxin

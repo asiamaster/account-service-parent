@@ -1,19 +1,20 @@
 package com.dili.account.controller;
 
-import cn.hutool.core.collection.CollUtil;
+import java.util.List;
+
+import javax.annotation.Resource;
+
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
 import com.dili.account.dto.SerialQueryDto;
 import com.dili.account.entity.SerialRecordDo;
 import com.dili.account.service.ISerialRecordService;
 import com.dili.ss.domain.BaseOutput;
 import com.dili.ss.domain.PageOutput;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-import javax.annotation.Resource;
-import java.util.List;
+import cn.hutool.core.collection.CollUtil;
 
 /**
  * 操作流水api
@@ -22,7 +23,6 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/api/serial")
 public class SerialRecordController {
-    private static final Logger LOGGER = LoggerFactory.getLogger(SerialRecordController.class);
 
     @Resource
     private ISerialRecordService serialRecordService;

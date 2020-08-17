@@ -1,8 +1,5 @@
 package com.dili.account.dto;
 
-
-import javax.validation.constraints.NotBlank;
-
 /**
  * @author:      xiaosa
  * @date:        2020/4/27

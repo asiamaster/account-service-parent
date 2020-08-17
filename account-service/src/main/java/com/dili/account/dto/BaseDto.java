@@ -14,7 +14,9 @@ import java.io.Serializable;
  * @Description:
  */
 public class BaseDto implements Serializable {
-    /**操作员id*/
+    /** */
+	private static final long serialVersionUID = 746716184736078528L;
+	/**操作员id*/
     private Long opId;
     /**操作员名字*/
     private String opName;

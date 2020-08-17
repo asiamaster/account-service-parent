@@ -8,7 +8,9 @@ import java.io.Serializable;
  * @Description: 用于接收当前操作员信息
  */
 public class OperatorRequestDto implements Serializable {
-    /**操作员id*/
+    /** */
+	private static final long serialVersionUID = 81402680656397356L;
+	/**操作员id*/
     private Long opId;
     /**操作员名字*/
     private String opName;

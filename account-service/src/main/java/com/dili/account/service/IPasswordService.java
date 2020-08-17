@@ -1,7 +1,6 @@
 package com.dili.account.service;
 
 import com.dili.account.dto.CardRequestDto;
-import com.dili.account.dto.PasswordManageResponseDto;
 
 /**
  * @description： 重置密码修改密码等

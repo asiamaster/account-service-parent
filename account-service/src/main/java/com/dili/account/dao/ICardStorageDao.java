@@ -2,8 +2,6 @@ package com.dili.account.dao;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Mapper;
-
 import com.dili.account.dto.BatchActivateCardDto;
 import com.dili.account.dto.CardRepoQueryParam;
 import com.dili.account.entity.CardStorageDo;

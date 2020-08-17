@@ -1,10 +1,10 @@
 package com.dili.account.rpc.resolver;
 
-import com.dili.account.dto.BalanceResponseDto;
-import com.dili.account.dto.CreateTradeRequestDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.dili.account.dto.BalanceResponseDto;
+import com.dili.account.dto.CreateTradeRequestDto;
 import com.dili.account.dto.FundAccountDto;
 import com.dili.account.dto.PayAccountDto;
 import com.dili.account.dto.PayCreateFundReponseDto;
@@ -21,8 +21,6 @@ import com.dili.ss.domain.BaseOutput;
  */
 @Component
 public class PayRpcResolver {
-	private Long appid = 100101L;
-	private String token = "abcd1234";
 	@Autowired
 	private PayRpc payRpc;
 
