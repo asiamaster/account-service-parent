@@ -74,7 +74,8 @@ public class QueryAccountController {
     @PostMapping("/getSingle")
     public BaseOutput<UserAccountCardResponseDto> getSingle(@RequestBody @Validated(AccountValidator.SingleQuery.class)
                                                                     UserAccountSingleQueryDto param) {
-        UserAccountCardQuery query = this.convertQueryParams(param);
+    	LOGGER.info("查询单个getSingle请求参数:{}", JSON.toJSONString(param));
+    	UserAccountCardQuery query = this.convertQueryParams(param);
         return BaseOutput.successData(accountQueryService.getSingleForRest(query, true));
     }
 
@@ -86,7 +87,8 @@ public class QueryAccountController {
     @PostMapping("/getSingleWithoutValidate")
     public BaseOutput<UserAccountCardResponseDto> getSingleWithoutValidate(@RequestBody @Validated(AccountValidator.SingleQuery.class)
                                                                                    UserAccountSingleQueryDto param) {
-        UserAccountCardQuery query = this.convertQueryParams(param);
+    	LOGGER.info("查询单个getSingleWithoutValidate请求参数:{}", JSON.toJSONString(param));
+    	UserAccountCardQuery query = this.convertQueryParams(param);
         return BaseOutput.successData(accountQueryService.getSingleForRest(query, false));
     }
 
@@ -98,7 +100,8 @@ public class QueryAccountController {
     @PostMapping("/getPage")
     public PageOutput<List<UserAccountCardResponseDto>> getPage(@RequestBody @Validated(ConstantValidator.Page.class)
                                                                         UserAccountCardQuery param) {
-        AssertUtils.notNull(param.getFirmId(), "市场id不能为空");
+    	LOGGER.info("分页条件查询getPage请求参数:{}", JSON.toJSONString(param));
+    	AssertUtils.notNull(param.getFirmId(), "市场id不能为空");
         return accountQueryService.getPageByConditionForRest(param);
     }
 
