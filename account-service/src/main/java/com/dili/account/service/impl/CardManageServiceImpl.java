@@ -78,10 +78,13 @@ public class CardManageServiceImpl implements ICardManageService {
         UserCardDo userCard = wrapper.getUserCard();
 
         this.validateCanReportLoss(userCard, cardParam);
-        int update = userCardDao.updateState(userAccount.getAccountId(), CardStatus.LOSS.getCode(), userCard.getVersion());
-        if (update == 0) {
-            throw new AccountBizException(ResultCode.DATA_ERROR, "退卡操作失败");
-        }
+        this.changeState(userCard,CardStatus.LOSS.getCode());
+        userCardDao.update(userCard);
+
+//        int update = userCardDao.updateState(userAccount.getAccountId(), CardStatus.LOSS.getCode(), userCard.getVersion());
+//        if (update == 0) {
+//            throw new AccountBizException(ResultCode.DATA_ERROR, "退卡操作失败");
+//        }
     }
 
 

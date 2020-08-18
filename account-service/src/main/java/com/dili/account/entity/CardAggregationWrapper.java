@@ -8,6 +8,8 @@ package com.dili.account.entity;
 public class CardAggregationWrapper {
 	/**账户id*/
 	private Long accountId;
+	/***/
+	private String cardNo;
 	/** 市场编码 */
 	private Long firmId;
 	/** 禁用状态（管理员使用:1-启用2-禁用） */
@@ -16,6 +18,14 @@ public class CardAggregationWrapper {
 	private UserAccountDo userAccount;
 	/**卡信息*/
 	private UserCardDo userCard;
+
+	public String getCardNo() {
+		return cardNo;
+	}
+
+	public void setCardNo(String cardNo) {
+		this.cardNo = cardNo;
+	}
 
 	public Long getAccountId() {
 		return accountId;
