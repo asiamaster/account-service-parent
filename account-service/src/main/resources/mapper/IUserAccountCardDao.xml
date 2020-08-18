@@ -2,9 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.dili.account.dao.IUserAccountCardDao">
 
-
+    <!--一条数据同时需要account_id和card_no才能确定唯一-->
     <resultMap id="Aggregation_Result" type="com.dili.account.entity.CardAggregationWrapper">
         <id column="account_id" property="accountId"/>
+        <id column="card_no" property="cardNo"/>
         <result column="firm_id" property="firmId"/>
         <association property="userAccount" javaType="com.dili.account.entity.UserAccountDo">
             <result column="id" property="id"/>
