@@ -15,7 +15,9 @@ import java.io.Serializable;
         "accountId", "cardNo"
 }, groups = AccountValidator.SingleQuery.class, message = "至少需要一个查询条件")
 public class UserAccountSingleQueryDto implements Serializable {
-    /**账户ID */
+    /** */
+	private static final long serialVersionUID = 3514423425377026650L;
+	/**账户ID */
     @Min(value = 1, message = "非法的账户id", groups = AccountValidator.SingleQuery.class)
     private Long accountId;
     /** 卡号 */

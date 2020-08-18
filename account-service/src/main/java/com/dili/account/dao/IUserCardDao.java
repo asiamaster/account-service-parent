@@ -1,16 +1,15 @@
 package com.dili.account.dao;
 
-import com.dili.account.entity.UserCardDo;
-import org.apache.ibatis.annotations.Mapper;
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
-import java.util.List;
+import com.dili.account.entity.UserCardDo;
 
 /**
  * 用户卡片信息（包括电子卡）
  * @author bob<>
  */
-@Mapper
 public interface IUserCardDao {
     /**
      * 列表查询

@@ -9,7 +9,9 @@ import java.io.Serializable;
  * @Date: 2020/7/7 15:21
  */
 public class AccountSimpleResponseDto implements Serializable {
-    /**账户资金信息*/
+    /** */
+	private static final long serialVersionUID = 965655137183253419L;
+	/**账户资金信息*/
     private BalanceResponseDto accountFund;
     /**账户信息*/
     private UserAccountCardResponseDto accountInfo;

@@ -1,14 +1,13 @@
 package com.dili.account.dao;
 
-import org.apache.ibatis.annotations.Mapper;
 import java.util.List;
+
 import com.dili.account.entity.LoginUserDo;
 
 /**
  * 用户电子登录账号
  * @author bob<>
  */
-@Mapper
 public interface ILoginUserDao {
 	/**
      * 列表查询

@@ -4,11 +4,14 @@ import java.util.List;
 
 import javax.annotation.Resource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.alibaba.fastjson.JSONObject;
 import com.dili.account.dto.BatchActivateCardDto;
 import com.dili.account.dto.BatchCardAddStorageDto;
 import com.dili.account.dto.CardAddStorageDto;
@@ -28,6 +31,9 @@ import com.dili.ss.domain.PageOutput;
 @RestController
 @RequestMapping(value = "api/account/cardStorage")
 public class CardStorageController {
+	
+	private static final Logger log = LoggerFactory.getLogger(CardStorageController.class);
+
 
 	@Resource
 	private ICardStorageService cardStorageService;
@@ -37,6 +43,7 @@ public class CardStorageController {
 	 */
 	@PostMapping("pageList")
 	public PageOutput<List<CardStorageDo>> pageList(@RequestBody CardRepoQueryParam param) {
+		log.info("卡片仓库列表查询*****" + JSONObject.toJSONString(param));
 		return cardStorageService.listPage(param);
 	}
 
@@ -45,8 +52,11 @@ public class CardStorageController {
 	 */
 	@PostMapping("getCardStorageByCardNo")
 	public BaseOutput<CardStorageDo> getCardStorageByCardNo(@RequestBody CardRepoQueryParam param) {
+		log.info("获取卡片在仓库中的状态*****" + JSONObject.toJSONString(param));
 		AssertUtils.notEmpty(param.getCardNo(), "卡号不能为空!");
-		return BaseOutput.successData(cardStorageService.getByCardNo(param.getCardNo()));
+		CardStorageDo cardStorage = cardStorageService.getByCardNo(param.getCardNo());
+		log.info("获取卡片在仓库中的状态*****" + JSONObject.toJSONString(cardStorage));
+		return BaseOutput.successData(cardStorage);
 	}
 
 	/**
@@ -54,6 +64,7 @@ public class CardStorageController {
 	 */
 	@PostMapping("add")
 	public BaseOutput<?> addCard(@RequestBody CardAddStorageDto addCardInfo) {
+		log.info("卡片入库*****" + JSONObject.toJSONString(addCardInfo));
 		AssertUtils.notEmpty(addCardInfo.getCardNo(), "卡号不能为空!");
 		AssertUtils.notEmpty(addCardInfo.getCreator(), "入库操作人员不能为空!");
 		AssertUtils.notNull(addCardInfo.getFirmId(), "卡片所属市场不能为空!");
@@ -67,6 +78,7 @@ public class CardStorageController {
 	 */
 	@PostMapping("batchActivate")
 	public BaseOutput<?> batchActivate(@RequestBody BatchActivateCardDto dto) {
+		log.info("卡片批量激活*****" + JSONObject.toJSONString(dto));
 		AssertUtils.notNull(dto.getCardNos(), "参数校验失败：卡号缺失!");
 		cardStorageService.batchActivate(dto.getCardNos());
 		return BaseOutput.success();
@@ -77,6 +89,7 @@ public class CardStorageController {
 	 */
 	@PostMapping("batchAdd")
 	public BaseOutput<?> barchAddCard(@RequestBody BatchCardAddStorageDto batchInfo) {
+		log.info("卡片批量入库*****" + JSONObject.toJSONString(batchInfo));
 		AssertUtils.notEmpty(batchInfo.getCreator(), "入库操作人员不能为空!");
 		AssertUtils.notNull(batchInfo.getFirmId(), "卡片所属市场不能为空!");
 		AssertUtils.notNull(batchInfo.getStartCardNo(), "起始卡号不能为空!");
@@ -90,6 +103,7 @@ public class CardStorageController {
 	 */
 	@PostMapping("void")
 	public BaseOutput<?> voidCard(@RequestBody CardAddStorageDto voidCardInfo) {
+		log.info("卡片作废*****" + JSONObject.toJSONString(voidCardInfo));
 		AssertUtils.notEmpty(voidCardInfo.getCardNo(), "卡号不能为空!");
 		cardStorageService.voidCard(voidCardInfo.getCardNo(), voidCardInfo.getNotes());
 		return BaseOutput.success();
@@ -100,6 +114,7 @@ public class CardStorageController {
 	 */
 	@PostMapping("activateCardByInUse")
 	public BaseOutput<?> activateCardByInUse(@RequestBody CardAddStorageDto cardInfo) {
+		log.info("卡片由使用中转为激活状态*****" + JSONObject.toJSONString(cardInfo));
 		AssertUtils.notEmpty(cardInfo.getCardNo(), "卡号不能为空!");
 		cardStorageService.activateCard(cardInfo.getCardNo());
 		return BaseOutput.success();

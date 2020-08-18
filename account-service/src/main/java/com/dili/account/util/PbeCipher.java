@@ -1,12 +1,12 @@
 package com.dili.account.util;
 
+import java.security.Key;
+
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.PBEKeySpec;
 import javax.crypto.spec.PBEParameterSpec;
-import java.security.Key;
-import java.util.Random;
 
 /**
  * PBE算法工具类
@@ -37,12 +37,12 @@ public class PbeCipher {
         return cipher.doFinal(data);
     }
 
-    private static byte[] initSalt() throws Exception {
-        byte[] salt = new byte[8];
-        Random random = new Random();
-        random.nextBytes(salt);
-        return salt;
-    }
+//    private static byte[] initSalt() throws Exception {
+//        byte[] salt = new byte[8];
+//        Random random = new Random();
+//        random.nextBytes(salt);
+//        return salt;
+//    }
 
     private static Key toKey(String password) throws Exception {
         PBEKeySpec keySpec = new PBEKeySpec(password.toCharArray());

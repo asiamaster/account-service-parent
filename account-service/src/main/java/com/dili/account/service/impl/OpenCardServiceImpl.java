@@ -41,6 +41,8 @@ import com.dili.account.type.YesNoType;
 import com.dili.account.util.PasswordUtils;
 import com.google.common.collect.Lists;
 
+import io.seata.spring.annotation.GlobalTransactional;
+
 /**
  * @description： 开卡service实现
  * 
@@ -65,6 +67,7 @@ public class OpenCardServiceImpl implements IOpenCardService {
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
+	@GlobalTransactional(rollbackFor = Exception.class)
 	public OpenCardResponseDto openMasterCard(OpenCardDto openCardInfo) {
 		// 判断卡状态是否异常
 		if (accountQueryService.cardExist(openCardInfo.getCardNo())) {

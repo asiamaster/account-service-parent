@@ -1,16 +1,15 @@
 package com.dili.account.dao;
 
-import org.apache.ibatis.annotations.Mapper;
+import java.util.List;
+
 import org.apache.ibatis.annotations.Param;
 
-import java.util.List;
 import com.dili.account.entity.UserAccountDo;
 
 /**
  * 用户账户信息
  * @author bob<>
  */
-@Mapper
 public interface IUserAccountDao {
 	/**
      * 列表查询
@@ -48,6 +47,11 @@ public interface IUserAccountDao {
      */
 	int update(UserAccountDo userAccount);
 
+	
+	/**
+	 * 根据证件号修改冗余的客户信息
+	 */
+	int updateCustomerInfo(UserAccountDo userAccount);
     /**
      * 删除
      * @param id

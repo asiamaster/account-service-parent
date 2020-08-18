@@ -8,7 +8,9 @@ import java.io.Serializable;
  * @Description: 客户信息
  */
 public class CustomerResponseDto implements Serializable {
-    private Long userInfoId;
+    /** */
+	private static final long serialVersionUID = 166080921451941277L;
+	private Long userInfoId;
     /** 用户姓名 */
     private String name;
     /** 客户类型（个人，对公） */

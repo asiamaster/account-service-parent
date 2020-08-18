@@ -1,10 +1,9 @@
 package com.dili.account.dto;
 
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.annotation.JSONField;
-
 import java.time.LocalDateTime;
 import java.util.List;
+
+import com.alibaba.fastjson.annotation.JSONField;
 
 /**
  * @description： 用户信息查询参数
@@ -13,7 +12,9 @@ import java.util.List;
  * @time ：2020年4月26日下午4:30:03
  */
 public class UserAccountCardQuery extends BaseDto {
-    /**客户id*/
+    /** */
+	private static final long serialVersionUID = -3691031883377218795L;
+	/**客户id*/
     private List<Long> customerIds;
     /**客户名称*/
     private String customerName;

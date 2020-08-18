@@ -2,8 +2,6 @@ package com.dili.account.dao;
 
 import java.util.List;
 
-import org.apache.ibatis.annotations.Mapper;
-
 import com.dili.account.dto.BatchActivateCardDto;
 import com.dili.account.dto.CardRepoQueryParam;
 import com.dili.account.entity.CardStorageDo;
@@ -12,7 +10,6 @@ import com.dili.account.entity.CardStorageDo;
  * 卡片仓库，所有新开卡必须来至该表
  * @author bob<>
  */
-@Mapper
 public interface ICardStorageDao {
 	
 	/**

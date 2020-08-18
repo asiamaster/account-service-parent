@@ -7,7 +7,9 @@ import java.util.List;
  * @author xuliang
  */
 public class SerialQueryDto extends SerialDto {
-    /** 资金项目*/
+    /** */
+	private static final long serialVersionUID = -8757780422239402172L;
+	/** 资金项目*/
     private Integer fundItem;
     /** 账户ID*/
     private Long accountId;
