@@ -23,8 +23,8 @@ import java.util.List;
  * rabbit mq 消息监听器
  */
 @Component
-public class RabbitMQListener {
-    private static final Logger LOGGER = LoggerFactory.getLogger(RabbitMQListener.class);
+public class SerialMQListener {
+    private static final Logger LOGGER = LoggerFactory.getLogger(SerialMQListener.class);
     //账户流水
     public static final String EXCHANGE_ACCOUNT_SERIAL = "exchange_account_serial";
     public static final String QUEUE_ACCOUNT_SERIAL = "queue_account_serial";
