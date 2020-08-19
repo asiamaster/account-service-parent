@@ -1,6 +1,5 @@
 package com.dili.account.dto;
 
-import com.dili.account.type.CardCategory;
 import com.dili.account.type.CardType;
 import com.dili.account.type.CreateSource;
 import com.dili.account.type.UsePermissionType;
@@ -9,7 +8,7 @@ import com.dili.account.type.UsePermissionType;
  * @description： 开卡所需要的用户信息
  *
  * @author ：WangBo
- * @time ：2020年4月23日下午5:30:18
+ * @time ：2020年6月23日下午5:30:18
  */
 public class OpenCardDto {
 	/** 用户姓名 */
@@ -51,10 +50,8 @@ public class OpenCardDto {
 	private Long creatorId;
 	/** 员工名称-保留字段 */
 	private String creator;
-	/** 卡类别 {@link CardCategory} */
-	private Integer category;
-	/** {@link CardType} */
-	private Integer seinsweise;
+	/** 卡类型 {@link CardType} */
+	private Integer cardType;
 	/** 父账号ID */
 	private Long parentAccountId;
 	/** 商户ID */
@@ -110,20 +107,12 @@ public class OpenCardDto {
 		this.cardNo = cardNo;
 	}
 
-	public Integer getCategory() {
-		return category;
+	public Integer getCardType() {
+		return cardType;
 	}
 
-	public void setCategory(Integer category) {
-		this.category = category;
-	}
-
-	public Integer getSeinsweise() {
-		return seinsweise;
-	}
-
-	public void setSeinsweise(Integer seinsweise) {
-		this.seinsweise = seinsweise;
+	public void setCardType(Integer cardType) {
+		this.cardType = cardType;
 	}
 
 	public Long getParentAccountId() {

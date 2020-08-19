@@ -13,17 +13,14 @@ import com.alibaba.fastjson.JSONObject;
 import com.dili.account.dto.OpenCardDto;
 import com.dili.account.dto.OpenCardResponseDto;
 import com.dili.account.service.IOpenCardService;
+import com.dili.account.type.CardType;
 import com.dili.account.util.AssertUtils;
 import com.dili.ss.domain.BaseOutput;
 
 /**
  *	开卡服务          
  * @author ：WangBo
- * @time ：2020年4月28日下午3:36:22
- */
-/**
- * @author mrkin
- *
+ * @time ：2020年6月28日下午3:36:22
  */
 @RestController
 @RequestMapping(value = "api/account")
@@ -34,34 +31,26 @@ public class OpenCardController {
 	@Resource
 	private IOpenCardService openCardService;
 
+	
 	/**
-	 * 主卡开卡
+	 * 开卡
 	 * 
 	 * @throws InterruptedException
 	 */
-	@PostMapping("openMasterCard")
-	public BaseOutput<?> openMasterCard(@RequestBody OpenCardDto openCardInfo) {
-		log.info("api/account/openMasterCard *****" + JSONObject.toJSONString(openCardInfo));
-		// 主要参数校验
-		checkMasterParam(openCardInfo);
+	@PostMapping("openCard")
+	public BaseOutput<?> openCard(@RequestBody OpenCardDto openCardInfo) {
+		log.info("api/account/openCard*****" + JSONObject.toJSONString(openCardInfo));
 		OpenCardResponseDto response = null;
-		// 开卡
-		response = openCardService.openMasterCard(openCardInfo);
+		if(CardType.MASTER.getCode() == openCardInfo.getCardType()) {
+			checkMasterParam(openCardInfo);
+			response = openCardService.openMasterCard(openCardInfo);
+		}else {
+			AssertUtils.notNull(openCardInfo.getParentAccountId(), "主卡信息不能为空!");
+			response = openCardService.openSlaveCard(openCardInfo);
+		}
 		return BaseOutput.success("success").setData(response);
 	}
-
-	/**
-	 * 副卡开卡
-	 */
-	@PostMapping("openSlaveCard")
-	public BaseOutput<?> openSlaveCard(@RequestBody OpenCardDto openCardInfo) throws Exception {
-		log.info("api/account/openSlaveCard *****" + JSONObject.toJSONString(openCardInfo));
-		// 主要参数校验
-		AssertUtils.notNull(openCardInfo.getParentAccountId(), "主卡信息不能为空!");
-		OpenCardResponseDto response = openCardService.openSlaveCard(openCardInfo);
-		return BaseOutput.success("success").setData(response);
-	}
-
+	
 	/**
 	 * 主卡参数校验
 	 * 
