@@ -25,19 +25,12 @@ public class AccountManageServiceImpl implements IAccountManageService {
 	@Autowired
 	private IUserAccountDao userAccountDao;
 	@Autowired
-	private IAccountQueryService accountQueryService;
-	@Autowired
 	IOpenCardService openCardService;
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public void frozen(CardRequestDto cardRequestDto) {
-		CardAggregationWrapper accountWrapper = accountQueryService.getByAccountIdForGenericOp(cardRequestDto.getAccountId());
-		UserAccountDo userAccount = accountWrapper.getUserAccount();
-		if (!userAccountDao.updateDisabledState(userAccount.getAccountId(), DisableState.DISABLED.getCode(),
-				userAccount.getVersion())) {
-			throw new AccountBizException(ResultCode.DATA_ERROR, "数据更新错误,冻结失败,请重试");
-		}
+		this.updateDisabledState(cardRequestDto, DisableState.DISABLED);
 	}
 
 	@Override
