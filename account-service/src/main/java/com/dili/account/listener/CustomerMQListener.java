@@ -43,6 +43,7 @@ public class CustomerMQListener {
     public void processCustomerInfo(Channel channel, Message message) {
         try {
             String data = new String(message.getBody(), "UTF-8");
+			LOGGER.info("客户信息修改同步>>>>>" + data);
             if (!StrUtil.isBlank(data)) {
             	Customer customer = JSONObject.parseObject(data,Customer.class);
             	accountManageService.updateCustomerInfo(customer);
