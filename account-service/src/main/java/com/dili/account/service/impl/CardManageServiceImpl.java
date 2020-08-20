@@ -8,11 +8,11 @@ import com.dili.account.entity.CardStorageDo;
 import com.dili.account.entity.UserAccountDo;
 import com.dili.account.entity.UserCardDo;
 import com.dili.account.exception.AccountBizException;
-import com.dili.account.rpc.resolver.PayRpcResolver;
 import com.dili.account.service.IAccountQueryService;
 import com.dili.account.service.ICardManageService;
 import com.dili.account.service.ICardStorageService;
 import com.dili.account.service.IPasswordService;
+import com.dili.account.type.CardLastState;
 import com.dili.account.type.CardStatus;
 import com.dili.ss.constant.ResultCode;
 import org.apache.commons.lang3.StringUtils;
@@ -21,7 +21,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
-import javax.annotation.Resource;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -43,8 +42,6 @@ public class CardManageServiceImpl implements ICardManageService {
     private IUserCardDao userCardDao;
     @Autowired
     private IUserAccountDao userAccountDao;
-    @Resource
-    private PayRpcResolver payRpcResolver;
 
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -74,17 +71,11 @@ public class CardManageServiceImpl implements ICardManageService {
     @Transactional(rollbackFor = Exception.class)
     public void reportLoss(CardRequestDto cardParam) {
         CardAggregationWrapper wrapper = accountQueryService.getByAccountIdForGenericOp(cardParam.getAccountId());
-        UserAccountDo userAccount = wrapper.getUserAccount();
         UserCardDo userCard = wrapper.getUserCard();
 
         this.validateCanReportLoss(userCard, cardParam);
-        this.changeState(userCard,CardStatus.LOSS.getCode());
+        this.changeState(userCard, CardStatus.LOSS.getCode());
         userCardDao.update(userCard);
-
-//        int update = userCardDao.updateState(userAccount.getAccountId(), CardStatus.LOSS.getCode(), userCard.getVersion());
-//        if (update == 0) {
-//            throw new AccountBizException(ResultCode.DATA_ERROR, "退卡操作失败");
-//        }
     }
 
 
@@ -99,7 +90,7 @@ public class CardManageServiceImpl implements ICardManageService {
         //退还旧卡
         this.changeState(oldCard, CardStatus.RETURNED.getCode());
         //赋值为旧卡状态
-        oldCard.setLast(0);
+        oldCard.setLast(CardLastState.NO.getCode());
 
         userCardDao.update(oldCard);
         userCardDao.save(newCard);
@@ -152,11 +143,11 @@ public class CardManageServiceImpl implements ICardManageService {
         if (userCard.getState() != CardStatus.NORMAL.getCode()) {
             throw new AccountBizException(ResultCode.DATA_ERROR, "该卡为非正常状态，不能进行此操作");
         }
-        if (userCard.getCardNo().equalsIgnoreCase(cardParam.getNewCardNo())){
+        if (userCard.getCardNo().equalsIgnoreCase(cardParam.getNewCardNo())) {
             throw new AccountBizException(ResultCode.DATA_ERROR, "新老卡片的卡号不能相同");
         }
         //换卡可以不需要密码
-        if (StringUtils.isNoneBlank(cardParam.getLoginPwd())){
+        if (StringUtils.isNoneBlank(cardParam.getLoginPwd())) {
             passwordService.checkPassword(cardParam.getAccountId(), cardParam.getLoginPwd());
         }
         //主卡换主卡，副卡换副卡

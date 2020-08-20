@@ -11,57 +11,33 @@ import com.dili.account.entity.UserCardDo;
  */
 public interface ICardManageService {
 
-	/**
-	 * 退卡
-	 */
-	void returnCard(CardRequestDto cardParam);
+    /**
+     * 退卡
+     */
+    void returnCard(CardRequestDto cardParam);
 
-//	/**
-//	 * 换卡
-//	 */
-//	public void changeCard(CardManageParamDto cardParam);
-//
-//	/**
-//	 * 补卡
-//	 */
-//	public void reissueCard(CardManageParamDto cardParam);
-//
-	/**
-	* 挂失
-	* @author miaoguoxin
-	* @date 2020/6/17
-	*/
-	 void reportLoss(CardRequestDto cardParam);
-	 /**
-	 * 换卡
-	 * @author miaoguoxin
-	 * @date 2020/6/17
-	 */
-	 UserCardDo changeCard(CardRequestDto cardParam);
+    /**
+     * 挂失
+     * @author miaoguoxin
+     * @date 2020/6/17
+     */
+    void reportLoss(CardRequestDto cardParam);
 
-	/**
-	 * 解挂卡片
-	 */
-	void unLostCard(CardRequestDto cardParam);
+    /**
+     * 换卡
+     * @author miaoguoxin
+     * @date 2020/6/17
+     */
+    UserCardDo changeCard(CardRequestDto cardParam);
 
-	/**
-	 * 解锁卡片
-	 * @param cardParam
-	 */
+    /**
+     * 解挂卡片
+     */
+    void unLostCard(CardRequestDto cardParam);
+
+    /**
+     * 解锁卡片
+     * @param cardParam
+     */
     void unLockCard(CardRequestDto cardParam);
-//
-//	/**
-//	 * 根据卡号锁定卡
-//	 */
-//	public void lockCard(String cardNo);
-//
-//	/**
-//	 * 根据账户ID锁定卡
-//	 */
-//	public void lockCard(Long accountId);
-//
-//	/**
-//	 * 根据账户ID解锁卡片
-//	 */
-//	public void unLock(Long accountId, String loginPwd);
 }
