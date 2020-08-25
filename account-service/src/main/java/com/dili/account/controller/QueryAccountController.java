@@ -42,18 +42,6 @@ public class QueryAccountController {
 
 
     /**
-     * 根据卡号查卡账户信息
-     */
-    @GetMapping("/getOneAccountCard/{cardNo}")
-    public BaseOutput<UserAccountCardResponseDto> getOneAccountCard(@PathVariable String cardNo) {
-        LOGGER.info("getOneAccountCard请求参数:{}", cardNo);
-        AssertUtils.notEmpty(cardNo, "卡号不能为空");
-        UserAccountCardQuery queryParam = new UserAccountCardQuery();
-        queryParam.setCardNos(Lists.newArrayList(cardNo));
-        return BaseOutput.successData(accountQueryService.getSingleForRest(queryParam, true));
-    }
-
-    /**
      * 根据accountId查卡账户信息
      * @author miaoguoxin
      * @date 2020/7/27

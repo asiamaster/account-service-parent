@@ -1,5 +1,6 @@
 package com.dili.account.dto;
 
+import com.dili.account.common.annotation.SqlXss;
 import com.dili.account.validator.ConstantValidator;
 import com.dili.account.common.annotation.IsOrderBy;
 import org.apache.commons.lang3.StringUtils;
@@ -33,9 +34,10 @@ public class BaseDto implements Serializable {
    // @Range(min = 1, max = 100, message = "每页最少1条，最多100条", groups = ConstantValidator.Page.class)
     private Integer rows;
     /**顺序or降序 ASC、DESC*/
-    @IsOrderBy(message = "排序不正确", groups = ConstantValidator.Page.class)
+    @IsOrderBy(message = "非法的排序顺序", groups = ConstantValidator.Page.class)
     private String order;
     /**排序字段*/
+    @SqlXss(message = "非法的排序字段")
     private String sort;
 
     public BaseDto setDefSort(String defSort) {
