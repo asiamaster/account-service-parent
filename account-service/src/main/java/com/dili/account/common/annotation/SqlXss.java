@@ -1,6 +1,6 @@
 package com.dili.account.common.annotation;
 
-import com.dili.account.validator.OrderByValidator;
+import com.dili.account.validator.SqlXssValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -19,7 +19,7 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 @Target({FIELD})
 @Retention(RUNTIME)
 @Documented
-@Constraint(validatedBy = OrderByValidator.class)
+@Constraint(validatedBy = SqlXssValidator.class)
 public @interface SqlXss {
     String message() default "";
 
