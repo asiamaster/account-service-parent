@@ -176,14 +176,16 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
             throw new AccountBizException(ResultCode.DATA_ERROR, "该卡的主卡不存在");
         }
         CardAggregationWrapper masterWrapper = parentList.get(0);
-        String cardNo = masterWrapper.getUserCard().getCardNo();
-        if (CardStatus.RETURNED.getCode() == userCard.getState()) {
+        UserCardDo masterCard = masterWrapper.getUserCard();
+        UserAccountDo masterAccount = masterWrapper.getUserAccount();
+        String cardNo = masterCard.getCardNo();
+        if (CardStatus.RETURNED.getCode() == masterCard.getState()) {
             throw new AccountBizException(ResultCode.DATA_ERROR, "该卡的主卡【%s】为退还状态，不能进行此操作");
         }
-        if (CardStatus.LOSS.getCode() == masterWrapper.getUserCard().getState()) {
+        if (CardStatus.LOSS.getCode() == masterCard.getState()) {
             throw new AccountBizException(ResultCode.DATA_ERROR, String.format("该卡的主卡【%s】为挂失状态，不能进行此操作", cardNo));
         }
-        if (DisableState.DISABLED.getCode().equals(userAccount.getDisabledState())) {
+        if (DisableState.DISABLED.getCode().equals(masterAccount.getDisabledState())) {
             throw new AccountBizException(ResultCode.DATA_ERROR, String.format("该卡的主卡账户【%s】为禁用状态，不能进行此操作", cardNo));
         }
     }
