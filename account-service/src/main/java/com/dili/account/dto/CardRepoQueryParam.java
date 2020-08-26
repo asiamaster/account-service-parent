@@ -1,13 +1,14 @@
 package com.dili.account.dto;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import com.dili.ss.domain.BaseDomain;
 
 /**
  * @description： 卡片仓库查询参数
- * 
+ *
  * @author ：WangBo
  * @time ：2020年4月28日下午4:14:56
  */
@@ -21,10 +22,10 @@ public class CardRepoQueryParam extends BaseDomain {
 	private Long firmId;
 	/** 操作员ID */
 	private Long creatorId;
-	/** 结束时间 */
-	private LocalDate startDate;
-	/** 开始时间 */
-	private LocalDate endDate;
+	/**开始时间*/
+	private LocalDateTime startDate;
+	/**结束时间*/
+	private LocalDateTime endDate;
 	/** 卡类型 */
 	private Integer type;
 	/** 卡片在仓库状态 */
@@ -67,19 +68,19 @@ public class CardRepoQueryParam extends BaseDomain {
 		this.creatorId = creatorId;
 	}
 
-	public LocalDate getStartDate() {
+	public LocalDateTime getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(LocalDate startDate) {
+	public void setStartDate(LocalDateTime startDate) {
 		this.startDate = startDate;
 	}
 
-	public LocalDate getEndDate() {
+	public LocalDateTime getEndDate() {
 		return endDate;
 	}
 
-	public void setEndDate(LocalDate endDate) {
+	public void setEndDate(LocalDateTime endDate) {
 		this.endDate = endDate;
 	}
 

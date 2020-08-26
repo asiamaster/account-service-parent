@@ -28,9 +28,9 @@ public class UserAccountCardQuery extends BaseDto {
     private List<String> cardNos;
     /** 主账户ID */
     private Long parentAccountId;
-    /**结束时间*/
-    private LocalDateTime startDate;
     /**开始时间*/
+    private LocalDateTime startDate;
+    /**结束时间*/
     private LocalDateTime endDate;
     /**卡类别 {@link com.dili.account.type.CardType}*/
     private Integer cardType;
