@@ -38,7 +38,10 @@
 		<if test="startCardNo != null"><![CDATA[ AND card_no >= #{startCardNo}]]></if>
 		<if test="endCardNo != null"><![CDATA[ AND card_no <= #{endCardNo}]]></if>
 		<if test="firmId != null"><![CDATA[ AND firm_id = #{firmId}]]></if>
-			ORDER BY ${sort} ${order}
+		<if test="sort != null">
+			<![CDATA[ ORDER BY ${sort} ${order} ]]>
+		</if>
+			
 	</select>
 
 	<insert id="save">
