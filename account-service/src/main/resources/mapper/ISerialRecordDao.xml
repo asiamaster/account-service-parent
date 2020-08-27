@@ -272,5 +272,18 @@
 		<if test="serialSort != null and serialSort != ''">
 			ORDER BY ${serialSort}
 		</if>
+		<if test="sort != null and sort != '' and order != null and order != ''">
+			ORDER BY ${sort} ${order}
+		</if>
+		<choose>
+			<when test="serialSort != null and serialSort != ''">
+				ORDER BY ${serialSort}
+			</when>
+			<otherwise>
+				<if test="sort != null and sort != '' and order != null and order != ''">
+					ORDER BY ${sort} ${order}
+				</if>
+			</otherwise>
+		</choose>
 	</select>
 </mapper>
