@@ -178,9 +178,13 @@ public class CardStorageServiceImpl implements ICardStorageService {
 			if (selectList.size() == 1) {
 				throw BizExceptionProxy.exception("入库失败，包含重复卡号" + selectList.get(0).getCardNo());
 			}
-			String existsCardNo1 = selectList.get(0).getCardNo();
-			String existsCardNo2 = selectList.get(selectList.size() - 1).getCardNo();
-			throw BizExceptionProxy.exception("入库失败，包含重复卡号" + existsCardNo2 + "~" + existsCardNo1);
+			Long existsCardNo1 = Long.parseLong(selectList.get(0).getCardNo());
+			Long existsCardNo2 = Long.parseLong(selectList.get(selectList.size() - 1).getCardNo());
+			String errMsg = String.format("入库失败，包含重复卡号%s~%s", existsCardNo1, existsCardNo2);
+			if (existsCardNo1 > existsCardNo2) {
+				errMsg = String.format("入库失败，包含重复卡号%s~%s", existsCardNo2, existsCardNo1);
+			}
+			throw BizExceptionProxy.exception(errMsg);
 		}
 
 		List<CardStorageDo> cardList = new ArrayList<CardStorageDo>();

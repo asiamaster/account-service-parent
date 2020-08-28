@@ -67,7 +67,6 @@ public class OpenCardServiceImpl implements IOpenCardService {
 
 	@Override
 	@Transactional(rollbackFor = Exception.class)
-	@GlobalTransactional(rollbackFor = Exception.class)
 	public OpenCardResponseDto openMasterCard(OpenCardDto openCardInfo) {
 		// 判断卡状态是否异常
 		if (accountQueryService.cardExist(openCardInfo.getCardNo())) {
