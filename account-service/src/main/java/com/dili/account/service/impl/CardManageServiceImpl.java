@@ -65,6 +65,7 @@ public class CardManageServiceImpl implements ICardManageService {
         if (update == 0) {
             throw new AccountBizException(ResultCode.DATA_ERROR, "退卡操作失败");
         }
+        cardStorageService.activateCard(cardRequest.getCardNo());
     }
 
     @Override
