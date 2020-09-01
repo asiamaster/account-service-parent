@@ -46,7 +46,8 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
     private IUserAccountCardDao userAccountCardDao;
     @Autowired
     private PayRpcResolver payRpcResolver;
-
+    /**需要校验的非法卡状态类型*/
+    private static final CardStatus[] VALID_CARD_STATES = new CardStatus[]{CardStatus.LOSS, CardStatus.RETURNED};
 
     @Override
     public Boolean cardExist(String cardNo) {
@@ -148,14 +149,13 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
         }
         UserCardDo userCard = wrapper.getUserCard();
         UserAccountDo userAccount = wrapper.getUserAccount();
-        if (CardStatus.RETURNED.getCode() == userCard.getState()) {
-            throw new AccountBizException(ResultCode.DATA_ERROR, "该卡为退还状态，不能进行此操作");
-        }
         if (DisableState.DISABLED.getCode().equals(userAccount.getDisabledState())) {
             throw new AccountBizException(ResultCode.DATA_ERROR, "该卡账户为冻结状态，不能进行此操作");
         }
-        if (CardStatus.LOSS.getCode() == userCard.getState()) {
-            throw new AccountBizException(ResultCode.DATA_ERROR, "该卡为挂失状态，不能进行此操作");
+        for (CardStatus cardStatus : VALID_CARD_STATES) {
+            if (cardStatus.getCode() == userCard.getState()) {
+                throw new AccountBizException(ResultCode.DATA_ERROR, String.format("该卡为%s状态，不能进行此操作", cardStatus.getName()));
+            }
         }
         //如果是副卡，查询主卡状态
         this.validateMaster(userCard, userAccount);
@@ -179,14 +179,14 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
         UserCardDo masterCard = masterWrapper.getUserCard();
         UserAccountDo masterAccount = masterWrapper.getUserAccount();
         String cardNo = masterCard.getCardNo();
-        if (CardStatus.RETURNED.getCode() == masterCard.getState()) {
-            throw new AccountBizException(ResultCode.DATA_ERROR, "该卡的主卡【%s】为退还状态，不能进行此操作");
-        }
-        if (CardStatus.LOSS.getCode() == masterCard.getState()) {
-            throw new AccountBizException(ResultCode.DATA_ERROR, String.format("该卡的主卡【%s】为挂失状态，不能进行此操作", cardNo));
-        }
         if (DisableState.DISABLED.getCode().equals(masterAccount.getDisabledState())) {
             throw new AccountBizException(ResultCode.DATA_ERROR, String.format("该卡的主卡账户【%s】为冻结状态，不能进行此操作", cardNo));
+        }
+        for (CardStatus cardStatus : VALID_CARD_STATES) {
+            if (cardStatus.getCode() == userCard.getState()) {
+                throw new AccountBizException(ResultCode.DATA_ERROR,
+                        String.format("该卡的主卡【%s】为%s状态，不能进行此操作", cardNo, cardStatus.getName()));
+            }
         }
     }
 
