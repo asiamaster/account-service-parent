@@ -95,8 +95,8 @@ public class CardManageServiceImpl implements ICardManageService {
         userCardDao.update(oldCard);
         userCardDao.save(newCard);
 
-        //新卡出库
-        //cardStorageService.voidCard(oldCard.getCardNo(), "");
+        //新卡出库，原卡变为激活
+        cardStorageService.activateCard(oldCard.getCardNo());
         cardStorageService.inUse(newCard.getCardNo());
         return newCard;
     }
