@@ -152,7 +152,7 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
             throw new AccountBizException(ResultCode.DATA_ERROR, "该卡为退还状态，不能进行此操作");
         }
         if (DisableState.DISABLED.getCode().equals(userAccount.getDisabledState())) {
-            throw new AccountBizException(ResultCode.DATA_ERROR, "该卡账户为禁用状态，不能进行此操作");
+            throw new AccountBizException(ResultCode.DATA_ERROR, "该卡账户为冻结状态，不能进行此操作");
         }
         if (CardStatus.LOSS.getCode() == userCard.getState()) {
             throw new AccountBizException(ResultCode.DATA_ERROR, "该卡为挂失状态，不能进行此操作");
@@ -186,7 +186,7 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
             throw new AccountBizException(ResultCode.DATA_ERROR, String.format("该卡的主卡【%s】为挂失状态，不能进行此操作", cardNo));
         }
         if (DisableState.DISABLED.getCode().equals(masterAccount.getDisabledState())) {
-            throw new AccountBizException(ResultCode.DATA_ERROR, String.format("该卡的主卡账户【%s】为禁用状态，不能进行此操作", cardNo));
+            throw new AccountBizException(ResultCode.DATA_ERROR, String.format("该卡的主卡账户【%s】为冻结状态，不能进行此操作", cardNo));
         }
     }
 
