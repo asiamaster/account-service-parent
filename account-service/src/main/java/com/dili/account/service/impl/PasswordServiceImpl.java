@@ -25,7 +25,7 @@ import com.dili.ss.constant.ResultCode;
  * @description: 密码相关的操作
  */
 @Service
-public class PasswordServiceImpl implements IPasswordService{
+public class PasswordServiceImpl implements IPasswordService {
 
 	public static final Logger log = LoggerFactory.getLogger(PasswordServiceImpl.class);
 
@@ -43,26 +43,29 @@ public class PasswordServiceImpl implements IPasswordService{
 	public void resetLoginPwd(CardRequestDto cardRequestDto) throws Exception {
 		CardAggregationWrapper account = accountQueryService.getByAccountIdForGenericOp(cardRequestDto.getAccountId());
 		if (!cardRequestDto.getLoginPwd().equals(cardRequestDto.getSecondLoginPwd())) {
-			throw new AccountBizException(ResultCode.DATA_ERROR,"两次输入密码不匹配");
+			throw new AccountBizException(ResultCode.DATA_ERROR, "两次输入密码不匹配");
 		}
 		UserAccountDo userAccount = new UserAccountDo();
 		userAccount.setAccountId(cardRequestDto.getAccountId());
-		userAccount.setLoginPwd(PasswordUtils.encrypt(cardRequestDto.getLoginPwd(), account.getUserAccount().getSecretKey()));
+		userAccount.setLoginPwd(
+				PasswordUtils.encrypt(cardRequestDto.getLoginPwd(), account.getUserAccount().getSecretKey()));
 		userAccountDao.update(userAccount);
 	}
 
 	@Override
 	public void checkPassword(Long accountId, String password) {
 		if (accountId == null || StringUtils.isBlank(password)) {
-			throw new AccountBizException(ResultCode.DATA_ERROR,"密码校验参数错误");
+			throw new AccountBizException(ResultCode.DATA_ERROR, "密码校验参数错误");
 		}
 		UserAccountDo userAccountDo = userAccountDao.getByAccountId(accountId);
 		if (userAccountDo == null) {
-			throw new AccountBizException(ResultCode.DATA_ERROR,"卡信息不存在");
+			throw new AccountBizException(ResultCode.DATA_ERROR, "卡信息不存在");
 		}
 		String encryptPwd = PasswordUtils.encrypt(password, userAccountDo.getSecretKey());
 		if (!userAccountDo.getLoginPwd().equals(encryptPwd)) {
-			throw new AccountBizException(ErrorCode.PASSWORD_ERROR,"密码错误");
+			log.info("loginPwd[{}],SecretKey[{}],encryptPwd[{}]", userAccountDo.getLoginPwd(),
+					userAccountDo.getSecretKey(), encryptPwd);
+			throw new AccountBizException(ErrorCode.PASSWORD_ERROR, "密码错误");
 		}
 	}
 }
