@@ -61,7 +61,7 @@ public class CardManageServiceImpl implements ICardManageService {
             throw new AccountBizException(ResultCode.DATA_ERROR, "该卡存在副卡,不能退卡");
         }
         //更新卡状态
-        int update = userCardDao.updateState(cardRequest.getAccountId(), CardStatus.RETURNED.getCode(), userCardDo.getVersion());
+        int update = userCardDao.updateStateById(userCardDo.getId(), CardStatus.RETURNED.getCode(), userCardDo.getVersion());
         if (update == 0) {
             throw new AccountBizException(ResultCode.DATA_ERROR, "退卡操作失败");
         }
@@ -111,7 +111,7 @@ public class CardManageServiceImpl implements ICardManageService {
             throw new AccountBizException(ResultCode.DATA_ERROR, "该卡为非挂失状态,不能进行此操作");
         }
         passwordService.checkPassword(cardParam.getAccountId(), cardParam.getLoginPwd());
-        int i = userCardDao.updateState(cardParam.getAccountId(), CardStatus.NORMAL.getCode(), userCard.getVersion());
+        int i = userCardDao.updateStateById(userCard.getId(), CardStatus.NORMAL.getCode(), userCard.getVersion());
         if (i != 1) {
             throw new AccountBizException(ResultCode.DATA_ERROR, "解挂失操作失败");
         }
@@ -126,7 +126,7 @@ public class CardManageServiceImpl implements ICardManageService {
             throw new AccountBizException(ResultCode.DATA_ERROR, "该卡为非锁定状态,不能进行此操作");
         }
         passwordService.checkPassword(cardParam.getAccountId(), cardParam.getLoginPwd());
-        int i = userCardDao.updateState(cardParam.getAccountId(), CardStatus.NORMAL.getCode(), userCard.getVersion());
+        int i = userCardDao.updateStateById(userCard.getId(), CardStatus.NORMAL.getCode(), userCard.getVersion());
         if (i != 1) {
             throw new AccountBizException(ResultCode.DATA_ERROR, "解锁操作失败");
         }

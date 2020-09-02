@@ -69,7 +69,7 @@ public interface IUserCardDao {
      * @param version
      * @return
      */
-    int updateState(@Param("accountId") Long accountId,
+    int updateStateById(@Param("id") Long id,
                     @Param("state") Integer state,
                     @Param("version") Integer version);
 }
