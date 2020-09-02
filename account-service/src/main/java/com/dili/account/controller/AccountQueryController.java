@@ -34,8 +34,8 @@ import java.util.List;
  */
 @RestController
 @RequestMapping(value = "api/account")
-public class QueryAccountController {
-    private static final Logger LOGGER = LoggerFactory.getLogger(QueryAccountController.class);
+public class AccountQueryController {
+    private static final Logger LOGGER = LoggerFactory.getLogger(AccountQueryController.class);
 
     @Autowired
     private IAccountQueryService accountQueryService;
