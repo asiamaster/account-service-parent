@@ -53,10 +53,4 @@ class UserCardDaoTest extends BaseTest {
         assertEquals(1, update);
     }
 
-    @Test
-    @Transactional
-    @Rollback
-    void testUpdateState(){
-        userCardDao.updateState(1L,1,1);
-    }
 }
