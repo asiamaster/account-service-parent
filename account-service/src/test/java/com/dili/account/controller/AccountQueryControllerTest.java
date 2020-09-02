@@ -28,7 +28,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
  * @Date: 2020/6/18 15:37
  * @Description:
  */
-class QueryAccountControllerTest extends BaseTest {
+class AccountQueryControllerTest extends BaseTest {
 
     @Autowired
     private MockMvc mockMvc;

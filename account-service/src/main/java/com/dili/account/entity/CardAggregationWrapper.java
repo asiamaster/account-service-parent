@@ -6,10 +6,10 @@ package com.dili.account.entity;
  * 卡片聚合信息
  */
 public class CardAggregationWrapper {
-	/**账户id*/
-	private Long accountId;
-	/***/
-	private String cardNo;
+	/**账户主键id*/
+	private Long accountPkId;
+	/**卡主键id*/
+	private Long cardPkId;
 	/** 市场编码 */
 	private Long firmId;
 	/** 禁用状态（管理员使用:1-启用2-禁用） */
@@ -19,20 +19,20 @@ public class CardAggregationWrapper {
 	/**卡信息*/
 	private UserCardDo userCard;
 
-	public String getCardNo() {
-		return cardNo;
+	public Long getAccountPkId() {
+		return accountPkId;
 	}
 
-	public void setCardNo(String cardNo) {
-		this.cardNo = cardNo;
+	public void setAccountPkId(Long accountPkId) {
+		this.accountPkId = accountPkId;
 	}
 
-	public Long getAccountId() {
-		return accountId;
+	public Long getCardPkId() {
+		return cardPkId;
 	}
 
-	public void setAccountId(Long accountId) {
-		this.accountId = accountId;
+	public void setCardPkId(Long cardPkId) {
+		this.cardPkId = cardPkId;
 	}
 
 	public Long getFirmId() {

@@ -4,8 +4,8 @@
 
     <!--一条数据同时需要account_id和card_no才能确定唯一-->
     <resultMap id="Aggregation_Result" type="com.dili.account.entity.CardAggregationWrapper">
-        <id column="account_id" property="accountId"/>
-        <id column="card_no" property="cardNo"/>
+        <id column="id" property="accountPkId"/>
+        <id column="card_id" property="cardPkId"/>
         <result column="firm_id" property="firmId"/>
         <association property="userAccount" javaType="com.dili.account.entity.UserAccountDo">
             <result column="id" property="id"/>
@@ -76,7 +76,6 @@
             aua.`pwd_changed`,
             aua.`login_time`,
             aua.`secret_key`,
-            aua.`state`,
             aua.`source`,
             aua.`version`,
             aua.`firm_id`,
@@ -160,6 +159,7 @@
             </if>
         </where>
     </sql>
+
     <select id="getListByCondition" resultMap="Aggregation_Result">
         SELECT
         <include refid="Base_Account_Column"/>
