@@ -30,7 +30,6 @@ import cn.hutool.core.util.StrUtil;
 @Component
 public class CustomerMQListener {
     private static final Logger LOGGER = LoggerFactory.getLogger(CustomerMQListener.class);
-    public static final String EXCHANGE_CUSTOMER_CHANGE = "dili.customer.fanoutExchange";
     @Autowired
     IAccountManageService accountManageService;
     /**

@@ -10,6 +10,8 @@
 		`device_id`,
 		`card_no`,
 		`type`,
+		`card_face`, 
+		`storage_in_id`, 
 		`verify_code`,
 		`maker_version`,
 		`state`,
@@ -49,6 +51,8 @@
 		`device_id`,
 		`card_no`,
 		`type`,
+		`card_face`, 
+		`storage_in_id`, 
 		`verify_code`,
 		`maker_version`,
 		`state`,
@@ -64,6 +68,8 @@
 		#{deviceId},
 		#{cardNo},
 		#{type},
+		#{cardFace}, 
+		#{storageInId},
 		#{verifyCode},
 		#{makerVersion},
 		#{state},
@@ -84,6 +90,8 @@
 		`device_id`,
 		`card_no`,
 		`type`,
+		`card_face`, 
+		`storage_in_id`, 
 		`verify_code`,
 		`maker_version`,
 		`state`,
@@ -106,6 +114,8 @@
 			<if test="deviceId != null">`device_id` = #{deviceId}, </if>
 			<if test="cardNo != null">`card_no` = #{cardNo}, </if>
 			<if test="type != null">`type` = #{type}, </if>
+			<if test="cardFace != null">`card_face` = #{cardFace}, </if>
+			<if test="storageInId != null">`storage_in_id` = #{storageInId}, </if>
 			<if test="verifyCode != null">`verify_code` = #{verifyCode}, </if>
 			<if test="makerVersion != null">`maker_version` = #{makerVersion}, </if>
 			<if test="state != null">`state` = #{state}, </if>
@@ -139,6 +149,8 @@
 		`device_id`,
 		`card_no`,
 		`type`,
+		`card_face`, 
+		`storage_in_id`, 
 		`verify_code`,
 		`maker_version`,
 		`state`,
@@ -156,6 +168,8 @@
 				#{item.deviceId},
 				#{item.cardNo},
 				#{item.type},
+				#{item.cardFace}, 
+				#{item.storageInId},
 				#{item.verifyCode},
 				#{item.makerVersion},
 				#{item.state},

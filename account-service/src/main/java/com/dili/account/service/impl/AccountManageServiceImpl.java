@@ -1,5 +1,6 @@
 package com.dili.account.service.impl;
 
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,7 +69,8 @@ public class AccountManageServiceImpl implements IAccountManageService {
 		openCardService.setAccountPermissions(updateAccount, customer.getCustomerMarket().getType());
 		
 		// 客户禁用，则禁用所有账户状态 CustomerEnum.State.DISABLED.getCode();
-		updateAccount.setState(customer.getState()); 
+		updateAccount.setDisabledState(customer.getState()); 
+		updateAccount.setModifyTime(LocalDateTime.now());
 		userAccountDao.updateCustomerInfo(updateAccount);
 	}
 }
