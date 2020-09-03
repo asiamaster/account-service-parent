@@ -200,6 +200,8 @@ public class CardStorageServiceImpl implements ICardStorageService {
 			saveInfo.setNotes(batchCardDto.getNotes());
 			saveInfo.setState(CardStorageState.UNACTIVATE.getCode());
 			saveInfo.setType(batchCardDto.getCardType());
+			saveInfo.setCardFace(batchCardDto.getCardFace());
+			saveInfo.setStorageInId(batchCardDto.getStorageInId());
 			cardList.add(saveInfo);
 		}
 		cardStorageDao.batchSave(cardList);
@@ -218,9 +220,30 @@ public class CardStorageServiceImpl implements ICardStorageService {
 		}
 	}
 
+	@Override
+	public void delByStorageInId(Long storageInId, Long firmId) {
+		// 检查重复卡号
+		CardRepoQueryParam queryParam = new CardRepoQueryParam();
+		queryParam.setStorageInId(storageInId);
+		queryParam.setExcludeState(CardStorageState.UNACTIVATE.getCode());
+		queryParam.setFirmId(firmId);
+		Long count = cardStorageDao.selectListCount(queryParam);
+		if (count > 0) {
+			throw BizExceptionProxy.exception("有部分卡片已出库，删除失败");
+		}
+		CardStorageDo delParam = new CardStorageDo();
+		delParam.setStorageInId(storageInId);
+		delParam.setFirmId(firmId);
+		int delCount = cardStorageDao.del(delParam);
+		if (delCount <= 0) {
+			throw BizExceptionProxy.exception("删除失败");
+		}
+	}
+
 	private static final String NONEXISTENT_ERRMSG = "该卡{}未入库!";
 	private static final String IN_USE_ERRMSG = "该卡{}已在使用中!";
 	private static final String NOT_IN_USE_ERRMSG = "该卡{}未被使用，操作失败!";
 	private static final String VOID_ERRMSG = "该卡{}已作废，操作失败!";
 	private static final String DUPLICATION_ERRMSG = "卡号{}重复,入库失败!";
+
 }
