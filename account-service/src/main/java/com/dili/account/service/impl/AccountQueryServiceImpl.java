@@ -11,6 +11,7 @@ import com.dili.account.entity.CardAggregationWrapper;
 import com.dili.account.entity.UserAccountDo;
 import com.dili.account.entity.UserCardDo;
 import com.dili.account.exception.AccountBizException;
+import com.dili.account.exception.ErrorCode;
 import com.dili.account.rpc.resolver.PayRpcResolver;
 import com.dili.account.service.IAccountQueryService;
 import com.dili.account.type.AccountUsageType;
@@ -141,7 +142,7 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
         PageHelper.startPage(1, 1, false);
         List<CardAggregationWrapper> list = this.getWrapperList(queryParam);
         if (CollectionUtils.isEmpty(list)) {
-            throw new AccountBizException(ResultCode.DATA_ERROR, ExceptionMsg.ACCOUNT_NOT_EXIST.getName());
+            throw new AccountBizException(ErrorCode.ACCOUNT_NOT_EXIST, ExceptionMsg.ACCOUNT_NOT_EXIST.getName());
         }
         CardAggregationWrapper wrapper = list.get(0);
         if (!needValidate) {
