@@ -62,8 +62,8 @@ public class AccountQueryController {
     @PostMapping("/getSingle")
     public BaseOutput<UserAccountCardResponseDto> getSingle(@RequestBody @Validated(AccountValidator.SingleQuery.class)
                                                                     UserAccountSingleQueryDto param) {
-    	LOGGER.info("查询单个getSingle请求参数:{}", JSON.toJSONString(param));
-    	UserAccountCardQuery query = this.convertQueryParams(param);
+        LOGGER.info("查询单个getSingle请求参数:{}", JSON.toJSONString(param));
+        UserAccountCardQuery query = this.convertQueryParams(param);
         return BaseOutput.successData(accountQueryService.getSingleForRest(query, true));
     }
 
@@ -75,8 +75,8 @@ public class AccountQueryController {
     @PostMapping("/getSingleWithoutValidate")
     public BaseOutput<UserAccountCardResponseDto> getSingleWithoutValidate(@RequestBody @Validated(AccountValidator.SingleQuery.class)
                                                                                    UserAccountSingleQueryDto param) {
-    	LOGGER.info("查询单个getSingleWithoutValidate请求参数:{}", JSON.toJSONString(param));
-    	UserAccountCardQuery query = this.convertQueryParams(param);
+        LOGGER.info("查询单个getSingleWithoutValidate请求参数:{}", JSON.toJSONString(param));
+        UserAccountCardQuery query = this.convertQueryParams(param);
         return BaseOutput.successData(accountQueryService.getSingleForRest(query, false));
     }
 
@@ -88,8 +88,8 @@ public class AccountQueryController {
     @PostMapping("/getPage")
     public PageOutput<List<UserAccountCardResponseDto>> getPage(@RequestBody @Validated(ConstantValidator.Page.class)
                                                                         UserAccountCardQuery param) {
-    	LOGGER.info("分页条件查询getPage请求参数:{}", JSON.toJSONString(param));
-    	AssertUtils.notNull(param.getFirmId(), "市场id不能为空");
+        LOGGER.info("分页条件查询getPage请求参数:{}", JSON.toJSONString(param));
+        AssertUtils.notNull(param.getFirmId(), "市场id不能为空");
         return accountQueryService.getPageByConditionForRest(param);
     }
 
@@ -127,6 +127,12 @@ public class AccountQueryController {
      */
     private UserAccountCardQuery convertQueryParams(@Validated(AccountValidator.SingleQuery.class) @RequestBody UserAccountSingleQueryDto param) {
         UserAccountCardQuery query = new UserAccountCardQuery();
+        if (param.getAccountId() != null) {
+            query.setAccountPkId(param.getAccountPkId());
+        }
+        if (param.getCardPkId() != null) {
+            query.setCardPkId(param.getCardPkId());
+        }
         if (StringUtils.isNoneBlank(param.getCardNo())) {
             query.setCardNos(Lists.newArrayList(param.getCardNo()));
         }
