@@ -7,6 +7,8 @@ import com.dili.account.dto.UserAccountCardQuery;
 import com.dili.account.dto.UserAccountCardResponseDto;
 import com.dili.account.dto.UserAccountSingleQueryDto;
 import com.dili.account.service.IAccountQueryService;
+import com.dili.account.type.CardLastState;
+import com.dili.account.type.YesNoType;
 import com.dili.account.util.AssertUtils;
 import com.dili.account.validator.AccountValidator;
 import com.dili.account.validator.ConstantValidator;
@@ -90,6 +92,8 @@ public class AccountQueryController {
                                                                         UserAccountCardQuery param) {
         LOGGER.info("分页条件查询getPage请求参数:{}", JSON.toJSONString(param));
         AssertUtils.notNull(param.getFirmId(), "市场id不能为空");
+        //换卡后，老卡不再显示
+        param.setLast(CardLastState.YES.getCode());
         return accountQueryService.getPageByConditionForRest(param);
     }
 
@@ -116,7 +120,6 @@ public class AccountQueryController {
         LOGGER.info("simpleInfo请求参数:{}", cardNo);
         AssertUtils.notEmpty(cardNo, "卡号不能为空");
         AccountSimpleResponseDto dto = accountQueryService.getByCardNoWithBalance(cardNo);
-        LOGGER.info("simpleInfo返回:{}", JSONObject.toJSONString(dto));
         return BaseOutput.successData(dto);
     }
 
