@@ -10,6 +10,7 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.nacos.client.naming.utils.CollectionUtils;
 import com.dili.account.dao.ICardStorageDao;
@@ -48,6 +49,7 @@ public class CardStorageServiceImpl implements ICardStorageService {
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public void addCard(CardAddStorageDto addInfo) {
 		CardStorageDo repository = cardStorageDao.getByCardNo(addInfo.getCardNo());
 		if (repository != null) {
@@ -74,6 +76,7 @@ public class CardStorageServiceImpl implements ICardStorageService {
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public CardStorageDo activateCard(String cardNo) {
 		CardStorageDo repository = checkCardState(cardNo);
 		// 该卡已在激活状态
@@ -93,6 +96,7 @@ public class CardStorageServiceImpl implements ICardStorageService {
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public CardStorageDo inUse(String cardNo) {
 		CardStorageDo repository = checkCardState(cardNo);
 		// 该卡已在使用状态
@@ -112,6 +116,7 @@ public class CardStorageServiceImpl implements ICardStorageService {
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public void voidCard(String cardNo, String remark) {
 		checkCardState(cardNo);
 		// 作废
@@ -142,6 +147,7 @@ public class CardStorageServiceImpl implements ICardStorageService {
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public int updateByCardNo(CardStorageDo cardStorage) {
 		checkCardState(cardStorage.getCardNo());
 		// 修改状态
@@ -167,6 +173,7 @@ public class CardStorageServiceImpl implements ICardStorageService {
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public void batchAddCard(BatchCardAddStorageDto batchCardDto) {
 		// 检查重复卡号
 		CardRepoQueryParam queryParam = new CardRepoQueryParam();
@@ -208,6 +215,7 @@ public class CardStorageServiceImpl implements ICardStorageService {
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public void batchActivate(List<String> cardNos) {
 		BatchActivateCardDto activateDto = new BatchActivateCardDto();
 		activateDto.setState(CardStorageState.ACTIVATE.getCode());
@@ -221,6 +229,7 @@ public class CardStorageServiceImpl implements ICardStorageService {
 	}
 
 	@Override
+	@Transactional(rollbackFor = Exception.class)
 	public void delByStorageInId(Long storageInId, Long firmId) {
 		// 检查重复卡号
 		CardRepoQueryParam queryParam = new CardRepoQueryParam();
