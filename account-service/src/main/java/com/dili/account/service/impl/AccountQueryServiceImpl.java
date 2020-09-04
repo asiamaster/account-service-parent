@@ -204,6 +204,9 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
 
     private UserAccountCardResponseDto convertFromAccountUnionCard(UserCardDo card, UserAccountDo account) {
         UserAccountCardResponseDto responseDto = new UserAccountCardResponseDto();
+        responseDto.setAccountPkId(account.getId());
+        responseDto.setCardPkId(card.getId());
+
         responseDto.setCardId(card.getId());
         responseDto.setCardType(card.getType());
         responseDto.setCardNo(card.getCardNo());
