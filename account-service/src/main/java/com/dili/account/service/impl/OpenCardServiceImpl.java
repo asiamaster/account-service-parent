@@ -135,8 +135,9 @@ public class OpenCardServiceImpl implements IOpenCardService {
 			throw BizExceptionProxy.exception("请刷正确的主卡!{}", openCardInfo.getParentAccountId());
 		}
 
-		// 使用主卡资金账号
-		Long fundAccountId = parentAccount.get().getUserAccount().getFundAccountId();
+		// 创建资金账户
+		FundAccountDto fundAccount = buildFundAccount(openCardInfo);
+		Long fundAccountId = payRpcResolver.createFundAccount(fundAccount);
 
 		// 构建账户信息
 		String accountIdStr = uidRpcResovler.bizNumberRetry(BizNoServiceType.ACCOUNT_ID, 3);
