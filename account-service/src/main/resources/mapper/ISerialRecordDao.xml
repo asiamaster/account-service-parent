@@ -12,7 +12,8 @@
 			`card_no`, 
 			`customer_id`, 
 			`customer_no`, 
-			`customer_name`, 
+			`customer_name`,
+			`customer_type`,
 			`action`, 
 			`start_balance`, 
 			`amount`, 
@@ -42,7 +43,8 @@
 			`card_no`, 
 			`customer_id`, 
 			`customer_no`, 
-			`customer_name`, 
+			`customer_name`,
+			`customer_type`,
 			`action`, 
 			`start_balance`, 
 			`amount`, 
@@ -66,7 +68,8 @@
 			#{cardNo}, 
 			#{customerId}, 
 			#{customerNo}, 
-			#{customerName}, 
+			#{customerName},
+			#{customerType},
 			#{action}, 
 			#{startBalance}, 
 			#{amount}, 
@@ -94,7 +97,8 @@
 			`card_no`, 
 			`customer_id`, 
 			`customer_no`, 
-			`customer_name`, 
+			`customer_name`,
+			`customer_type`,
 			`action`, 
 			`start_balance`, 
 			`amount`, 
@@ -126,6 +130,7 @@
 			<if test="customerId != null">`customer_id` = #{customerId}, </if>
 			<if test="customerNo != null">`customer_no` = #{customerNo}, </if>
 			<if test="customerName != null">`customer_name` = #{customerName}, </if>
+			<if test="customerType != null">`customer_type` = #{customerType}, </if>
 			<if test="action != null">`action` = #{action}, </if>
 			<if test="startBalance != null">`start_balance` = #{startBalance}, </if>
 			<if test="amount != null">`amount` = #{amount}, </if>
@@ -166,6 +171,7 @@
 			`customer_id`,
 			`customer_no`,
 			`customer_name`,
+			`customer_type`,
 			`action`,
 			`start_balance`,
 			`amount`,
@@ -191,6 +197,7 @@
 				#{item.customerId},
 				#{item.customerNo},
 				#{item.customerName},
+				#{item.customerType},
 				#{item.action},
 				#{item.startBalance},
 				#{item.amount},
@@ -221,6 +228,7 @@
 			`customer_id`,
 			`customer_no`,
 			`customer_name`,
+			`customer_type`,
 			`action`,
 			`start_balance`,
 			`amount`,

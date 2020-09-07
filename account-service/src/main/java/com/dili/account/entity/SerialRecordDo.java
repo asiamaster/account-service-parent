@@ -30,7 +30,9 @@ public class SerialRecordDo implements Serializable {
 	/** 客户编号 */
 	private String customerNo; 
 	/** 客户姓名 */
-	private String customerName; 
+	private String customerName;
+	/** 客户身份类型*/
+	private String customerType;
 	/** 资金动作-收入,支出 */
 	private Integer action; 
 	/** 期初余额-分 */
@@ -185,7 +187,23 @@ public class SerialRecordDo implements Serializable {
 		return customerName;
 	}
 
-    /**
+	/**
+	 * getter for 客户身份
+	 * @return
+	 */
+	public String getCustomerType() {
+		return customerType;
+	}
+
+	/**
+	 * setter for 客户身份
+	 * @param customerType
+	 */
+	public void setCustomerType(String customerType) {
+		this.customerType = customerType;
+	}
+
+	/**
      * setter for 资金动作-收入,支出
      */
 	public void setAction(Integer action) {
