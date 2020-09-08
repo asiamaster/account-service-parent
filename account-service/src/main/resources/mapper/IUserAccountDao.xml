@@ -190,12 +190,17 @@
 
 	<select id="findSlavesByParent" resultType="com.dili.account.entity.UserAccountDo">
 		SELECT
-		<include refid="Base_Column"/>
+			aua.account_id accountId, aua.customer_id customerId, auc.card_no cardNo
 		FROM
-			account_user_account
+			account_user_account aua 
+		INNER JOIN 
+			account_user_card auc 
+		ON 
+			aua.account_id = auc.account_id
 		WHERE
-			parent_account_id = #{parentAccountId}
-		AND state != 4
+			aua.parent_account_id = #{parentAccountId}
+		AND 
+			auc.state != 4
 	</select>
 	
 	<!-- 单个更新卡账户是否禁用状态 -->
