@@ -1,9 +1,9 @@
 package com.dili.account.dto;
 
+import com.alibaba.fastjson.annotation.JSONField;
+
 import java.time.LocalDateTime;
 import java.util.List;
-
-import com.alibaba.fastjson.annotation.JSONField;
 
 /**
  * @description： 用户信息查询参数
@@ -13,8 +13,12 @@ import com.alibaba.fastjson.annotation.JSONField;
  */
 public class UserAccountCardQuery extends BaseDto {
     /** */
-	private static final long serialVersionUID = -3691031883377218795L;
-	/**客户id*/
+    private static final long serialVersionUID = -3691031883377218795L;
+    /**account主键id*/
+    private Long accountPkId;
+    /**card主键id*/
+    private Long cardPkId;
+    /**客户id*/
     private List<Long> customerIds;
     /**客户名称*/
     private String customerName;
@@ -43,6 +47,22 @@ public class UserAccountCardQuery extends BaseDto {
     /**标记是否是最新的卡*/
     @JSONField(deserialize = false)
     private Integer last;
+
+    public Long getAccountPkId() {
+        return accountPkId;
+    }
+
+    public void setAccountPkId(Long accountPkId) {
+        this.accountPkId = accountPkId;
+    }
+
+    public Long getCardPkId() {
+        return cardPkId;
+    }
+
+    public void setCardPkId(Long cardPkId) {
+        this.cardPkId = cardPkId;
+    }
 
     public String getCustomerMarketType() {
         return customerMarketType;

@@ -19,6 +19,11 @@ public interface ICardStorageDao {
      * @return
      */
 	List<CardStorageDo> selectList(CardRepoQueryParam cardStorage);
+	
+	/**
+	 * 查询记录数
+	 */
+	Long selectListCount(CardRepoQueryParam cardStorage);
 
     /**
      * 新增
@@ -60,5 +65,10 @@ public interface ICardStorageDao {
 	 * 根据卡号查询
 	 */
 	CardStorageDo getByCardNo(String cardNo);
-
+	
+	/**
+	 * 删除库存,只删除状态为“未激活”的数据
+	 */
+	int del(CardStorageDo cardStorage);
+	
 }

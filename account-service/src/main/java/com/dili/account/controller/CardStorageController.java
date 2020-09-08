@@ -16,6 +16,7 @@ import com.dili.account.dto.BatchActivateCardDto;
 import com.dili.account.dto.BatchCardAddStorageDto;
 import com.dili.account.dto.CardAddStorageDto;
 import com.dili.account.dto.CardRepoQueryParam;
+import com.dili.account.dto.CardStorageParam;
 import com.dili.account.entity.CardStorageDo;
 import com.dili.account.service.ICardStorageService;
 import com.dili.account.util.AssertUtils;
@@ -81,6 +82,17 @@ public class CardStorageController {
 		log.info("卡片批量激活*****" + JSONObject.toJSONString(dto));
 		AssertUtils.notNull(dto.getCardNos(), "参数校验失败：卡号缺失!");
 		cardStorageService.batchActivate(dto.getCardNos());
+		return BaseOutput.success();
+	}
+	
+	/**
+	 * 卡片删除，根据号段入库ID，如果有非激活状态的卡片则删除失败
+	 */
+	@PostMapping("delByStorageInId")
+	public BaseOutput<?> delByStorageInId(@RequestBody CardStorageParam dto) {
+		log.info("卡片删除*****" + JSONObject.toJSONString(dto));
+		AssertUtils.notNull(dto.getStorageInId(), "参数校验失败：入库ID为空!");
+		cardStorageService.delByStorageInId(dto.getStorageInId(), dto.getFirmId());;
 		return BaseOutput.success();
 	}
 

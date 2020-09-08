@@ -35,15 +35,42 @@
 		</if>
 		<if test="type != null"><![CDATA[ AND type = #{type}]]></if>
 		<if test="state != null"><![CDATA[ AND state = #{state}]]></if>
+		<if test="excludeState != null"><![CDATA[ AND state != #{excludeState}]]></if>
 		<if test="startDate != null"><![CDATA[ AND DATE(create_time) >= #{startDate}]]></if>
 		<if test="endDate != null"><![CDATA[ AND DATE(create_time) <= #{endDate}]]></if>
 		<if test="startCardNo != null"><![CDATA[ AND card_no >= #{startCardNo}]]></if>
 		<if test="endCardNo != null"><![CDATA[ AND card_no <= #{endCardNo}]]></if>
+		<if test="storageInId != null"><![CDATA[ AND storage_in_`id = #{storageInId}]]></if>
 		<if test="firmId != null"><![CDATA[ AND firm_id = #{firmId}]]></if>
 		<if test="sort != null">
 			<![CDATA[ ORDER BY ${sort} ${order} ]]>
 		</if>
 			
+	</select>
+
+	<select id="selectListCount" resultType="java.lang.Long">
+		SELECT
+			count(*)
+		FROM
+		account_card_storage
+		WHERE
+		1 = 1
+		<if test="cardNo != null"><![CDATA[ AND card_no = #{cardNo}]]></if>
+		<if test="cardNos != null">
+			AND card_no in
+			<foreach collection="cardNos" item="cardNo" separator="," open="(" close=")">
+				#{cardNo}
+			</foreach>
+		</if>
+		<if test="type != null"><![CDATA[ AND type = #{type}]]></if>
+		<if test="state != null"><![CDATA[ AND state = #{state}]]></if>
+		<if test="excludeState != null"><![CDATA[ AND state != #{excludeState}]]></if>
+		<if test="startDate != null"><![CDATA[ AND DATE(create_time) >= #{startDate}]]></if>
+		<if test="endDate != null"><![CDATA[ AND DATE(create_time) <= #{endDate}]]></if>
+		<if test="startCardNo != null"><![CDATA[ AND card_no >= #{startCardNo}]]></if>
+		<if test="endCardNo != null"><![CDATA[ AND card_no <= #{endCardNo}]]></if>
+		<if test="storageInId != null"><![CDATA[ AND storage_in_id = #{storageInId}]]></if>
+		<if test="firmId != null"><![CDATA[ AND firm_id = #{firmId}]]></if>
 	</select>
 
 	<insert id="save">
@@ -183,4 +210,14 @@
 			)
 		</foreach>
 	</insert>
+	
+	<!-- 删除状态为“未激活的数据” -->
+	<delete id="del">
+		DELETE FROM 
+			account_card_storage
+		WHERE 
+			state = 4
+		<if test="storageInId != null"><![CDATA[ AND storage_in_id <= #{storageInId}]]></if>
+		<if test="firmId != null"><![CDATA[ AND firm_id = #{firmId}]]></if>
+	</delete>
 </mapper>

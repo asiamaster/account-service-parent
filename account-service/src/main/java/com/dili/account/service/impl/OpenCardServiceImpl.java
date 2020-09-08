@@ -41,8 +41,6 @@ import com.dili.account.type.YesNoType;
 import com.dili.account.util.PasswordUtils;
 import com.google.common.collect.Lists;
 
-import io.seata.spring.annotation.GlobalTransactional;
-
 /**
  * @description： 开卡service实现
  * 
@@ -88,13 +86,13 @@ public class OpenCardServiceImpl implements IOpenCardService {
 		}
 
 		// 创建资金账户
-		FundAccountDto fundAccount = buildFundAccount(openCardInfo);
-		Long fundAccountId = payRpcResolver.createFundAccount(fundAccount);
+//		FundAccountDto fundAccount = buildFundAccount(openCardInfo);
+//		Long fundAccountId = payRpcResolver.createFundAccount(fundAccount);
 
 		// 保存账户信息
 		String accountIdStr = uidRpcResovler.bizNumberRetry(BizNoServiceType.ACCOUNT_ID, 3);
 		Long accountId = Long.parseLong(accountIdStr);
-		UserAccountDo userAccount = buildUserAccount(openCardInfo, accountId, fundAccountId);
+		UserAccountDo userAccount = buildUserAccount(openCardInfo, accountId, openCardInfo.getFundAccountId());
 		userAccountDao.save(userAccount);
 
 		// 保存卡片信息
@@ -104,7 +102,7 @@ public class OpenCardServiceImpl implements IOpenCardService {
 		// 返回数据
 		OpenCardResponseDto response = new OpenCardResponseDto();
 		response.setAccountId(userAccount.getAccountId());
-		response.setFundAccountId(fundAccountId);
+		response.setFundAccountId(openCardInfo.getFundAccountId());
 		return response;
 	}
 
@@ -135,13 +133,14 @@ public class OpenCardServiceImpl implements IOpenCardService {
 			throw BizExceptionProxy.exception("请刷正确的主卡!{}", openCardInfo.getParentAccountId());
 		}
 
-		// 使用主卡资金账号
-		Long fundAccountId = parentAccount.get().getUserAccount().getFundAccountId();
+		// 创建资金账户
+//		FundAccountDto fundAccount = buildFundAccount(openCardInfo);
+//		Long fundAccountId = payRpcResolver.createFundAccount(fundAccount);
 
 		// 构建账户信息
 		String accountIdStr = uidRpcResovler.bizNumberRetry(BizNoServiceType.ACCOUNT_ID, 3);
 		Long accountId = Long.parseLong(accountIdStr);
-		UserAccountDo userAccount = buildUserAccount(openCardInfo, accountId, fundAccountId);
+		UserAccountDo userAccount = buildUserAccount(openCardInfo, accountId, openCardInfo.getFundAccountId());
 		userAccountDao.save(userAccount);
 
 		// 保存卡片信息
@@ -151,7 +150,7 @@ public class OpenCardServiceImpl implements IOpenCardService {
 		// 返回数据
 		OpenCardResponseDto response = new OpenCardResponseDto();
 		response.setAccountId(userAccount.getAccountId());
-		response.setFundAccountId(fundAccountId);
+		response.setFundAccountId(openCardInfo.getFundAccountId());
 		return response;
 	}
 
@@ -202,18 +201,18 @@ public class OpenCardServiceImpl implements IOpenCardService {
 	 * @param fundAccountId 资金账号ID
 	 * @return
 	 */
-	private FundAccountDto buildFundAccount(OpenCardDto openCardInfo) {
-		FundAccountDto fundAccount = new FundAccountDto();
-		fundAccount.setCustomerId(openCardInfo.getCustomerId());
-		fundAccount.setType(CustomerOrgType.getPayCode(openCardInfo.getCustomerOrganizationType()));
-		fundAccount.setType(1);
-		fundAccount.setUseFor(1); // TODO 寿光只有一个交易账户，其它市场将允许多账户
-		fundAccount.setName(openCardInfo.getCustomerName());
-		fundAccount.setMobile(openCardInfo.getCustomerContactsPhone());
-		fundAccount.setCode(openCardInfo.getCardNo());
-		fundAccount.setPassword(openCardInfo.getLoginPwd());
-		return fundAccount;
-	}
+//	private FundAccountDto buildFundAccount(OpenCardDto openCardInfo) {
+//		FundAccountDto fundAccount = new FundAccountDto();
+//		fundAccount.setCustomerId(openCardInfo.getCustomerId());
+//		fundAccount.setType(CustomerOrgType.getPayCode(openCardInfo.getCustomerOrganizationType()));
+//		fundAccount.setType(1);
+//		fundAccount.setUseFor(1); // TODO 寿光只有一个交易账户，其它市场将允许多账户
+//		fundAccount.setName(openCardInfo.getCustomerName());
+//		fundAccount.setMobile(openCardInfo.getCustomerContactsPhone());
+//		fundAccount.setCode(openCardInfo.getCardNo());
+//		fundAccount.setPassword(openCardInfo.getLoginPwd());
+//		return fundAccount;
+//	}
 
 	/**
 	 * 根据客户类型设置账户类型及相应权限

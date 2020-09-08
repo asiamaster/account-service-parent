@@ -17,6 +17,10 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 public class UserAccountCardResponseDto implements Serializable {
 	/** */
 	private static final long serialVersionUID = 9154422843880027453L;
+	/**account主键id*/
+	private Long accountPkId;
+	/**card主键id*/
+	private Long cardPkId;
 	/** 市场id */
 	private Long firmId;
 	/** 账号id */
@@ -66,6 +70,22 @@ public class UserAccountCardResponseDto implements Serializable {
 	private String creator;
 	/** 创建人id */
 	private Long creatorId;
+
+	public Long getAccountPkId() {
+		return accountPkId;
+	}
+
+	public void setAccountPkId(Long accountPkId) {
+		this.accountPkId = accountPkId;
+	}
+
+	public Long getCardPkId() {
+		return cardPkId;
+	}
+
+	public void setCardPkId(Long cardPkId) {
+		this.cardPkId = cardPkId;
+	}
 
 	public String getCreator() {
 		return creator;

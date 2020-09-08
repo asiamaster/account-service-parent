@@ -1,6 +1,5 @@
 package com.dili.account.dto;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -22,14 +21,18 @@ public class CardRepoQueryParam extends BaseDomain {
 	private Long firmId;
 	/** 操作员ID */
 	private Long creatorId;
-	/**开始时间*/
+	/** 开始时间 */
 	private LocalDateTime startDate;
-	/**结束时间*/
+	/** 结束时间 */
 	private LocalDateTime endDate;
 	/** 卡类型 */
 	private Integer type;
 	/** 卡片在仓库状态 */
 	private Integer state;
+	/** 排除状态（用于数据查询时） */
+	private Integer excludeState;
+	/** 入库记录ID */
+	private Long storageInId;
 	private List<String> cardNos;
 	/** 卡片起始号 */
 	private Long startCardNo;
@@ -114,6 +117,22 @@ public class CardRepoQueryParam extends BaseDomain {
 
 	public void setEndCardNo(Long endCardNo) {
 		this.endCardNo = endCardNo;
+	}
+
+	public Integer getExcludeState() {
+		return excludeState;
+	}
+
+	public void setExcludeState(Integer excludeState) {
+		this.excludeState = excludeState;
+	}
+
+	public Long getStorageInId() {
+		return storageInId;
+	}
+
+	public void setStorageInId(Long storageInId) {
+		this.storageInId = storageInId;
 	}
 
 }
