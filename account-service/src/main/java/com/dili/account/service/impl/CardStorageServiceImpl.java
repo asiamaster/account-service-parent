@@ -169,7 +169,7 @@ public class CardStorageServiceImpl implements ICardStorageService {
 			LOG.error(NONEXISTENT_ERRMSG, cardNo);
 			throw BizExceptionProxy.exception(NONEXISTENT_ERRMSG);
 		}
-		return cardStorageDao.getByCardNo(cardNo);
+		return cardStorage;
 	}
 
 	@Override

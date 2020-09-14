@@ -10,11 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 import com.dili.account.common.ExceptionMsg;
 import com.dili.account.dao.IUserAccountDao;
 import com.dili.account.dto.CardRequestDto;
-import com.dili.account.entity.CardAggregationWrapper;
 import com.dili.account.entity.UserAccountDo;
 import com.dili.account.exception.AccountBizException;
 import com.dili.account.service.IAccountManageService;
-import com.dili.account.service.IAccountQueryService;
 import com.dili.account.service.IOpenCardService;
 import com.dili.account.type.DisableState;
 import com.dili.customer.sdk.domain.Customer;
@@ -66,6 +64,7 @@ public class AccountManageServiceImpl implements IAccountManageService {
 		updateAccount.setCustomerCertificateType(customer.getCertificateType());
 		updateAccount.setCustomerId(customer.getId());
 		//根据客户类型设置对应的权限
+		updateAccount.setCustomerMarketType(customer.getCustomerMarket().getType());
 		openCardService.setAccountPermissions(updateAccount, customer.getCustomerMarket().getType());
 		
 		// 客户禁用，则禁用所有账户状态 CustomerEnum.State.DISABLED.getCode();
