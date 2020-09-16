@@ -12,8 +12,8 @@ import feign.RequestInterceptor;
  */
 public class PayServiceFeignConfig {
 
-    private static final String APPID = "100101";
-    private static final String TOKEN = "abcd1234";
+    private static final String APPID = "1010";
+    private static final String TOKEN = "abcd1010";
 
     @Bean
     public RequestInterceptor requestInterceptor() {
