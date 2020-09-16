@@ -1,6 +1,8 @@
 package com.dili.account.rpc;
 
 import org.springframework.cloud.openfeign.FeignClient;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -33,5 +35,5 @@ public interface PayRpc {
      * @date 2020/6/30
      */
     @RequestMapping(value = "/payment/api/gateway.do?service=payment.fund.service:query", method = RequestMethod.POST)
-    BaseOutput<BalanceResponseDto> getAccountBalance(CreateTradeRequestDto requestDto);
+    BaseOutput<BalanceResponseDto> getAccountBalance(@RequestBody CreateTradeRequestDto requestDto, @RequestHeader(name = "mchid") String mchid);
 }

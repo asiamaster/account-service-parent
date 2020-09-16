@@ -1,8 +1,5 @@
 package com.dili.account.rpc.resolver;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-
 import com.dili.account.dto.BalanceResponseDto;
 import com.dili.account.dto.CreateTradeRequestDto;
 import com.dili.account.dto.FundAccountDto;
@@ -12,6 +9,8 @@ import com.dili.account.exception.AccountBizException;
 import com.dili.account.rpc.PayRpc;
 import com.dili.ss.constant.ResultCode;
 import com.dili.ss.domain.BaseOutput;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 /**
  * @description： 支付服务调用包装类
@@ -21,44 +20,45 @@ import com.dili.ss.domain.BaseOutput;
  */
 @Component
 public class PayRpcResolver {
-	@Autowired
-	private PayRpc payRpc;
+    @Autowired
+    private PayRpc payRpc;
 
-	/**
-	 *
-	 * @author miaoguoxin
-	 * @date 2020/6/18
-	 */
-	public PayAccountDto resolverByUserAccount(Long account) {
-		return new PayAccountDto();
-	}
+    /**
+     *
+     * @author miaoguoxin
+     * @date 2020/6/18
+     */
+    public PayAccountDto resolverByUserAccount(Long account) {
+        return new PayAccountDto();
+    }
 
-	/**
-	 * 调用支付服务
-	 *
-	 * @param accountInfo
-	 * @return 资金账号ID
-	 */
-	public Long createFundAccount(FundAccountDto accountInfo) {
-		BaseOutput<PayCreateFundReponseDto> baseOutput = BaseOutput.failure();
-		baseOutput = payRpc.createFundAccount(accountInfo);
-		if (baseOutput.isSuccess()) {
-			return baseOutput.getData().getAccountId();
-		}
-		throw new AccountBizException(ResultCode.DATA_ERROR, baseOutput.getMessage());
-	}
-	/**
-	 *  查询余额
-	 * @author miaoguoxin
-	 * @date 2020/6/30
-	 */
-	public BalanceResponseDto findBalanceByFundAccountId(Long fundAccountId) {
-		CreateTradeRequestDto requestDto = new CreateTradeRequestDto();
-		requestDto.setAccountId(fundAccountId);
-		BaseOutput<BalanceResponseDto> result = payRpc.getAccountBalance(requestDto);
-		if (!result.isSuccess()){
-			throw new AccountBizException(ResultCode.DATA_ERROR, result.getMessage());
-		}
-		return result.getData();
-	}
+    /**
+     * 调用支付服务
+     *
+     * @param accountInfo
+     * @return 资金账号ID
+     */
+    public Long createFundAccount(FundAccountDto accountInfo) {
+        BaseOutput<PayCreateFundReponseDto> baseOutput = BaseOutput.failure();
+        baseOutput = payRpc.createFundAccount(accountInfo);
+        if (baseOutput.isSuccess()) {
+            return baseOutput.getData().getAccountId();
+        }
+        throw new AccountBizException(ResultCode.DATA_ERROR, baseOutput.getMessage());
+    }
+
+    /**
+     *  查询余额
+     * @author miaoguoxin
+     * @date 2020/6/30
+     */
+    public BalanceResponseDto findBalanceByFundAccountId(Long fundAccountId, String mchid) {
+        CreateTradeRequestDto requestDto = new CreateTradeRequestDto();
+        requestDto.setAccountId(fundAccountId);
+        BaseOutput<BalanceResponseDto> result = payRpc.getAccountBalance(requestDto, mchid);
+        if (!result.isSuccess()) {
+            throw new AccountBizException(ResultCode.DATA_ERROR, result.getMessage());
+        }
+        return result.getData();
+    }
 }

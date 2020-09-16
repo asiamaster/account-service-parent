@@ -60,7 +60,7 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
         UserAccountCardQuery query = new UserAccountCardQuery();
         query.setCardNos(Lists.newArrayList(cardNo));
         UserAccountCardResponseDto userAccount = this.getSingleForRest(query, true);
-        BalanceResponseDto fund = payRpcResolver.findBalanceByFundAccountId(userAccount.getFundAccountId());
+        BalanceResponseDto fund = payRpcResolver.findBalanceByFundAccountId(userAccount.getFundAccountId(), userAccount.getFirmId() + "");
         return new AccountSimpleResponseDto(fund, userAccount);
     }
 
