@@ -73,11 +73,16 @@ public class OpenCardServiceImpl implements IOpenCardService {
 		// 判断客户是否已办理过主卡，寿光每个人只能有一张交易主卡,其它市场允许办两张卡，则判断只能一张交易买家卡和一张交易卖家卡
 		UserAccountCardQuery queryParam = new UserAccountCardQuery();
 		queryParam.setCustomerIds(Lists.newArrayList(openCardInfo.getCustomerId()));
+		queryParam.setExcludeUnusualState(0); // 不排除任何状态
 		List<UserAccountCardResponseDto> userAccountList = accountQueryService.getListByConditionForRest(queryParam);
 		if (userAccountList.size() > 0) {
-			// TODO 是否允许两张卡
-			throw BizExceptionProxy.exception("客户{}已办理过交易主卡{}", openCardInfo.getCustomerName(),
-					userAccountList.get(0).getCardNo());
+			// 判断是否已办理过主卡
+			for (UserAccountCardResponseDto accountDto : userAccountList) {
+				if (CardType.isMaster(accountDto.getCardType())
+						&& accountDto.getCardState() != CardStatus.RETURNED.getCode())
+					throw BizExceptionProxy.exception("客户{}已办理过交易主卡{}", openCardInfo.getCustomerName(),
+							userAccountList.get(0).getCardNo());
+			}
 		}
 		// 判断卡类型，并将卡片改为使用中
 		CardStorageDo cardStorageDo = cardStorageService.inUse(openCardInfo.getCardNo());

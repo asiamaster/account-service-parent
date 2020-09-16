@@ -33,21 +33,6 @@ public class PayRpcResolver {
     }
 
     /**
-     * 调用支付服务
-     *
-     * @param accountInfo
-     * @return 资金账号ID
-     */
-    public Long createFundAccount(FundAccountDto accountInfo) {
-        BaseOutput<PayCreateFundReponseDto> baseOutput = BaseOutput.failure();
-        baseOutput = payRpc.createFundAccount(accountInfo);
-        if (baseOutput.isSuccess()) {
-            return baseOutput.getData().getAccountId();
-        }
-        throw new AccountBizException(ResultCode.DATA_ERROR, baseOutput.getMessage());
-    }
-
-    /**
      *  查询余额
      * @author miaoguoxin
      * @date 2020/6/30

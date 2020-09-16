@@ -9,8 +9,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.dili.account.config.PayServiceFeignConfig;
 import com.dili.account.dto.BalanceResponseDto;
 import com.dili.account.dto.CreateTradeRequestDto;
-import com.dili.account.dto.FundAccountDto;
-import com.dili.account.dto.PayCreateFundReponseDto;
 import com.dili.ss.domain.BaseOutput;
 
 /**
@@ -22,13 +20,6 @@ import com.dili.ss.domain.BaseOutput;
 @FeignClient(value = "pay-service", configuration = PayServiceFeignConfig.class)
 public interface PayRpc {
 
-    /**
-     * 创建资金账户服务
-     * @param type
-     * @return
-     */
-    @RequestMapping(value = "/payment/api/gateway.do?service=payment.account.service:register", method = RequestMethod.POST)
-    BaseOutput<PayCreateFundReponseDto> createFundAccount(FundAccountDto type);
     /**
      * 查询余额
      * @author miaoguoxin
