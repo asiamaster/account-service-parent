@@ -26,5 +26,5 @@ public interface PayRpc {
      * @date 2020/6/30
      */
     @RequestMapping(value = "/payment/api/gateway.do?service=payment.fund.service:query", method = RequestMethod.POST)
-    BaseOutput<BalanceResponseDto> getAccountBalance(@RequestBody CreateTradeRequestDto requestDto, @RequestHeader(name = "mchid") String mchid);
+    BaseOutput<BalanceResponseDto> getAccountBalance(@RequestBody CreateTradeRequestDto requestDto, @RequestHeader(name = "mchId") String mchId);
 }
