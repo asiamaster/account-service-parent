@@ -12,7 +12,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.dili.account.common.BizNoServiceType;
 import com.dili.account.dao.IUserAccountDao;
 import com.dili.account.dao.IUserCardDao;
-import com.dili.account.dto.FundAccountDto;
 import com.dili.account.dto.OpenCardDto;
 import com.dili.account.dto.OpenCardResponseDto;
 import com.dili.account.dto.UserAccountCardQuery;
@@ -33,7 +32,6 @@ import com.dili.account.type.AccountUsageType;
 import com.dili.account.type.CardCategory;
 import com.dili.account.type.CardStatus;
 import com.dili.account.type.CardType;
-import com.dili.account.type.CustomerOrgType;
 import com.dili.account.type.CustomerType;
 import com.dili.account.type.DisableState;
 import com.dili.account.type.UsePermissionType;
@@ -85,7 +83,7 @@ public class OpenCardServiceImpl implements IOpenCardService {
 			}
 		}
 		// 判断卡类型，并将卡片改为使用中
-		CardStorageDo cardStorageDo = cardStorageService.inUse(openCardInfo.getCardNo());
+		CardStorageDo cardStorageDo = cardStorageService.inUse(openCardInfo.getCardNo(), openCardInfo.getFirmId());
 		if (cardStorageDo.getType() != CardType.MASTER.getCode()) {
 			throw BizExceptionProxy.exception("该卡{}不是主卡，操作失败!", openCardInfo.getCardNo());
 		}
@@ -120,7 +118,7 @@ public class OpenCardServiceImpl implements IOpenCardService {
 		}
 
 		// 判断卡类型，并将卡片改为使用中
-		CardStorageDo cardStorageDo = cardStorageService.inUse(openCardInfo.getCardNo());
+		CardStorageDo cardStorageDo = cardStorageService.inUse(openCardInfo.getCardNo(), openCardInfo.getFirmId());
 		if (cardStorageDo.getType() != CardType.SLAVE.getCode()) {
 			throw BizExceptionProxy.exception("该卡{}不是副卡，操作失败!", openCardInfo.getCardNo());
 		}

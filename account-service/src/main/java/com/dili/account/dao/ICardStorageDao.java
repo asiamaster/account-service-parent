@@ -64,7 +64,7 @@ public interface ICardStorageDao {
 	/**
 	 * 根据卡号查询
 	 */
-	CardStorageDo getByCardNo(String cardNo);
+	CardStorageDo getByCardNo(String cardNo, Long firmId);
 	
 	/**
 	 * 删除库存,只删除状态为“未激活”的数据

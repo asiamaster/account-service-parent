@@ -34,7 +34,7 @@ public interface ICardStorageService {
 	/**
 	 * 批量激活，出库激活，只修改状态为未激活的卡
 	 */
-	void batchActivate(List<String> cardNos);
+	void batchActivate(List<String> cardNos, Long firmId);
 
 	/**
 	 * 卡片批量删除，根据号段入库ID，如果有非激活状态的卡片则删除失败
@@ -44,17 +44,17 @@ public interface ICardStorageService {
 	/**
 	 * 使用过后更新为激活,表示可以被开卡
 	 */
-	CardStorageDo activateCard(String cardNo);
+	CardStorageDo activateCard(String cardNo, Long firmId);
 
 	/**
 	 * 更新为使用中，开卡后更新为使用中
 	 */
-	CardStorageDo inUse(String cardNo);
+	CardStorageDo inUse(String cardNo, Long firmId);
 
 	/**
 	 * 更新为作废
 	 */
-	void voidCard(String cardNo, String remark);
+	void voidCard(String cardNo, String remark, Long firmId);
 
 	/**
 	 * 根据卡号修改状态 <br>
@@ -68,6 +68,6 @@ public interface ICardStorageService {
 	/**
 	 * 根据卡号查询
 	 */
-	CardStorageDo getByCardNo(String cardNo);
+	CardStorageDo getByCardNo(String cardNo, Long firmId);
 
 }

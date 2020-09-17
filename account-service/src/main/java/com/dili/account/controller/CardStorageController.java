@@ -32,9 +32,8 @@ import com.dili.ss.domain.PageOutput;
 @RestController
 @RequestMapping(value = "api/account/cardStorage")
 public class CardStorageController {
-	
-	private static final Logger log = LoggerFactory.getLogger(CardStorageController.class);
 
+	private static final Logger log = LoggerFactory.getLogger(CardStorageController.class);
 
 	@Resource
 	private ICardStorageService cardStorageService;
@@ -55,7 +54,7 @@ public class CardStorageController {
 	public BaseOutput<CardStorageDo> getCardStorageByCardNo(@RequestBody CardRepoQueryParam param) {
 		log.info("获取卡片在仓库中的状态*****" + JSONObject.toJSONString(param));
 		AssertUtils.notEmpty(param.getCardNo(), "卡号不能为空!");
-		CardStorageDo cardStorage = cardStorageService.getByCardNo(param.getCardNo());
+		CardStorageDo cardStorage = cardStorageService.getByCardNo(param.getCardNo(), param.getFirmId());
 		log.info("获取卡片在仓库中的状态*****" + JSONObject.toJSONString(cardStorage));
 		return BaseOutput.successData(cardStorage);
 	}
@@ -81,10 +80,10 @@ public class CardStorageController {
 	public BaseOutput<?> batchActivate(@RequestBody BatchActivateCardDto dto) {
 		log.info("卡片批量激活*****" + JSONObject.toJSONString(dto));
 		AssertUtils.notNull(dto.getCardNos(), "参数校验失败：卡号缺失!");
-		cardStorageService.batchActivate(dto.getCardNos());
+		cardStorageService.batchActivate(dto.getCardNos(), dto.getFirmId());
 		return BaseOutput.success();
 	}
-	
+
 	/**
 	 * 卡片删除，根据号段入库ID，如果有非激活状态的卡片则删除失败
 	 */
@@ -92,7 +91,8 @@ public class CardStorageController {
 	public BaseOutput<?> delByStorageInId(@RequestBody CardStorageParam dto) {
 		log.info("卡片删除*****" + JSONObject.toJSONString(dto));
 		AssertUtils.notNull(dto.getStorageInId(), "参数校验失败：入库ID为空!");
-		cardStorageService.delByStorageInId(dto.getStorageInId(), dto.getFirmId());;
+		cardStorageService.delByStorageInId(dto.getStorageInId(), dto.getFirmId());
+		;
 		return BaseOutput.success();
 	}
 
@@ -117,10 +117,10 @@ public class CardStorageController {
 	public BaseOutput<?> voidCard(@RequestBody CardAddStorageDto voidCardInfo) {
 		log.info("卡片作废*****" + JSONObject.toJSONString(voidCardInfo));
 		AssertUtils.notEmpty(voidCardInfo.getCardNo(), "卡号不能为空!");
-		cardStorageService.voidCard(voidCardInfo.getCardNo(), voidCardInfo.getNotes());
+		cardStorageService.voidCard(voidCardInfo.getCardNo(), voidCardInfo.getNotes(), voidCardInfo.getFirmId());
 		return BaseOutput.success();
 	}
-	
+
 	/**
 	 * 卡片由使用中转为激活状态
 	 */
@@ -128,7 +128,7 @@ public class CardStorageController {
 	public BaseOutput<?> activateCardByInUse(@RequestBody CardAddStorageDto cardInfo) {
 		log.info("卡片由使用中转为激活状态*****" + JSONObject.toJSONString(cardInfo));
 		AssertUtils.notEmpty(cardInfo.getCardNo(), "卡号不能为空!");
-		cardStorageService.activateCard(cardInfo.getCardNo());
+		cardStorageService.activateCard(cardInfo.getCardNo(), cardInfo.getFirmId());
 		return BaseOutput.success();
 	}
 }

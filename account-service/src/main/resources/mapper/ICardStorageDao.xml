@@ -132,7 +132,9 @@
 		FROM
 		account_card_storage
 		WHERE
-		card_no = #{cardNo}
+			card_no = #{cardNo}
+		AND 
+			firm_id = #{firmId}
 	</select>
 
 	<update id="updateByCardNo">
@@ -155,7 +157,8 @@
 			<if test="modifyTime != null">`modify_time` = #{modifyTime}</if>
 		</set>
 		WHERE
-		card_no = #{cardNo}
+			card_no = #{cardNo}
+		AND firm_id = #{firmId}
 	</update>
 
 	<!-- 批量激活 -->
@@ -165,7 +168,10 @@
 			`state` = #{state},
 			`modify_time` = #{modifyTime}
 		</set>
-		WHERE state = 4 and card_no in
+		WHERE 
+			state = 4
+		AND firm_id = #{firmId}
+		AND card_no in
 		<foreach collection="cardNos" item="cardNo" open="(" close=")" separator=",">
 			#{cardNo}
 		</foreach> 

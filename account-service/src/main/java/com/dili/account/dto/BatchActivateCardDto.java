@@ -16,6 +16,8 @@ public class BatchActivateCardDto {
 	private LocalDateTime modifyTime;
 	/** 激活的卡片列表 */
 	private List<String> cardNos;
+	/** 商户ID */
+	private Long firmId;
 
 	public Integer getState() {
 		return state;
@@ -39,6 +41,14 @@ public class BatchActivateCardDto {
 
 	public void setCardNos(List<String> cardNos) {
 		this.cardNos = cardNos;
+	}
+
+	public Long getFirmId() {
+		return firmId;
+	}
+
+	public void setFirmId(Long firmId) {
+		this.firmId = firmId;
 	}
 
 }
