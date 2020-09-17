@@ -183,7 +183,7 @@ public class CardStorageServiceImpl implements ICardStorageService {
 		CardRepoQueryParam queryParam = new CardRepoQueryParam();
 		queryParam.setStartCardNo(batchCardDto.getStartCardNo());
 		queryParam.setEndCardNo(batchCardDto.getEndCardNo());
-		queryParam.setFirmId(batchCardDto.getFirmId());
+//		queryParam.setFirmId(batchCardDto.getFirmId()); 卡号全市场唯一
 		List<CardStorageDo> selectList = cardStorageDao.selectList(queryParam);
 		if (!CollectionUtils.isEmpty(selectList)) {
 			if (selectList.size() == 1) {
