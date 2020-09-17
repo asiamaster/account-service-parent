@@ -29,6 +29,16 @@ public class UserAccountSingleQueryDto implements Serializable {
     private Long accountId;
     /** 卡号 */
     private String cardNo;
+    /**市场id*/
+    private Long firmId;
+
+    public Long getFirmId() {
+        return firmId;
+    }
+
+    public void setFirmId(Long firmId) {
+        this.firmId = firmId;
+    }
 
     public Long getAccountPkId() {
         return accountPkId;
