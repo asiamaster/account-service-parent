@@ -110,6 +110,7 @@ public class CardStorageServiceImpl implements ICardStorageService {
 		updateParam.setCardNo(cardNo);
 		updateParam.setState(CardStorageState.USED.getCode());
 		updateParam.setModifyTime(LocalDateTime.now());
+		updateParam.setFirmId(firmId);
 		cardStorageDao.updateByCardNo(updateParam);
 
 		repository.setState(updateParam.getState());
@@ -125,6 +126,7 @@ public class CardStorageServiceImpl implements ICardStorageService {
 		updateParam.setCardNo(cardNo);
 		updateParam.setState(CardStorageState.VOID.getCode());
 		updateParam.setModifyTime(LocalDateTime.now());
+		updateParam.setFirmId(firmId);
 		cardStorageDao.updateByCardNo(updateParam);
 	}
 
@@ -156,6 +158,7 @@ public class CardStorageServiceImpl implements ICardStorageService {
 		updateParam.setCardNo(cardStorage.getCardNo());
 		updateParam.setState(cardStorage.getState());
 		updateParam.setModifyTime(LocalDateTime.now());
+		updateParam.setFirmId(cardStorage.getFirmId());
 		cardStorageDao.updateByCardNo(updateParam);
 		return 0;
 	}
@@ -180,7 +183,7 @@ public class CardStorageServiceImpl implements ICardStorageService {
 		CardRepoQueryParam queryParam = new CardRepoQueryParam();
 		queryParam.setStartCardNo(batchCardDto.getStartCardNo());
 		queryParam.setEndCardNo(batchCardDto.getEndCardNo());
-		queryParam.setFirmId(batchCardDto.getFirmId());
+//		queryParam.setFirmId(batchCardDto.getFirmId()); 卡号全市场唯一
 		List<CardStorageDo> selectList = cardStorageDao.selectList(queryParam);
 		if (!CollectionUtils.isEmpty(selectList)) {
 			if (selectList.size() == 1) {
@@ -222,6 +225,7 @@ public class CardStorageServiceImpl implements ICardStorageService {
 		activateDto.setState(CardStorageState.ACTIVATE.getCode());
 		activateDto.setModifyTime(LocalDateTime.now());
 		activateDto.setCardNos(cardNos);
+		activateDto.setFirmId(firmId);
 		// 批量激活
 		int batchResult = cardStorageDao.batchActivate(activateDto);
 		if (batchResult == 0 || batchResult != cardNos.size()) {
