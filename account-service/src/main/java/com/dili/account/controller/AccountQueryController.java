@@ -126,7 +126,7 @@ public class AccountQueryController {
      * @author miaoguoxin
      * @date 2020/8/12
      */
-    private UserAccountCardQuery convertQueryParams(@Validated(AccountValidator.SingleQuery.class) @RequestBody UserAccountSingleQueryDto param) {
+    private UserAccountCardQuery convertQueryParams(UserAccountSingleQueryDto param) {
         UserAccountCardQuery query = new UserAccountCardQuery();
         if (param.getAccountId() != null) {
             query.setAccountPkId(param.getAccountPkId());
@@ -140,6 +140,7 @@ public class AccountQueryController {
         if (param.getAccountId() != null) {
             query.setAccountIds(Lists.newArrayList(param.getAccountId()));
         }
+        query.setFirmId(param.getFirmId());
         return query;
     }
 }
