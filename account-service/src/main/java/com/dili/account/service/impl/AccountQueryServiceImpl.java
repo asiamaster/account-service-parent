@@ -56,9 +56,10 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
     }
 
     @Override
-    public AccountSimpleResponseDto getByCardNoWithBalance(String cardNo) {
+    public AccountSimpleResponseDto getByCardNoWithBalance(String cardNo, Long firmId) {
         UserAccountCardQuery query = new UserAccountCardQuery();
         query.setCardNos(Lists.newArrayList(cardNo));
+        query.setFirmId(firmId);
         UserAccountCardResponseDto userAccount = this.getSingleForRest(query, true);
         BalanceResponseDto fund = payRpcResolver.findBalanceByFundAccountId(userAccount.getFundAccountId(), userAccount.getFirmId() + "");
         return new AccountSimpleResponseDto(fund, userAccount);

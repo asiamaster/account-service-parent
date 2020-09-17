@@ -30,7 +30,7 @@ public interface IAccountQueryService {
      * @author miaoguoxin
      * @date 2020/7/7
      */
-    AccountSimpleResponseDto getByCardNoWithBalance(String cardNo);
+    AccountSimpleResponseDto getByCardNoWithBalance(String cardNo, Long firmId);
 
     /**
      * 单个查询（对外）
