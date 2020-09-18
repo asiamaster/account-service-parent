@@ -127,6 +127,12 @@
             <if test="customerMarketType !=null and customerMarketType !=''">
                 AND aua.`customer_market_type` = #{customerMarketType}
             </if>
+            <if test="customerContactsPhone !=null and customerContactsPhone !=''">
+                AND aua.`customer_contacts_phone` = #{customerContactsPhone}
+            </if>
+            <if test="customerCode !=null and customerCode !=''">
+                AND aua.`customer_code` = #{customerCode}
+            </if>
             <if test="accountIds!=null and accountIds.size>0">
                 AND aua.account_id IN
                 <foreach item="item" collection="accountIds" separator="," open="(" close=")" index="">

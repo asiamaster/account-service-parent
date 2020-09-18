@@ -26,6 +26,10 @@ public class UserAccountCardQuery extends BaseDto {
     private String customerCertificateNumber;
     /**客户市场类型 {@link com.dili.account.type.CustomerType}*/
     private String customerMarketType;
+    /** 客户电话 */
+    private String customerContactsPhone;
+    /** 客户编号 */
+    private String customerCode;
     /** 多个账户ID */
     private List<Long> accountIds;
     /** 多个卡号 */
@@ -47,6 +51,22 @@ public class UserAccountCardQuery extends BaseDto {
     /**标记是否是最新的卡*/
     @JSONField(deserialize = false)
     private Integer last;
+
+    public String getCustomerContactsPhone() {
+        return customerContactsPhone;
+    }
+
+    public void setCustomerContactsPhone(String customerContactsPhone) {
+        this.customerContactsPhone = customerContactsPhone;
+    }
+
+    public String getCustomerCode() {
+        return customerCode;
+    }
+
+    public void setCustomerCode(String customerCode) {
+        this.customerCode = customerCode;
+    }
 
     public Long getAccountPkId() {
         return accountPkId;
