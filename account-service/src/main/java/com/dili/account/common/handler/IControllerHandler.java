@@ -12,7 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Arrays;
 
 /**
- * 用于获取用户session、验证公共参数、赋值操作员信息
+ * 用于获取cookie
  * @author xuliang
  */
 public interface IControllerHandler {
@@ -25,6 +25,7 @@ public interface IControllerHandler {
     default void buildFirmId(BaseDto baseDto){
         Long firmId = getFirmId();
         if (firmId == null){
+            //如果header里面拿不到，再检验是否已经传了firmId
             AssertUtils.notNull(baseDto.getFirmId(),"市场id不能为空");
         }else {
             baseDto.setFirmId(firmId);

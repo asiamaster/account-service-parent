@@ -1,6 +1,7 @@
 package com.dili.account.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.dili.account.common.handler.IControllerHandler;
 import com.dili.account.dto.AccountSimpleResponseDto;
 import com.dili.account.dto.UserAccountCardQuery;
 import com.dili.account.dto.UserAccountCardResponseDto;
@@ -25,8 +26,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -36,14 +35,12 @@ import java.util.List;
  */
 @RestController
 @RequestMapping(value = "api/account")
-public class AccountQueryController {
+public class AccountQueryController implements IControllerHandler {
     private static final Logger LOGGER = LoggerFactory.getLogger(AccountQueryController.class);
 
     @Autowired
     private IAccountQueryService accountQueryService;
 
-    @Autowired
-    private HttpServletRequest request;
 
     /**
      * 根据accountId查卡账户信息
@@ -68,6 +65,7 @@ public class AccountQueryController {
                                                                     UserAccountSingleQueryDto param) {
         LOGGER.info("查询单个getSingle请求参数:{}", JSON.toJSONString(param));
         UserAccountCardQuery query = this.convertQueryParams(param);
+        this.buildFirmId(query);
         return BaseOutput.successData(accountQueryService.getSingleForRest(query, true));
     }
 
@@ -81,6 +79,7 @@ public class AccountQueryController {
                                                                                    UserAccountSingleQueryDto param) {
         LOGGER.info("查询单个getSingleWithoutValidate请求参数:{}", JSON.toJSONString(param));
         UserAccountCardQuery query = this.convertQueryParams(param);
+        this.buildFirmId(query);
         return BaseOutput.successData(accountQueryService.getSingleForRest(query, false));
     }
 
@@ -93,7 +92,7 @@ public class AccountQueryController {
     public PageOutput<List<UserAccountCardResponseDto>> getPage(@RequestBody @Validated(ConstantValidator.Page.class)
                                                                         UserAccountCardQuery param) {
         LOGGER.info("分页条件查询getPage请求参数:{}", JSON.toJSONString(param));
-        AssertUtils.notNull(param.getFirmId(), "市场id不能为空");
+        this.buildFirmId(param);
         //换卡后，老卡不再显示
         param.setLast(CardLastState.YES.getCode());
         return accountQueryService.getPageByConditionForRest(param);
@@ -107,7 +106,7 @@ public class AccountQueryController {
     @PostMapping("/getList")
     public BaseOutput<List<UserAccountCardResponseDto>> getList(@RequestBody UserAccountCardQuery param) {
         LOGGER.info("getList请求参数:{}", JSON.toJSONString(param));
-        AssertUtils.notNull(param.getFirmId(), "市场id不能为空");
+        this.buildFirmId(param);
         return BaseOutput.successData(accountQueryService.getListByConditionForRest(param));
     }
 
