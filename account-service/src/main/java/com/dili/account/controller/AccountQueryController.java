@@ -25,6 +25,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -40,6 +42,8 @@ public class AccountQueryController {
     @Autowired
     private IAccountQueryService accountQueryService;
 
+    @Autowired
+    private HttpServletRequest request;
 
     /**
      * 根据accountId查卡账户信息
@@ -90,6 +94,8 @@ public class AccountQueryController {
                                                                         UserAccountCardQuery param) {
         LOGGER.info("分页条件查询getPage请求参数:{}", JSON.toJSONString(param));
         AssertUtils.notNull(param.getFirmId(), "市场id不能为空");
+        Cookie[] cookies = request.getCookies();
+        LOGGER.info("获取到Cookies:{}",JSON.toJSONString(cookies));
         //换卡后，老卡不再显示
         param.setLast(CardLastState.YES.getCode());
         return accountQueryService.getPageByConditionForRest(param);
