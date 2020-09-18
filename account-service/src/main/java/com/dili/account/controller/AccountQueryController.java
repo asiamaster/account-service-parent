@@ -94,8 +94,6 @@ public class AccountQueryController {
                                                                         UserAccountCardQuery param) {
         LOGGER.info("分页条件查询getPage请求参数:{}", JSON.toJSONString(param));
         AssertUtils.notNull(param.getFirmId(), "市场id不能为空");
-        Cookie[] cookies = request.getCookies();
-        LOGGER.info("获取到Cookies:{}",JSON.toJSONString(cookies));
         //换卡后，老卡不再显示
         param.setLast(CardLastState.YES.getCode());
         return accountQueryService.getPageByConditionForRest(param);
