@@ -1,7 +1,6 @@
 package com.dili.account.controller;
 
 import com.alibaba.fastjson.JSON;
-import com.dili.account.common.handler.IControllerHandler;
 import com.dili.account.dto.AccountSimpleResponseDto;
 import com.dili.account.dto.UserAccountCardQuery;
 import com.dili.account.dto.UserAccountCardResponseDto;
@@ -35,7 +34,7 @@ import java.util.List;
  */
 @RestController
 @RequestMapping(value = "api/account")
-public class AccountQueryController implements IControllerHandler {
+public class AccountQueryController {
     private static final Logger LOGGER = LoggerFactory.getLogger(AccountQueryController.class);
 
     @Autowired
@@ -65,7 +64,6 @@ public class AccountQueryController implements IControllerHandler {
                                                                     UserAccountSingleQueryDto param) {
         LOGGER.info("查询单个getSingle请求参数:{}", JSON.toJSONString(param));
         UserAccountCardQuery query = this.convertQueryParams(param);
-        this.buildFirmId(query);
         return BaseOutput.successData(accountQueryService.getSingleForRest(query, true));
     }
 
@@ -79,7 +77,6 @@ public class AccountQueryController implements IControllerHandler {
                                                                                    UserAccountSingleQueryDto param) {
         LOGGER.info("查询单个getSingleWithoutValidate请求参数:{}", JSON.toJSONString(param));
         UserAccountCardQuery query = this.convertQueryParams(param);
-        this.buildFirmId(query);
         return BaseOutput.successData(accountQueryService.getSingleForRest(query, false));
     }
 
@@ -92,7 +89,6 @@ public class AccountQueryController implements IControllerHandler {
     public PageOutput<List<UserAccountCardResponseDto>> getPage(@RequestBody @Validated(ConstantValidator.Page.class)
                                                                         UserAccountCardQuery param) {
         LOGGER.info("分页条件查询getPage请求参数:{}", JSON.toJSONString(param));
-        this.buildFirmId(param);
         //换卡后，老卡不再显示
         param.setLast(CardLastState.YES.getCode());
         return accountQueryService.getPageByConditionForRest(param);
@@ -106,7 +102,6 @@ public class AccountQueryController implements IControllerHandler {
     @PostMapping("/getList")
     public BaseOutput<List<UserAccountCardResponseDto>> getList(@RequestBody UserAccountCardQuery param) {
         LOGGER.info("getList请求参数:{}", JSON.toJSONString(param));
-        this.buildFirmId(param);
         return BaseOutput.successData(accountQueryService.getListByConditionForRest(param));
     }
 
