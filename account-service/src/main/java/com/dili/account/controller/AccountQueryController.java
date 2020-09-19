@@ -89,6 +89,7 @@ public class AccountQueryController {
     public PageOutput<List<UserAccountCardResponseDto>> getPage(@RequestBody @Validated(ConstantValidator.Page.class)
                                                                         UserAccountCardQuery param) {
         LOGGER.info("分页条件查询getPage请求参数:{}", JSON.toJSONString(param));
+        AssertUtils.notNull(param.getFirmId(),"市场id不能为空");
         //换卡后，老卡不再显示
         param.setLast(CardLastState.YES.getCode());
         return accountQueryService.getPageByConditionForRest(param);
@@ -102,6 +103,7 @@ public class AccountQueryController {
     @PostMapping("/getList")
     public BaseOutput<List<UserAccountCardResponseDto>> getList(@RequestBody UserAccountCardQuery param) {
         LOGGER.info("getList请求参数:{}", JSON.toJSONString(param));
+        AssertUtils.notNull(param.getFirmId(),"市场id不能为空");
         return BaseOutput.successData(accountQueryService.getListByConditionForRest(param));
     }
 
