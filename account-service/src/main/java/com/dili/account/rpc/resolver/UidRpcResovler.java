@@ -29,7 +29,7 @@ public class UidRpcResovler {
 	public String bizNumber(String type) {
 		BaseOutput<String> baseOutput = uidRpc.bizNumber(type);
 		if (!baseOutput.isSuccess()) {
-			throw new AccountBizException(ResultCode.DATA_ERROR, "远程调用编号生成服务失败");
+			throw new AccountBizException(ResultCode.DATA_ERROR, "远程调用业务号规则服务失败");
 		}
 		return baseOutput.getData();
 	}
@@ -54,9 +54,9 @@ public class UidRpcResovler {
 			try {
 				Thread.sleep(500L);
 			} catch (InterruptedException e) {
-				throw new AccountBizException(ResultCode.DATA_ERROR, "远程调用编号生成服务失败");
+				throw new AccountBizException(ResultCode.DATA_ERROR, "远程调用业务号规则服务失败");
 			}
 		} while (retryCount < count);
-		throw new AccountBizException(ResultCode.DATA_ERROR, "远程调用编号生成服务失败");
+		throw new AccountBizException(ResultCode.DATA_ERROR, "远程调用业务号规则服务失败");
 	}
 }

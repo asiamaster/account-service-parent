@@ -6,6 +6,8 @@ import java.util.Optional;
 
 import javax.annotation.Resource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -47,6 +49,8 @@ import com.google.common.collect.Lists;
  */
 @Service("openCardService")
 public class OpenCardServiceImpl implements IOpenCardService {
+
+	private static final Logger log = LoggerFactory.getLogger(OpenCardServiceImpl.class);
 
 	@Resource
 	private ICardStorageService cardStorageService;
@@ -141,7 +145,8 @@ public class OpenCardServiceImpl implements IOpenCardService {
 //		Long fundAccountId = payRpcResolver.createFundAccount(fundAccount);
 
 		// 构建账户信息
-		String accountIdStr = uidRpcResovler.bizNumberRetry(BizNoServiceType.ACCOUNT_ID, 3);
+		String accountIdStr = uidRpcResovler.bizNumber(BizNoServiceType.ACCOUNT_ID);
+		log.info("编号服务获取账户ID*****{}", accountIdStr);
 		Long accountId = Long.parseLong(accountIdStr);
 		UserAccountDo userAccount = buildUserAccount(openCardInfo, accountId, openCardInfo.getFundAccountId());
 		userAccountDao.save(userAccount);
