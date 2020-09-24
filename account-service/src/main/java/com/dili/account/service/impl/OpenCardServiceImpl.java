@@ -224,9 +224,10 @@ public class OpenCardServiceImpl implements IOpenCardService {
 	 * @param customerType
 	 */
 	public void setAccountPermissions(UserAccountDo userAccount, String customerType) {
-		if (CustomerType.INSIDE_BUYER.getCode().equalsIgnoreCase(customerType)
+		if (CustomerType.OPERATION_AREA.getCode().equalsIgnoreCase(customerType)
 				|| CustomerType.OUTSIDE_BUYER.getCode().equalsIgnoreCase(customerType)
-				|| CustomerType.BUYER.getCode().equalsIgnoreCase(customerType)) {
+				|| CustomerType.IN_PROVINCE.getCode().equalsIgnoreCase(customerType)
+				|| CustomerType.NATIVE_CUSTOMER.getCode().equalsIgnoreCase(customerType)) {
 			// 买家 园内买家 园外买家
 			userAccount.setType(AccountType.PURCHASE.getCode());
 

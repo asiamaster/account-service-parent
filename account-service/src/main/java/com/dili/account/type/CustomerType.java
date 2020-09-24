@@ -8,17 +8,18 @@ package com.dili.account.type;
  * @time ：2020年6月23日下午3:32:47
  */
 public enum CustomerType {
-	/** 买家 */
-	BUYER("买家", "buyer"),
 	/** 园外买家 */
 	OUTSIDE_BUYER("园外买家", "outside_buyer"),
-	/** 园内买家 */
-	INSIDE_BUYER("园内买家", "inside_buyer"),
 	/** 卖家卡 */
 	SELLER("卖家", "seller"),
-
 	/** 司机 */
-	DRIVER("司机", "driver");
+	DRIVER("司机", "driver"),
+	/** 理货区客户 */
+	OPERATION_AREA("理货区客户", "operation_area"),
+	/** 省内客户 */
+	IN_PROVINCE("省内客户", "in_province"),
+	/** 本地客户 */
+	NATIVE_CUSTOMER("本地客户", "native"),;
 
 	private String name;
 	private String code;
