@@ -76,6 +76,7 @@ public class OpenCardServiceImpl implements IOpenCardService {
 		UserAccountCardQuery queryParam = new UserAccountCardQuery();
 		queryParam.setCustomerIds(Lists.newArrayList(openCardInfo.getCustomerId()));
 		queryParam.setExcludeUnusualState(0); // 不排除任何状态
+		queryParam.setFirmId(openCardInfo.getFirmId());
 		List<UserAccountCardResponseDto> userAccountList = accountQueryService.getListByConditionForRest(queryParam);
 		if (userAccountList.size() > 0) {
 			// 判断是否已办理过主卡
