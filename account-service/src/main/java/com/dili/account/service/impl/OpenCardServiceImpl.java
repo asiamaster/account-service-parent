@@ -6,6 +6,8 @@ import java.util.Optional;
 
 import javax.annotation.Resource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -48,6 +50,8 @@ import com.google.common.collect.Lists;
 @Service("openCardService")
 public class OpenCardServiceImpl implements IOpenCardService {
 
+	private static final Logger log = LoggerFactory.getLogger(OpenCardServiceImpl.class);
+
 	@Resource
 	private ICardStorageService cardStorageService;
 	@Resource
@@ -72,6 +76,7 @@ public class OpenCardServiceImpl implements IOpenCardService {
 		UserAccountCardQuery queryParam = new UserAccountCardQuery();
 		queryParam.setCustomerIds(Lists.newArrayList(openCardInfo.getCustomerId()));
 		queryParam.setExcludeUnusualState(0); // 不排除任何状态
+		queryParam.setFirmId(openCardInfo.getFirmId());
 		List<UserAccountCardResponseDto> userAccountList = accountQueryService.getListByConditionForRest(queryParam);
 		if (userAccountList.size() > 0) {
 			// 判断是否已办理过主卡
@@ -141,7 +146,8 @@ public class OpenCardServiceImpl implements IOpenCardService {
 //		Long fundAccountId = payRpcResolver.createFundAccount(fundAccount);
 
 		// 构建账户信息
-		String accountIdStr = uidRpcResovler.bizNumberRetry(BizNoServiceType.ACCOUNT_ID, 3);
+		String accountIdStr = uidRpcResovler.bizNumber(BizNoServiceType.ACCOUNT_ID);
+		log.info("编号服务获取账户ID*****{}", accountIdStr);
 		Long accountId = Long.parseLong(accountIdStr);
 		UserAccountDo userAccount = buildUserAccount(openCardInfo, accountId, openCardInfo.getFundAccountId());
 		userAccountDao.save(userAccount);
@@ -224,9 +230,10 @@ public class OpenCardServiceImpl implements IOpenCardService {
 	 * @param customerType
 	 */
 	public void setAccountPermissions(UserAccountDo userAccount, String customerType) {
-		if (CustomerType.INSIDE_BUYER.getCode().equalsIgnoreCase(customerType)
+		if (CustomerType.OPERATION_AREA.getCode().equalsIgnoreCase(customerType)
 				|| CustomerType.OUTSIDE_BUYER.getCode().equalsIgnoreCase(customerType)
-				|| CustomerType.BUYER.getCode().equalsIgnoreCase(customerType)) {
+				|| CustomerType.IN_PROVINCE.getCode().equalsIgnoreCase(customerType)
+				|| CustomerType.NATIVE_CUSTOMER.getCode().equalsIgnoreCase(customerType)) {
 			// 买家 园内买家 园外买家
 			userAccount.setType(AccountType.PURCHASE.getCode());
 

@@ -46,10 +46,14 @@ public class PasswordServiceImpl implements IPasswordService {
 			throw new AccountBizException(ResultCode.DATA_ERROR, "两次输入密码不匹配");
 		}
 		UserAccountDo userAccount = new UserAccountDo();
+		userAccount.setId(account.getUserAccount().getId());
 		userAccount.setAccountId(cardRequestDto.getAccountId());
 		userAccount.setLoginPwd(
 				PasswordUtils.encrypt(cardRequestDto.getLoginPwd(), account.getUserAccount().getSecretKey()));
-		userAccountDao.update(userAccount);
+		int update = userAccountDao.update(userAccount);
+		if(update == 0) {
+			throw new AccountBizException(ResultCode.DATA_ERROR, "密码重置失败");
+		}
 	}
 
 	@Override
