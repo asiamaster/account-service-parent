@@ -1,12 +1,14 @@
 package com.dili.account.controller;
 
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.dili.account.dto.AccountSimpleResponseDto;
 import com.dili.account.dto.UserAccountCardQuery;
 import com.dili.account.dto.UserAccountCardResponseDto;
 import com.dili.account.dto.UserAccountSingleQueryDto;
 import com.dili.account.service.IAccountQueryService;
 import com.dili.account.type.CardLastState;
+import com.dili.account.type.CardStatus;
 import com.dili.account.util.AssertUtils;
 import com.dili.account.validator.AccountValidator;
 import com.dili.account.validator.ConstantValidator;
@@ -23,9 +25,11 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 账户信息查询
@@ -105,6 +109,24 @@ public class AccountQueryController {
         LOGGER.info("getList请求参数:{}", JSON.toJSONString(param));
         AssertUtils.notNull(param.getFirmId(),"市场id不能为空");
         return BaseOutput.successData(accountQueryService.getListByConditionForRest(param));
+    }
+
+    /**
+    *  条件查询所有（包含异常状态，但排除掉了退卡）
+    * @author miaoguoxin
+    * @date 2020/9/25
+    */
+    @PostMapping("/getAllList")
+    @ResponseBody
+    public BaseOutput<List<UserAccountCardResponseDto>> getListV2(@RequestBody UserAccountCardQuery param) {
+        LOGGER.info("条件查询卡账户列表*****{}", JSONObject.toJSONString(param));
+        AssertUtils.notNull(param.getFirmId(), "市场id不能为空");
+        param.setExcludeUnusualState(0);
+        List<UserAccountCardResponseDto> list = accountQueryService.getListByConditionForRest(param);
+        List<UserAccountCardResponseDto> collect = list.stream()
+                .filter(u -> u.getCardState() != CardStatus.RETURNED.getCode())
+                .collect(Collectors.toList());
+        return BaseOutput.successData(collect);
     }
 
 
