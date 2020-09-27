@@ -51,7 +51,7 @@ public class CardStorageServiceImpl implements ICardStorageService {
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public void addCard(CardAddStorageDto addInfo) {
-		CardStorageDo repository = cardStorageDao.getByCardNo(addInfo.getCardNo(),addInfo.getFirmId());
+		CardStorageDo repository = cardStorageDao.getByCardNo(addInfo.getCardNo(), addInfo.getFirmId());
 		if (repository != null) {
 			LOG.error(DUPLICATION_ERRMSG, addInfo.getCardNo());
 			throw BizExceptionProxy.exception(DUPLICATION_ERRMSG);
@@ -78,7 +78,7 @@ public class CardStorageServiceImpl implements ICardStorageService {
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public CardStorageDo activateCard(String cardNo, Long firmId) {
-		CardStorageDo repository = checkCardState(cardNo,firmId);
+		CardStorageDo repository = checkCardState(cardNo, firmId);
 		// 该卡已在激活状态
 		if (repository.getState() == CardStorageState.ACTIVATE.getCode()) {
 			LOG.error(NOT_IN_USE_ERRMSG, cardNo);
@@ -99,7 +99,7 @@ public class CardStorageServiceImpl implements ICardStorageService {
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public CardStorageDo inUse(String cardNo, Long firmId) {
-		CardStorageDo repository = checkCardState(cardNo,firmId);
+		CardStorageDo repository = checkCardState(cardNo, firmId);
 		// 该卡已在使用状态
 		if (repository.getState() == CardStorageState.USED.getCode()) {
 			LOG.error(IN_USE_ERRMSG, cardNo);
@@ -120,7 +120,7 @@ public class CardStorageServiceImpl implements ICardStorageService {
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public void voidCard(String cardNo, String remark, Long firmId) {
-		checkCardState(cardNo,firmId);
+		checkCardState(cardNo, firmId);
 		// 作废
 		CardStorageDo updateParam = new CardStorageDo();
 		updateParam.setCardNo(cardNo);
@@ -135,7 +135,7 @@ public class CardStorageServiceImpl implements ICardStorageService {
 	 * 如果不存在或者卡已作废则抛出异常
 	 */
 	private CardStorageDo checkCardState(String cardNo, Long firmId) {
-		CardStorageDo repository = cardStorageDao.getByCardNo(cardNo,firmId);
+		CardStorageDo repository = cardStorageDao.getByCardNo(cardNo, firmId);
 		// 判断该卡是否存在
 		if (repository == null) {
 			LOG.error(NONEXISTENT_ERRMSG, cardNo);
@@ -152,7 +152,7 @@ public class CardStorageServiceImpl implements ICardStorageService {
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public int updateByCardNo(CardStorageDo cardStorage) {
-		checkCardState(cardStorage.getCardNo(),cardStorage.getFirmId());
+		checkCardState(cardStorage.getCardNo(), cardStorage.getFirmId());
 		// 修改状态
 		CardStorageDo updateParam = new CardStorageDo();
 		updateParam.setCardNo(cardStorage.getCardNo());
@@ -250,7 +250,8 @@ public class CardStorageServiceImpl implements ICardStorageService {
 		delParam.setFirmId(firmId);
 		int delCount = cardStorageDao.del(delParam);
 		if (delCount <= 0) {
-			throw BizExceptionProxy.exception("删除失败");
+			LOG.warn("库存卡片删除失败，没有对应的storageInId[{}]", storageInId);
+//			throw BizExceptionProxy.exception("删除失败");
 		}
 	}
 
