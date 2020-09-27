@@ -236,7 +236,7 @@ public class CardStorageServiceImpl implements ICardStorageService {
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public void delByStorageInId(Long storageInId, Long firmId) {
-		// 检查重复卡号
+		// 检查该入库批次中是否有非激活的数据
 		CardRepoQueryParam queryParam = new CardRepoQueryParam();
 		queryParam.setStorageInId(storageInId);
 		queryParam.setExcludeState(CardStorageState.UNACTIVATE.getCode());
