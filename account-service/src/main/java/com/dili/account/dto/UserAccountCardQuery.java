@@ -44,6 +44,8 @@ public class UserAccountCardQuery extends BaseDto {
     private Integer cardType;
     /**卡状态 {@link com.dili.account.type.CardStatus}*/
     private Integer cardState;
+    /**账户状态 {@link com.dili.account.type.DisableState}*/
+    private Integer disableState;
     /**关键词，用于模糊查询等*/
     private String keyword;
     /**是否要排除异常状态的账户 ex：卡退还、账户被禁用*/
@@ -51,6 +53,14 @@ public class UserAccountCardQuery extends BaseDto {
     /**标记是否是最新的卡*/
     @JSONField(deserialize = false)
     private Integer last;
+
+    public Integer getDisableState() {
+        return disableState;
+    }
+
+    public void setDisableState(Integer disableState) {
+        this.disableState = disableState;
+    }
 
     public String getCustomerContactsPhone() {
         return customerContactsPhone;

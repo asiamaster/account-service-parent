@@ -148,6 +148,9 @@
             <if test="parentAccountId!=null">
                 AND aua.parent_account_id = #{parentAccountId}
             </if>
+            <if test="disableState!=null">
+                AND aua.disabled_state = #{disableState}
+            </if>
             <if test="cardType!=null">
                 AND auc.type = #{cardType}
             </if>
