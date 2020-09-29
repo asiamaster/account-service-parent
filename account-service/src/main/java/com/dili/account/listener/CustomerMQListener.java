@@ -48,7 +48,7 @@ public class CustomerMQListener {
             	accountManageService.updateCustomerInfo(customer);
             }
         } catch (Exception e) {
-            LOGGER.error("客户信息修改失败", message, e);
+            LOGGER.error("客户信息修改失败", e);
         }
     }
 }
