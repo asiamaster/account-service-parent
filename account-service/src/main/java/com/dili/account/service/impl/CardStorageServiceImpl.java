@@ -243,13 +243,13 @@ public class CardStorageServiceImpl implements ICardStorageService {
 		queryParam.setFirmId(firmId);
 		Long count = cardStorageDao.selectListCount(queryParam);
 		if (count > 0) {
-			throw BizExceptionProxy.exception("有部分卡片已出库，删除失败");
+			throw BizExceptionProxy.exception("有部分卡片已出库或作废，删除失败");
 		}
 		CardStorageDo delParam = new CardStorageDo();
 		delParam.setStorageInId(storageInId);
 		delParam.setFirmId(firmId);
 		int delCount = cardStorageDao.del(delParam);
-		if (delCount <= 0) {
+		if (delCount != 0) {
 			LOG.warn("库存卡片删除失败，没有对应的storageInId[{}]", storageInId);
 //			throw BizExceptionProxy.exception("删除失败");
 		}
