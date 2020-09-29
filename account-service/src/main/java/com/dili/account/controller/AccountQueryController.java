@@ -137,7 +137,7 @@ public class AccountQueryController {
      */
     @GetMapping("/simpleInfo")
     public BaseOutput<AccountSimpleResponseDto> getInfoByCardNo(String cardNo, Long firmId) {
-        LOGGER.info("simpleInfo请求参数:{}", cardNo);
+        LOGGER.info("simpleInfo请求参数:{}->>>>{}", cardNo,firmId);
         AssertUtils.notEmpty(cardNo, "卡号不能为空");
         AccountSimpleResponseDto dto = accountQueryService.getByCardNoWithBalance(cardNo, firmId);
         return BaseOutput.successData(dto);
