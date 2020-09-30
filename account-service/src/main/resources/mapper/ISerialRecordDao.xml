@@ -283,7 +283,7 @@
 			</when>
 			<otherwise>
 				<if test="sort != null and sort != '' and order != null and order != ''">
-					ORDER BY ${sort} ${order}
+					ORDER BY CONVERT(${sort} USING GBK) ${order}
 				</if>
 			</otherwise>
 		</choose>
