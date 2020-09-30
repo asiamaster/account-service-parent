@@ -279,11 +279,11 @@
 		</if>
 		<choose>
 			<when test="serialSort != null and serialSort != ''">
-				ORDER BY ${serialSort}
+				ORDER BY CONVERT(${serialSort} USING GBK)
 			</when>
 			<otherwise>
 				<if test="sort != null and sort != '' and order != null and order != ''">
-					ORDER BY ${sort} ${order}
+					ORDER BY CONVERT(${sort} USING GBK) ${order}
 				</if>
 			</otherwise>
 		</choose>
