@@ -70,7 +70,7 @@ public class CardManageController {
      */
     @PostMapping("/changeCard")
     public BaseOutput<?> changeCard(@RequestBody
-                                    @Validated({CardValidator.Generic.class, CardValidator.ChangeCard.class})
+                                    @Validated({CardValidator.ChangeCard.class})
                                             CardRequestDto cardParam) {
         cardManageService.changeCard(cardParam);
         return BaseOutput.success();
