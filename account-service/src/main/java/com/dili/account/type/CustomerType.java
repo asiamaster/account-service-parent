@@ -9,9 +9,9 @@ package com.dili.account.type;
  */
 public enum CustomerType {
 	/** 园外买家 */
-	OUTSIDE_BUYER("园外买家", "outside_buyer"),
+	OUTSIDE_BUYER("园外买方", "outside_buyer"),
 	/** 卖家卡 */
-	SELLER("卖家", "seller"),
+	SELLER("卖方", "seller"),
 	/** 司机 */
 	DRIVER("司机", "driver"),
 	/** 理货区客户 */
