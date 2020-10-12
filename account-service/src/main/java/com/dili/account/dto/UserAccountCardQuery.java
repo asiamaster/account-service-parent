@@ -44,6 +44,7 @@ public class UserAccountCardQuery extends BaseDto {
     private Integer cardType;
     /**卡状态 {@link com.dili.account.type.CardStatus}*/
     private Integer cardState;
+    private List<Integer> cardStates;
     /**账户状态 {@link com.dili.account.type.DisableState}*/
     private Integer disableState;
     /**关键词，用于模糊查询等*/
@@ -53,6 +54,14 @@ public class UserAccountCardQuery extends BaseDto {
     /**标记是否是最新的卡*/
     @JSONField(deserialize = false)
     private Integer last;
+
+    public List<Integer> getCardStates() {
+        return cardStates;
+    }
+
+    public void setCardStates(List<Integer> cardStates) {
+        this.cardStates = cardStates;
+    }
 
     public Integer getDisableState() {
         return disableState;

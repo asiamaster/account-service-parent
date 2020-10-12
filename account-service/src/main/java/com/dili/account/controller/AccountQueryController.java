@@ -9,6 +9,7 @@ import com.dili.account.dto.UserAccountSingleQueryDto;
 import com.dili.account.service.IAccountQueryService;
 import com.dili.account.type.CardLastState;
 import com.dili.account.type.CardStatus;
+import com.dili.account.type.DisableState;
 import com.dili.account.util.AssertUtils;
 import com.dili.account.validator.AccountValidator;
 import com.dili.account.validator.ConstantValidator;
@@ -122,11 +123,14 @@ public class AccountQueryController {
         LOGGER.info("条件查询卡账户列表*****{}", JSONObject.toJSONString(param));
         AssertUtils.notNull(param.getFirmId(), "市场id不能为空");
         param.setExcludeUnusualState(0);
+        param.setCardStates(Lists.newArrayList(
+                CardStatus.NORMAL.getCode(),
+                CardStatus.LOSS.getCode(),
+                CardStatus.LOCKED.getCode()
+        ));
+        param.setDisableState(DisableState.ENABLED.getCode());
         List<UserAccountCardResponseDto> list = accountQueryService.getListByConditionForRest(param);
-        List<UserAccountCardResponseDto> collect = list.stream()
-                .filter(u -> u.getCardState() != CardStatus.RETURNED.getCode())
-                .collect(Collectors.toList());
-        return BaseOutput.successData(collect);
+        return BaseOutput.successData(list);
     }
 
 

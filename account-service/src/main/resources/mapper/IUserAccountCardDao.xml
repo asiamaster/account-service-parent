@@ -169,6 +169,12 @@
             <if test="excludeUnusualState !=null and excludeUnusualState == 1">
                 AND auc.state not in (3,4)  AND aua.disabled_state = 1
             </if>
+            <if test="cardStates!=null and cardStates.size>0">
+                AND auc.state IN
+                <foreach item="item" collection="cardStates" separator="," open="(" close=")" index="">
+                    #{item}
+                </foreach>
+            </if>
             <if test="keyword !=null and keyword !=''">
                 AND auc.card_no LIKE concat('%',#{keyword},'%')
             </if>
