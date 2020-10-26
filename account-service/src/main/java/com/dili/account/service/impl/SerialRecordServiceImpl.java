@@ -45,7 +45,7 @@ public class SerialRecordServiceImpl implements ISerialRecordService {
         output.setData(itemList);
         output.setPageNum(page.getPageNum());
         output.setPageSize(page.getPageSize());
-        output.setTotal(Long.valueOf(page.getTotal()).intValue());
+        output.setTotal(page.getTotal());
         output.setStartRow(page.getStartRow());
         output.setEndRow(page.getEndRow());
         output.setPages(page.getPages());
