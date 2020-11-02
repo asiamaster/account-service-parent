@@ -14,10 +14,15 @@ public interface IUserAccountCardDao {
 
     /**
     * 条件查询卡账户列表（包含退卡状态）
-    * @param
-    * @return
     * @author miaoguoxin
     * @date 2020/6/19
     */
     List<CardAggregationWrapper> getListByCondition(UserAccountCardQuery queryParam);
+
+    /**
+    * 获取所有已开卡客户id
+    * @author miaoguoxin
+    * @date 2020/11/2
+    */
+    List<Long> getAllCustomerIds(UserAccountCardQuery queryParam);
 }

@@ -85,6 +85,11 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public List<Long> getAllCustomerIds(UserAccountCardQuery queryParam) {
+        return userAccountCardDao.getAllCustomerIds(queryParam);
+    }
+
 
     @Override
     public PageOutput<List<UserAccountCardResponseDto>> getPageByConditionForRest(UserAccountCardQuery param) {

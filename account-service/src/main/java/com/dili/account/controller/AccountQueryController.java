@@ -43,7 +43,7 @@ public class AccountQueryController {
     private static final Logger LOGGER = LoggerFactory.getLogger(AccountQueryController.class);
 
     @Autowired
-    private IAccountQueryService accountQueryService;
+   private IAccountQueryService accountQueryService;
 
 
     /**
@@ -113,7 +113,7 @@ public class AccountQueryController {
     }
 
     /**
-    *  条件查询所有（包含异常状态，但排除掉了退卡）
+    *  条件查询所有（只排除掉了退卡）
     * @author miaoguoxin
     * @date 2020/9/25
     */
@@ -133,6 +133,23 @@ public class AccountQueryController {
         return BaseOutput.successData(list);
     }
 
+    /**
+    *  获取市场所有已开卡客户id
+    * @author miaoguoxin
+    * @date 2020/11/2
+    */
+    @PostMapping("/getAllCustomerIds")
+    @ResponseBody
+    public BaseOutput<List<Long>> getAllCustomerIds(@RequestBody UserAccountCardQuery param){
+        AssertUtils.notNull(param.getFirmId(), "市场id不能为空");
+        param.setCardStates(Lists.newArrayList(
+                CardStatus.NORMAL.getCode(),
+                CardStatus.LOSS.getCode(),
+                CardStatus.LOCKED.getCode()
+        ));
+        param.setDisableState(DisableState.ENABLED.getCode());
+        return BaseOutput.successData(accountQueryService.getAllCustomerIds(param));
+    }
 
     /**
      * 账户信息，包含余额

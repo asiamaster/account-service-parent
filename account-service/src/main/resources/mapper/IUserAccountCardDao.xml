@@ -192,4 +192,21 @@
         <include refid="Where_Condition"/>
         ORDER BY ${sort} ${order}
     </select>
+    <select id="getAllCustomerIds" resultType="java.lang.Long">
+        SELECT aua.customer_id
+        FROM account_user_account aua
+        LEFT JOIN account_user_card auc on aua.account_id = auc.account_id
+        <where>
+            aua.firm_id=#{firmId}
+            <if test="cardStates!=null and cardStates.size>0">
+                AND auc.state IN
+                <foreach item="item" collection="cardStates" separator="," open="(" close=")" index="">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="disableState!=null">
+                AND aua.disabled_state = #{disableState}
+            </if>
+        </where>
+    </select>
 </mapper>
