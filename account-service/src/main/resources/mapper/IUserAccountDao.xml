@@ -92,6 +92,7 @@
 			#{pwdChanged},
 			#{loginTime},
 			#{secretKey},
+			#{state},
 			#{source},
 			#{version},
 			#{disabledState},
