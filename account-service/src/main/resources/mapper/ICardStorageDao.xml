@@ -34,6 +34,7 @@
 			</foreach>
 		</if>
 		<if test="type != null"><![CDATA[ AND type = #{type}]]></if>
+		<if test="cardFace != null"><![CDATA[ AND card_face = #{cardFace}]]></if>
 		<if test="state != null"><![CDATA[ AND state = #{state}]]></if>
 		<if test="excludeState != null"><![CDATA[ AND state != #{excludeState}]]></if>
 		<if test="startDate != null"><![CDATA[ AND create_time >= #{startDate}]]></if>
