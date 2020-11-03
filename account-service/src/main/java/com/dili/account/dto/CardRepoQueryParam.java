@@ -27,6 +27,8 @@ public class CardRepoQueryParam extends BaseDomain {
 	private LocalDateTime endDate;
 	/** 卡类型 */
 	private Integer type;
+	/** 卡面 */
+	private String cardFace;
 	/** 卡片在仓库状态 */
 	private Integer state;
 	/** 排除状态（用于数据查询时） */
@@ -133,6 +135,14 @@ public class CardRepoQueryParam extends BaseDomain {
 
 	public void setStorageInId(Long storageInId) {
 		this.storageInId = storageInId;
+	}
+
+	public String getCardFace() {
+		return cardFace;
+	}
+
+	public void setCardFace(String cardFace) {
+		this.cardFace = cardFace;
 	}
 
 }

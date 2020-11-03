@@ -70,6 +70,7 @@ public class AccountManageServiceImpl implements IAccountManageService {
 		// 客户禁用，则禁用所有账户状态 CustomerEnum.State.DISABLED.getCode();
 		updateAccount.setDisabledState(customer.getState()); 
 		updateAccount.setModifyTime(LocalDateTime.now());
+		updateAccount.setFirmId(customer.getCustomerMarket().getMarketId());
 		userAccountDao.updateCustomerInfo(updateAccount);
 	}
 }

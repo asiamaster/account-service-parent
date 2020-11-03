@@ -48,6 +48,12 @@ public interface IAccountQueryService {
     List<UserAccountCardResponseDto> getListByConditionForRest(UserAccountCardQuery queryParam);
 
     /**
+    * 获取市场所有已开卡的客户Id
+    * @author miaoguoxin
+    * @date 2020/11/2
+    */
+    List<Long> getAllCustomerIds(UserAccountCardQuery queryParam);
+    /**
      * 卡列表条件查询（带分页count）
      * @author miaoguoxin
      * @date 2020/6/19

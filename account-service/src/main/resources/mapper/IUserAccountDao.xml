@@ -8,13 +8,13 @@
 			`account_id`,
 			`parent_account_id`,
 			`customer_id`,
-			`customer_id`, 
-			`customer_name`, 
-			`customer_code`, 
-			`customer_market_type`, 
-			`customer_certificate_type`, 
-			`customer_certificate_number`, 
-			`customer_contacts_phone`,  
+			`customer_id`,
+			`customer_name`,
+			`customer_code`,
+			`customer_market_type`,
+			`customer_certificate_type`,
+			`customer_certificate_number`,
+			`customer_contacts_phone`,
 			`fund_account_id`,
 			`card_exist`,
 			`type`,
@@ -24,7 +24,6 @@
 			`pwd_changed`,
 			`login_time`,
 			`secret_key`,
-			`state`,
 			`source`,
 			`disabled_state`,
 			`version`,
@@ -47,13 +46,13 @@
 		INSERT INTO account_user_account (
 			`account_id`,
 			`parent_account_id`,
-			`customer_id`, 
-			`customer_name`, 
-			`customer_code`, 
-			`customer_market_type`, 
-			`customer_certificate_type`, 
-			`customer_certificate_number`, 
-			`customer_contacts_phone`, 
+			`customer_id`,
+			`customer_name`,
+			`customer_code`,
+			`customer_market_type`,
+			`customer_certificate_type`,
+			`customer_certificate_number`,
+			`customer_contacts_phone`,
 			`fund_account_id`,
 			`card_exist`,
 			`type`,
@@ -63,7 +62,6 @@
 			`pwd_changed`,
 			`login_time`,
 			`secret_key`,
-			`state`,
 			`source`,
 			`version`,
 			`disabled_state`,
@@ -77,12 +75,12 @@
 		VALUES (
 			#{accountId},
 			#{parentAccountId},
-			#{customerId}, 
-			#{customerName}, 
-			#{customerCode}, 
-			#{customerMarketType}, 
-			#{customerCertificateType}, 
-			#{customerCertificateNumber}, 
+			#{customerId},
+			#{customerName},
+			#{customerCode},
+			#{customerMarketType},
+			#{customerCertificateType},
+			#{customerCertificateNumber},
 			#{customerContactsPhone},
 			#{fundAccountId},
 			#{cardExist},
@@ -93,7 +91,6 @@
 			#{pwdChanged},
 			#{loginTime},
 			#{secretKey},
-			#{state},
 			#{source},
 			#{version},
 			#{disabledState},
@@ -136,7 +133,6 @@
 			<if test="pwdChanged != null">`pwd_changed` = #{pwdChanged}, </if>
 			<if test="loginTime != null">`login_time` = #{loginTime}, </if>
 			<if test="secretKey != null">`secret_key` = #{secretKey}, </if>
-			<if test="state != null">`state` = #{state}, </if>
 			<if test="source != null">`source` = #{source}, </if>
 			<if test="version != null">`version` = #{version}, </if>
 			<if test="firmId != null">`firm_id` = #{firmId}, </if>
@@ -164,6 +160,8 @@
 		</set>
 		WHERE
 			customer_id = #{customerId}
+		AND 
+			firm_id = #{customerId}
 	</update>
 
 
@@ -202,32 +200,32 @@
 		AND 
 			auc.state != 4
 	</select>
-	
+
 	<!-- 单个更新卡账户是否禁用状态 -->
 	<update id="updateDisabledState">
-		UPDATE 
-			account_user_account 
-		SET 
+		UPDATE
+			account_user_account
+		SET
 			disabled_state = #{disabledState},
 		    version = version + 1,
 		    modify_time = NOW()
-		WHERE 
+		WHERE
 			account_id = #{accountId}
-		AND 
+		AND
 			version=#{version}
 	</update>
-	
+
 	<!-- 单个更新卡账户使用状态 -->
 	<update id="updateState">
-		UPDATE 
-			account_user_account 
-		SET 
+		UPDATE
+			account_user_account
+		SET
 			state = #{state},
 		    version = version + 1,
 		    modify_time = NOW()
-		WHERE 
+		WHERE
 			account_id = #{accountId}
-		AND 
+		AND
 			version=#{version}
 	</update>
 </mapper>
