@@ -24,6 +24,7 @@
 			`pwd_changed`,
 			`login_time`,
 			`secret_key`,
+			`state`,
 			`source`,
 			`disabled_state`,
 			`version`,
