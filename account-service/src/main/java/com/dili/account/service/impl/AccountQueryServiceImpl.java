@@ -8,6 +8,7 @@ import com.dili.account.dto.BalanceResponseDto;
 import com.dili.account.dto.UserAccountCardQuery;
 import com.dili.account.dto.UserAccountCardResponseDto;
 import com.dili.account.entity.CardAggregationWrapper;
+import com.dili.account.entity.CustomerCardWrapper;
 import com.dili.account.entity.UserAccountDo;
 import com.dili.account.entity.UserCardDo;
 import com.dili.account.exception.AccountBizException;
@@ -29,8 +30,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -88,6 +92,19 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
     @Override
     public List<Long> getAllCustomerIds(UserAccountCardQuery queryParam) {
         return userAccountCardDao.getAllCustomerIds(queryParam);
+    }
+
+    @Override
+    public Map<String, List<String>> getCardNosGroupByCustomerIds(UserAccountCardQuery param) {
+        List<CustomerCardWrapper> list = userAccountCardDao.getCarNosByCustomerIds(param);
+        Map<String,List<String>> result = new HashMap<>();
+        Map<String, List<CustomerCardWrapper>> collect = list.stream().collect(Collectors.groupingBy(
+                customerCardWrapper -> String.valueOf(customerCardWrapper.getCustomerId())));
+        collect.forEach((key, value) -> {
+            List<String> cardNos = value.stream().map(CustomerCardWrapper::getCardNo).collect(Collectors.toList());
+            result.put(key, cardNos);
+        });
+        return result;
     }
 
 

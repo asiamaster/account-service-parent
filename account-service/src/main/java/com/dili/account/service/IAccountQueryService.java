@@ -7,7 +7,9 @@ import com.dili.account.entity.CardAggregationWrapper;
 import com.dili.ss.domain.PageOutput;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 
 /**
@@ -48,11 +50,19 @@ public interface IAccountQueryService {
     List<UserAccountCardResponseDto> getListByConditionForRest(UserAccountCardQuery queryParam);
 
     /**
-    * 获取市场所有已开卡的客户Id
+    * 获取市场所有已开卡的客户Id(特殊接口)
     * @author miaoguoxin
     * @date 2020/11/2
     */
     List<Long> getAllCustomerIds(UserAccountCardQuery queryParam);
+
+    /**
+     *  根据客户id分组卡号(特殊接口)
+     * @author miaoguoxin
+     * @date 2020/11/2
+     */
+    Map<String, List<String>> getCardNosGroupByCustomerIds(UserAccountCardQuery param);
+
     /**
      * 卡列表条件查询（带分页count）
      * @author miaoguoxin
