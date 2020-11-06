@@ -209,4 +209,27 @@
             </if>
         </where>
     </select>
+    <select id="getCarNosByCustomerIds" resultType="com.dili.account.entity.CustomerCardWrapper">
+        SELECT
+        aua.customer_id,
+        auc.card_no
+        FROM account_user_account aua
+        LEFT JOIN account_user_card auc on aua.account_id = auc.account_id
+        <where>
+            aua.firm_id=#{firmId}
+            <if test="cardStates!=null and cardStates.size>0">
+                AND auc.state IN
+                <foreach item="item" collection="cardStates" separator="," open="(" close=")" index="">
+                    #{item}
+                </foreach>
+            </if>
+            <if test="disableState!=null">
+                AND aua.disabled_state = #{disableState}
+            </if>
+            AND aua.customer_id IN
+            <foreach item="item" collection="customerIds" separator="," open="(" close=")" index="">
+                    #{item}
+            </foreach>
+        </where>
+    </select>
 </mapper>

@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.dili.account.dto.UserAccountCardQuery;
 import com.dili.account.entity.CardAggregationWrapper;
+import com.dili.account.entity.CustomerCardWrapper;
 
 /**
  * @Auther: miaoguoxin
@@ -25,4 +26,11 @@ public interface IUserAccountCardDao {
     * @date 2020/11/2
     */
     List<Long> getAllCustomerIds(UserAccountCardQuery queryParam);
+
+    /**
+     * 根据客户id获取卡号
+     * @author miaoguoxin
+     * @date 2020/11/2
+     */
+    List<CustomerCardWrapper> getCarNosByCustomerIds(UserAccountCardQuery queryParam);
 }

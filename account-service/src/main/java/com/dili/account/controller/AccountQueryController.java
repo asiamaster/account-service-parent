@@ -30,7 +30,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * 账户信息查询
@@ -149,6 +150,26 @@ public class AccountQueryController {
         ));
         param.setDisableState(DisableState.ENABLED.getCode());
         return BaseOutput.successData(accountQueryService.getAllCustomerIds(param));
+    }
+
+    /**
+     *  根据客户id分组卡号
+     * @author miaoguoxin
+     * @date 2020/11/2
+     */
+    @PostMapping("/getCardNosGroupByCustomerIds")
+    @ResponseBody
+    public BaseOutput<Map<String, List<String>>> getCardNosGroupByCustomerIds(@RequestBody UserAccountCardQuery param) {
+        List<Long> customerIds = param.getCustomerIds();
+        AssertUtils.notNull(param.getFirmId(), "市场id不能为空");
+        AssertUtils.isTrue(customerIds != null && customerIds.size() > 0, "请求参数不能为空");
+        param.setCardStates(Lists.newArrayList(
+                CardStatus.NORMAL.getCode(),
+                CardStatus.LOSS.getCode(),
+                CardStatus.LOCKED.getCode()
+        ));
+        param.setDisableState(DisableState.ENABLED.getCode());
+        return BaseOutput.successData(accountQueryService.getCardNosGroupByCustomerIds(param));
     }
 
     /**
