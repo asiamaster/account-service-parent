@@ -165,7 +165,7 @@
 		WHERE
 			customer_id = #{customerId}
 		AND 
-			firm_id = #{customerId}
+			firm_id = #{firmId}
 	</update>
 
 
