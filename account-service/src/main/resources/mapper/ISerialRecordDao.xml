@@ -217,36 +217,7 @@
 		</foreach>
 	</insert>
 
-	<!-- 查询操作流水记录列表 -->
-	<select id="list" parameterType="com.dili.account.dto.SerialQueryDto" resultType="com.dili.account.entity.SerialRecordDo">
-        SELECT
-			`id`,
-			`serial_no`,
-			`type`,
-			`account_id`,
-			`card_no`,
-			`customer_id`,
-			`customer_no`,
-			`customer_name`,
-			`customer_type`,
-			`action`,
-			`start_balance`,
-			`amount`,
-			`end_balance`,
-			`trade_type`,
-			`trade_channel`,
-			`trade_no`,
-			`fund_item`,
-			`fund_item_name`,
-			`operator_id`,
-			`operator_no`,
-			`operator_name`,
-			`operate_time`,
-			`notes`,
-			`firm_id`
-		FROM
-			account_serial_record
-		where 1 = 1
+	<sql id="QUERY_CONDITION">
 		<if test="firmId != null">
 			and `firm_id` = #{firmId}
 		</if>
@@ -277,15 +248,65 @@
 		<if test="operateTimeEnd != null and operateTimeEnd != ''">
 			and `operate_time` &lt;= #{operateTimeEnd}
 		</if>
+	</sql>
+
+	<!-- 查询操作流水记录列表 -->
+	<select id="list" parameterType="com.dili.account.dto.SerialQueryDto" resultType="com.dili.account.entity.SerialRecordDo">
+        SELECT
+			`id`,
+			`serial_no`,
+			`type`,
+			`account_id`,
+			`card_no`,
+			`customer_id`,
+			`customer_no`,
+			`customer_name`,
+			`customer_type`,
+			`action`,
+			`start_balance`,
+			`amount`,
+			`end_balance`,
+			`trade_type`,
+			`trade_channel`,
+			`trade_no`,
+			`fund_item`,
+			`fund_item_name`,
+			`operator_id`,
+			`operator_no`,
+			`operator_name`,
+			`operate_time`,
+			`notes`,
+			`firm_id`
+		FROM
+			account_serial_record
+		where 1 = 1
+		<include refid="QUERY_CONDITION"/>
 		<choose>
 			<when test="serialSort != null and serialSort != ''">
 				ORDER BY ${serialSort}
 			</when>
 			<otherwise>
 				<if test="sort != null and sort != '' and order != null and order != ''">
-					ORDER BY CONVERT(${sort} USING GBK) ${order}
+					<choose>
+						<when test="sortConvert">
+							ORDER BY CONVERT(${sort} USING GBK) ${order}
+						</when>
+						<otherwise>
+							ORDER BY ${sort} ${order}
+						</otherwise>
+					</choose>
 				</if>
 			</otherwise>
 		</choose>
+	</select>
+
+	<!-- 资金统计 -->
+	<select id="countOperateAmount" parameterType="com.dili.account.dto.SerialQueryDto" resultType="java.lang.Long">
+		SELECT
+			SUM(case when a.`action` = 1 then IFNULL(a.amount,0) ELSE -IFNULL(a.amount,0) end)
+		FROM
+			account_serial_record a
+		where 1 = 1
+		<include refid="QUERY_CONDITION"/>
 	</select>
 </mapper>

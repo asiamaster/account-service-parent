@@ -1,9 +1,9 @@
 package com.dili.account.dao;
 
-import java.util.List;
-
 import com.dili.account.dto.SerialQueryDto;
 import com.dili.account.entity.SerialRecordDo;
+
+import java.util.List;
 
 /**
  * 业务端账户流水
@@ -58,4 +58,11 @@ public interface ISerialRecordDao {
 	 * @return
 	 */
 	List<SerialRecordDo> list(SerialQueryDto serialQueryDto);
+
+	/**
+	 * 资金统计
+	 * @param serialQueryDto
+	 * @return
+	 */
+    Long countOperateAmount(SerialQueryDto serialQueryDto);
 }
