@@ -1,23 +1,20 @@
 package com.dili.account.controller;
 
-import java.util.List;
-
-import javax.annotation.Resource;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-
+import cn.hutool.core.collection.CollUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.dili.account.dto.SerialQueryDto;
 import com.dili.account.entity.SerialRecordDo;
 import com.dili.account.service.ISerialRecordService;
 import com.dili.ss.domain.BaseOutput;
 import com.dili.ss.domain.PageOutput;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import cn.hutool.core.collection.CollUtil;
+import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * 操作流水api
@@ -59,5 +56,16 @@ public class SerialRecordController {
 	public PageOutput<List<SerialRecordDo>> listPage(@RequestBody SerialQueryDto serialQueryDto) {
 		log.info("分页查询操作流水列表*****{}", JSONObject.toJSONString(serialQueryDto));
 		return serialRecordService.listPage(serialQueryDto);
+	}
+
+	/**
+	 * 根据列表查询条件统计资金情况
+	 * @param serialQueryDto
+	 * @return
+	 */
+	@RequestMapping(value = "/countOperateAmount")
+	public BaseOutput<Long> countOperateAmount(@RequestBody SerialQueryDto serialQueryDto) {
+		log.info("统计资金*****{}", JSONObject.toJSONString(serialQueryDto));
+		return BaseOutput.success().setData(serialRecordService.countOperateAmount(serialQueryDto));
 	}
 }
