@@ -93,13 +93,10 @@ public class OpenCardServiceImpl implements IOpenCardService {
 			throw BizExceptionProxy.exception("该卡{}不是主卡，操作失败!", openCardInfo.getCardNo());
 		}
 
-		// 创建资金账户
-//		FundAccountDto fundAccount = buildFundAccount(openCardInfo);
-//		Long fundAccountId = payRpcResolver.createFundAccount(fundAccount);
-
 		// 保存账户信息
-		String accountIdStr = uidRpcResovler.bizNumberRetry(BizNoServiceType.ACCOUNT_ID, 3);
-		Long accountId = Long.parseLong(accountIdStr);
+//		String accountIdStr = uidRpcResovler.bizNumberRetry(BizNoServiceType.ACCOUNT_ID, 3);
+//		Long accountId = Long.parseLong(accountIdStr);
+		Long accountId = openCardInfo.getFundAccountId();
 		UserAccountDo userAccount = buildUserAccount(openCardInfo, accountId, openCardInfo.getFundAccountId());
 		userAccountDao.save(userAccount);
 
@@ -141,14 +138,11 @@ public class OpenCardServiceImpl implements IOpenCardService {
 			throw BizExceptionProxy.exception("请刷正确的主卡!{}", openCardInfo.getParentAccountId());
 		}
 
-		// 创建资金账户
-//		FundAccountDto fundAccount = buildFundAccount(openCardInfo);
-//		Long fundAccountId = payRpcResolver.createFundAccount(fundAccount);
-
 		// 构建账户信息
-		String accountIdStr = uidRpcResovler.bizNumber(BizNoServiceType.ACCOUNT_ID);
-		log.info("编号服务获取账户ID*****{}", accountIdStr);
-		Long accountId = Long.parseLong(accountIdStr);
+//		String accountIdStr = uidRpcResovler.bizNumber(BizNoServiceType.ACCOUNT_ID);
+//		log.info("编号服务获取账户ID*****{}", accountIdStr);
+//		Long accountId = Long.parseLong(accountIdStr);
+		Long accountId = openCardInfo.getFundAccountId();
 		UserAccountDo userAccount = buildUserAccount(openCardInfo, accountId, openCardInfo.getFundAccountId());
 		userAccountDao.save(userAccount);
 
