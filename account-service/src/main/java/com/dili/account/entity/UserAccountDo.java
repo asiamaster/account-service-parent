@@ -32,6 +32,12 @@ public class UserAccountDo implements Serializable {
 	private String customerCertificateNumber;
 	/** 电话号码（冗余customer） */
 	private String customerContactsPhone;
+	/** 持卡人姓名 */
+	private String holdName;
+	/** 持卡人证件号 */
+	private String holdCertificateNumber;
+	/** 持卡人联系电话 */
+	private String holdContactsPhone;
 	/** 资金账号 */
 	private Long fundAccountId;
 	/** 实体卡是否存在 */
@@ -314,6 +320,30 @@ public class UserAccountDo implements Serializable {
 
 	public void setCustomerContactsPhone(String customerContactsPhone) {
 		this.customerContactsPhone = customerContactsPhone;
+	}
+
+	public String getHoldName() {
+		return holdName;
+	}
+
+	public void setHoldName(String holdName) {
+		this.holdName = holdName;
+	}
+
+	public String getHoldCertificateNumber() {
+		return holdCertificateNumber;
+	}
+
+	public void setHoldCertificateNumber(String holdCertificateNumber) {
+		this.holdCertificateNumber = holdCertificateNumber;
+	}
+
+	public String getHoldContactsPhone() {
+		return holdContactsPhone;
+	}
+
+	public void setHoldContactsPhone(String holdContactsPhone) {
+		this.holdContactsPhone = holdContactsPhone;
 	}
 
 }
