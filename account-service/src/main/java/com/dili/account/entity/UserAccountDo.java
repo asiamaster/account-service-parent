@@ -42,8 +42,8 @@ public class UserAccountDo implements Serializable {
 	private Long fundAccountId;
 	/** 实体卡是否存在 */
 	private Integer cardExist;
-	/** 账号类型-买家账户/卖家账户 */
-	private Integer type;
+	/** 账号类型-买/经营户/其它 */
+	private String types;
 	/** 账户用途-交易账户/水电费账户 ,多个以逗号分隔 */
 	private String usageType;
 	/** 使用权限(充值、提现、交费等),多个以逗号分隔 */
@@ -130,12 +130,12 @@ public class UserAccountDo implements Serializable {
 		return fundAccountId;
 	}
 
-	public void setType(Integer type) {
-		this.type = type;
+	public String getTypes() {
+		return types;
 	}
 
-	public Integer getType() {
-		return type;
+	public void setTypes(String types) {
+		this.types = types;
 	}
 
 	public void setUsageType(String usageType) {

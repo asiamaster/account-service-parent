@@ -224,53 +224,10 @@ public class OpenCardServiceImpl implements IOpenCardService {
 	 * @param customerType
 	 */
 	public void setAccountPermissions(UserAccountDo userAccount, String customerType) {
-		if (CustomerType.OPERATION_AREA.getCode().equalsIgnoreCase(customerType)
-				|| CustomerType.OUTSIDE_BUYER.getCode().equalsIgnoreCase(customerType)
-				|| CustomerType.IN_PROVINCE.getCode().equalsIgnoreCase(customerType)
-				|| CustomerType.NATIVE_CUSTOMER.getCode().equalsIgnoreCase(customerType)) {
-			// 买家 园内买家 园外买家
-			userAccount.setType(AccountType.PURCHASE.getCode());
-
-			// 资金账户。 交易/理财
-			String usageTypeCodes = AccountUsageType.getCodes(AccountUsageType.TRADE.getCode(),
-					AccountUsageType.WEALTH.getCode());
-			userAccount.setUsageType(usageTypeCodes);
-
-			// 场景权限，充值/提现/交易/缴费/理财
-			Integer[] codes = { UsePermissionType.RECHARGE.getCode(), UsePermissionType.WEALTH.getCode(),
-					UsePermissionType.TRANSACTION.getCode(), UsePermissionType.WITHDRAW.getCode(),
-					UsePermissionType.PAY_FEES.getCode() };
-			userAccount.setPermissions(UsePermissionType.getPermissions(codes));
-		} else if (CustomerType.SELLER.getCode().equalsIgnoreCase(customerType)) {
-			// 卖家
-			userAccount.setType(AccountType.SALE.getCode());
-
-			// 资金账户。 交易/理财/水电预存
-			String usageTypeCodes = AccountUsageType.getCodes(AccountUsageType.TRADE.getCode(),
-					AccountUsageType.WEALTH.getCode(), AccountUsageType.UTILITIES.getCode());
-			userAccount.setUsageType(usageTypeCodes);
-
-			// 场景权限，充值/提现/交易/缴费/理财
-			Integer[] permissionCodes = { UsePermissionType.RECHARGE.getCode(), UsePermissionType.TRANSACTION.getCode(),
-					UsePermissionType.WEALTH.getCode(), UsePermissionType.WITHDRAW.getCode(),
-					UsePermissionType.UTILITIES.getCode(), UsePermissionType.PAY_FEES.getCode() };
-			userAccount.setPermissions(UsePermissionType.getPermissions(permissionCodes));
-		} else if (CustomerType.DRIVER.getCode().equalsIgnoreCase(customerType)) {
-			// 司机
-			userAccount.setType(AccountType.PAY_FEES.getCode());
-
-			// 资金账户。 交费/理财
-			String usageTypeCodes = AccountUsageType.getCodes(AccountUsageType.PAY_FEES.getCode(),
-					AccountUsageType.WEALTH.getCode());
-			userAccount.setUsageType(usageTypeCodes);
-
-			// 场景权限，充值/提现/缴费/理财
-			Integer[] permissionCodes = { UsePermissionType.RECHARGE.getCode(), UsePermissionType.WEALTH.getCode(),
-					UsePermissionType.WITHDRAW.getCode(), UsePermissionType.PAY_FEES.getCode() };
-			userAccount.setPermissions(UsePermissionType.getPermissions(permissionCodes));
-		} else {
-			throw BizExceptionProxy.exception("客户类型为[{}]，无法设置账户类型及相应权限!", customerType);
-		}
+		// 场景权限，充值/提现/交易
+		Integer[] codes = { UsePermissionType.RECHARGE.getCode(), UsePermissionType.TRANSACTION.getCode(),
+				UsePermissionType.WITHDRAW.getCode() };
+		userAccount.setPermissions(UsePermissionType.getPermissions(codes));
 	}
 
 	/**

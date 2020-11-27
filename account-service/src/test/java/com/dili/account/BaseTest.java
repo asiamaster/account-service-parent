@@ -53,7 +53,7 @@ public class BaseTest {
         userAccountDo.setLoginPwd(PasswordUtils.encrypt("12345678", userAccountDo.getSecretKey()));
         userAccountDo.setPermissions(genPermission());
         userAccountDo.setUsageType(AccountUsageType.TRADE.getCode()+"");
-        userAccountDo.setType(AccountType.PURCHASE.getCode());
+//        userAccountDo.setType(AccountType.BUYER_CHARACTER.getCode());
         userAccountDo.setSource(CreateSource.COUNTER.getCode());
         userAccountDo.setState(AccountStatus.NORMAL.getType());
         userAccountDo.setVersion(1);

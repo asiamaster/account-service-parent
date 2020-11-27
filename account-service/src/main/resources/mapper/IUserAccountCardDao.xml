@@ -22,7 +22,7 @@
             <result column="hold_certificate_number" property="holdCertificateNumber"/>
             <result column="hold_contacts_phone" property="holdContactsPhone"/>
             <result column="fund_account_id" property="fundAccountId"/>
-            <result column="type" property="type"/>
+            <result column="types" property="types"/>
             <result column="usage_type" property="usageType"/>
             <result column="permissions" property="permissions"/>
             <result column="login_pwd" property="loginPwd"/>
@@ -75,7 +75,7 @@
 			aua.`hold_certificate_number`, 
 			aua.`hold_contacts_phone`, 
             aua.`fund_account_id`,
-            aua.`type`,
+            aua.`types`,
             aua.`usage_type`,
             aua.`permissions`,
             aua.`login_pwd`,
