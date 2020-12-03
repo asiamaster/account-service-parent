@@ -20,6 +20,11 @@ public interface ICardStorageService {
 	 * 查询列表数据
 	 */
 	PageOutput<List<CardStorageDo>> listPage(CardRepoQueryParam queryParam);
+	
+	/**
+	 * 批量查询，不分页
+	 */
+	List<CardStorageDo>  list(CardRepoQueryParam queryParam);
 
 	/**
 	 * 卡片首次入库激活

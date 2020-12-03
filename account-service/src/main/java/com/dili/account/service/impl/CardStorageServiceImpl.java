@@ -47,7 +47,10 @@ public class CardStorageServiceImpl implements ICardStorageService {
 		List<CardStorageDo> selectList = cardStorageDao.selectList(queryParam);
 		return PageUtils.convert2PageOutput(page, selectList);
 	}
-
+	@Override
+	public List<CardStorageDo> list(CardRepoQueryParam queryParam) {
+		return cardStorageDao.selectList(queryParam);
+	}
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public void addCard(CardAddStorageDto addInfo) {
@@ -260,5 +263,7 @@ public class CardStorageServiceImpl implements ICardStorageService {
 	private static final String NOT_IN_USE_ERRMSG = "该卡{}未被使用，操作失败!";
 	private static final String VOID_ERRMSG = "该卡{}已作废，操作失败!";
 	private static final String DUPLICATION_ERRMSG = "卡号{}重复,入库失败!";
+
+	
 
 }
