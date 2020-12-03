@@ -18,7 +18,7 @@ import com.dili.account.util.AssertUtils;
 import com.dili.ss.domain.BaseOutput;
 
 /**
- *	开卡服务          
+ *	开卡服务
  * @author ：WangBo
  * @time ：2020年6月28日下午3:36:22
  */
@@ -31,10 +31,10 @@ public class OpenCardController {
 	@Resource
 	private IOpenCardService openCardService;
 
-	
+
 	/**
 	 * 开卡
-	 * 
+	 *
 	 * @throws InterruptedException
 	 */
 	@PostMapping("openCard")
@@ -50,15 +50,14 @@ public class OpenCardController {
 		}
 		return BaseOutput.success("success").setData(response);
 	}
-	
+
 	/**
 	 * 主卡参数校验
-	 * 
+	 *
 	 * @param openCardInfo
 	 */
 	private void checkMasterParam(OpenCardDto openCardInfo) {
 		AssertUtils.notEmpty(openCardInfo.getCustomerName(), "开卡用户名不能为空!");
-		AssertUtils.notNull(openCardInfo.getFundAccountId(), "资金账号不能为空!");
 		AssertUtils.notEmpty(openCardInfo.getCustomerCertificateNumber(), "开卡用户名证件号不能为空!");
 		AssertUtils.notEmpty(openCardInfo.getCustomerContactsPhone(), "账户联系电话不能为空!");
 		AssertUtils.notNull(openCardInfo.getFirmId(), "开卡市场编码不能为空!");

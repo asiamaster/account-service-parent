@@ -43,7 +43,7 @@ import com.google.common.collect.Lists;
 
 /**
  * @description： 开卡service实现
- * 
+ *
  * @author ：WangBo
  * @time ：2020年6月19日下午5:54:23
  */
@@ -93,10 +93,13 @@ public class OpenCardServiceImpl implements IOpenCardService {
 			throw BizExceptionProxy.exception("该卡{}不是主卡，操作失败!", openCardInfo.getCardNo());
 		}
 
+		// 创建资金账户
+//		FundAccountDto fundAccount = buildFundAccount(openCardInfo);
+//		Long fundAccountId = payRpcResolver.createFundAccount(fundAccount);
+
 		// 保存账户信息
-//		String accountIdStr = uidRpcResovler.bizNumberRetry(BizNoServiceType.ACCOUNT_ID, 3);
-//		Long accountId = Long.parseLong(accountIdStr);
-		Long accountId = openCardInfo.getFundAccountId();
+		String accountIdStr = uidRpcResovler.bizNumberRetry(BizNoServiceType.ACCOUNT_ID, 3);
+		Long accountId = Long.parseLong(accountIdStr);
 		UserAccountDo userAccount = buildUserAccount(openCardInfo, accountId, openCardInfo.getFundAccountId());
 		userAccountDao.save(userAccount);
 
@@ -138,11 +141,14 @@ public class OpenCardServiceImpl implements IOpenCardService {
 			throw BizExceptionProxy.exception("请刷正确的主卡!{}", openCardInfo.getParentAccountId());
 		}
 
+		// 创建资金账户
+//		FundAccountDto fundAccount = buildFundAccount(openCardInfo);
+//		Long fundAccountId = payRpcResolver.createFundAccount(fundAccount);
+
 		// 构建账户信息
-//		String accountIdStr = uidRpcResovler.bizNumber(BizNoServiceType.ACCOUNT_ID);
-//		log.info("编号服务获取账户ID*****{}", accountIdStr);
-//		Long accountId = Long.parseLong(accountIdStr);
-		Long accountId = openCardInfo.getFundAccountId();
+		String accountIdStr = uidRpcResovler.bizNumber(BizNoServiceType.ACCOUNT_ID);
+		log.info("编号服务获取账户ID*****{}", accountIdStr);
+		Long accountId = Long.parseLong(accountIdStr);
 		UserAccountDo userAccount = buildUserAccount(openCardInfo, accountId, openCardInfo.getFundAccountId());
 		userAccountDao.save(userAccount);
 
@@ -159,7 +165,7 @@ public class OpenCardServiceImpl implements IOpenCardService {
 
 	/**
 	 * 构建卡账户数据
-	 * 
+	 *
 	 * @param openCardInfo
 	 * @param accountId     业务主键
 	 * @param fundAccountId 资金账号ID
@@ -198,7 +204,7 @@ public class OpenCardServiceImpl implements IOpenCardService {
 
 	/**
 	 * 构建资金账户数据
-	 * 
+	 *
 	 * @param openCardInfo
 	 * @param accountId     业务主键
 	 * @param fundAccountId 资金账号ID
@@ -219,7 +225,7 @@ public class OpenCardServiceImpl implements IOpenCardService {
 
 	/**
 	 * 根据客户类型设置账户类型及相应权限
-	 * 
+	 *
 	 * @param userAccount
 	 * @param customerType
 	 */
