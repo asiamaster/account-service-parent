@@ -1,12 +1,12 @@
 package com.dili.account.service;
 
+import java.util.List;
+
 import com.dili.account.dto.BatchCardAddStorageDto;
 import com.dili.account.dto.CardAddStorageDto;
 import com.dili.account.dto.CardRepoQueryParam;
 import com.dili.account.entity.CardStorageDo;
 import com.dili.ss.domain.PageOutput;
-
-import java.util.List;
 
 /**
  * @description： 卡片入库管理
@@ -21,6 +21,11 @@ public interface ICardStorageService {
 	 */
 	PageOutput<List<CardStorageDo>> listPage(CardRepoQueryParam queryParam);
 
+	/**
+	 * 批量查询不分页
+	 */
+	List<CardStorageDo> list(CardRepoQueryParam queryParam);
+	
 	/**
 	 * 卡片首次入库激活
 	 */
