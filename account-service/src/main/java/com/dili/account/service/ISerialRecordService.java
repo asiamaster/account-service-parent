@@ -29,4 +29,11 @@ public interface ISerialRecordService {
      * @return
      */
     PageOutput<List<SerialRecordDo>> listPage(SerialQueryDto serialQueryDto);
+
+    /**
+     * 操作金额合计
+     * @param serialQueryDto
+     * @return
+     */
+    Long countOperateAmount(SerialQueryDto serialQueryDto);
 }

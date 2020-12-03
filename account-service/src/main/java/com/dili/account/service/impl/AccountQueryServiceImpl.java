@@ -255,6 +255,7 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
         responseDto.setCustomerContactsPhone(account.getCustomerContactsPhone());
         responseDto.setCustomerCertificateNumber(account.getCustomerCertificateNumber());
         responseDto.setCustomerCertificateType(account.getCustomerCertificateType());
+        responseDto.setHoldName(account.getHoldName());
         return responseDto;
     }
 

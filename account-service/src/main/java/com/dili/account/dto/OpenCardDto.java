@@ -27,6 +27,8 @@ public class OpenCardDto {
 	private String customerCertificateNumber;
 	/** 客户联系电话 */
 	private String customerContactsPhone;
+	/** 持卡人 */
+	private String holdName;
 	/** 资金账户ID */
 	private Long fundAccountId;
 	/** 账户类型(主、子/副) */
@@ -241,6 +243,14 @@ public class OpenCardDto {
 
 	public void setCustomerContactsPhone(String customerContactsPhone) {
 		this.customerContactsPhone = customerContactsPhone;
+	}
+
+	public String getHoldName() {
+		return holdName;
+	}
+
+	public void setHoldName(String holdName) {
+		this.holdName = holdName;
 	}
 
 }

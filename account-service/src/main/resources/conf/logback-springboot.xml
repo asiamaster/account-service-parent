@@ -32,8 +32,7 @@
 		</rollingPolicy>
 		<encoder
 			class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-			<pattern>%d %-5level [${LOG_NAME}-${build.profile.id}] [%t] [%c:%L]
-				-| %msg%n</pattern>
+			<pattern>%d %-5level [${LOG_NAME}-${build.profile.id}] [%t] [%c:%L] -| %msg%n</pattern>
 		</encoder>
 	</appender>
 
@@ -53,7 +52,7 @@
 	<!-- 灰度、生产环境 -->
 	<springProfile name="pre,prod">
 		<jmxConfigurator />
-		<root level="warn">
+		<root level="INFO">
 			<appender-ref ref="FILE" />
 		</root>
 	</springProfile>

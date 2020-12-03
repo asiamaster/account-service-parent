@@ -18,6 +18,9 @@
             <result column="customer_certificate_type" property="customerCertificateType"/>
             <result column="customer_certificate_number" property="customerCertificateNumber"/>
             <result column="customer_contacts_phone" property="customerContactsPhone"/>
+            <result column="hold_name" property="holdName"/>
+            <result column="hold_certificate_number" property="holdCertificateNumber"/>
+            <result column="hold_contacts_phone" property="holdContactsPhone"/>
             <result column="fund_account_id" property="fundAccountId"/>
             <result column="type" property="type"/>
             <result column="usage_type" property="usageType"/>
@@ -68,6 +71,9 @@
             aua.`customer_certificate_type`,
             aua.`customer_certificate_number`,
             aua.`customer_contacts_phone`,
+            aua.`hold_name`, 
+			aua.`hold_certificate_number`, 
+			aua.`hold_contacts_phone`, 
             aua.`fund_account_id`,
             aua.`type`,
             aua.`usage_type`,
