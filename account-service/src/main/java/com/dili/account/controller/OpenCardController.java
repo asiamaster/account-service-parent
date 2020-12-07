@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSONObject;
+import com.dili.account.common.constant.JsonExcludeFilter;
 import com.dili.account.dto.OpenCardDto;
 import com.dili.account.dto.OpenCardResponseDto;
 import com.dili.account.service.IOpenCardService;
@@ -39,7 +40,7 @@ public class OpenCardController {
 	 */
 	@PostMapping("openCard")
 	public BaseOutput<?> openCard(@RequestBody OpenCardDto openCardInfo) {
-		log.info("api/account/openCard*****" + JSONObject.toJSONString(openCardInfo));
+		log.info("api/account/openCard*****" + JSONObject.toJSONString(openCardInfo, JsonExcludeFilter.PWD_FILTER));
 		OpenCardResponseDto response = null;
 		if(CardType.MASTER.getCode() == openCardInfo.getCardType()) {
 			checkMasterParam(openCardInfo);

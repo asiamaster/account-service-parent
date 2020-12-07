@@ -2,12 +2,16 @@ package com.dili.account.controller;
 
 import javax.annotation.Resource;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.alibaba.fastjson.JSONObject;
+import com.dili.account.common.constant.JsonExcludeFilter;
 import com.dili.account.dto.CardRequestDto;
 import com.dili.account.service.ICardManageService;
 import com.dili.account.validator.CardValidator;
@@ -24,6 +28,8 @@ import cn.hutool.core.util.StrUtil;
 @RequestMapping(value = "/api/card")
 public class CardManageController {
 
+	private static final Logger log = LoggerFactory.getLogger(CardManageController.class);
+
     @Resource
     private ICardManageService cardManageService;
 
@@ -32,7 +38,8 @@ public class CardManageController {
      */
     @PostMapping("/returnCard")
     public BaseOutput<Boolean> returnCard(@RequestBody @Validated(value = {CardValidator.Generic.class}) CardRequestDto cardRequest) {
-        cardManageService.returnCard(cardRequest);
+		log.info("退卡*****" + JSONObject.toJSONString(cardRequest, JsonExcludeFilter.PWD_FILTER));
+    	cardManageService.returnCard(cardRequest);
         return BaseOutput.success();
     }
 
@@ -41,6 +48,7 @@ public class CardManageController {
      */
     @PostMapping("/unLostCard")
     public BaseOutput<?> unLostCard(@RequestBody CardRequestDto cardParam) {
+    	log.info("解挂卡片*****" + JSONObject.toJSONString(cardParam, JsonExcludeFilter.PWD_FILTER));
         if (cardParam.getAccountId() == null) {
             return BaseOutput.failure("账户ID为空");
         }
@@ -59,6 +67,7 @@ public class CardManageController {
     @PostMapping("/reportLossCard")
     public BaseOutput<?> reportLossCard(@RequestBody @Validated({CardValidator.Generic.class})
                                                 CardRequestDto cardParam) {
+    	log.info("卡片挂失*****" + JSONObject.toJSONString(cardParam, JsonExcludeFilter.PWD_FILTER));
         cardManageService.reportLoss(cardParam);
         return BaseOutput.success();
     }
@@ -72,6 +81,7 @@ public class CardManageController {
     public BaseOutput<?> changeCard(@RequestBody
                                     @Validated({CardValidator.ChangeCard.class})
                                             CardRequestDto cardParam) {
+    	log.info("换卡*****" + JSONObject.toJSONString(cardParam, JsonExcludeFilter.PWD_FILTER));
         cardManageService.changeCard(cardParam);
         return BaseOutput.success();
     }
@@ -82,6 +92,7 @@ public class CardManageController {
      */
     @PostMapping("/unLockCard")
     public BaseOutput<?> unLockCard(@RequestBody CardRequestDto cardParam) {
+    	log.info("解锁卡片*****" + JSONObject.toJSONString(cardParam, JsonExcludeFilter.PWD_FILTER));
         if (cardParam.getAccountId() == null) {
             return BaseOutput.failure("账户ID为空");
         }
