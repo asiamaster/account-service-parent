@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alibaba.fastjson.JSONObject;
+import com.dili.account.common.constant.JsonExcludeFilter;
 import com.dili.account.dto.CardRequestDto;
 import com.dili.account.service.IPasswordService;
 import com.dili.account.validator.CardValidator;
@@ -33,7 +34,7 @@ public class PasswordManageController {
 	@RequestMapping(value = "/resetLoginPwd", method = RequestMethod.POST)
 	public BaseOutput<Boolean> resetLoginPassword(@RequestBody @Validated(value = { CardValidator.Generic.class,
 			CardValidator.ResetPassword.class }) CardRequestDto cardRequest) throws Exception {
-		log.info("重置登陆密码>>>>" + JSONObject.toJSONString(cardRequest));
+		log.info("重置登陆密码>>>>" + JSONObject.toJSONString(cardRequest, JsonExcludeFilter.PWD_FILTER));
 		passwordService.resetLoginPwd(cardRequest);
 		return BaseOutput.success();
 	}
@@ -45,7 +46,7 @@ public class PasswordManageController {
 	public BaseOutput<Boolean> checkPassword(
 			@RequestBody @Validated(value = { CardValidator.Generic.class }) CardRequestDto cardRequest)
 			throws Exception {
-		log.info("校验登陆密码>>>>" + JSONObject.toJSONString(cardRequest));
+		log.info("校验登陆密码>>>>" + JSONObject.toJSONString(cardRequest, JsonExcludeFilter.PWD_FILTER));
 		passwordService.checkPassword(cardRequest.getAccountId(), cardRequest.getLoginPwd());
 		return BaseOutput.success();
 	}
