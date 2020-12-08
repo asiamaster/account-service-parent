@@ -20,8 +20,7 @@ public enum AccountUsageType {
 	/** 水电预存款账户 */
 	UTILITIES("水电预存款账户", 13),
 	/** 理财账户 */
-	WEALTH("理财账户", 14),
-	;
+	WEALTH("理财账户", 14),;
 
 	private String name;
 	private int code;
@@ -41,13 +40,17 @@ public enum AccountUsageType {
 	}
 
 	public static List<String> getUsageTypeList(String permissions) {
+		if (StringUtils.isBlank(permissions)) {
+			return null;
+		}
 		String[] split = permissions.split(",");
 		return Arrays.asList(split);
 	}
 
-	public static String getCodes(Integer ...codes) {
+	public static String getCodes(Integer... codes) {
 		return StringUtils.join(codes, ",") + ",";
 	}
+
 	public static String getName(int code) {
 //    	if(code == null||code == 0) {
 //    		return "";

@@ -1,5 +1,6 @@
 package com.dili.account.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;
@@ -100,7 +101,7 @@ public class CardStorageController {
 	 * 卡片批量入库
 	 */
 	@PostMapping("batchAdd")
-	public BaseOutput<?> barchAddCard(@RequestBody BatchCardAddStorageDto batchInfo) {
+	public BaseOutput<?> batchAddCard(@RequestBody BatchCardAddStorageDto batchInfo) {
 		log.info("卡片批量入库*****" + JSONObject.toJSONString(batchInfo));
 		AssertUtils.notEmpty(batchInfo.getCreator(), "入库操作人员不能为空!");
 		AssertUtils.notNull(batchInfo.getFirmId(), "卡片所属市场不能为空!");
@@ -110,6 +111,17 @@ public class CardStorageController {
 		return BaseOutput.success();
 	}
 
+	/**
+	 * 卡片批量查询
+	 */
+	@PostMapping("batchQueryByCardNo")
+	public BaseOutput<List<CardStorageDo>> batchQueryByCardNo(@RequestBody CardRepoQueryParam queryParam) {
+		log.info("卡片批量入库*****" + JSONObject.toJSONString(queryParam));
+		AssertUtils.notNull(queryParam.getCardNos(), "查询卡号不能为空!");
+		AssertUtils.notNull(queryParam.getFirmId(), "卡片所属市场不能为空!");
+		return BaseOutput.successData(cardStorageService.list(queryParam));
+	}
+	
 	/**
 	 * 卡片作废
 	 */

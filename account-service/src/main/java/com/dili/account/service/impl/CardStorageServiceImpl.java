@@ -255,10 +255,17 @@ public class CardStorageServiceImpl implements ICardStorageService {
 		}
 	}
 
+	@Override
+	public List<CardStorageDo> list(CardRepoQueryParam queryParam) {
+		List<CardStorageDo> selectList = cardStorageDao.selectList(queryParam);
+		return selectList;
+	}
+	
 	private static final String NONEXISTENT_ERRMSG = "该卡{}未入库!";
 	private static final String IN_USE_ERRMSG = "该卡{}已在使用中!";
 	private static final String NOT_IN_USE_ERRMSG = "该卡{}未被使用，操作失败!";
 	private static final String VOID_ERRMSG = "该卡{}已作废，操作失败!";
 	private static final String DUPLICATION_ERRMSG = "卡号{}重复,入库失败!";
+
 
 }

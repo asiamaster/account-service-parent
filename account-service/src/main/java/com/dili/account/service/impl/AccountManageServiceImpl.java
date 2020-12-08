@@ -66,7 +66,7 @@ public class AccountManageServiceImpl implements IAccountManageService {
 		//根据客户类型设置对应的权限
 		updateAccount.setCustomerMarketType(customer.getCustomerMarket().getType());
 		openCardService.setAccountPermissions(updateAccount, customer.getCustomerMarket().getType());
-		
+		// TODO 保存客户角色及身份类型
 		// 客户禁用，则禁用所有账户状态 CustomerEnum.State.DISABLED.getCode();
 		updateAccount.setDisabledState(customer.getState()); 
 		updateAccount.setModifyTime(LocalDateTime.now());

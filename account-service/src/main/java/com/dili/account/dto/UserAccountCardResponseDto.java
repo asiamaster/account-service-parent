@@ -27,8 +27,8 @@ public class UserAccountCardResponseDto implements Serializable {
 	private Long accountId;
 	/** 父账号id */
 	private Long parentAccountId;
-	/** 卡交易类型: 1-买家 2-卖家 */
-	private Integer accountType;
+	/** 卡交易类型: 买/经营户/其它 */
+	private String accountTypes;
 	/** 资金账号ID */
 	private Long fundAccountId;
 	/** 客户id */
@@ -149,12 +149,12 @@ public class UserAccountCardResponseDto implements Serializable {
 		this.parentAccountId = parentAccountId;
 	}
 
-	public Integer getAccountType() {
-		return accountType;
+	public String getAccountTypes() {
+		return accountTypes;
 	}
 
-	public void setAccountType(Integer accountType) {
-		this.accountType = accountType;
+	public void setAccountTypes(String accountTypes) {
+		this.accountTypes = accountTypes;
 	}
 
 	public Long getFundAccountId() {
