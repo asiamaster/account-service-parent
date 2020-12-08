@@ -71,9 +71,9 @@
             aua.`customer_certificate_type`,
             aua.`customer_certificate_number`,
             aua.`customer_contacts_phone`,
-            aua.`hold_name`, 
-			aua.`hold_certificate_number`, 
-			aua.`hold_contacts_phone`, 
+            aua.`hold_name`,
+			aua.`hold_certificate_number`,
+			aua.`hold_contacts_phone`,
             aua.`fund_account_id`,
             aua.`types`,
             aua.`usage_type`,
@@ -173,7 +173,7 @@
                 AND auc.create_time &lt;= #{endDate}
             </if>
             <if test="excludeUnusualState !=null and excludeUnusualState == 1">
-                AND auc.state not in (3,4)  AND aua.disabled_state = 1
+                AND auc.state in (1)  AND aua.disabled_state = 1
             </if>
             <if test="cardStates!=null and cardStates.size>0">
                 AND auc.state IN
