@@ -2,124 +2,124 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="com.dili.account.dao.ISerialRecordDao">
-	
+
 	<select id="selectList" resultType="com.dili.account.entity.SerialRecordDo">
 		SELECT
-			`id`, 
+			`id`,
 			`serial_no`,
 			`type`,
-			`account_id`, 
-			`card_no`, 
-			`customer_id`, 
-			`customer_no`, 
+			`account_id`,
+			`card_no`,
+			`customer_id`,
+			`customer_no`,
 			`customer_name`,
 			`customer_type`,
-			`action`, 
-			`start_balance`, 
-			`amount`, 
-			`end_balance`, 
-			`trade_type`, 
-			`trade_channel`, 
-			`trade_no`, 
-			`fund_item`, 
-			`fund_item_name`, 
-			`operator_id`, 
-			`operator_no`, 
-			`operator_name`, 
-			`operate_time`, 
-			`notes`, 
+			`action`,
+			`start_balance`,
+			`amount`,
+			`end_balance`,
+			`trade_type`,
+			`trade_channel`,
+			`trade_no`,
+			`fund_item`,
+			`fund_item_name`,
+			`operator_id`,
+			`operator_no`,
+			`operator_name`,
+			`operate_time`,
+			`notes`,
 			`firm_id`
 		FROM
 			account_serial_record
 		ORDER BY
 			id DESC
 	</select>
-	
+
 	<insert id="save">
 		INSERT INTO account_serial_record (
 			`serial_no`,
 			`type`,
-			`account_id`, 
-			`card_no`, 
-			`customer_id`, 
-			`customer_no`, 
+			`account_id`,
+			`card_no`,
+			`customer_id`,
+			`customer_no`,
 			`customer_name`,
 			`customer_type`,
-			`action`, 
-			`start_balance`, 
-			`amount`, 
-			`end_balance`, 
-			`trade_type`, 
-			`trade_channel`, 
-			`trade_no`, 
-			`fund_item`, 
-			`fund_item_name`, 
-			`operator_id`, 
-			`operator_no`, 
-			`operator_name`, 
-			`operate_time`, 
-			`notes`, 
+			`action`,
+			`start_balance`,
+			`amount`,
+			`end_balance`,
+			`trade_type`,
+			`trade_channel`,
+			`trade_no`,
+			`fund_item`,
+			`fund_item_name`,
+			`operator_id`,
+			`operator_no`,
+			`operator_name`,
+			`operate_time`,
+			`notes`,
 			`firm_id`
 		)
 		VALUES (
 			#{serialNo},
 			#{type},
-			#{accountId}, 
-			#{cardNo}, 
-			#{customerId}, 
-			#{customerNo}, 
+			#{accountId},
+			#{cardNo},
+			#{customerId},
+			#{customerNo},
 			#{customerName},
 			#{customerType},
-			#{action}, 
-			#{startBalance}, 
-			#{amount}, 
-			#{endBalance}, 
-			#{tradeType}, 
-			#{tradeChannel}, 
-			#{tradeNo}, 
-			#{fundItem}, 
-			#{fundItemName}, 
-			#{operatorId}, 
-			#{operatorNo}, 
-			#{operatorName}, 
-			#{operateTime}, 
-			#{notes}, 
+			#{action},
+			#{startBalance},
+			#{amount},
+			#{endBalance},
+			#{tradeType},
+			#{tradeChannel},
+			#{tradeNo},
+			#{fundItem},
+			#{fundItemName},
+			#{operatorId},
+			#{operatorNo},
+			#{operatorName},
+			#{operateTime},
+			#{notes},
 			#{firmId}
 		)
 	</insert>
-	
+
 	<select id="getById" resultType="com.dili.account.entity.SerialRecordDo">
 		SELECT
-			`id`, 
+			`id`,
 			`serial_no`,
 			`type`,
-			`account_id`, 
-			`card_no`, 
-			`customer_id`, 
-			`customer_no`, 
+			`account_id`,
+			`card_no`,
+			`customer_id`,
+			`customer_no`,
 			`customer_name`,
 			`customer_type`,
-			`action`, 
-			`start_balance`, 
-			`amount`, 
-			`end_balance`, 
-			`trade_type`, 
-			`trade_channel`, 
-			`trade_no`, 
-			`fund_item`, 
-			`fund_item_name`, 
-			`operator_id`, 
-			`operator_no`, 
-			`operator_name`, 
-			`operate_time`, 
-			`notes`, 
+			`action`,
+			`start_balance`,
+			`amount`,
+			`end_balance`,
+			`trade_type`,
+			`trade_channel`,
+			`trade_no`,
+			`fund_item`,
+			`fund_item_name`,
+			`operator_id`,
+			`operator_no`,
+			`operator_name`,
+			`operate_time`,
+			`notes`,
 			`firm_id`
 		FROM
 			account_serial_record
 		WHERE
 			id = #{id}
 	</select>
-	
+
 	<update id="update">
 		UPDATE account_serial_record
 	 	<set>
@@ -150,7 +150,7 @@
 		WHERE
 			id = #{id}
 	</update>
-	
+
 	<delete id="batchRemove">
 		DELETE
 		FROM
@@ -172,6 +172,7 @@
 			`customer_no`,
 			`customer_name`,
 			`customer_type`,
+		    `hold_name`,
 			`action`,
 			`start_balance`,
 			`amount`,
@@ -198,6 +199,7 @@
 				#{item.customerNo},
 				#{item.customerName},
 				#{item.customerType},
+				#{item.holdName},
 				#{item.action},
 				#{item.startBalance},
 				#{item.amount},
