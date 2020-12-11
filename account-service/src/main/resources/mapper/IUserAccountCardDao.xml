@@ -14,7 +14,7 @@
             <result column="customer_id" property="customerId"/>
             <result column="customer_name" property="customerName"/>
             <result column="customer_code" property="customerCode"/>
-            <result column="customer_market_type" property="customerMarketType"/>
+            <result column="customer_character_type" property="customerCharacterType"/>
             <result column="customer_certificate_type" property="customerCertificateType"/>
             <result column="customer_certificate_number" property="customerCertificateNumber"/>
             <result column="customer_contacts_phone" property="customerContactsPhone"/>
@@ -22,7 +22,6 @@
             <result column="hold_certificate_number" property="holdCertificateNumber"/>
             <result column="hold_contacts_phone" property="holdContactsPhone"/>
             <result column="fund_account_id" property="fundAccountId"/>
-            <result column="types" property="types"/>
             <result column="usage_type" property="usageType"/>
             <result column="permissions" property="permissions"/>
             <result column="login_pwd" property="loginPwd"/>
@@ -67,7 +66,7 @@
             aua.`customer_id`,
             aua.`customer_name`,
             aua.`customer_code`,
-            aua.`customer_market_type`,
+            aua.`customer_character_type`,
             aua.`customer_certificate_type`,
             aua.`customer_certificate_number`,
             aua.`customer_contacts_phone`,
@@ -75,7 +74,6 @@
 			aua.`hold_certificate_number`,
 			aua.`hold_contacts_phone`,
             aua.`fund_account_id`,
-            aua.`types`,
             aua.`usage_type`,
             aua.`permissions`,
             aua.`login_pwd`,
@@ -130,8 +128,8 @@
             <if test="customerCertificateNumber!=null and customerCertificateNumber !=''">
                 AND aua.`customer_certificate_number` LIKE concat('%',#{customerCertificateNumber},'%')
             </if>
-            <if test="customerMarketType !=null and customerMarketType !=''">
-                AND aua.`customer_market_type` = #{customerMarketType}
+            <if test="customerCharacterType !=null and customerCharacterType !=''">
+                AND aua.`customer_character_type` = #{customerCharacterType}
             </if>
             <if test="customerContactsPhone !=null and customerContactsPhone !=''">
                 AND aua.`customer_contacts_phone` = #{customerContactsPhone}

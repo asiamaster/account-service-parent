@@ -15,8 +15,8 @@ public class OpenCardDto {
 	private String customerName;
 	/** CRM系统客户ID */
 	private Long customerId;
-	/** 客户类型 */
-	private String customerType;
+	/** 客户角色，多值以逗号分割 */
+	private String customerCharacterType;
 	/** 客户编号 */
 	private String customerCode;
 	/** 个人、对公 */
@@ -205,12 +205,12 @@ public class OpenCardDto {
 		this.customerName = customerName;
 	}
 
-	public String getCustomerType() {
-		return customerType;
+	public String getCustomerCharacterType() {
+		return customerCharacterType;
 	}
 
-	public void setCustomerType(String customerType) {
-		this.customerType = customerType;
+	public void setCustomerCharacterType(String customerCharacterType) {
+		this.customerCharacterType = customerCharacterType;
 	}
 
 	public String getCustomerOrganizationType() {

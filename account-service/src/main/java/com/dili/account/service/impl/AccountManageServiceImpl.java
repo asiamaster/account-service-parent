@@ -1,6 +1,8 @@
 package com.dili.account.service.impl;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +17,9 @@ import com.dili.account.exception.AccountBizException;
 import com.dili.account.service.IAccountManageService;
 import com.dili.account.service.IOpenCardService;
 import com.dili.account.type.DisableState;
+import com.dili.customer.sdk.domain.CharacterType;
 import com.dili.customer.sdk.domain.Customer;
+import com.dili.customer.sdk.domain.dto.CustomerExtendDto;
 import com.dili.ss.constant.ResultCode;
 
 @Service("accountManageService")
@@ -56,7 +60,7 @@ public class AccountManageServiceImpl implements IAccountManageService {
 	}
 
 	@Override
-	public void updateCustomerInfo(Customer customer) {
+	public void updateCustomerInfo(CustomerExtendDto customer) {
 		UserAccountDo updateAccount = new UserAccountDo();
 		updateAccount.setCustomerCertificateNumber(customer.getCertificateNumber());
 		updateAccount.setCustomerName(customer.getName());
@@ -64,13 +68,24 @@ public class AccountManageServiceImpl implements IAccountManageService {
 		updateAccount.setCustomerCertificateType(customer.getCertificateType());
 		updateAccount.setCustomerId(customer.getId());
 		//根据客户类型设置对应的权限
-		updateAccount.setCustomerMarketType(customer.getCustomerMarket().getType());
-		openCardService.setAccountPermissions(updateAccount, customer.getCustomerMarket().getType());
+		updateAccount.setCustomerCharacterType(getCharacterTypes(customer.getCharacterTypeList(), customer.getId()));
+		openCardService.setAccountPermissions(updateAccount);
 		// TODO 保存客户角色及身份类型
 		// 客户禁用，则禁用所有账户状态 CustomerEnum.State.DISABLED.getCode();
 		updateAccount.setDisabledState(customer.getState()); 
 		updateAccount.setModifyTime(LocalDateTime.now());
 		updateAccount.setFirmId(customer.getCustomerMarket().getMarketId());
 		userAccountDao.updateCustomerInfo(updateAccount);
+	}
+	
+	public String getCharacterTypes(List<CharacterType> typeList, Long customerId) {
+		if (typeList == null || typeList.size() == 0) {
+			throw new AccountBizException("客户ID"+customerId+"角色信息为空");
+		}
+		List<String> typesList = new ArrayList<String>();
+		typeList.forEach(type -> {
+			typesList.add(type.getCharacterType());
+		});
+		return String.join(",", typesList);
 	}
 }

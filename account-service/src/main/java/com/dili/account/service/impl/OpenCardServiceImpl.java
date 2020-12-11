@@ -83,7 +83,7 @@ public class OpenCardServiceImpl implements IOpenCardService {
 			for (UserAccountCardResponseDto accountDto : userAccountList) {
 				if (CardType.isMaster(accountDto.getCardType())
 						&& accountDto.getCardState() != CardStatus.RETURNED.getCode())
-					throw BizExceptionProxy.exception("客户{}已办理过交易主卡{}", openCardInfo.getCustomerName(),
+					throw BizExceptionProxy.exception("客户{}已办理过主卡{}", openCardInfo.getCustomerName(),
 							userAccountList.get(0).getCardNo());
 			}
 		}
@@ -174,7 +174,7 @@ public class OpenCardServiceImpl implements IOpenCardService {
 		userAccount.setCustomerCertificateType(openCardInfo.getCustomerCredentialType());
 		userAccount.setCustomerName(openCardInfo.getCustomerName());
 		userAccount.setCustomerCode(openCardInfo.getCustomerCode());
-		userAccount.setCustomerMarketType(openCardInfo.getCustomerType());
+		userAccount.setCustomerCharacterType(openCardInfo.getCustomerCharacterType());
 		userAccount.setCustomerContactsPhone(openCardInfo.getCustomerContactsPhone());
 		userAccount.setFundAccountId(fundAccountId);
 		userAccount.setCardExist(YesNoType.YES.getCode());
@@ -192,7 +192,7 @@ public class OpenCardServiceImpl implements IOpenCardService {
 		userAccount.setModifyTime(now);
 		userAccount.setCreatorId(openCardInfo.getCreatorId());
 		userAccount.setCreator(openCardInfo.getCreator());
-		setAccountPermissions(userAccount, openCardInfo.getCustomerType());
+		setAccountPermissions(userAccount);
 		return userAccount;
 	}
 
@@ -223,7 +223,7 @@ public class OpenCardServiceImpl implements IOpenCardService {
 	 * @param userAccount
 	 * @param customerType
 	 */
-	public void setAccountPermissions(UserAccountDo userAccount, String customerType) {
+	public void setAccountPermissions(UserAccountDo userAccount) {
 		// 场景权限，充值/提现/交易
 		Integer[] codes = { UsePermissionType.RECHARGE.getCode(), UsePermissionType.TRANSACTION.getCode(),
 				UsePermissionType.WITHDRAW.getCode() };

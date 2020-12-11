@@ -16,6 +16,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.dili.account.service.IAccountManageService;
 import com.dili.customer.sdk.constants.MqConstant;
 import com.dili.customer.sdk.domain.Customer;
+import com.dili.customer.sdk.domain.dto.CustomerExtendDto;
 import com.rabbitmq.client.Channel;
 
 import cn.hutool.core.util.StrUtil;
@@ -44,7 +45,7 @@ public class CustomerMQListener {
             String data = new String(message.getBody(), "UTF-8");
 			LOGGER.info("客户信息修改同步>>>>>" + data);
             if (!StrUtil.isBlank(data)) {
-            	Customer customer = JSONObject.parseObject(data,Customer.class);
+            	CustomerExtendDto customer = JSONObject.parseObject(data,CustomerExtendDto.class);
             	accountManageService.updateCustomerInfo(customer);
             }
         } catch (Exception e) {

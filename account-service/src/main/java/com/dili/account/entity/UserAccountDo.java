@@ -24,8 +24,8 @@ public class UserAccountDo implements Serializable {
 	private String customerName;
 	/** 客户编号（冗余customer） */
 	private String customerCode;
-	/** 客户市场类型(冗余customer_market) */
-	private String customerMarketType;
+	/** 客户角色 */
+	private String customerCharacterType;
 	/** 证件类型（冗余customer） */
 	private String customerCertificateType;
 	/** 证件号（冗余customer） */
@@ -290,12 +290,12 @@ public class UserAccountDo implements Serializable {
 		this.customerCode = customerCode;
 	}
 
-	public String getCustomerMarketType() {
-		return customerMarketType;
+	public String getCustomerCharacterType() {
+		return customerCharacterType;
 	}
 
-	public void setCustomerMarketType(String customerMarketType) {
-		this.customerMarketType = customerMarketType;
+	public void setCustomerCharacterType(String customerCharacterType) {
+		this.customerCharacterType = customerCharacterType;
 	}
 
 	public String getCustomerCertificateType() {

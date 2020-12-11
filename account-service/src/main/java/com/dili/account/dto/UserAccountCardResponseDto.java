@@ -37,8 +37,8 @@ public class UserAccountCardResponseDto implements Serializable {
 	private String customerName;
 	/** 客户编号 */
 	private String customerCode;
-	/** 客户市场类型(冗余customer_market) */
-	private String customerMarketType;
+	/** 客户角色 */
+	private String customerCharacterType;
 	/** 客户证件类型 */
 	private String customerCertificateType;
 	/** 客户身份号 */
@@ -269,12 +269,12 @@ public class UserAccountCardResponseDto implements Serializable {
 		this.disabledState = disabledState;
 	}
 
-	public String getCustomerMarketType() {
-		return customerMarketType;
+	public String getCustomerCharacterType() {
+		return customerCharacterType;
 	}
 
-	public void setCustomerMarketType(String customerMarketType) {
-		this.customerMarketType = customerMarketType;
+	public void setCustomerCharacterType(String customerCharacterType) {
+		this.customerCharacterType = customerCharacterType;
 	}
 
 	public String getHoldName() {

@@ -32,6 +32,6 @@ public interface IOpenCardService {
 	/**
 	 * 根据客户市场类型设置对应的权限
 	 */
-	public void setAccountPermissions(UserAccountDo userAccount, String customerType);
+	public void setAccountPermissions(UserAccountDo userAccount);
 
 }
