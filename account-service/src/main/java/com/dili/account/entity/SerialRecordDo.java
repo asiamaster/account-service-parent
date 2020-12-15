@@ -31,7 +31,7 @@ public class SerialRecordDo implements Serializable {
 	private String customerNo;
 	/** 客户姓名 */
 	private String customerName;
-	/** 客户身份类型*/
+	/** 客户角色*/
 	private String customerType;
 	/**持卡人姓名*/
 	private String holdName;
