@@ -16,6 +16,7 @@ import com.dili.account.entity.UserAccountDo;
 import com.dili.account.exception.AccountBizException;
 import com.dili.account.service.IAccountManageService;
 import com.dili.account.service.IOpenCardService;
+import com.dili.account.type.CustomerSyncModifyHoldinfo;
 import com.dili.account.type.DisableState;
 import com.dili.customer.sdk.domain.CharacterType;
 import com.dili.customer.sdk.domain.Customer;
@@ -70,12 +71,18 @@ public class AccountManageServiceImpl implements IAccountManageService {
 		//根据客户类型设置对应的权限
 		updateAccount.setCustomerCharacterType(getCharacterTypes(customer.getCharacterTypeList(), customer.getId()));
 		openCardService.setAccountPermissions(updateAccount);
-		// TODO 保存客户角色及身份类型
 		// 客户禁用，则禁用所有账户状态 CustomerEnum.State.DISABLED.getCode();
 		updateAccount.setDisabledState(customer.getState()); 
 		updateAccount.setModifyTime(LocalDateTime.now());
 		updateAccount.setFirmId(customer.getCustomerMarket().getMarketId());
 		userAccountDao.updateCustomerInfo(updateAccount);
+		
+		// 更新持卡人信息
+		updateAccount.setHoldName(customer.getName());
+		updateAccount.setHoldContactsPhone(customer.getContactsPhone());
+		updateAccount.setHoldCertificateNumber(customer.getCertificateNumber());
+		updateAccount.setCustomerSyncModifyHoldinfo(CustomerSyncModifyHoldinfo.Y.getCode());
+		userAccountDao.updateHoldinfo(updateAccount);
 	}
 	
 	public String getCharacterTypes(List<CharacterType> typeList, Long customerId) {

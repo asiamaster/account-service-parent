@@ -19,3 +19,6 @@ where customer_character_type in('seller') and firm_id = 8;
 update account_user_account set customer_character_type = 'other_character_type' 
 where customer_character_type in('driver') and firm_id = 8;
 
+-- 客户信息修改时是否同步修改持卡人信息
+ALTER TABLE `dili_account`.`account_user_account` 
+ADD COLUMN `customer_sync_modify_holdinfo` tinyint(3) NULL COMMENT '客户信息修改时是否同步修改持卡人信息1-是，2-否' AFTER `hold_contacts_phone`;

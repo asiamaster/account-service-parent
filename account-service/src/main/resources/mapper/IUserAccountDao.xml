@@ -59,6 +59,7 @@
 			`hold_name`, 
 			`hold_certificate_number`, 
 			`hold_contacts_phone`, 
+			`customer_sync_modify_holdinfo`,
 			`fund_account_id`,
 			`card_exist`,
 			`usage_type`,
@@ -91,6 +92,7 @@
 			#{holdName}, 
 			#{holdCertificateNumber}, 
 			#{holdContactsPhone}, 
+			#{customerSyncModifyHoldinfo}, 
 			#{fundAccountId},
 			#{cardExist},
 			#{usageType},
@@ -239,4 +241,22 @@
 		AND
 			version=#{version}
 	</update>
+	
+	<!-- 更新持卡人信息 -->
+	<update id="updateHoldinfo">
+		UPDATE
+			account_user_account
+		SET
+			hold_name = #{holdName},
+			hold_certificate_number = #{holdCertificateNumber},
+			hold_contacts_phone = #{holdContactsPhone},
+		    modify_time = NOW()
+		WHERE
+			customer_id = #{customerId}
+		AND
+			customer_sync_modify_holdinfo = #{customerSyncModifyHoldinfo}
+		AND 
+			firm_id = #{firmId}
+	</update>
+	
 </mapper>

@@ -34,6 +34,7 @@ import com.dili.account.type.AccountUsageType;
 import com.dili.account.type.CardCategory;
 import com.dili.account.type.CardStatus;
 import com.dili.account.type.CardType;
+import com.dili.account.type.CustomerSyncModifyHoldinfo;
 import com.dili.account.type.CustomerType;
 import com.dili.account.type.DisableState;
 import com.dili.account.type.UsePermissionType;
@@ -192,6 +193,10 @@ public class OpenCardServiceImpl implements IOpenCardService {
 		userAccount.setModifyTime(now);
 		userAccount.setCreatorId(openCardInfo.getCreatorId());
 		userAccount.setCreator(openCardInfo.getCreator());
+		userAccount.setHoldName(openCardInfo.getHoldName());
+		userAccount.setHoldContactsPhone(openCardInfo.getHoldContactsPhone());
+		userAccount.setHoldCertificateNumber(openCardInfo.getHoldCertificateNumber());
+		userAccount.setCustomerSyncModifyHoldinfo(openCardInfo.getCustomerSyncModifyHoldinfo());
 		setAccountPermissions(userAccount);
 		return userAccount;
 	}

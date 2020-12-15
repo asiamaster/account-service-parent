@@ -38,6 +38,8 @@ public class UserAccountDo implements Serializable {
 	private String holdCertificateNumber;
 	/** 持卡人联系电话 */
 	private String holdContactsPhone;
+	/** 客户信息修改时是否同步修改持卡人信息1-是，2-否 */
+	private Integer customerSyncModifyHoldinfo;
 	/** 资金账号 */
 	private Long fundAccountId;
 	/** 实体卡是否存在 */
@@ -344,6 +346,14 @@ public class UserAccountDo implements Serializable {
 
 	public void setHoldContactsPhone(String holdContactsPhone) {
 		this.holdContactsPhone = holdContactsPhone;
+	}
+
+	public Integer getCustomerSyncModifyHoldinfo() {
+		return customerSyncModifyHoldinfo;
+	}
+
+	public void setCustomerSyncModifyHoldinfo(Integer customerSyncModifyHoldinfo) {
+		this.customerSyncModifyHoldinfo = customerSyncModifyHoldinfo;
 	}
 
 }
