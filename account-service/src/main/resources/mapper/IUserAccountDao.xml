@@ -156,6 +156,8 @@
 		</set>
 		WHERE
 			id = #{id}
+		AND
+			firm_id = #{firmId}
 	</update>
 
 	<update id="updateCustomerInfo">

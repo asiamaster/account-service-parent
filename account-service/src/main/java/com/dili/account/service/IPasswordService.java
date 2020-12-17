@@ -1,6 +1,7 @@
 package com.dili.account.service;
 
 import com.dili.account.dto.CardRequestDto;
+import com.dili.account.entity.UserAccountDo;
 
 /**
  * @description： 重置密码修改密码等
@@ -32,6 +33,13 @@ public interface IPasswordService {
 	 * 密码校验
 	 * @param accountId 账号id
 	 * @param password 密码
+	 * @return 
 	 */
-	void checkPassword(Long accountId, String password);
+	UserAccountDo checkPassword(Long accountId, String password);
+	
+	/**
+	 * 清除redis中用户的错误次数
+	 * @param key
+	 */
+	public void cleanPwdErrorCount(Long accountId);
 }
