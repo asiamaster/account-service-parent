@@ -182,6 +182,7 @@ public class AccountQueryController {
         LOGGER.info("simpleInfo请求参数:{}->>>>{}", cardNo,firmId);
         AssertUtils.notEmpty(cardNo, "卡号不能为空");
         AccountSimpleResponseDto dto = accountQueryService.getByCardNoWithBalance(cardNo, firmId);
+        LOGGER.info("simpleInfo返回:>>>>{}", JSONObject.toJSONString(dto));
         return BaseOutput.successData(dto);
     }
 
