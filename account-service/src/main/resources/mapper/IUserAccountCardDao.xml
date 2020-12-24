@@ -25,6 +25,7 @@
             <result column="usage_type" property="usageType"/>
             <result column="permissions" property="permissions"/>
             <result column="login_pwd" property="loginPwd"/>
+            <result column="card_exist" property="cardExist"/>
             <result column="pwd_changed" property="pwdChanged"/>
             <result column="login_time" property="loginTime"/>
             <result column="secret_key" property="secretKey"/>
@@ -78,6 +79,7 @@
             aua.`permissions`,
             aua.`login_pwd`,
             aua.`pwd_changed`,
+            aua.`card_exist`,
             aua.`login_time`,
             aua.`secret_key`,
             aua.`source`,
