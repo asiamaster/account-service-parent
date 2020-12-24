@@ -131,7 +131,7 @@
                 AND aua.`customer_certificate_number` LIKE concat('%',#{customerCertificateNumber},'%')
             </if>
             <if test="customerCharacterType !=null and customerCharacterType !=''">
-                AND aua.`customer_character_type` = #{customerCharacterType}
+                AND aua.`customer_character_type` LIKE concat('%',#{customerCharacterType},'%')
             </if>
             <if test="customerContactsPhone !=null and customerContactsPhone !=''">
                 AND aua.`customer_contacts_phone` = #{customerContactsPhone}
