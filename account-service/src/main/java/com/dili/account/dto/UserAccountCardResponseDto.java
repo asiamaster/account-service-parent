@@ -72,6 +72,8 @@ public class UserAccountCardResponseDto implements Serializable {
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime cardCreateTime;
+	/** 实体卡是否存在 */
+	private Integer cardExist;
 	/** 创建人名字 */
 	private String creator;
 	/** 创建人id */
@@ -299,6 +301,14 @@ public class UserAccountCardResponseDto implements Serializable {
 
 	public void setHoldContactsPhone(String holdContactsPhone) {
 		this.holdContactsPhone = holdContactsPhone;
+	}
+
+	public Integer getCardExist() {
+		return cardExist;
+	}
+
+	public void setCardExist(Integer cardExist) {
+		this.cardExist = cardExist;
 	}
 
 }
