@@ -52,6 +52,11 @@ public interface IUserAccountDao {
 	 * 根据证件号修改冗余的客户信息
 	 */
 	int updateCustomerInfo(UserAccountDo userAccount);
+	
+	/**
+	 * 更新持卡人信息
+	 */
+	int updateHoldinfo(UserAccountDo userAccount);
     /**
      * 删除
      * @param id
@@ -83,4 +88,7 @@ public interface IUserAccountDao {
     boolean updateState(@Param("accountId") Long accountId,
                     @Param("state") Integer state,
                     @Param("version") Integer version);
+    
+    
+    
 }

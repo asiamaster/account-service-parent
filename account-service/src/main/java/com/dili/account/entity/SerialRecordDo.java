@@ -12,142 +12,114 @@ import java.time.LocalDateTime;
  * @author bob
  */
 public class SerialRecordDo implements Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	/**  */
-	private Long id; 
+	private Long id;
 	/** 流水号 */
 	private String serialNo;
 	/** 操作类型*/
 	private Integer type;
 	/** 账户ID */
-	private Long accountId; 
+	private Long accountId;
 	/** 关联卡号 */
-	private String cardNo; 
+	private String cardNo;
 	/** 客户ID */
-	private Long customerId; 
+	private Long customerId;
 	/** 客户编号 */
-	private String customerNo; 
+	private String customerNo;
 	/** 客户姓名 */
 	private String customerName;
-	/** 客户身份类型*/
+	/** 客户角色*/
 	private String customerType;
+	/**持卡人姓名*/
+	private String holdName;
 	/** 资金动作-收入,支出 */
-	private Integer action; 
+	private Integer action;
 	/** 期初余额-分 */
-	private Long startBalance; 
+	private Long startBalance;
 	/** 操作金额-分 */
-	private Long amount; 
+	private Long amount;
 	/** 期末余额-分 */
-	private Long endBalance; 
+	private Long endBalance;
 	/** 交易类型-充值、提现、消费、转账、其他 */
-	private Integer tradeType; 
+	private Integer tradeType;
 	/** 交易渠道-现金、POS、网银 */
-	private Integer tradeChannel; 
+	private Integer tradeChannel;
 	/** 交易流水号 */
-	private String tradeNo; 
+	private String tradeNo;
 	/** 资金项目 */
-	private Integer fundItem; 
+	private Integer fundItem;
 	/** 资金项目名称 */
-	private String fundItemName; 
+	private String fundItemName;
 	/** 操作员ID */
-	private Long operatorId; 
+	private Long operatorId;
 	/** 操作员工号 */
-	private String operatorNo; 
+	private String operatorNo;
 	/** 操作员名称 */
-	private String operatorName; 
+	private String operatorName;
 	/** 操作时间-与支付系统保持一致 */
 	@JSONField(format = "yyyy-MM-dd HH:mm:ss")
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-	private LocalDateTime operateTime; 
+	private LocalDateTime operateTime;
 	/** 备注 */
-	private String notes; 
+	private String notes;
 	/** 商户ID */
-	private Long firmId; 
-    /**
-     * SerialRecordEntity constructor
-     */
+	private Long firmId;
 	public SerialRecordDo() {
 		super();
 	}
 
-    /**
-     * setter for 
-     */
 	public void setId(Long id) {
 		this.id = id;
 	}
 
-    /**
-     * getter for 
-     */
 	public Long getId() {
 		return id;
 	}
 
-    /**
-     * setter for 流水号
-     */
 	public void setSerialNo(String serialNo) {
 		this.serialNo = serialNo;
 	}
 
-    /**
-     * getter for 流水号
-     */
 	public String getSerialNo() {
 		return serialNo;
 	}
 
-	/**
-	 *
-	 * @return
-	 */
 	public Integer getType() {
 		return type;
 	}
 
-	/**
-	 *
-	 * @param type
-	 */
 	public void setType(Integer type) {
 		this.type = type;
 	}
 
-	/**
-     * setter for 账户ID
-     */
 	public void setAccountId(Long accountId) {
 		this.accountId = accountId;
 	}
 
-    /**
-     * getter for 账户ID
-     */
 	public Long getAccountId() {
 		return accountId;
 	}
 
-    /**
-     * setter for 关联卡号
-     */
 	public void setCardNo(String cardNo) {
 		this.cardNo = cardNo;
 	}
 
-    /**
-     * getter for 关联卡号
-     */
 	public String getCardNo() {
 		return cardNo;
 	}
 
-    /**
-     * setter for 客户ID
-     */
+	public String getHoldName() {
+		return holdName;
+	}
+
+	public void setHoldName(String holdName) {
+		this.holdName = holdName;
+	}
+
 	public void setCustomerId(Long customerId) {
 		this.customerId = customerId;
 	}

@@ -1,5 +1,15 @@
 package com.dili.account.service.impl;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+import java.util.stream.Collectors;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+
 import com.dili.account.common.ExceptionMsg;
 import com.dili.account.dao.IUserAccountCardDao;
 import com.dili.account.dao.IUserCardDao;
@@ -15,7 +25,6 @@ import com.dili.account.exception.AccountBizException;
 import com.dili.account.exception.ErrorCode;
 import com.dili.account.rpc.resolver.PayRpcResolver;
 import com.dili.account.service.IAccountQueryService;
-import com.dili.account.type.AccountUsageType;
 import com.dili.account.type.CardStatus;
 import com.dili.account.type.CardType;
 import com.dili.account.type.DisableState;
@@ -26,16 +35,6 @@ import com.dili.ss.domain.PageOutput;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import com.google.common.collect.Lists;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
-
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
 /**
  * @description： 用户账户信息查询service实现
@@ -234,7 +233,7 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
         responseDto.setCardType(card.getType());
         responseDto.setCardNo(card.getCardNo());
         responseDto.setCardState(card.getState());
-        responseDto.setUsageType(AccountUsageType.getUsageTypeList(account.getUsageType()));
+//        responseDto.setUsageType(AccountUsageType.getUsageTypeList(account.getUsageType()));
         responseDto.setCardCreateTime(card.getCreateTime());
         responseDto.setCreator(card.getCreator());
         responseDto.setCreatorId(card.getCreatorId());
@@ -244,18 +243,21 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
         responseDto.setFundAccountId(account.getFundAccountId());
         responseDto.setPermissionList(UsePermissionType.getPermissionList(account.getPermissions()));
         responseDto.setParentAccountId(account.getParentAccountId());
-        responseDto.setAccountType(account.getType());
+        responseDto.setAccountTypes(account.getTypes());
         responseDto.setAccountState(account.getState());
         responseDto.setDisabledState(account.getDisabledState());
 
         responseDto.setCustomerId(account.getCustomerId());
         responseDto.setCustomerName(account.getCustomerName());
         responseDto.setCustomerCode(account.getCustomerCode());
-        responseDto.setCustomerMarketType(account.getCustomerMarketType());
+        responseDto.setCustomerCharacterType(account.getCustomerCharacterType());
         responseDto.setCustomerContactsPhone(account.getCustomerContactsPhone());
         responseDto.setCustomerCertificateNumber(account.getCustomerCertificateNumber());
         responseDto.setCustomerCertificateType(account.getCustomerCertificateType());
         responseDto.setHoldName(account.getHoldName());
+        responseDto.setHoldContactsPhone(account.getHoldContactsPhone());
+        responseDto.setHoldCertificateNumber(account.getHoldCertificateNumber());
+        responseDto.setCardExist(account.getCardExist());
         return responseDto;
     }
 

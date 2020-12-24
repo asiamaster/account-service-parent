@@ -5,6 +5,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -25,6 +26,7 @@ import tk.mybatis.spring.annotation.MapperScan;
 @DTOScan(value={"com.dili.ss", "com.dili.account.domain"})
 @EnableDiscoveryClient
 @EnableFeignClients
+@RefreshScope
 public class Application extends SpringBootServletInitializer {
 
     @LoadBalanced

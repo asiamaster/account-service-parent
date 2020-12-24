@@ -24,8 +24,8 @@ public class UserAccountDo implements Serializable {
 	private String customerName;
 	/** 客户编号（冗余customer） */
 	private String customerCode;
-	/** 客户市场类型(冗余customer_market) */
-	private String customerMarketType;
+	/** 客户角色 */
+	private String customerCharacterType;
 	/** 证件类型（冗余customer） */
 	private String customerCertificateType;
 	/** 证件号（冗余customer） */
@@ -38,12 +38,14 @@ public class UserAccountDo implements Serializable {
 	private String holdCertificateNumber;
 	/** 持卡人联系电话 */
 	private String holdContactsPhone;
+	/** 客户信息修改时是否同步修改持卡人信息1-是，2-否 */
+	private Integer customerSyncModifyHoldinfo;
 	/** 资金账号 */
 	private Long fundAccountId;
 	/** 实体卡是否存在 */
 	private Integer cardExist;
-	/** 账号类型-买家账户/卖家账户 */
-	private Integer type;
+	/** 账号类型-买/经营户/其它 */
+	private String types;
 	/** 账户用途-交易账户/水电费账户 ,多个以逗号分隔 */
 	private String usageType;
 	/** 使用权限(充值、提现、交费等),多个以逗号分隔 */
@@ -130,12 +132,12 @@ public class UserAccountDo implements Serializable {
 		return fundAccountId;
 	}
 
-	public void setType(Integer type) {
-		this.type = type;
+	public String getTypes() {
+		return types;
 	}
 
-	public Integer getType() {
-		return type;
+	public void setTypes(String types) {
+		this.types = types;
 	}
 
 	public void setUsageType(String usageType) {
@@ -290,12 +292,12 @@ public class UserAccountDo implements Serializable {
 		this.customerCode = customerCode;
 	}
 
-	public String getCustomerMarketType() {
-		return customerMarketType;
+	public String getCustomerCharacterType() {
+		return customerCharacterType;
 	}
 
-	public void setCustomerMarketType(String customerMarketType) {
-		this.customerMarketType = customerMarketType;
+	public void setCustomerCharacterType(String customerCharacterType) {
+		this.customerCharacterType = customerCharacterType;
 	}
 
 	public String getCustomerCertificateType() {
@@ -344,6 +346,14 @@ public class UserAccountDo implements Serializable {
 
 	public void setHoldContactsPhone(String holdContactsPhone) {
 		this.holdContactsPhone = holdContactsPhone;
+	}
+
+	public Integer getCustomerSyncModifyHoldinfo() {
+		return customerSyncModifyHoldinfo;
+	}
+
+	public void setCustomerSyncModifyHoldinfo(Integer customerSyncModifyHoldinfo) {
+		this.customerSyncModifyHoldinfo = customerSyncModifyHoldinfo;
 	}
 
 }

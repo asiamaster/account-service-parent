@@ -18,7 +18,7 @@ import java.util.List;
 
 /**
  * 操作流水api
- * 
+ *
  * @author xuliang
  */
 @RestController
@@ -32,7 +32,7 @@ public class SerialRecordController {
 
 	/**
 	 * 批量存储流水记录
-	 * 
+	 *
 	 * @param serialRecordDoList
 	 * @return
 	 */
@@ -48,7 +48,7 @@ public class SerialRecordController {
 
 	/**
 	 * 分页查询操作流水列表
-	 * 
+	 *
 	 * @param serialQueryDto
 	 * @return
 	 */
@@ -56,6 +56,18 @@ public class SerialRecordController {
 	public PageOutput<List<SerialRecordDo>> listPage(@RequestBody SerialQueryDto serialQueryDto) {
 		log.info("分页查询操作流水列表*****{}", JSONObject.toJSONString(serialQueryDto));
 		return serialRecordService.listPage(serialQueryDto);
+	}
+
+	/**
+	 * 条件查询操作流水列表
+	 *
+	 * @param serialQueryDto
+	 * @return
+	 */
+	@RequestMapping(value = "/list")
+	public BaseOutput<List<SerialRecordDo>> getList(@RequestBody SerialQueryDto serialQueryDto) {
+		log.info("列表查询操作流水列表*****{}", JSONObject.toJSONString(serialQueryDto));
+		return BaseOutput.successData(serialRecordService.list(serialQueryDto));
 	}
 
 	/**

@@ -27,8 +27,8 @@ public class UserAccountCardResponseDto implements Serializable {
 	private Long accountId;
 	/** 父账号id */
 	private Long parentAccountId;
-	/** 卡交易类型: 1-买家 2-卖家 */
-	private Integer accountType;
+	/** 卡交易类型: 买/经营户/其它 */
+	private String accountTypes;
 	/** 资金账号ID */
 	private Long fundAccountId;
 	/** 客户id */
@@ -37,8 +37,8 @@ public class UserAccountCardResponseDto implements Serializable {
 	private String customerName;
 	/** 客户编号 */
 	private String customerCode;
-	/** 客户市场类型(冗余customer_market) */
-	private String customerMarketType;
+	/** 客户角色 */
+	private String customerCharacterType;
 	/** 客户证件类型 */
 	private String customerCertificateType;
 	/** 客户身份号 */
@@ -72,6 +72,8 @@ public class UserAccountCardResponseDto implements Serializable {
 	@JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	@DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
 	private LocalDateTime cardCreateTime;
+	/** 实体卡是否存在 */
+	private Integer cardExist;
 	/** 创建人名字 */
 	private String creator;
 	/** 创建人id */
@@ -149,12 +151,12 @@ public class UserAccountCardResponseDto implements Serializable {
 		this.parentAccountId = parentAccountId;
 	}
 
-	public Integer getAccountType() {
-		return accountType;
+	public String getAccountTypes() {
+		return accountTypes;
 	}
 
-	public void setAccountType(Integer accountType) {
-		this.accountType = accountType;
+	public void setAccountTypes(String accountTypes) {
+		this.accountTypes = accountTypes;
 	}
 
 	public Long getFundAccountId() {
@@ -269,12 +271,12 @@ public class UserAccountCardResponseDto implements Serializable {
 		this.disabledState = disabledState;
 	}
 
-	public String getCustomerMarketType() {
-		return customerMarketType;
+	public String getCustomerCharacterType() {
+		return customerCharacterType;
 	}
 
-	public void setCustomerMarketType(String customerMarketType) {
-		this.customerMarketType = customerMarketType;
+	public void setCustomerCharacterType(String customerCharacterType) {
+		this.customerCharacterType = customerCharacterType;
 	}
 
 	public String getHoldName() {
@@ -299,6 +301,14 @@ public class UserAccountCardResponseDto implements Serializable {
 
 	public void setHoldContactsPhone(String holdContactsPhone) {
 		this.holdContactsPhone = holdContactsPhone;
+	}
+
+	public Integer getCardExist() {
+		return cardExist;
+	}
+
+	public void setCardExist(Integer cardExist) {
+		this.cardExist = cardExist;
 	}
 
 }

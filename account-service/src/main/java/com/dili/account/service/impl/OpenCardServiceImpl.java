@@ -34,6 +34,7 @@ import com.dili.account.type.AccountUsageType;
 import com.dili.account.type.CardCategory;
 import com.dili.account.type.CardStatus;
 import com.dili.account.type.CardType;
+import com.dili.account.type.CustomerSyncModifyHoldinfo;
 import com.dili.account.type.CustomerType;
 import com.dili.account.type.DisableState;
 import com.dili.account.type.UsePermissionType;
@@ -83,7 +84,7 @@ public class OpenCardServiceImpl implements IOpenCardService {
 			for (UserAccountCardResponseDto accountDto : userAccountList) {
 				if (CardType.isMaster(accountDto.getCardType())
 						&& accountDto.getCardState() != CardStatus.RETURNED.getCode())
-					throw BizExceptionProxy.exception("客户{}已办理过交易主卡{}", openCardInfo.getCustomerName(),
+					throw BizExceptionProxy.exception("客户{}已办理过主卡{}", openCardInfo.getCustomerName(),
 							userAccountList.get(0).getCardNo());
 			}
 		}
@@ -180,7 +181,7 @@ public class OpenCardServiceImpl implements IOpenCardService {
 		userAccount.setCustomerCertificateType(openCardInfo.getCustomerCredentialType());
 		userAccount.setCustomerName(openCardInfo.getCustomerName());
 		userAccount.setCustomerCode(openCardInfo.getCustomerCode());
-		userAccount.setCustomerMarketType(openCardInfo.getCustomerType());
+		userAccount.setCustomerCharacterType(openCardInfo.getCustomerCharacterType());
 		userAccount.setCustomerContactsPhone(openCardInfo.getCustomerContactsPhone());
 		userAccount.setFundAccountId(fundAccountId);
 		userAccount.setCardExist(YesNoType.YES.getCode());
@@ -198,7 +199,11 @@ public class OpenCardServiceImpl implements IOpenCardService {
 		userAccount.setModifyTime(now);
 		userAccount.setCreatorId(openCardInfo.getCreatorId());
 		userAccount.setCreator(openCardInfo.getCreator());
-		setAccountPermissions(userAccount, openCardInfo.getCustomerType());
+		userAccount.setHoldName(openCardInfo.getHoldName());
+		userAccount.setHoldContactsPhone(openCardInfo.getHoldContactsPhone());
+		userAccount.setHoldCertificateNumber(openCardInfo.getHoldCertificateNumber());
+		userAccount.setCustomerSyncModifyHoldinfo(openCardInfo.getCustomerSyncModifyHoldinfo());
+		setAccountPermissions(userAccount);
 		return userAccount;
 	}
 
@@ -229,54 +234,11 @@ public class OpenCardServiceImpl implements IOpenCardService {
 	 * @param userAccount
 	 * @param customerType
 	 */
-	public void setAccountPermissions(UserAccountDo userAccount, String customerType) {
-		if (CustomerType.OPERATION_AREA.getCode().equalsIgnoreCase(customerType)
-				|| CustomerType.OUTSIDE_BUYER.getCode().equalsIgnoreCase(customerType)
-				|| CustomerType.IN_PROVINCE.getCode().equalsIgnoreCase(customerType)
-				|| CustomerType.NATIVE_CUSTOMER.getCode().equalsIgnoreCase(customerType)) {
-			// 买家 园内买家 园外买家
-			userAccount.setType(AccountType.PURCHASE.getCode());
-
-			// 资金账户。 交易/理财
-			String usageTypeCodes = AccountUsageType.getCodes(AccountUsageType.TRADE.getCode(),
-					AccountUsageType.WEALTH.getCode());
-			userAccount.setUsageType(usageTypeCodes);
-
-			// 场景权限，充值/提现/交易/缴费/理财
-			Integer[] codes = { UsePermissionType.RECHARGE.getCode(), UsePermissionType.WEALTH.getCode(),
-					UsePermissionType.TRANSACTION.getCode(), UsePermissionType.WITHDRAW.getCode(),
-					UsePermissionType.PAY_FEES.getCode() };
-			userAccount.setPermissions(UsePermissionType.getPermissions(codes));
-		} else if (CustomerType.SELLER.getCode().equalsIgnoreCase(customerType)) {
-			// 卖家
-			userAccount.setType(AccountType.SALE.getCode());
-
-			// 资金账户。 交易/理财/水电预存
-			String usageTypeCodes = AccountUsageType.getCodes(AccountUsageType.TRADE.getCode(),
-					AccountUsageType.WEALTH.getCode(), AccountUsageType.UTILITIES.getCode());
-			userAccount.setUsageType(usageTypeCodes);
-
-			// 场景权限，充值/提现/交易/缴费/理财
-			Integer[] permissionCodes = { UsePermissionType.RECHARGE.getCode(), UsePermissionType.TRANSACTION.getCode(),
-					UsePermissionType.WEALTH.getCode(), UsePermissionType.WITHDRAW.getCode(),
-					UsePermissionType.UTILITIES.getCode(), UsePermissionType.PAY_FEES.getCode() };
-			userAccount.setPermissions(UsePermissionType.getPermissions(permissionCodes));
-		} else if (CustomerType.DRIVER.getCode().equalsIgnoreCase(customerType)) {
-			// 司机
-			userAccount.setType(AccountType.PAY_FEES.getCode());
-
-			// 资金账户。 交费/理财
-			String usageTypeCodes = AccountUsageType.getCodes(AccountUsageType.PAY_FEES.getCode(),
-					AccountUsageType.WEALTH.getCode());
-			userAccount.setUsageType(usageTypeCodes);
-
-			// 场景权限，充值/提现/缴费/理财
-			Integer[] permissionCodes = { UsePermissionType.RECHARGE.getCode(), UsePermissionType.WEALTH.getCode(),
-					UsePermissionType.WITHDRAW.getCode(), UsePermissionType.PAY_FEES.getCode() };
-			userAccount.setPermissions(UsePermissionType.getPermissions(permissionCodes));
-		} else {
-			throw BizExceptionProxy.exception("客户类型为[{}]，无法设置账户类型及相应权限!", customerType);
-		}
+	public void setAccountPermissions(UserAccountDo userAccount) {
+		// 场景权限，充值/提现/交易
+		Integer[] codes = { UsePermissionType.RECHARGE.getCode(), UsePermissionType.TRANSACTION.getCode(),
+				UsePermissionType.WITHDRAW.getCode() };
+		userAccount.setPermissions(UsePermissionType.getPermissions(codes));
 	}
 
 	/**

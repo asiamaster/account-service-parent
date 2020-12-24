@@ -11,13 +11,12 @@
 			`customer_id`,
 			`customer_name`,
 			`customer_code`,
-			`customer_market_type`,
+			`customer_character_type`,
 			`customer_certificate_type`,
 			`customer_certificate_number`,
 			`customer_contacts_phone`,
 			`fund_account_id`,
 			`card_exist`,
-			`type`,
 			`usage_type`,
 			`permissions`,
 			`login_pwd`,
@@ -50,13 +49,16 @@
 			`customer_id`,
 			`customer_name`,
 			`customer_code`,
-			`customer_market_type`,
+			`customer_character_type`,
 			`customer_certificate_type`,
 			`customer_certificate_number`,
 			`customer_contacts_phone`,
+			`hold_name`, 
+			`hold_certificate_number`, 
+			`hold_contacts_phone`, 
+			`customer_sync_modify_holdinfo`,
 			`fund_account_id`,
 			`card_exist`,
-			`type`,
 			`usage_type`,
 			`permissions`,
 			`login_pwd`,
@@ -80,13 +82,16 @@
 			#{customerId},
 			#{customerName},
 			#{customerCode},
-			#{customerMarketType},
+			#{customerCharacterType},
 			#{customerCertificateType},
 			#{customerCertificateNumber},
 			#{customerContactsPhone},
+			#{holdName}, 
+			#{holdCertificateNumber}, 
+			#{holdContactsPhone}, 
+			#{customerSyncModifyHoldinfo}, 
 			#{fundAccountId},
 			#{cardExist},
-			#{type},
 			#{usageType},
 			#{permissions},
 			#{loginPwd},
@@ -123,13 +128,12 @@
 			<if test="customerId != null">`customer_id` = #{customerId}, </if>
 			<if test="customerName != null">`customer_name` = #{customerName}, </if>
 			<if test="customerCode != null">`customer_code` = #{customerCode}, </if>
-			<if test="customerMarketType != null">`customer_market_type` = #{customerMarketType}, </if>
+			<if test="customerCharacterType != null">`customer_character_type` = #{customerCharacterType}, </if>
 			<if test="customerCertificateType != null">`customer_certificate_type` = #{customerCertificateType}, </if>
 			<if test="customerCertificateNumber != null">`customer_certificate_number` = #{customerCertificateNumber}, </if>
 			<if test="customerContactsPhone != null">`customer_contacts_phone` = #{customerContactsPhone}, </if>
 			<if test="fundAccountId != null">`fund_account_id` = #{fundAccountId}, </if>
 			<if test="cardExist != null">`card_exist` = #{cardExist}, </if>
-			<if test="type != null">`type` = #{type}, </if>
 			<if test="usageType != null">`usage_type` = #{usageType}, </if>
 			<if test="permissions != null">`permissions` = #{permissions}, </if>
 			<if test="loginPwd != null">`login_pwd` = #{loginPwd}, </if>
@@ -146,17 +150,18 @@
 		</set>
 		WHERE
 			id = #{id}
+		AND
+			firm_id = #{firmId}
 	</update>
 
 	<update id="updateCustomerInfo">
 		UPDATE account_user_account
 	 	<set>
 			<if test="customerName != null">`customer_name` = #{customerName}, </if>
-			<if test="customerMarketType != null">`customer_market_type` = #{customerMarketType}, </if>
+			<if test="customerCharacterType != null">`customer_character_type` = #{customerCharacterType}, </if>
 			<if test="customerCertificateType != null">`customer_certificate_type` = #{customerCertificateType}, </if>
 			<if test="customerCertificateNumber != null">`customer_certificate_number` = #{customerCertificateNumber}, </if>
 			<if test="customerContactsPhone != null">`customer_contacts_phone` = #{customerContactsPhone}, </if>
-			<if test="type != null">`type` = #{type}, </if>
 			<if test="usageType != null">`usage_type` = #{usageType}, </if>
 			<if test="permissions != null">`permissions` = #{permissions}, </if>
 			<if test="disabledState != null">`disabled_state` = #{disabledState}, </if>
@@ -232,4 +237,22 @@
 		AND
 			version=#{version}
 	</update>
+	
+	<!-- 更新持卡人信息 -->
+	<update id="updateHoldinfo">
+		UPDATE
+			account_user_account
+		SET
+			hold_name = #{holdName},
+			hold_certificate_number = #{holdCertificateNumber},
+			hold_contacts_phone = #{holdContactsPhone},
+		    modify_time = NOW()
+		WHERE
+			customer_id = #{customerId}
+		AND
+			customer_sync_modify_holdinfo = #{customerSyncModifyHoldinfo}
+		AND 
+			firm_id = #{firmId}
+	</update>
+	
 </mapper>

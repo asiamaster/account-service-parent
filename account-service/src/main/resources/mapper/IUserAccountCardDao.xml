@@ -14,15 +14,15 @@
             <result column="customer_id" property="customerId"/>
             <result column="customer_name" property="customerName"/>
             <result column="customer_code" property="customerCode"/>
-            <result column="customer_market_type" property="customerMarketType"/>
+            <result column="customer_character_type" property="customerCharacterType"/>
             <result column="customer_certificate_type" property="customerCertificateType"/>
             <result column="customer_certificate_number" property="customerCertificateNumber"/>
             <result column="customer_contacts_phone" property="customerContactsPhone"/>
             <result column="fund_account_id" property="fundAccountId"/>
-            <result column="type" property="type"/>
             <result column="usage_type" property="usageType"/>
             <result column="permissions" property="permissions"/>
             <result column="login_pwd" property="loginPwd"/>
+            <result column="card_exist" property="cardExist"/>
             <result column="pwd_changed" property="pwdChanged"/>
             <result column="login_time" property="loginTime"/>
             <result column="secret_key" property="secretKey"/>
@@ -64,16 +64,19 @@
             aua.`customer_id`,
             aua.`customer_name`,
             aua.`customer_code`,
-            aua.`customer_market_type`,
+            aua.`customer_character_type`,
             aua.`customer_certificate_type`,
             aua.`customer_certificate_number`,
             aua.`customer_contacts_phone`,
+            aua.`hold_name`,
+			aua.`hold_certificate_number`,
+			aua.`hold_contacts_phone`,
             aua.`fund_account_id`,
-            aua.`type`,
             aua.`usage_type`,
             aua.`permissions`,
             aua.`login_pwd`,
             aua.`pwd_changed`,
+            aua.`card_exist`,
             aua.`login_time`,
             aua.`secret_key`,
             aua.`source`,
@@ -124,8 +127,8 @@
             <if test="customerCertificateNumber!=null and customerCertificateNumber !=''">
                 AND aua.`customer_certificate_number` LIKE concat('%',#{customerCertificateNumber},'%')
             </if>
-            <if test="customerMarketType !=null and customerMarketType !=''">
-                AND aua.`customer_market_type` = #{customerMarketType}
+            <if test="customerCharacterType !=null and customerCharacterType !=''">
+                AND aua.`customer_character_type` LIKE concat('%',#{customerCharacterType},'%')
             </if>
             <if test="customerContactsPhone !=null and customerContactsPhone !=''">
                 AND aua.`customer_contacts_phone` = #{customerContactsPhone}
@@ -167,7 +170,7 @@
                 AND auc.create_time &lt;= #{endDate}
             </if>
             <if test="excludeUnusualState !=null and excludeUnusualState == 1">
-                AND auc.state not in (3,4)  AND aua.disabled_state = 1
+                AND auc.state in (1)  AND aua.disabled_state = 1
             </if>
             <if test="cardStates!=null and cardStates.size>0">
                 AND auc.state IN

@@ -51,6 +51,11 @@ public class SerialRecordServiceImpl implements ISerialRecordService {
     }
 
     @Override
+    public List<SerialRecordDo> list(SerialQueryDto serialQueryDto) {
+        return serialRecordDao.list(serialQueryDto);
+    }
+
+    @Override
     public Long countOperateAmount(SerialQueryDto serialQueryDto) {
         return serialRecordDao.countOperateAmount(serialQueryDto);
     }

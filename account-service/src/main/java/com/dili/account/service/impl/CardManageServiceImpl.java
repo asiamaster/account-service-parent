@@ -130,6 +130,8 @@ public class CardManageServiceImpl implements ICardManageService {
 		if (i != 1) {
 			throw new AccountBizException(ResultCode.DATA_ERROR, "修改卡状态失败,请稍后重试");
 		}
+		// 清除redis中的错误次数
+		passwordService.cleanPwdErrorCount(wrapper.getUserAccount().getAccountId());
 	}
 
 	private void validateCanReportLoss(UserCardDo userCard, CardRequestDto cardParam) {

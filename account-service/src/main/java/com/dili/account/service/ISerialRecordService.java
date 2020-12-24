@@ -29,7 +29,12 @@ public interface ISerialRecordService {
      * @return
      */
     PageOutput<List<SerialRecordDo>> listPage(SerialQueryDto serialQueryDto);
-
+    /**
+     * 列表查询
+     * @param serialQueryDto
+     * @return
+     */
+    List<SerialRecordDo> list(SerialQueryDto serialQueryDto);
     /**
      * 操作金额合计
      * @param serialQueryDto
