@@ -1,3 +1,6 @@
+ALTER TABLE `dili_account`.`account_serial_record`
+    ADD COLUMN `hold_name` varchar(40) NULL COMMENT '持卡人姓名' AFTER `customer_type`;
+
 -- 帐户增加持卡人信息
 ALTER TABLE `dili_account`.`account_user_account` 
 ADD COLUMN `hold_name` varchar(40) NULL COMMENT '持卡人姓名' AFTER `customer_contacts_phone`,
