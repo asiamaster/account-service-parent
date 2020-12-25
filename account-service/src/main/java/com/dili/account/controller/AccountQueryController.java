@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.dili.account.dto.AccountSimpleResponseDto;
+import com.dili.account.dto.CustomerBalanceResponseDto;
 import com.dili.account.dto.UserAccountCardQuery;
 import com.dili.account.dto.UserAccountCardResponseDto;
 import com.dili.account.dto.UserAccountSingleQueryDto;
@@ -207,4 +208,17 @@ public class AccountQueryController {
         query.setFirmId(param.getFirmId());
         return query;
     }
+    /**
+	 * @param cardNo
+	 * @param firmId
+	 * @return
+	 */
+	@GetMapping("/getAccountFundByCustomerId.action")
+	public BaseOutput<CustomerBalanceResponseDto> getAccountFundByCustomerId(Long customerId, Long firmId) {
+		LOGGER.info("getAccountFundByCustomerId请求参数:{}->>>>{},{}", customerId, firmId);
+		AssertUtils.notNull(customerId, "卡号不能为空");
+		AssertUtils.notNull(firmId, "市场ID不能为空");
+		CustomerBalanceResponseDto customerBalance = accountQueryService.getAccountFundByCustomerId(customerId);
+		return BaseOutput.successData(customerBalance);
+	}
 }

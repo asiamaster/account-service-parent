@@ -6,15 +6,20 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import com.dili.account.common.ExceptionMsg;
+import com.dili.account.common.constant.ServiceName;
 import com.dili.account.dao.IUserAccountCardDao;
 import com.dili.account.dao.IUserCardDao;
 import com.dili.account.dto.AccountSimpleResponseDto;
 import com.dili.account.dto.BalanceResponseDto;
+import com.dili.account.dto.CustomerBalanceResponseDto;
+import com.dili.account.dto.FundAccountDto;
 import com.dili.account.dto.UserAccountCardQuery;
 import com.dili.account.dto.UserAccountCardResponseDto;
 import com.dili.account.entity.CardAggregationWrapper;
@@ -23,6 +28,8 @@ import com.dili.account.entity.UserAccountDo;
 import com.dili.account.entity.UserCardDo;
 import com.dili.account.exception.AccountBizException;
 import com.dili.account.exception.ErrorCode;
+import com.dili.account.rpc.PayRpc;
+import com.dili.account.rpc.resolver.GenericRpcResolver;
 import com.dili.account.rpc.resolver.PayRpcResolver;
 import com.dili.account.service.IAccountQueryService;
 import com.dili.account.type.CardStatus;
@@ -44,12 +51,18 @@ import com.google.common.collect.Lists;
  */
 @Service("accountQueryService")
 public class AccountQueryServiceImpl implements IAccountQueryService {
+	
+	private static final Logger log = LoggerFactory.getLogger(AccountQueryServiceImpl.class);
+
     @Autowired
     private IUserCardDao userCardDao;
     @Autowired
     private IUserAccountCardDao userAccountCardDao;
     @Autowired
     private PayRpcResolver payRpcResolver;
+    
+    @Autowired
+    private PayRpc payRpc;
     /**需要校验的非法卡状态类型*/
     private static final CardStatus[] VALID_CARD_STATES = new CardStatus[]{CardStatus.LOSS, CardStatus.RETURNED};
 
@@ -185,6 +198,40 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
         return wrapper;
     }
 
+    @Override
+	public CustomerBalanceResponseDto getAccountFundByCustomerId(Long customerId) {
+		UserAccountCardQuery masterParams = new UserAccountCardQuery();
+        masterParams.setCardType(CardType.MASTER.getCode());
+        masterParams.setCustomerIds(Lists.newArrayList(customerId));
+        //按照现在需求，一个customerId只有一张主卡，但是为了需求有变，这里设计成list
+        //以防customerId对应多个主卡的情况
+        List<UserAccountCardResponseDto> masterList = getListByConditionForRest(masterParams);
+        if(CollectionUtils.isEmpty(masterList)) {
+        	throw new AccountBizException("您没有开通过账户");
+        }
+        
+        // 查询客户资产情况
+        FundAccountDto fundAccountDto = new FundAccountDto();
+        fundAccountDto.setCustomerId(customerId);
+        CustomerBalanceResponseDto customerBalance = GenericRpcResolver.resolver(payRpc.getAccountFundByCustomerId(fundAccountDto),ServiceName.PAY);
+        if(CollectionUtils.isEmpty(masterList)) {
+        	log.warn("未获取到支付接口明细数据");
+        }else {
+	        customerBalance.getFundAccounts().forEach(accountItem -> {
+	        	for(UserAccountCardResponseDto userAccount: masterList) {
+	        		if(accountItem.getAccountId().longValue() == userAccount.getFundAccountId()) {
+	        			accountItem.setCardNo(userAccount.getCardNo());
+	        			accountItem.setCardExist(userAccount.getCardExist());
+	        			break;
+	        		}
+	        	}
+	        });
+        }
+        
+		return customerBalance;
+	}
+    
+    
     private void validateMaster(UserCardDo userCard, UserAccountDo userAccount) {
         if (!CardType.isSlave(userCard.getType())) {
             return;
