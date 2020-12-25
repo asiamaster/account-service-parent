@@ -34,5 +34,5 @@ public interface PayRpc {
      * 查询客户总资产及明细
      */
     @RequestMapping(value = "/payment/api/gateway.do?service=payment.fund.service:customer", method = RequestMethod.POST)
-    BaseOutput<CustomerBalanceResponseDto> getAccountFundByCustomerId(FundAccountDto type);
+    BaseOutput<CustomerBalanceResponseDto> getAccountFundByCustomerId(@RequestHeader(name = "mchId")  Long mchId, FundAccountDto type);
 }

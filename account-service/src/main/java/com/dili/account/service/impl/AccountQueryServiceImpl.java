@@ -199,7 +199,7 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
     }
 
     @Override
-	public CustomerBalanceResponseDto getAccountFundByCustomerId(Long customerId) {
+	public CustomerBalanceResponseDto getAccountFundByCustomerId(Long customerId, Long firmId) {
 		UserAccountCardQuery masterParams = new UserAccountCardQuery();
         masterParams.setCardType(CardType.MASTER.getCode());
         masterParams.setCustomerIds(Lists.newArrayList(customerId));
@@ -213,7 +213,7 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
         // 查询客户资产情况
         FundAccountDto fundAccountDto = new FundAccountDto();
         fundAccountDto.setCustomerId(customerId);
-        CustomerBalanceResponseDto customerBalance = GenericRpcResolver.resolver(payRpc.getAccountFundByCustomerId(fundAccountDto),ServiceName.PAY);
+        CustomerBalanceResponseDto customerBalance = GenericRpcResolver.resolver(payRpc.getAccountFundByCustomerId(firmId, fundAccountDto),ServiceName.PAY);
         if(CollectionUtils.isEmpty(masterList)) {
         	log.warn("未获取到支付接口明细数据");
         }else {

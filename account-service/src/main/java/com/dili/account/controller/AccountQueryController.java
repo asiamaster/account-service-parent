@@ -218,7 +218,7 @@ public class AccountQueryController {
 		LOGGER.info("getAccountFundByCustomerId请求参数:{}->>>>{},{}", customerId, firmId);
 		AssertUtils.notNull(customerId, "卡号不能为空");
 		AssertUtils.notNull(firmId, "市场ID不能为空");
-		CustomerBalanceResponseDto customerBalance = accountQueryService.getAccountFundByCustomerId(customerId);
+		CustomerBalanceResponseDto customerBalance = accountQueryService.getAccountFundByCustomerId(firmId, customerId);
 		return BaseOutput.successData(customerBalance);
 	}
 }

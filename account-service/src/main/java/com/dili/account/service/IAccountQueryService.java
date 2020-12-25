@@ -102,7 +102,7 @@ public interface IAccountQueryService {
 	/**
 	 * 根据客户ID获取客户下所有账户，及资金情况(包括可用资金、冻结资金)
 	 */
-	CustomerBalanceResponseDto getAccountFundByCustomerId(Long customerId);
+	CustomerBalanceResponseDto getAccountFundByCustomerId(Long customerId, Long firmId);
 
 
 }
