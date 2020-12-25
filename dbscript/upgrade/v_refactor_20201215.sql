@@ -26,9 +26,9 @@ where customer_character_type in('driver') and firm_id = 8;
 ALTER TABLE `dili_account`.`account_user_account` 
 ADD COLUMN `customer_sync_modify_holdinfo` tinyint(3) NULL COMMENT '客户信息修改时是否同步修改持卡人信息1-是，2-否' AFTER `hold_contacts_phone`;
 -- 更新是否同步修改持卡人信息标志 
-update account_user_account set customer_sync_modify_holdinfo = 1 where customer_sync_modify_holdinfo is null
+update account_user_account set customer_sync_modify_holdinfo = 1 where customer_sync_modify_holdinfo is null;
 
--- 增加角色字段长度
+-- 增加客户身份类型字段长度
 ALTER TABLE `dili_account`.`account_serial_record` 
 MODIFY COLUMN `customer_type` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '客户角色' AFTER `customer_name`;
 
