@@ -203,6 +203,7 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
 		UserAccountCardQuery masterParams = new UserAccountCardQuery();
         masterParams.setCardType(CardType.MASTER.getCode());
         masterParams.setCustomerIds(Lists.newArrayList(customerId));
+        masterParams.setFirmId(firmId);
         //按照现在需求，一个customerId只有一张主卡，但是为了需求有变，这里设计成list
         //以防customerId对应多个主卡的情况
         List<UserAccountCardResponseDto> masterList = getListByConditionForRest(masterParams);
