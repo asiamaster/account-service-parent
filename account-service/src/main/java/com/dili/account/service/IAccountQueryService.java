@@ -1,15 +1,15 @@
 package com.dili.account.service;
 
+import java.util.List;
+import java.util.Map;
+import java.util.Optional;
+
 import com.dili.account.dto.AccountSimpleResponseDto;
+import com.dili.account.dto.CustomerBalanceResponseDto;
 import com.dili.account.dto.UserAccountCardQuery;
 import com.dili.account.dto.UserAccountCardResponseDto;
 import com.dili.account.entity.CardAggregationWrapper;
 import com.dili.ss.domain.PageOutput;
-
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Set;
 
 
 /**
@@ -98,6 +98,11 @@ public interface IAccountQueryService {
      * @date 2020/6/29
      */
     Optional<CardAggregationWrapper> getByAccountId(Long accountId);
+
+	/**
+	 * 根据客户ID获取客户下所有账户，及资金情况(包括可用资金、冻结资金)
+	 */
+	CustomerBalanceResponseDto getAccountFundByCustomerId(Long customerId, Long firmId);
 
 
 }

@@ -26,9 +26,17 @@ where customer_character_type in('driver') and firm_id = 8;
 ALTER TABLE `dili_account`.`account_user_account` 
 ADD COLUMN `customer_sync_modify_holdinfo` tinyint(3) NULL COMMENT '客户信息修改时是否同步修改持卡人信息1-是，2-否' AFTER `hold_contacts_phone`;
 -- 更新是否同步修改持卡人信息标志 
-update account_user_account set customer_sync_modify_holdinfo = 1 where customer_sync_modify_holdinfo is null
+update account_user_account set customer_sync_modify_holdinfo = 1 where customer_sync_modify_holdinfo is null;
 
--- 增加角色字段长度
+-- 增加客户身份类型字段长度
 ALTER TABLE `dili_account`.`account_serial_record` 
 MODIFY COLUMN `customer_type` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '客户角色' AFTER `customer_name`;
 
+-- 取消必填
+ALTER TABLE `dili_account`.`account_user_account` 
+MODIFY COLUMN `usage_type` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '备用字段-账户用途-交易/缴费/理财/水电费预存,多个以逗号分隔' AFTER `card_exist`;
+
+ALTER TABLE `dili_account`.`account_user_account` 
+MODIFY COLUMN `hold_certificate_number` varchar(40) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备用-持卡人证件号' AFTER `hold_name`;
+
+MODIFY COLUMN `permissions` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '备用-使用权限(充值、提现、交费等),多个以逗号分隔' AFTER `usage_type`;

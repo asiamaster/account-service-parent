@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.dili.account.config.PayServiceFeignConfig;
 import com.dili.account.dto.BalanceResponseDto;
 import com.dili.account.dto.CreateTradeRequestDto;
+import com.dili.account.dto.CustomerBalanceResponseDto;
+import com.dili.account.dto.FundAccountDto;
 import com.dili.ss.domain.BaseOutput;
 
 /**
@@ -27,4 +29,10 @@ public interface PayRpc {
      */
     @RequestMapping(value = "/payment/api/gateway.do?service=payment.fund.service:query", method = RequestMethod.POST)
     BaseOutput<BalanceResponseDto> getAccountBalance(@RequestBody CreateTradeRequestDto requestDto, @RequestHeader(name = "mchId") String mchId);
+    
+    /**
+     * 查询客户总资产及明细
+     */
+    @RequestMapping(value = "/payment/api/gateway.do?service=payment.fund.service:customer", method = RequestMethod.POST)
+    BaseOutput<CustomerBalanceResponseDto> getAccountFundByCustomerId(@RequestHeader(name = "mchId")  Long mchId, FundAccountDto type);
 }
