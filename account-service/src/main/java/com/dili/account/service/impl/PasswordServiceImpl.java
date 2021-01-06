@@ -34,6 +34,9 @@ import com.dili.ss.redis.service.RedisUtil;
 import com.dili.uap.sdk.domain.DataDictionaryValue;
 import com.dili.uap.sdk.rpc.DataDictionaryRpc;
 
+import cn.hutool.Hutool;
+import cn.hutool.core.thread.ThreadUtil;
+
 /**
  * @author: xiaosa
  * @date: 2020/4/27
@@ -96,7 +99,6 @@ public class PasswordServiceImpl implements IPasswordService {
 	}
 
 	@Override
-	@Transactional(propagation = Propagation.REQUIRES_NEW, noRollbackFor = AccountBizException.class)
 	public UserAccountDo checkPassword(Long accountId, String password) {
 		if (accountId == null || StringUtils.isBlank(password)) {
 			throw new AccountBizException(ResultCode.DATA_ERROR, "密码校验参数错误");
@@ -104,54 +106,46 @@ public class PasswordServiceImpl implements IPasswordService {
 
 		UserAccountDo userAccountDo = userAccountDao.getByAccountId(accountId);
 
-			AssertUtils.notNull(userAccountDo, "卡信息不存在");
+		AssertUtils.notNull(userAccountDo, "卡信息不存在");
 
-			String encryptPwd = PasswordUtils.encrypt(password, userAccountDo.getSecretKey());
-			if (!userAccountDo.getLoginPwd().equals(encryptPwd)) {
-				log.info("loginPwd[{}],SecretKey[{}],encryptPwd[{}]", userAccountDo.getLoginPwd(),
-						userAccountDo.getSecretKey(), encryptPwd);
-				// 没有配置密码错误次数，直接返回错误信息
-				Integer maxErrorCount = getLockedFirmSetting(userAccountDo.getFirmId());
-				if (maxErrorCount == null) {
-					throw new AccountBizException(ErrorCode.PASSWORD_ERROR, "密码输入有误");
-				}
-
-				// 判断是否需要锁定卡片
-				String key = PWD_ERROR_KEY + accountId;
-				int pwdErrorCount = addPwdErrorCount(key);
-				if (pwdErrorCount >= maxErrorCount) {
-					this.pwdErrorLock2(accountId);
-					throw new AccountBizException(ErrorCode.PASSWORD_ERROR, "密码错误次数已达上限，账户已被锁定");
-				}
+		String encryptPwd = PasswordUtils.encrypt(password, userAccountDo.getSecretKey());
+		if (!userAccountDo.getLoginPwd().equals(encryptPwd)) {
+			log.info("loginPwd[{}],SecretKey[{}],encryptPwd[{}]", userAccountDo.getLoginPwd(),
+					userAccountDo.getSecretKey(), encryptPwd);
+			// 没有配置密码错误次数，直接返回错误信息
+			Integer maxErrorCount = getLockedFirmSetting(userAccountDo.getFirmId());
+			if (maxErrorCount == null) {
 				throw new AccountBizException(ErrorCode.PASSWORD_ERROR, "密码输入有误");
-			} else {
-				cleanPwdErrorCount(accountId);
 			}
+
+			// 判断是否需要锁定卡片
+			String key = PWD_ERROR_KEY + accountId;
+			int pwdErrorCount = addPwdErrorCount(key);
+			if (pwdErrorCount >= maxErrorCount) {
+				this.pwdErrorLock(accountId);
+				throw new AccountBizException(ErrorCode.PASSWORD_ERROR, "密码错误次数已达上限，账户已被锁定");
+			}
+			throw new AccountBizException(ErrorCode.PASSWORD_ERROR, "密码输入有误");
+		} else {
+			cleanPwdErrorCount(accountId);
+		}
 
 		return userAccountDo;
 	}
 
-	/**
-	 * 当密码错误次数达到时，更改状态操作应该避免被回滚
-	 */
-	private void pwdErrorLock2(Long accountId) {
-		log.info("&************************");
-		UserCardDo userCard = userCardDao.getByAccountId(accountId);
-		int updateRet = userCardDao.updateStateById(userCard.getId(), CardStatus.LOCKED.getCode(),
-				userCard.getVersion());
-		if (updateRet < 1) {
-			log.warn("密码错误次数达到限制，但更改卡状态为锁定失败!");
-		}
-	}
-
 	public void pwdErrorLock(Long accountId) {
 		log.info("&************************");
-		UserCardDo userCard = userCardDao.getByAccountId(accountId);
-		int updateRet = userCardDao.updateStateById(userCard.getId(), CardStatus.LOCKED.getCode(),
-				userCard.getVersion());
-		if (updateRet < 1) {
-			log.warn("密码错误次数达到限制，但更改卡状态为锁定失败!");
-		}
+		ThreadUtil.execute(new Runnable() {
+			@Override
+			public void run() {
+				UserCardDo userCard = userCardDao.getByAccountId(accountId);
+				int updateRet = userCardDao.updateStateById(userCard.getId(), CardStatus.LOCKED.getCode(),
+						userCard.getVersion());
+				if (updateRet < 1) {
+					log.warn("{}密码错误次数达到限制，但更改卡状态为锁定失败!", userCard.getCardNo());
+				}
+			}
+		});
 	}
 
 	/**
