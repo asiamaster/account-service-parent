@@ -30,7 +30,7 @@ public interface IPasswordService {
 	void resetLoginPwd(CardRequestDto cardRequestDto) throws Exception;
 	
 	/**
-	 * 密码校验
+	 * 密码校验,校验失败会锁定卡片状态，所以使用独立事务
 	 * @param accountId 账号id
 	 * @param password 密码
 	 * @return 
@@ -42,4 +42,10 @@ public interface IPasswordService {
 	 * @param key
 	 */
 	public void cleanPwdErrorCount(Long accountId);
+	
+	/**
+	 * 根据帐号ID锁定卡片,当密码错误次数达到时，更改状态操作应该避免被回滚
+	 * @param accountId
+	 */
+	void pwdErrorLock(Long accountId);
 }

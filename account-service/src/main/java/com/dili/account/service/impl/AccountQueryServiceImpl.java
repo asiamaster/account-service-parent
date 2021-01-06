@@ -64,7 +64,7 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
     @Autowired
     private PayRpc payRpc;
     /**需要校验的非法卡状态类型*/
-    private static final CardStatus[] VALID_CARD_STATES = new CardStatus[]{CardStatus.LOSS, CardStatus.RETURNED};
+    private static final CardStatus[] VALID_CARD_STATES = new CardStatus[]{CardStatus.LOSS, CardStatus.RETURNED, CardStatus.LOCKED};
 
     @Override
     public Boolean cardExist(String cardNo) {
