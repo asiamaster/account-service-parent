@@ -120,7 +120,7 @@ public class CardManageServiceImpl implements ICardManageService {
 	@Transactional(rollbackFor = Exception.class)
 	@Override
 	public void unLockCard(CardRequestDto cardParam) {
-		CardAggregationWrapper wrapper = accountQueryService.getByAccountIdForGenericOp(cardParam.getAccountId());
+		CardAggregationWrapper wrapper = accountQueryService.getByAccountIdForUnLostCard(cardParam.getAccountId());
 		UserCardDo userCard = wrapper.getUserCard();
 		if (CardStatus.LOCKED.getCode() != userCard.getState()) {// 非锁定状态卡片，不允许解锁
 			throw new AccountBizException(ResultCode.DATA_ERROR, "该卡为非锁定状态,不能进行此操作");

@@ -24,6 +24,9 @@
             <result column="login_pwd" property="loginPwd"/>
             <result column="card_exist" property="cardExist"/>
             <result column="pwd_changed" property="pwdChanged"/>
+            <result column="hold_name" property="holdName"/>
+            <result column="hold_certificate_number" property="holdCertificateNumber"/>
+            <result column="hold_contacts_phone" property="holdContactsPhone"/>
             <result column="login_time" property="loginTime"/>
             <result column="secret_key" property="secretKey"/>
             <result column="state" property="state"/>
