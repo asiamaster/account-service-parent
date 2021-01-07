@@ -66,7 +66,7 @@ public class PasswordServiceImpl implements IPasswordService {
 
 	@Override
 	public void resetLoginPwd(CardRequestDto cardRequestDto) throws Exception {
-		CardAggregationWrapper account = accountQueryService.getByAccountIdForGenericOp(cardRequestDto.getAccountId());
+		CardAggregationWrapper account = accountQueryService.getByAccountIdForUnLostCard(cardRequestDto.getAccountId());
 		if (!cardRequestDto.getLoginPwd().equals(cardRequestDto.getSecondLoginPwd())) {
 			throw new AccountBizException(ResultCode.DATA_ERROR, "两次密码输入不一致，请重新输入");
 		}
