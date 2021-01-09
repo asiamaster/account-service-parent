@@ -17,6 +17,8 @@ public class SerialQueryDto extends SerialDto {
     private Long customerId;
     /** 卡号*/
     private String cardNo;
+    /**卡列表*/
+    private List<String> cardNos;
     /** 操作员ID*/
     private Long operatorId;
     /** 操作开始时间*/
@@ -41,6 +43,14 @@ public class SerialQueryDto extends SerialDto {
     private String serialSort;
     /** 用于排序转换标记 */
     private Boolean sortConvert;
+
+    public List<String> getCardNos() {
+        return cardNos;
+    }
+
+    public void setCardNos(List<String> cardNos) {
+        this.cardNos = cardNos;
+    }
 
     public Integer getFundItem() {
         return fundItem;
