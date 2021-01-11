@@ -7,9 +7,9 @@ package com.dili.account.type;
  * @time ：2020年4月24日上午9:58:20
  */
 public enum CardCategory {
-	PARK("园区", 1),
+	PARK("园区卡", 1),
 
-	BANK("银行", 20),
+	BANK("银行卡", 2),
 	;
 
 	private String name;

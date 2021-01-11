@@ -32,6 +32,9 @@ update account_user_account set customer_sync_modify_holdinfo = 1 where customer
 ALTER TABLE `dili_account`.`account_serial_record` 
 MODIFY COLUMN `customer_type` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '客户角色' AFTER `customer_name`;
 
+ALTER TABLE `dili_account`.`account_serial_record` 
+MODIFY COLUMN `customer_type` varchar(100) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '客户子身份类型' AFTER `customer_name`;
+
 -- 取消必填
 ALTER TABLE `dili_account`.`account_user_account` 
 MODIFY COLUMN `usage_type` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NULL COMMENT '备用字段-账户用途-交易/缴费/理财/水电费预存,多个以逗号分隔' AFTER `card_exist`;
