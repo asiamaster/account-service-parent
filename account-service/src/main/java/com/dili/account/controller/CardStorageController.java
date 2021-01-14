@@ -92,7 +92,6 @@ public class CardStorageController {
 		log.info("卡片删除*****" + JSONObject.toJSONString(dto));
 		AssertUtils.notNull(dto.getStorageInId(), "参数校验失败：入库ID为空!");
 		cardStorageService.delByStorageInId(dto.getStorageInId(), dto.getFirmId());
-		;
 		return BaseOutput.success();
 	}
 
