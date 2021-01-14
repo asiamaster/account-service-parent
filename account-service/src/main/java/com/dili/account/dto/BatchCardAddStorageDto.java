@@ -25,6 +25,8 @@ public class BatchCardAddStorageDto {
 	private Long storageInId;
 	/** 卡片起始号 */
 	private Long startCardNo;
+	/** 卡片起始号 */
+	private String startCardNoStr;
 	/** 卡片结束号 */
 	private Long endCardNo;
 
@@ -106,6 +108,14 @@ public class BatchCardAddStorageDto {
 
 	public void setStorageInId(Long storageInId) {
 		this.storageInId = storageInId;
+	}
+
+	public String getStartCardNoStr() {
+		return startCardNoStr;
+	}
+
+	public void setStartCardNoStr(String startCardNoStr) {
+		this.startCardNoStr = startCardNoStr;
 	}
 
 }

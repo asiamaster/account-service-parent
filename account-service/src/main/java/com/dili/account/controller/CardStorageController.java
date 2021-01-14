@@ -1,6 +1,5 @@
 package com.dili.account.controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.Resource;

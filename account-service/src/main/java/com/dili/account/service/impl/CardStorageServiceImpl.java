@@ -47,7 +47,7 @@ public class CardStorageServiceImpl implements ICardStorageService {
 		List<CardStorageDo> selectList = cardStorageDao.selectList(queryParam);
 		return PageUtils.convert2PageOutput(page, selectList);
 	}
-	
+
 	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public void addCard(CardAddStorageDto addInfo) {
@@ -201,7 +201,8 @@ public class CardStorageServiceImpl implements ICardStorageService {
 		List<CardStorageDo> cardList = new ArrayList<CardStorageDo>();
 		for (long i = batchCardDto.getStartCardNo(); i <= batchCardDto.getEndCardNo(); i++) {
 			CardStorageDo saveInfo = new CardStorageDo();
-			saveInfo.setCardNo(i + "");
+			// 以起始卡号长度为准，对前面带0的卡号转换为整型后补回前面的0
+			saveInfo.setCardNo(padLength(i, batchCardDto.getStartCardNoStr()));
 			saveInfo.setCreateTime(LocalDateTime.now());
 			saveInfo.setCreator(batchCardDto.getCreator());
 			saveInfo.setCreatorId(batchCardDto.getCreatorId());
@@ -260,6 +261,27 @@ public class CardStorageServiceImpl implements ICardStorageService {
 		List<CardStorageDo> selectList = cardStorageDao.selectList(queryParam);
 		return selectList;
 	}
+
+	/**
+	 * 处理卡号转换成整形后，前面为零的长度丢失
+	 * @return
+	 */
+	private static String padLength(Long cardNo, String cardNoStr) {
+		String cardNoReturn = cardNo + "";
+		if(cardNo == null || StringUtils.isBlank(cardNoStr)) {
+			return cardNoReturn;
+		}
+		if(cardNoReturn.length() >= cardNoStr.length()) {
+			return cardNoReturn;
+		}else {
+			int length = cardNoStr.length()-cardNoReturn.length();
+			for(int i =0 ; i<length; i++) {
+				cardNoReturn = "0"+cardNoReturn;
+			}
+		}
+		return cardNoReturn;
+	}
+
 	private static final String NONEXISTENT_ERRMSG = "该卡{}未入库!";
 	private static final String IN_USE_ERRMSG = "该卡{}已在使用中!";
 	private static final String NOT_IN_USE_ERRMSG = "该卡{}未被使用，操作失败!";
