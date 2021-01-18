@@ -84,8 +84,10 @@ public class OpenCardServiceImpl implements IOpenCardService {
 //		Long fundAccountId = payRpcResolver.createFundAccount(fundAccount);
 
 		// 保存账户信息
-		String accountIdStr = uidRpcResovler.bizNumberRetry(BizNoServiceType.ACCOUNT_ID, 3);
-		Long accountId = Long.parseLong(accountIdStr);
+//		String accountIdStr = uidRpcResovler.bizNumberRetry(BizNoServiceType.ACCOUNT_ID, 3);
+//		Long accountId = Long.parseLong(accountIdStr);
+		// 使用支付账户ID，为以后合并做准备
+		Long accountId = openCardInfo.getFundAccountId();
 		UserAccountDo userAccount = buildUserAccount(openCardInfo, accountId, openCardInfo.getFundAccountId());
 		userAccountDao.save(userAccount);
 
