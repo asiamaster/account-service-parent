@@ -43,3 +43,7 @@ ALTER TABLE `dili_account`.`account_user_account`
 MODIFY COLUMN `hold_certificate_number` varchar(40) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '备用-持卡人证件号' AFTER `hold_name`;
 
 MODIFY COLUMN `permissions` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '备用-使用权限(充值、提现、交费等),多个以逗号分隔' AFTER `usage_type`;
+
+ALTER TABLE `dili_account`.`account_serial_record` 
+MODIFY COLUMN `type` varchar(120) NULL DEFAULT NULL COMMENT '操作类型-与业务办理记录保持一致' AFTER `serial_no`,
+MODIFY COLUMN `fund_item` bigint(4) NULL DEFAULT NULL COMMENT '资金项目' AFTER `trade_no`;
