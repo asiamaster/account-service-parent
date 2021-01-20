@@ -254,6 +254,9 @@ public class AccountQueryServiceImpl implements IAccountQueryService {
             throw new AccountBizException(ResultCode.DATA_ERROR, String.format("该卡的主卡账户【%s】为冻结状态，不能进行此操作", cardNo));
         }
         for (CardStatus cardStatus : VALID_CARD_STATES) {
+        	if(cardStatus.getCode() == CardStatus.LOCKED.getCode()) {
+				continue;
+        	}
             if (cardStatus.getCode() == masterCard.getState()) {
                 throw new AccountBizException(ResultCode.DATA_ERROR,
                         String.format("该卡的主卡【%s】为%s状态，不能进行此操作", cardNo, cardStatus.getName()));

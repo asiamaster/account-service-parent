@@ -100,6 +100,10 @@ public class PasswordServiceImpl implements IPasswordService {
 
 	@Override
 	public UserAccountDo checkPassword(Long accountId, String password) {
+		return checkPassword(accountId, password, true);
+	}
+	@Override
+	public UserAccountDo checkPassword(Long accountId, String password, boolean isLockCard) {
 		if (accountId == null || StringUtils.isBlank(password)) {
 			throw new AccountBizException(ResultCode.DATA_ERROR, "密码校验参数错误");
 		}
@@ -112,6 +116,9 @@ public class PasswordServiceImpl implements IPasswordService {
 		if (!userAccountDo.getLoginPwd().equals(encryptPwd)) {
 			log.info("loginPwd[{}],SecretKey[{}],encryptPwd[{}]", userAccountDo.getLoginPwd(),
 					userAccountDo.getSecretKey(), encryptPwd);
+			if(!isLockCard) {
+				throw new AccountBizException(ErrorCode.PASSWORD_ERROR, "密码输入有误");
+			}
 			// 没有配置密码错误次数，直接返回错误信息
 			Integer maxErrorCount = getLockedFirmSetting(userAccountDo.getFirmId());
 			if (maxErrorCount == null) {
@@ -132,7 +139,8 @@ public class PasswordServiceImpl implements IPasswordService {
 
 		return userAccountDo;
 	}
-
+	
+	
 	public void pwdErrorLock(Long accountId) {
 		log.info("&************************");
 		ThreadUtil.execute(new Runnable() {

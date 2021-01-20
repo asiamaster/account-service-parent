@@ -38,6 +38,12 @@ public interface IPasswordService {
 	UserAccountDo checkPassword(Long accountId, String password);
 	
 	/**
+	 * 密码校验,根据参数判断是否需要锁定卡片,(像解锁这种业务的密码校验是不需要锁定卡片的)
+	 * @return
+	 */
+	UserAccountDo checkPassword(Long accountId, String password, boolean isLockCard);
+	
+	/**
 	 * 清除redis中用户的错误次数
 	 * @param key
 	 */
