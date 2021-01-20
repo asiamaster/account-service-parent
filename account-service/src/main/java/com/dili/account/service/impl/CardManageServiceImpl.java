@@ -125,7 +125,7 @@ public class CardManageServiceImpl implements ICardManageService {
 		if (CardStatus.LOCKED.getCode() != userCard.getState()) {// 非锁定状态卡片，不允许解锁
 			throw new AccountBizException(ResultCode.DATA_ERROR, "该卡为非锁定状态,不能进行此操作");
 		}
-		passwordService.checkPassword(cardParam.getAccountId(), cardParam.getLoginPwd());
+		passwordService.checkPassword(cardParam.getAccountId(), cardParam.getLoginPwd(), false);
 		int i = userCardDao.updateStateById(userCard.getId(), CardStatus.NORMAL.getCode(), userCard.getVersion());
 		if (i != 1) {
 			throw new AccountBizException(ResultCode.DATA_ERROR, "修改卡状态失败,请稍后重试");
