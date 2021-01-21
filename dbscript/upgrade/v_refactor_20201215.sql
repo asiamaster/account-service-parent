@@ -47,3 +47,8 @@ MODIFY COLUMN `permissions` varchar(50) CHARACTER SET utf8 COLLATE utf8_general_
 ALTER TABLE `dili_account`.`account_serial_record` 
 MODIFY COLUMN `type` varchar(120) NULL DEFAULT NULL COMMENT '操作类型-与业务办理记录保持一致' AFTER `serial_no`,
 MODIFY COLUMN `fund_item` bigint(4) NULL DEFAULT NULL COMMENT '资金项目' AFTER `trade_no`;
+
+
+ALTER TABLE `dili_account`.`account_serial_record` 
+MODIFY COLUMN `type` varchar(120) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL COMMENT '业务类型-基础数据中心配置' AFTER `serial_no`,
+ADD COLUMN `type_name` varchar(100) NULL COMMENT '业务类型名称' AFTER `type`;
