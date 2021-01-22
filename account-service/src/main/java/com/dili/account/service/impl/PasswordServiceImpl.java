@@ -9,8 +9,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import com.dili.account.common.constant.DictionaryCode;
@@ -34,7 +32,6 @@ import com.dili.ss.redis.service.RedisUtil;
 import com.dili.uap.sdk.domain.DataDictionaryValue;
 import com.dili.uap.sdk.rpc.DataDictionaryRpc;
 
-import cn.hutool.Hutool;
 import cn.hutool.core.thread.ThreadUtil;
 
 /**
@@ -79,7 +76,14 @@ public class PasswordServiceImpl implements IPasswordService {
 		if (update == 0) {
 			throw new AccountBizException(ResultCode.DATA_ERROR, "密码重置失败");
 		}
+		// 清除redis中的次数
 		cleanPwdErrorCount(userAccount.getAccountId());
+		
+		// 修改卡状态
+		UserCardDo userCard = userCardDao.getByAccountId(account.getUserAccount().getId());
+		userCardDao.updateStateById(userCard.getId(), CardStatus.NORMAL.getCode(),
+				userCard.getVersion());
+		
 	}
 
 	@Override
