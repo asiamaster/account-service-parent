@@ -80,7 +80,7 @@ public class PasswordServiceImpl implements IPasswordService {
 		cleanPwdErrorCount(userAccount.getAccountId());
 		
 		// 修改卡状态
-		UserCardDo userCard = userCardDao.getByAccountId(account.getUserAccount().getId());
+		UserCardDo userCard = userCardDao.getByAccountId(cardRequestDto.getAccountId());
 		userCardDao.updateStateById(userCard.getId(), CardStatus.NORMAL.getCode(),
 				userCard.getVersion());
 		
