@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import com.dili.account.common.constant.DictionaryCode;
@@ -33,6 +34,7 @@ import com.dili.uap.sdk.domain.DataDictionaryValue;
 import com.dili.uap.sdk.rpc.DataDictionaryRpc;
 
 import cn.hutool.core.thread.ThreadUtil;
+import io.seata.spring.annotation.GlobalTransactional;
 
 /**
  * @author: xiaosa
@@ -62,6 +64,8 @@ public class PasswordServiceImpl implements IPasswordService {
 	private DataDictionaryRpc dataDictionaryRpc;
 
 	@Override
+	@GlobalTransactional
+	@Transactional
 	public void resetLoginPwd(CardRequestDto cardRequestDto) throws Exception {
 		CardAggregationWrapper account = accountQueryService.getByAccountIdForUnLostCard(cardRequestDto.getAccountId());
 		if (!cardRequestDto.getLoginPwd().equals(cardRequestDto.getSecondLoginPwd())) {
@@ -77,13 +81,12 @@ public class PasswordServiceImpl implements IPasswordService {
 			throw new AccountBizException(ResultCode.DATA_ERROR, "密码重置失败");
 		}
 		// 清除redis中的次数
-		cleanPwdErrorCount(userAccount.getAccountId());
-		
+		cleanPwdErrorCount(cardRequestDto.getAccountId());
+
 		// 修改卡状态
 		UserCardDo userCard = userCardDao.getByAccountId(cardRequestDto.getAccountId());
-		userCardDao.updateStateById(userCard.getId(), CardStatus.NORMAL.getCode(),
-				userCard.getVersion());
-		
+		userCardDao.updateStateById(userCard.getId(), CardStatus.NORMAL.getCode(), userCard.getVersion());
+
 	}
 
 	@Override
@@ -106,6 +109,7 @@ public class PasswordServiceImpl implements IPasswordService {
 	public UserAccountDo checkPassword(Long accountId, String password) {
 		return checkPassword(accountId, password, true);
 	}
+
 	@Override
 	public UserAccountDo checkPassword(Long accountId, String password, boolean isLockCard) {
 		if (accountId == null || StringUtils.isBlank(password)) {
@@ -120,7 +124,7 @@ public class PasswordServiceImpl implements IPasswordService {
 		if (!userAccountDo.getLoginPwd().equals(encryptPwd)) {
 			log.info("loginPwd[{}],SecretKey[{}],encryptPwd[{}]", userAccountDo.getLoginPwd(),
 					userAccountDo.getSecretKey(), encryptPwd);
-			if(!isLockCard) {
+			if (!isLockCard) {
 				throw new AccountBizException(ErrorCode.PASSWORD_ERROR, "密码输入有误");
 			}
 			// 没有配置密码错误次数，直接返回错误信息
@@ -143,8 +147,7 @@ public class PasswordServiceImpl implements IPasswordService {
 
 		return userAccountDo;
 	}
-	
-	
+
 	public void pwdErrorLock(Long accountId) {
 		log.info("&************************");
 		ThreadUtil.execute(new Runnable() {
