@@ -215,7 +215,7 @@ public class AccountQueryController {
 	 */
 	@GetMapping("/getAccountFundByCustomerId.action")
 	public BaseOutput<CustomerBalanceResponseDto> getAccountFundByCustomerId(Long customerId, Long firmId) {
-		LOGGER.info("getAccountFundByCustomerId请求参数:{}->>>>{},{}", customerId, firmId);
+		LOGGER.info("getAccountFundByCustomerId请求参数:{}->>>>{}", customerId, firmId);
 		AssertUtils.notNull(customerId, "卡号不能为空");
 		AssertUtils.notNull(firmId, "市场ID不能为空");
 		CustomerBalanceResponseDto customerBalance = accountQueryService.getAccountFundByCustomerId(customerId, firmId);
