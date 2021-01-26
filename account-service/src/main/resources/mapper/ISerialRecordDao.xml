@@ -232,6 +232,12 @@
 		<if test="accountId != null">
 			and `account_id` = #{accountId}
 		</if>
+		<if test="accountIdList!=null and accountIdList.size>0">
+			AND `account_id` IN
+			<foreach item="item" collection="accountIdList" separator="," open="(" close=")" index="">
+				#{item}
+			</foreach>
+		</if>
 		<if test="fundItem != null">
 			and `fund_item` = #{fundItem}
 		</if>
