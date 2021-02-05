@@ -53,3 +53,7 @@ MODIFY COLUMN `customer_type` varchar(200)  NULL DEFAULT NULL COMMENT '客户角
 ALTER TABLE `dili_account`.`account_serial_record` 
 MODIFY COLUMN `type` varchar(120)  NULL DEFAULT NULL COMMENT '业务类型-基础数据中心配置' AFTER `serial_no`,
 ADD COLUMN `type_name` varchar(100) NULL COMMENT '业务类型名称' AFTER `type`;
+
+-- 刷新持卡人
+update account_serial_record set hold_name = customer_name where hold_name is null;
+update account_user_account set hold_name = customer_name where hold_name is null;
