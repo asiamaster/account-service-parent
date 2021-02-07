@@ -74,9 +74,9 @@ public class AccountManageServiceImpl implements IAccountManageService {
 		openCardService.setAccountPermissions(updateAccount);
 		// 客户禁用，则禁用所有账户状态 CustomerEnum.State.DISABLED.getCode(); 客户启用则不受影响，避免影响卡务的账户禁用功能 
 		Integer customerState = customer.getCustomerMarket().getState();
-		if(customerState !=null && customerState.intValue() == CustomerEnum.State.DISABLED.getCode()) {
-			updateAccount.setDisabledState(customer.getCustomerMarket().getState()); 
-		}
+//		if(customerState !=null && customerState.intValue() == CustomerEnum.State.DISABLED.getCode()) {
+			updateAccount.setDisabledState(customerState); 
+//		}
 		updateAccount.setModifyTime(LocalDateTime.now());
 		updateAccount.setFirmId(customer.getCustomerMarket().getMarketId());
 		userAccountDao.updateCustomerInfo(updateAccount);
