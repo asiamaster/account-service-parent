@@ -21,6 +21,7 @@ import com.dili.account.type.DisableState;
 import com.dili.customer.sdk.domain.CharacterType;
 import com.dili.customer.sdk.domain.Customer;
 import com.dili.customer.sdk.domain.dto.CustomerExtendDto;
+import com.dili.customer.sdk.enums.CustomerEnum;
 import com.dili.ss.constant.ResultCode;
 
 @Service("accountManageService")
@@ -71,13 +72,16 @@ public class AccountManageServiceImpl implements IAccountManageService {
 		//根据客户类型设置对应的权限
 		updateAccount.setCustomerCharacterType(getCharacterTypes(customer.getCharacterTypeList(), customer.getId()));
 		openCardService.setAccountPermissions(updateAccount);
-		// 客户禁用，则禁用所有账户状态 CustomerEnum.State.DISABLED.getCode();
-		updateAccount.setDisabledState(customer.getState()); 
+		// 客户禁用，则禁用所有账户状态 CustomerEnum.State.DISABLED.getCode(); 客户启用则不受影响，避免影响卡务的账户禁用功能 
+		Integer customerState = customer.getCustomerMarket().getState();
+		if(customerState !=null && customerState.intValue() == CustomerEnum.State.DISABLED.getCode()) {
+			updateAccount.setDisabledState(customer.getCustomerMarket().getState()); 
+		}
 		updateAccount.setModifyTime(LocalDateTime.now());
 		updateAccount.setFirmId(customer.getCustomerMarket().getMarketId());
 		userAccountDao.updateCustomerInfo(updateAccount);
 		
-		// 更新持卡人信息
+		// 更新持卡人信息,只更新CustomerSyncModifyHoldinfo为Y的账户
 		updateAccount.setHoldName(customer.getName());
 		updateAccount.setHoldContactsPhone(customer.getContactsPhone());
 		updateAccount.setHoldCertificateNumber(customer.getCertificateNumber());
