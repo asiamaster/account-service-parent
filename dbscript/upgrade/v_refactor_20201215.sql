@@ -51,3 +51,4 @@ ADD COLUMN `type_name` varchar(100) NULL COMMENT '业务类型名称' AFTER `typ
 -- 刷新持卡人
 update account_serial_record set hold_name = customer_name where (hold_name is null or hold_name = '');
 update account_user_account set hold_name = customer_name where (hold_name is null or hold_name = '');
+update account_user_account set hold_contacts_phone = customer_contacts_phone where (hold_certificate_number is null or hold_certificate_number = '');
