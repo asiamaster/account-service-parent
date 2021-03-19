@@ -79,7 +79,6 @@ public class AccountManageServiceImpl implements IAccountManageService {
 		} else {
 			updateAccount.setDisabledState(DisableState.ENABLED.getCode());
 		}
-		updateAccount.setDisabledState(customerState);
 		updateAccount.setModifyTime(LocalDateTime.now());
 		updateAccount.setFirmId(customer.getCustomerMarket().getMarketId());
 		userAccountDao.updateCustomerInfo(updateAccount);
