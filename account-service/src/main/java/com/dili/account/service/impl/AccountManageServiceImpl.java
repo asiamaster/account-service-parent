@@ -72,15 +72,18 @@ public class AccountManageServiceImpl implements IAccountManageService {
 		//根据客户类型设置对应的权限
 		updateAccount.setCustomerCharacterType(getCharacterTypes(customer.getCharacterTypeList(), customer.getId()));
 		openCardService.setAccountPermissions(updateAccount);
-		// 客户禁用，则禁用所有账户状态 CustomerEnum.State.DISABLED.getCode(); 客户启用则不受影响，避免影响卡务的账户禁用功能 
 		Integer customerState = customer.getCustomerMarket().getState();
-//		if(customerState !=null && customerState.intValue() == CustomerEnum.State.DISABLED.getCode()) {
-			updateAccount.setDisabledState(customerState); 
-//		}
+		//客户那边有“未生效”状态，不影响账户状态，都视为正常，只有“禁用”才影响状态
+		if (DisableState.DISABLED.getCode().equals(customerState)){
+			updateAccount.setDisabledState(DisableState.DISABLED.getCode());
+		} else {
+			updateAccount.setDisabledState(DisableState.ENABLED.getCode());
+		}
+		updateAccount.setDisabledState(customerState);
 		updateAccount.setModifyTime(LocalDateTime.now());
 		updateAccount.setFirmId(customer.getCustomerMarket().getMarketId());
 		userAccountDao.updateCustomerInfo(updateAccount);
-		
+
 		// 更新持卡人信息,只更新CustomerSyncModifyHoldinfo为Y的账户
 		updateAccount.setHoldName(customer.getName());
 		updateAccount.setHoldContactsPhone(customer.getContactsPhone());
@@ -88,7 +91,7 @@ public class AccountManageServiceImpl implements IAccountManageService {
 		updateAccount.setCustomerSyncModifyHoldinfo(CustomerSyncModifyHoldinfo.Y.getCode());
 		userAccountDao.updateHoldinfo(updateAccount);
 	}
-	
+
 	public String getCharacterTypes(List<CharacterType> typeList, Long customerId) {
 		if (typeList == null || typeList.size() == 0) {
 			throw new AccountBizException("客户ID"+customerId+"角色信息为空");
