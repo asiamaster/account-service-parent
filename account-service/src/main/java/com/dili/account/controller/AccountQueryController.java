@@ -169,7 +169,7 @@ public class AccountQueryController {
                 CardStatus.LOSS.getCode(),
                 CardStatus.LOCKED.getCode()
         ));
-        param.setDisableState(DisableState.ENABLED.getCode());
+        //param.setDisableState(DisableState.ENABLED.getCode());
         return BaseOutput.successData(accountQueryService.getCardNosGroupByCustomerIds(param));
     }
 
