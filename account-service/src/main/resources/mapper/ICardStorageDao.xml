@@ -10,8 +10,8 @@
 		`device_id`,
 		`card_no`,
 		`type`,
-		`card_face`, 
-		`storage_in_id`, 
+		`card_face`,
+		`storage_in_id`,
 		`verify_code`,
 		`maker_version`,
 		`state`,
@@ -41,12 +41,12 @@
 		<if test="endDate != null"><![CDATA[ AND create_time <= #{endDate}]]></if>
 		<if test="startCardNo != null"><![CDATA[ AND card_no >= #{startCardNo}]]></if>
 		<if test="endCardNo != null"><![CDATA[ AND card_no <= #{endCardNo}]]></if>
-		<if test="storageInId != null"><![CDATA[ AND storage_in_`id = #{storageInId}]]></if>
+		<if test="storageInId != null"><![CDATA[ AND storage_in_id = #{storageInId}]]></if>
 		<if test="firmId != null"><![CDATA[ AND firm_id = #{firmId}]]></if>
 		<if test="sort != null">
 			<![CDATA[ ORDER BY ${sort} ${order} ]]>
 		</if>
-			
+
 	</select>
 
 	<select id="selectListCount" resultType="java.lang.Long">
@@ -79,8 +79,8 @@
 		`device_id`,
 		`card_no`,
 		`type`,
-		`card_face`, 
-		`storage_in_id`, 
+		`card_face`,
+		`storage_in_id`,
 		`verify_code`,
 		`maker_version`,
 		`state`,
@@ -96,7 +96,7 @@
 		#{deviceId},
 		#{cardNo},
 		#{type},
-		#{cardFace}, 
+		#{cardFace},
 		#{storageInId},
 		#{verifyCode},
 		#{makerVersion},
@@ -118,8 +118,8 @@
 		`device_id`,
 		`card_no`,
 		`type`,
-		`card_face`, 
-		`storage_in_id`, 
+		`card_face`,
+		`storage_in_id`,
 		`verify_code`,
 		`maker_version`,
 		`state`,
@@ -134,7 +134,7 @@
 		account_card_storage
 		WHERE
 			card_no = #{cardNo}
-		AND 
+		AND
 			firm_id = #{firmId}
 	</select>
 
@@ -167,13 +167,13 @@
 			`state` = #{state},
 			`modify_time` = #{modifyTime}
 		</set>
-		WHERE 
+		WHERE
 			state = 4
 		AND firm_id = #{firmId}
 		AND card_no in
 		<foreach collection="cardNos" item="cardNo" open="(" close=")" separator=",">
 			#{cardNo}
-		</foreach> 
+		</foreach>
 	</update>
 
 	<insert id="batchSave" parameterType="java.util.List">
@@ -181,8 +181,8 @@
 		`device_id`,
 		`card_no`,
 		`type`,
-		`card_face`, 
-		`storage_in_id`, 
+		`card_face`,
+		`storage_in_id`,
 		`verify_code`,
 		`maker_version`,
 		`state`,
@@ -194,13 +194,13 @@
 		`create_time`,
 		`modify_time`
 		)
-		VALUES 
+		VALUES
 		<foreach item="item" collection="list" separator=",">
 			(
 				#{item.deviceId},
 				#{item.cardNo},
 				#{item.type},
-				#{item.cardFace}, 
+				#{item.cardFace},
 				#{item.storageInId},
 				#{item.verifyCode},
 				#{item.makerVersion},
@@ -215,12 +215,12 @@
 			)
 		</foreach>
 	</insert>
-	
+
 	<!-- 删除状态为“未激活的数据” -->
 	<delete id="del">
-		DELETE FROM 
+		DELETE FROM
 			account_card_storage
-		WHERE 
+		WHERE
 			state = 4
 		<if test="storageInId != null"><![CDATA[ AND storage_in_id = #{storageInId}]]></if>
 		<if test="firmId != null"><![CDATA[ AND firm_id = #{firmId}]]></if>

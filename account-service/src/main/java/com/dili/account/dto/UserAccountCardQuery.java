@@ -30,6 +30,8 @@ public class UserAccountCardQuery extends BaseDto {
 	private String customerContactsPhone;
 	/** 客户编号 */
 	private String customerCode;
+	/** 持卡人 */
+	private String holdName;
 	/** 多个账户ID */
 	private List<Long> accountIds;
 	/** 多个卡号 */
@@ -54,6 +56,14 @@ public class UserAccountCardQuery extends BaseDto {
 	/** 标记是否是最新的卡 */
 	@JSONField(deserialize = false)
 	private Integer last;
+
+	public String getHoldName() {
+		return holdName;
+	}
+
+	public void setHoldName(String holdName) {
+		this.holdName = holdName;
+	}
 
 	public List<Integer> getCardStates() {
 		return cardStates;
